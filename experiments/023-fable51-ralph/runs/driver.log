@@ -1,0 +1,6 @@
+=== RUN fable-1 (claude-fable-5-1) start: 2026-09-16 15:48:06 ===
+=== RUN fable-1 finished: 2026-09-16 15:55:09 | 1,2026-09-16 15:55:09,0,13,154,1,pass ===
+=== RUN fable-2 (claude-fable-5-1) start: 2026-09-16 15:55:10 ===
+=== RUN fable-2 finished: 2026-09-16 16:03:05 | 1,2026-09-16 16:03:05,0,13,154,1,pass ===
+=== RUN fable-3 (claude-fable-5-1) start: 2026-09-16 16:03:05 ===
+=== RUN fable-3 finished: 2026-09-16 16:09:24 | 1,2026-09-16 16:09:24,0,13,154,1,pass ===

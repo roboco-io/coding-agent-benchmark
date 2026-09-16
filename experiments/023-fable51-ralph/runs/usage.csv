@@ -1,0 +1,4 @@
+run,api_calls,input,cache_create,cache_read,output,tools
+fable-1,26,802,79451,1439045,31102,Bash21/context7-3/ToolSearch1
+fable-2,34,1058,85864,2206839,35753,Bash29/Write2/context7-2
+fable-3,22,674,73794,1242665,28747,Bash21

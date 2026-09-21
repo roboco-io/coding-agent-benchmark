@@ -26,7 +26,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新实验：EXP-023（2026-09-16）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新实验：EXP-025（2026-09-21）
 
 <!-- RESULTS:BEGIN -->
 <!-- 此区块由 scripts/update_readme_results.py 根据 experiments/*/report.md 自动生成（翻译来自 scripts/readme_i18n.json）。请勿手动编辑。 -->
@@ -55,6 +55,7 @@
 | [EXP-020](experiments/020-solar-pro4-direct/report.md) Claude Code × solar-pro4 直连完成验证（n=3） | M-14: 通过 Upstage 的 Anthropic 兼容端点将 Claude Code 直连到 solar-pro4（thinking 默认）后，能在隔离·无干扰的 Ralph 循环中于上限 30 iteration 内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（n=3，完成率判定·排除计费）。 | **验证** |
 | [EXP-021](experiments/021-gpt6-astra-codex/report.md) Codex CLI × gpt-6-astra Ralph 循环完成验证（n=3） | M-15: 在 Codex CLI（`codex exec`）框架中，gpt-6-astra（effort medium）能在隔离·无干扰的 Ralph 循环中于上限 30 iteration 内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（n=3，完成率判定·排除计费）。 | **验证** |
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 原生 Ralph 循环完成验证（n=3） | M-17: 在 Claude Code 原生框架中，Fable 5.1（`claude-fable-5-1`，thinking 默认）能以 EN 标准 Ralph 循环在上限 10 iteration 内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（n=3，完成率判定·排除计费）。 | **验证** |
+| [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash·V4-Pro 直连 Ralph 循环完成验证（EN·KO 各 n=3） | M-18: 通过 DeepSeek 的 Anthropic 兼容端点将 Claude Code 直连到 `deepseek-flash`（DeepSeek-V4.1-Flash）和 `deepseek-v4-pro`（DeepSeek-V4-Pro-0813）（thinking 默认）后，能在隔离·无干扰的 Ralph 循环中于上限 30 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 标准版各 n=3，完成率判定·排除计费）。 | **验证** |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (否定（反证）)  
 plan-then-execute 按 billable 计使用了**约 8.7 倍**的 token → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -122,6 +123,9 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-023 — Claude Code × Fable 5.1 原生 Ralph 循环完成验证（n=3）** (验证)  
 **3/3 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，会话 6–8 分钟·提交 2–4 次）。辅助指标相对 Opus 5（EXP-009/010）**时间·output 分布不重叠地下移**（6.2–7.8 分钟 vs 8.9–17.6 分钟，28.7–35.8K vs 41.1–48.4K）——Opus 5 的输出量扩大特征在 Fable 5.1 中回到 4.8 水平。 → [报告](experiments/023-fable51-ralph/report.md)
 
+**EXP-025 — Claude Code × DeepSeek V4.1-Flash·V4-Pro 直连 Ralph 循环完成验证（EN·KO 各 n=3）** (验证)  
+**12/12 run 全部在 iteration 1 完成**（四个条件各 3/3，门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，响应 model 字段全部一致）。Flash：EN 4.6–6.0 分钟，为全部条件中最快一档，按公开单价每 run 约 $0.1；Pro：12–16 分钟，约 $0.5。为观测值，不证明普遍成功率或效率优势。 → [报告](experiments/025-deepseek-direct/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（随实验积累更新）
@@ -136,6 +140,8 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 6. **Ralph 循环协议可跨框架移植，完成由模型决定、轨迹由框架决定（EXP-011/012 配对）。** 同一 PROMPT·门控·模型（gpt-5.6-sol，effort medium）只更换框架的配对实验中两者都无人干预完成——Codex CLI 为 iteration 1·5 分 46 秒·单文件 436 行·提交 3 次，Claude Code（经 ccr）为 iteration 11·58 分钟·模块化 11 个文件·提交 11 次。“最重要的一块”这一指令，Codex 理解为做到完成，Claude Code 一侧则按字面理解为一块，小型 iteration 由 Ralph 循环吸收。隔离原则（专用 CODEX_HOME/CLAUDE_CONFIG_DIR）和逐 iteration 的外部评分门控不分工具均成立。工具间的 token 效率比较需先标准化计量方式（rollout 累计 vs ccr 标签页 vs ccusage）。Codex 框架在模型换代时也可原样移植——GPT-6 首个模型 gpt-6-astra（因无 Anthropic 兼容端点，Codex 路径是唯一一致的路径）仅替换模型 ID 一项即接入并 3/3 在 iter 1 完成（EXP-021，会话 7 分钟级·误判 0 起）。但会话时间比 sol 多 +23–32%，官方“快 1.9 倍”的数字在此框架中未复现——速度叙事保留判断。
 7. **第三方模型的接入，通过 Anthropic 兼容端点直连在结构上优于转换层（ccr），且直连模板可跨提供商复用（EXP-013/014）。** 用 `ANTHROPIC_BASE_URL` 直连 qwen3.8-max（DashScope）和 kimi-k3（Moonshot）后，ccr 栈中反复出现的失败模式（usage 丢失→另建标签页、transformer 链调整、流停滞）全部消失——两个实验均未经调整通过 Phase 0·在 iteration 1 完成（15 分 5 秒 / 21 分 18 秒）·会话 jsonl usage 正常。EXP-014 在 EXP-013 框架上仅替换 3 个 env 值（端点/密钥/模型 ID）即可运行——方法与提供商无关。直连也把计量回归到 Claude 标准路径（jsonl + message.id 去重），部分解决了第 6 条的标准化前置课题，但缓存计量方式因提供商而异（Moonshot 将 cache_create 计为 0）。与 ccr 的比较因模型不同而存在栈·模型效应混淆——若提供商提供 Anthropic 兼容端点则以直连为默认选项，但栈间定量比较需要同一模型实验。**可复现性以 n=3 确定（EXP-016）**：Codex×gpt-5.6-sol·qwen 直连·kimi 直连三个条件各 3/3 完成（合计 9/9，8/9 为 iter 1）——但完成以外的指标（时间·提交·output）在同一条件下也波动至 3 倍（kimi 21 分钟→7 分钟级），S 轴“轨迹波动是常量噪声”的结论在 M 轴同样成立。只有完成率是稳定指标。**韩文条件也不损害完成率（EXP-017/019）**：在韩文标准版（要求全部产出为韩文）下 qwen·kimi·Opus 4.8·Opus 5·Codex×gpt-5.6-sol 五个条件各 3/3，**累计 15/15 在 iter 1 完成**，提交·README 全部韩文·语言偏离 0——连英语系模型（gpt-5.6-sol）也遵从，说明韩文执行是指令遵从问题而非模型谱系问题。时间·提交·output 在 EXP-019 三个条件下也全部与 EN 分布重叠——qwen 在 ko 下 +48% 的时间（EXP-017）是例外案例，仅作方向性记录（L-01 原则）。模型特征（4.8 单次提交 vs 5 细分提交）在语言翻转后依然保持。**但直连的可复现性依赖于提供商（EXP-018）**：EXP-015 完成次日，Upstage 无预告下线了 Anthropic 兼容端点和 solar-open2 托管 API（需申请的测试版结束），复现窗口关闭——第三方基准中标明实验时点界定了可复现性主张的边界，复用框架前的提供商冒烟测试必不可少。两周后端点以 solar-pro4 恢复，确认直连 3/3 完成（EXP-020）——完成能力与直连上游相当，但有效时间 119–258 分钟（qwen 的 8–17 倍）为最长特征，原因是不支持缓存（所有调用 cache 为 0，每次重新预填约 8 万 token）·往返 37 秒·thinking 88% 的乘积。**注意：solar-open2·solar-pro4 端点并非商用正式版（GA）API，而是预览（需申请的测试版）状态**，基础设施约束（不支持 prompt caching、往返延迟长、无预告下线端点）始终存在，Solar 系列的时间·usage 特征是模型能力与预览基础设施特性相混淆的值——不要当作商用基础设施上的性能来解读。门控误判第 3 例（全局 npm 污染遮蔽了 hurl 二进制）新增了**固定评分二进制绝对路径**的教训。
 8. **输出量扩大特征是模型固有特性而非世代特征（EXP-023）。** Claude 5 世代的高阶模型 Fable 5.1 在同一框架·EN 标准版下 3/3 在 iter 1 完成，output 28.7–35.8K·6.2–7.8 分钟，与 Opus 4.8 分布（29.6–37.1K·7.8–8.7 分钟）重叠，而与 Opus 5（41.1–48.4K·8.9–17.6 分钟）不重叠。EXP-010 确定为“世代特征”的 Opus 5 output·提交扩大在同世代的高阶模型中未复现，因此重新解释为 Opus 5 独有的特征（n=3·时点差 7 周，方向性记录）。
+
+9. **DeepSeek V4.1-Flash 无需调整即通过直连标准，并显示出全部条件中最快一档·最低成本的特征（EXP-025）。** 仅替换 3 个 env 值，Flash·V4-Pro 在 EN·KO 各 3/3，共 12/12 在 iter 1 完成（响应 model 字段全部保持）。Flash EN 4.6–6.0 分钟·每 run 折算约 $0.1（缓存命中输入 $0.006/M），低于 Codex×sol（5.3–10.0 分钟）一档；Pro 12–16 分钟·约 $0.5，output 为 1.5 倍。因时点·框架混淆，不确定速度·成本优势；作为直连可复用案例（第 4 家）和特征记录保留。
 
 ## 实验生命周期
 

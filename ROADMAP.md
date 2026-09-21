@@ -33,5 +33,6 @@
 - [x] EXP-020: Claude Code × solar-pro4 직결 완주 검증, n=3 (M-14, 엔드포인트 복구 확인 후) — 검증(3/3 완주, 신고 iter 3→2→1, 게이트 오검 1건 소급 재채점으로 유효 완주 확정, 캐시 0·유효 119–258분 최장 프로파일), [보고서](experiments/020-solar-pro4-direct/report.md)
 - [x] EXP-021: Codex CLI × gpt-6-astra 완주 검증 (M-15, n=3, GPT-6 출시 대응 — Anthropic 호환 엔드포인트 부재로 Codex 하네스 경로) — 검증(3/3 iter 1 완주·세션 7분대·오검 0건, sol 대비 +23–32% 시간으로 "1.9x 고속" 미재현), [보고서](experiments/021-gpt6-astra-codex/report.md)
 - [x] EXP-023: Claude Code × Fable 5.1 네이티브 완주 검증 (M-17, n=3, EN 정본) — 검증(3/3 iter 1 완주·6–8분 네이티브 최속, output은 Opus 4.8 수준으로 Opus 5 확대 프로파일 미재현), [보고서](experiments/023-fable51-ralph/report.md)
+- [x] EXP-025: Claude Code × DeepSeek V4.1-Flash·V4-Pro 직결 완주 검증 (M-18, EN·KO 각 n=3, 총 12 run) — 검증(12/12 iter 1 완주, Flash EN 4.6–6.0분 전 조건 최속 대역·run당 약 $0.1, Pro 12–16분, 모델 유지 12/12), [보고서](experiments/025-deepseek-direct/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

@@ -26,7 +26,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新実験反映: EXP-023（2026-09-16）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新実験反映: EXP-025（2026-09-21）
 
 <!-- RESULTS:BEGIN -->
 <!-- このブロックは scripts/update_readme_results.py が experiments/*/report.md から自動生成する（翻訳は scripts/readme_i18n.json）。直接編集禁止。 -->
@@ -55,6 +55,7 @@
 | [EXP-020](experiments/020-solar-pro4-direct/report.md) Claude Code × solar-pro4 直結完走検証（n=3） | M-14: Claude CodeをUpstageのAnthropic互換エンドポイントでsolar-pro4に直結すると（thinkingデフォルト）、隔離・無攪乱のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration以内に無介入で完走できる（n=3、完走率判定・課金除外）。 | **検証** |
 | [EXP-021](experiments/021-gpt6-astra-codex/report.md) Codex CLI × gpt-6-astra Ralphループ完走検証（n=3） | M-15: Codex CLI（`codex exec`）ハーネスでgpt-6-astra（effort medium）は隔離・無攪乱のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration以内に無介入で完走できる（n=3、完走率判定・課金除外）。 | **検証** |
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 ネイティブRalphループ完走検証（n=3） | M-17: Claude CodeネイティブハーネスでFable 5.1（`claude-fable-5-1`、thinkingデフォルト）はEN正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration以内に無介入で完走できる（n=3、完走率判定・課金除外）。 | **検証** |
+| [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash・V4-Pro 直結Ralphループ完走検証（EN・KO各n=3） | M-18: Claude CodeをDeepSeekのAnthropic互換エンドポイントで`deepseek-flash`（DeepSeek-V4.1-Flash）・`deepseek-v4-pro`（DeepSeek-V4-Pro-0813）に直結すると（thinkingデフォルト）、隔離・無攪乱のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に無介入で完走できる（EN・KO正本各n=3、完走率判定・課金除外）。 | **検証** |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (棄却（反証）)  
 plan-then-executeがbillable基準で**約8.7倍多い**トークンを使用 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -122,6 +123,9 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-023 — Claude Code × Fable 5.1 ネイティブRalphループ完走検証（n=3）** (検証)  
 **3/3 run全てiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、セッション6–8分・コミット2–4回）。補助指標はOpus 5（EXP-009/010）比で**時間・output分布が重ならず下方へ**（6.2–7.8分 vs 8.9–17.6分、28.7–35.8K vs 41.1–48.4K）——Opus 5の出力量拡大プロファイルはFable 5.1では4.8水準に戻った。 → [レポート](experiments/023-fable51-ralph/report.md)
 
+**EXP-025 — Claude Code × DeepSeek V4.1-Flash・V4-Pro 直結Ralphループ完走検証（EN・KO各n=3）** (検証)  
+**12/12 run全てiteration 1で完走**（4条件各3/3、ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールド全件一致）。FlashはEN 4.6–6.0分で全条件最速帯・公開単価でrunあたり約$0.1、Proは12–16分・約$0.5。観測値であり一般的成功率・効率優位の証明ではない。 → [レポート](experiments/025-deepseek-direct/report.md)
+
 <!-- RESULTS:END -->
 
 ### 総合インサイト（実験が積み重なるたびに更新）
@@ -136,6 +140,8 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 6. **Ralphループのプロトコルはハーネス非依存に移植され、完走はモデルが・軌跡はハーネスが決めた（EXP-011/012ペア）。** 同一PROMPT・ゲート・モデル（gpt-5.6-sol、effort medium）でハーネスだけを変えたペア実験で両方とも無介入完走——Codex CLIはiteration 1・5分46秒・単一ファイル436行・コミット3回、Claude Code（ccr経由）はiteration 11・58分・モジュール型11ファイル・コミット11回。「最も重要な一片」の指示をCodexは完走までと解釈し、Claude Code側は文字通り一片と解釈して小型iterationをRalphループが吸収した。隔離原則（専用CODEX_HOME/CLAUDE_CONFIG_DIR）とiterationごとの外部採点ゲートはツールを問わず成立。ツール間のトークン効率比較は計測方式（rollout累計 vs ccrタブ vs ccusage）の標準化が先行課題。Codexハーネスはモデル世代交代にもそのまま移植される——GPT-6初のモデルgpt-6-astra（Anthropic互換エンドポイント不在のためCodex経路が唯一の整合）をモデルID 1要素の差し替えだけで接続し3/3 iter 1完走（EXP-021、セッション7分台・誤棄却0件）。ただしsol比でセッション時間+23–32%で公式の「1.9倍高速」はこのハーネスでは再現せず——速度の叙述は判断保留。
 7. **サードパーティモデルの接続は変換層（ccr）よりAnthropic互換エンドポイントへの直結が構造的に優れ、直結テンプレートはプロバイダを越えて再利用される（EXP-013/014）。** qwen3.8-max（DashScope）とkimi-k3（Moonshot）を`ANTHROPIC_BASE_URL`直結で接続すると、ccrスタックで繰り返された失敗モード（usage欠落→別タブ構築、transformerチェーン調整、ストリームのストール）が全て消滅——両実験ともPhase 0を無調整で通過・iteration 1完走（15分5秒 / 21分18秒）・セッションjsonlのusage正常。EXP-014はEXP-013のハーネスでenv 3要素（エンドポイント/キー/モデルID）だけを差し替えてそのまま動作——方法がプロバイダ非依存。直結は計測もClaude標準経路（jsonl + message.id dedup）に回帰させ、6番の標準化先行課題を部分的に解消するが、キャッシュ計上方式はプロバイダごとに異なる（Moonshotはcache_create 0計上）。ccr比の比較はモデルが異なるためスタック・モデル効果が交絡——プロバイダがAnthropic互換エンドポイントを提供するなら直結を既定の選択肢とするが、スタック間の定量比較には同一モデル実験が必要。**再現性はn=3で確定（EXP-016）**：Codex×gpt-5.6-sol・qwen直結・kimi直結の3条件それぞれ3/3完走（合算9/9、8/9がiter 1）——ただし完走以外の指標（時間・コミット・output）は同条件でも最大3倍変動し（kimi 21分→7分台）、S軸の「軌跡変動は定常ノイズ」という結論がM軸でも成立。完走率だけが安定した指標である。**韓国語条件も完走率を損なわない（EXP-017/019）**：韓国語正本（全成果物の韓国語指示）でqwen・kimi・Opus 4.8・Opus 5・Codex×gpt-5.6-solの5条件それぞれ3/3、**累計15/15 iter 1完走**、コミット・README全て韓国語・言語逸脱0——英語圏モデル（gpt-5.6-sol）まで遵守し、韓国語の履行はモデル系統ではなく指示遵守の問題と判明。時間・コミット・outputもEXP-019の3条件全てEN分布と重なる——qwenのko +48%時間（EXP-017）は例外事例で、方向性の記録としてのみ残す（L-01原則）。モデルプロファイル（4.8単一コミット vs 5細かく刻む）は言語反転後も維持。**ただし直結の再現性はプロバイダに従属する（EXP-018）**：EXP-015完走の翌日、UpstageがAnthropic互換エンドポイントとsolar-open2 hosted APIを予告なく終了（申請制ベータ終了）し再現の窓が閉じた——サードパーティのベンチマークは実験時点の明記が再現性主張の限界を規定し、ハーネス再利用前のプロバイダスモークが必須。2週間後にエンドポイントがsolar-pro4として復旧し直結3/3完走を確認（EXP-020）——完走能力は直結上位と同等だが有効時間119–258分（qwenの8–17倍）の最長プロファイルで、原因はキャッシュ非対応（全呼び出しcache 0、毎回約8万トークンを再プリフィル）・往復37秒・thinking 88%の積。**注意：solar-open2・solar-pro4のエンドポイントは商用提供（GA）APIではなくプレビュー（申請制ベータ）状態**で、基盤制約（prompt caching非対応、長い往復遅延、予告なしのエンドポイント終了）が常時かかっており、Solar系の時間・usageプロファイルはモデル能力とプレビュー基盤特性が交絡した値——商用基盤基準の性能として読まないこと。ゲート誤棄却の3例目（グローバルnpm汚染がhurlバイナリを隠した）により**採点バイナリの絶対パス固定**の教訓を追加。
 8. **出力量拡大プロファイルは世代ではなくモデル固有の特性である（EXP-023）。** Claude 5世代の上位モデルFable 5.1は同一ハーネス・EN正本で3/3 iter 1完走しつつ、output 28.7–35.8K・6.2–7.8分でOpus 4.8の分布（29.6–37.1K・7.8–8.7分）と重なり、Opus 5（41.1–48.4K・8.9–17.6分）とは重ならなかった。EXP-010が「世代特性」と確定したOpus 5のoutput・コミット拡大は同世代の上位モデルで再現しないため、Opus 5固有のプロファイルとして再解釈する（n=3・時点差7週、方向性の記録）。
+
+9. **DeepSeek V4.1-Flashは直結標準を無調整で通過し、全条件最速帯・最低コストのプロファイルを示した（EXP-025）。** env 3要素の差し替えだけでFlash・V4-ProともEN・KO各3/3、計12/12 iter 1完走（応答modelフィールド全件維持）。Flash EN 4.6–6.0分・runあたり換算約$0.1（キャッシュヒット入力$0.006/M）でCodex×sol（5.3–10.0分）より下の帯、Proは12–16分・約$0.5でoutputが1.5倍。時点・ハーネスの交絡により速度・コスト優位は確定せず、直結再利用性の事例（4社目）とプロファイル記録として残す。
 
 ## 実験ライフサイクル
 

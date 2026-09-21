@@ -1,0 +1,13 @@
+run,api,dups,input,cache_create,cache_read,output,thinking_blocks,models,tools,sec,commits,est_usd
+flash-en-1,48,102,50634,0,2828672,41061,48,{deepseek-flash: 150},{Bash: 26, Read: 16, Write: 23, Edit: 17},274,5,0.081
+pro-en-1,50,73,65365,0,4144896,62497,50,{deepseek-v4-pro: 123},{Bash: 38, Read: 2, Write: 25, Edit: 1},800,4,0.516
+flash-ko-1,81,137,63149,0,5717376,53678,81,{deepseek-flash: 218},{Bash: 56, Read: 13, Write: 22, Edit: 17},505,6,0.118
+pro-ko-1,51,75,60080,0,3760000,64804,51,{deepseek-v4-pro: 126},{Bash: 37, Write: 25, Edit: 8},802,4,0.501
+flash-en-2,65,106,54181,0,4001536,43276,65,{deepseek-flash: 171},{Bash: 41, Read: 13, Write: 21, Edit: 9},359,4,0.092
+pro-en-2,24,45,52490,0,2034560,65548,24,{deepseek-v4-pro: 69},{Bash: 18, Read: 2, Write: 20, Edit: 1},725,3,0.418
+flash-ko-2,73,140,57978,0,5488640,58871,73,{deepseek-flash: 213},{Bash: 54, Read: 14, Write: 25, Edit: 15},379,7,0.121
+pro-ko-2,52,69,52470,0,3855744,59621,52,{deepseek-v4-pro: 121},{Bash: 41, Write: 22, Edit: 4, Read: 1},801,4,0.475
+flash-en-3,66,96,52359,0,4334976,47565,66,{deepseek-flash: 162},{Bash: 42, Write: 26, Edit: 11},289,3,0.099
+pro-en-3,62,67,56950,0,5068032,69590,62,{deepseek-v4-pro: 129},{Bash: 37, Read: 2, Write: 20, Edit: 2},950,5,0.574
+flash-ko-3,61,79,49644,0,3290752,38890,61,{deepseek-flash: 140},{Bash: 35, Read: 2, Write: 24, Edit: 10},254,4,0.081
+pro-ko-3,33,59,61564,0,2748288,62160,33,{deepseek-v4-pro: 92},{Bash: 28, Read: 2, Write: 22, Edit: 1},823,4,0.448

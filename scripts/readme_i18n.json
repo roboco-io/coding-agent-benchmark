@@ -489,6 +489,26 @@
         "verdict": "验证",
         "summary": "**12/12 run 全部在 iteration 1 完成**（四个条件各 3/3，门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，响应 model 字段全部一致）。Flash：EN 4.6–6.0 分钟，为全部条件中最快一档，按公开单价每 run 约 $0.1；Pro：12–16 分钟，约 $0.5。为观测值，不证明普遍成功率或效率优势。"
       }
+    },
+    "EXP-026": {
+      "en": {
+        "name": "Claude Code × Opus 5.5 native Ralph loop completion check (EN · KO, n=3 each)",
+        "hypothesis": "In the native Claude Code harness, Opus 5.5 (`claude-opus-5-5`, thinking default) can finish the RealWorld backend (Hurl 13/13 · 154/154) within a 10-iteration · 4-hour cap in a Ralph loop without intervention, with both the EN and KO canon prompts (n=3 each, completion-rate verdict, cost excluded).",
+        "verdict": "Verified",
+        "summary": "**All 6/6 runs completed at iteration 1** (EN 3/3 · KO 3/3, gate pass plus two independent re-checks each at 13/13 · 154/154, 0 interventions, response model field `claude-opus-5-5` on every call). Sessions 4.0–8.4 min (5 of 6 runs at 4.0–4.2 min) and output 18.6–28.2K — the shortest and lowest band among native Claude conditions, below Opus 5 (8.9–17.6 min · 39–49K) and Fable 5.1 (6.2–7.8 min · 28.7–35.8K). Observed values, not a confirmed advantage."
+      },
+      "ja": {
+        "name": "Claude Code × Opus 5.5 ネイティブRalphループ完走検証（EN・KO各n=3）",
+        "hypothesis": "Claude Codeネイティブハーネスで、Opus 5.5（`claude-opus-5-5`、thinkingデフォルト）はEN正本・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3、完走率判定・課金除外）。",
+        "verdict": "検証",
+        "summary": "**6/6 run全てiteration 1で完走**（EN 3/3・KO 3/3、ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールド全件`claude-opus-5-5`）。セッション4.0–8.4分（6 run中5 runが4.0–4.2分）・output 18.6–28.2Kでネイティブ Claude条件中最短・最低帯、Opus 5（8.9–17.6分・39–49K）とFable 5.1（6.2–7.8分・28.7–35.8K）の分布より下。観測値であり優位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × Opus 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3）",
+        "hypothesis": "在 Claude Code 原生框架中，Opus 5.5（`claude-opus-5-5`，thinking 默认）使用 EN 与 KO 标准版提示的 Ralph 循环，能在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，完成率判定·排除计费）。",
+        "verdict": "验证",
+        "summary": "**6/6 run 全部在 iteration 1 完成**（EN 3/3·KO 3/3，门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，响应 model 字段全部为 `claude-opus-5-5`）。会话 4.0–8.4 分钟（6 个 run 中 5 个为 4.0–4.2 分钟），output 18.6–28.2K，为原生 Claude 条件中最短·最低一档，低于 Opus 5（8.9–17.6 分钟·39–49K）和 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）。为观测值，并非确定的优势。"
+      }
     }
   }
 }

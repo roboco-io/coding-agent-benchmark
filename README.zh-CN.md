@@ -26,7 +26,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新实验：EXP-025（2026-09-21）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新实验：EXP-026（2026-09-23）
 
 <!-- RESULTS:BEGIN -->
 <!-- 此区块由 scripts/update_readme_results.py 根据 experiments/*/report.md 自动生成（翻译来自 scripts/readme_i18n.json）。请勿手动编辑。 -->
@@ -56,6 +56,7 @@
 | [EXP-021](experiments/021-gpt6-astra-codex/report.md) Codex CLI × gpt-6-astra Ralph 循环完成验证（n=3） | M-15: 在 Codex CLI（`codex exec`）框架中，gpt-6-astra（effort medium）能在隔离·无干扰的 Ralph 循环中于上限 30 iteration 内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（n=3，完成率判定·排除计费）。 | **验证** |
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 原生 Ralph 循环完成验证（n=3） | M-17: 在 Claude Code 原生框架中，Fable 5.1（`claude-fable-5-1`，thinking 默认）能以 EN 标准 Ralph 循环在上限 10 iteration 内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（n=3，完成率判定·排除计费）。 | **验证** |
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash·V4-Pro 直连 Ralph 循环完成验证（EN·KO 各 n=3） | M-18: 通过 DeepSeek 的 Anthropic 兼容端点将 Claude Code 直连到 `deepseek-flash`（DeepSeek-V4.1-Flash）和 `deepseek-v4-pro`（DeepSeek-V4-Pro-0813）（thinking 默认）后，能在隔离·无干扰的 Ralph 循环中于上限 30 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 标准版各 n=3，完成率判定·排除计费）。 | **验证** |
+| [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3） | M-19: 在 Claude Code 原生框架中，Opus 5.5（`claude-opus-5-5`，thinking 默认）使用 EN 与 KO 标准版提示的 Ralph 循环，能在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，完成率判定·排除计费）。 | **验证** |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (否定（反证）)  
 plan-then-execute 按 billable 计使用了**约 8.7 倍**的 token → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -126,6 +127,9 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-025 — Claude Code × DeepSeek V4.1-Flash·V4-Pro 直连 Ralph 循环完成验证（EN·KO 各 n=3）** (验证)  
 **12/12 run 全部在 iteration 1 完成**（四个条件各 3/3，门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，响应 model 字段全部一致）。Flash：EN 4.6–6.0 分钟，为全部条件中最快一档，按公开单价每 run 约 $0.1；Pro：12–16 分钟，约 $0.5。为观测值，不证明普遍成功率或效率优势。 → [报告](experiments/025-deepseek-direct/report.md)
 
+**EXP-026 — Claude Code × Opus 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3）** (验证)  
+**6/6 run 全部在 iteration 1 完成**（EN 3/3·KO 3/3，门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，响应 model 字段全部为 `claude-opus-5-5`）。会话 4.0–8.4 分钟（6 个 run 中 5 个为 4.0–4.2 分钟），output 18.6–28.2K，为原生 Claude 条件中最短·最低一档，低于 Opus 5（8.9–17.6 分钟·39–49K）和 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）。为观测值，并非确定的优势。 → [报告](experiments/026-opus55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（随实验积累更新）
@@ -142,6 +146,7 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 8. **输出量扩大特征是模型固有特性而非世代特征（EXP-023）。** Claude 5 世代的高阶模型 Fable 5.1 在同一框架·EN 标准版下 3/3 在 iter 1 完成，output 28.7–35.8K·6.2–7.8 分钟，与 Opus 4.8 分布（29.6–37.1K·7.8–8.7 分钟）重叠，而与 Opus 5（41.1–48.4K·8.9–17.6 分钟）不重叠。EXP-010 确定为“世代特征”的 Opus 5 output·提交扩大在同世代的高阶模型中未复现，因此重新解释为 Opus 5 独有的特征（n=3·时点差 7 周，方向性记录）。
 
 9. **DeepSeek V4.1-Flash 无需调整即通过直连标准，并显示出全部条件中最快一档·最低成本的特征（EXP-025）。** 仅替换 3 个 env 值，Flash·V4-Pro 在 EN·KO 各 3/3，共 12/12 在 iter 1 完成（响应 model 字段全部保持）。Flash EN 4.6–6.0 分钟·每 run 折算约 $0.1（缓存命中输入 $0.006/M），低于 Codex×sol（5.3–10.0 分钟）一档；Pro 12–16 分钟·约 $0.5，output 为 1.5 倍。因时点·框架混淆，不确定速度·成本优势；作为直连可复用案例（第 4 家）和特征记录保留。
+10. **Opus 5.5 仅替换模型 ID 即通过原生框架，并显示出原生 Claude 条件中最短·最低输出的特征（EXP-026）。** EN·KO 各 3/3，共 6/6 在 iter 1 完成（各 2 次复验一致）。6 个 run 中 5 个为 4.0–4.2 分钟·output 约 20K，低于 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）和 Opus 5（8.9–17.6 分钟·39–49K）的分布，KO 下也保持同一档。这与第 8 条的解释（输出量扩大是 Opus 5 特有特征）一致。但这是与时点·CLI 版本不同的基准并置，且为 n=3 观测，在同期交叉重测之前不确定速度优势。
 
 ## 实验生命周期
 

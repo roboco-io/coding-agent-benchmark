@@ -26,7 +26,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) — 최신 실험 반영: EXP-025 (2026-09-21)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) — 최신 실험 반영: EXP-026 (2026-09-23)
 
 <!-- RESULTS:BEGIN -->
 <!-- 이 블록은 scripts/update_readme_results.py가 experiments/*/report.md에서 자동 생성한다. 직접 수정 금지. -->
@@ -56,6 +56,7 @@
 | [EXP-021](experiments/021-gpt6-astra-codex/report.md) Codex CLI × gpt-6-astra 랄프 루프 완주 검증 (n=3) | M-15: Codex CLI(`codex exec`) 하네스에서 gpt-6-astra(effort medium)는 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다 (n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 네이티브 랄프 루프 완주 검증 (n=3) | M-17: Claude Code 네이티브 하네스에서 Fable 5.1(`claude-fable-5-1`, thinking 기본값)은 EN 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration 안에 무개입 완주할 수 있다 (n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash·V4-Pro 직결 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-18: Claude Code를 DeepSeek Anthropic 호환 엔드포인트로 `deepseek-flash`(DeepSeek-V4.1-Flash)·`deepseek-v4-pro`(DeepSeek-V4-Pro-0813)에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 정본 각 n=3, 완주율 판정·과금 배제). | **검증** |
+| [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-19: Claude Code 네이티브 하네스에서 Opus 5.5(`claude-opus-5-5`, thinking 기본값)는 EN 정본·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
 plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -126,6 +127,9 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 **EXP-025 — Claude Code × DeepSeek V4.1-Flash·V4-Pro 직결 랄프 루프 완주 검증 (EN·KO 각 n=3)** (검증)  
 **12/12 run 전부 iteration 1 완주** (4조건 각 3/3, 게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). Flash는 EN 4.6–6.0분으로 전 조건 최속·run당 환산 약 $0.1, Pro는 12–16분·약 $0.5. 관측 범위의 사실이며 일반적 성공률·효율 우위의 확정이 아니다. → [보고서](experiments/025-deepseek-direct/report.md)
 
+**EXP-026 — Claude Code × Opus 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3)** (검증)  
+**6/6 run 전부 iteration 1 완주** (EN 3/3·KO 3/3, 게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-opus-5-5`). 세션 4.0–8.4분(6 run 중 5개가 4.0–4.2분)·output 18.6–28.2K로 네이티브 Claude 조건 중 최단·최저 대역이며, Opus 5(8.9–17.6분·39–49K)와 Fable 5.1(6.2–7.8분·28.7–35.8K) 분포 아래에 놓인다. 관측값이며 우위 확정이 아니다. → [보고서](experiments/026-opus55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (실험이 쌓일 때마다 갱신)
@@ -143,6 +147,7 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 8. **산출량 확대 프로파일은 세대가 아니라 모델 고유 특성이다 (EXP-023).** Claude 5 세대 상위 모델 Fable 5.1은 동일 하네스·EN 정본에서 3/3 iter 1 완주하면서 output 28.7–35.8K·6.2–7.8분으로 Opus 4.8 분포(29.6–37.1K·7.8–8.7분)와 겹치고 Opus 5(41.1–48.4K·8.9–17.6분)와는 겹치지 않았다. EXP-010이 "세대 특성"으로 확정한 Opus 5의 output·커밋 확대는 같은 세대의 상위 모델에서 재현되지 않으므로 Opus 5 고유 프로파일로 재해석한다 (n=3·시점 차 7주, 방향성 기록).
 
 9. **DeepSeek V4.1-Flash는 직결 표준을 무조정으로 통과하며 전 조건 최속 대역·최저 비용 프로파일을 보였다 (EXP-025).** env 3요소 치환만으로 Flash·V4-Pro 모두 EN·KO 각 3/3, 총 12/12 iter 1 완주(응답 model 필드 전수 유지). Flash EN 4.6–6.0분·run당 환산 약 $0.1(캐시 히트 입력 $0.006/M)로 Codex×sol(5.3–10.0분)보다 아래 대역이고, Pro는 12–16분·약 $0.5로 output이 1.5배. 시점·하네스 교락으로 속도·비용 우위는 확정하지 않으며, 직결 재사용성 사례(4사째)와 프로파일 기록으로 남긴다.
+10. **Opus 5.5는 네이티브 하네스를 모델 ID 교체만으로 통과하며 네이티브 Claude 조건 중 최단·최저 산출 프로파일을 보였다 (EXP-026).** EN·KO 각 3/3, 총 6/6 iter 1 완주(재검증 각 2회 일치). 6 run 중 5개가 4.0–4.2분·output 약 20K로 Fable 5.1(6.2–7.8분·28.7–35.8K)과 Opus 5(8.9–17.6분·39–49K) 분포 아래에 있고, KO에서도 같은 대역을 유지했다. 8항의 해석(산출량 확대는 Opus 5 고유 특성)과 부합한다. 단 시점·CLI 버전이 다른 기준선과의 병치이며 n=3 관측이므로 속도 우위는 동시기 교차 재측정 전까지 확정하지 않는다.
 
 ## 실험 라이프사이클
 

@@ -1,0 +1,7 @@
+run,iters,sec,api,dups,input,cache_create,cache_read,output,thinking_blocks,models,commits,tools
+en-1,1,501,41,46,82,79065,2606338,28166,31,claude-opus-5-5,5,Bash 40
+ko-1,1,240,25,30,50,65190,1342373,20873,19,claude-opus-5-5,4,Bash 24
+en-2,1,239,27,26,54,68865,1524353,19871,18,claude-opus-5-5,6,Bash 26
+ko-2,1,253,26,23,52,65824,1376142,21089,17,claude-opus-5-5,1,Bash 25
+en-3,1,252,23,23,46,68436,1289590,18607,16,claude-opus-5-5,4,Bash 21 · Write 1
+ko-3,1,237,22,23,44,66891,1174998,20066,16,claude-opus-5-5,4,Bash 21

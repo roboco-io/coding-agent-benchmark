@@ -26,7 +26,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新実験反映: EXP-025（2026-09-21）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新実験反映: EXP-026（2026-09-23）
 
 <!-- RESULTS:BEGIN -->
 <!-- このブロックは scripts/update_readme_results.py が experiments/*/report.md から自動生成する（翻訳は scripts/readme_i18n.json）。直接編集禁止。 -->
@@ -56,6 +56,7 @@
 | [EXP-021](experiments/021-gpt6-astra-codex/report.md) Codex CLI × gpt-6-astra Ralphループ完走検証（n=3） | M-15: Codex CLI（`codex exec`）ハーネスでgpt-6-astra（effort medium）は隔離・無攪乱のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration以内に無介入で完走できる（n=3、完走率判定・課金除外）。 | **検証** |
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 ネイティブRalphループ完走検証（n=3） | M-17: Claude CodeネイティブハーネスでFable 5.1（`claude-fable-5-1`、thinkingデフォルト）はEN正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration以内に無介入で完走できる（n=3、完走率判定・課金除外）。 | **検証** |
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash・V4-Pro 直結Ralphループ完走検証（EN・KO各n=3） | M-18: Claude CodeをDeepSeekのAnthropic互換エンドポイントで`deepseek-flash`（DeepSeek-V4.1-Flash）・`deepseek-v4-pro`（DeepSeek-V4-Pro-0813）に直結すると（thinkingデフォルト）、隔離・無攪乱のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に無介入で完走できる（EN・KO正本各n=3、完走率判定・課金除外）。 | **検証** |
+| [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 ネイティブRalphループ完走検証（EN・KO各n=3） | M-19: Claude Codeネイティブハーネスで、Opus 5.5（`claude-opus-5-5`、thinkingデフォルト）はEN正本・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3、完走率判定・課金除外）。 | **検証** |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (棄却（反証）)  
 plan-then-executeがbillable基準で**約8.7倍多い**トークンを使用 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -126,6 +127,9 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-025 — Claude Code × DeepSeek V4.1-Flash・V4-Pro 直結Ralphループ完走検証（EN・KO各n=3）** (検証)  
 **12/12 run全てiteration 1で完走**（4条件各3/3、ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールド全件一致）。FlashはEN 4.6–6.0分で全条件最速帯・公開単価でrunあたり約$0.1、Proは12–16分・約$0.5。観測値であり一般的成功率・効率優位の証明ではない。 → [レポート](experiments/025-deepseek-direct/report.md)
 
+**EXP-026 — Claude Code × Opus 5.5 ネイティブRalphループ完走検証（EN・KO各n=3）** (検証)  
+**6/6 run全てiteration 1で完走**（EN 3/3・KO 3/3、ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールド全件`claude-opus-5-5`）。セッション4.0–8.4分（6 run中5 runが4.0–4.2分）・output 18.6–28.2Kでネイティブ Claude条件中最短・最低帯、Opus 5（8.9–17.6分・39–49K）とFable 5.1（6.2–7.8分・28.7–35.8K）の分布より下。観測値であり優位の確定ではない。 → [レポート](experiments/026-opus55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 総合インサイト（実験が積み重なるたびに更新）
@@ -142,6 +146,7 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 8. **出力量拡大プロファイルは世代ではなくモデル固有の特性である（EXP-023）。** Claude 5世代の上位モデルFable 5.1は同一ハーネス・EN正本で3/3 iter 1完走しつつ、output 28.7–35.8K・6.2–7.8分でOpus 4.8の分布（29.6–37.1K・7.8–8.7分）と重なり、Opus 5（41.1–48.4K・8.9–17.6分）とは重ならなかった。EXP-010が「世代特性」と確定したOpus 5のoutput・コミット拡大は同世代の上位モデルで再現しないため、Opus 5固有のプロファイルとして再解釈する（n=3・時点差7週、方向性の記録）。
 
 9. **DeepSeek V4.1-Flashは直結標準を無調整で通過し、全条件最速帯・最低コストのプロファイルを示した（EXP-025）。** env 3要素の差し替えだけでFlash・V4-ProともEN・KO各3/3、計12/12 iter 1完走（応答modelフィールド全件維持）。Flash EN 4.6–6.0分・runあたり換算約$0.1（キャッシュヒット入力$0.006/M）でCodex×sol（5.3–10.0分）より下の帯、Proは12–16分・約$0.5でoutputが1.5倍。時点・ハーネスの交絡により速度・コスト優位は確定せず、直結再利用性の事例（4社目）とプロファイル記録として残す。
+10. **Opus 5.5はモデルIDの差し替えだけでネイティブハーネスを通過し、ネイティブClaude条件中で最短・最低出力のプロファイルを示した（EXP-026）。** EN・KO各3/3、計6/6 iter 1完走（再検証各2回一致）。6 run中5 runが4.0–4.2分・output約20KでFable 5.1（6.2–7.8分・28.7–35.8K）とOpus 5（8.9–17.6分・39–49K）の分布より下にあり、KOでも同じ帯を維持した。第8項の解釈（出力量拡大はOpus 5固有の特性）と整合する。ただし時点・CLIバージョンが異なる基準線との並置かつn=3の観測であり、速度優位は同時期の交差再測定まで確定しない。
 
 ## 実験ライフサイクル
 

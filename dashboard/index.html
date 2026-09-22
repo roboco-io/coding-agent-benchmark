@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Ralph loop completion benchmark across coding-agent model and harness combinations (RealWorld backend, official Hurl suite).">
+<title>Ralph Loop Model Benchmark</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#EDF0F4; --surface:#FBFCFE; --sunk:#E4E8EE;
+  --ink:#131A24; --ink-2:#3C4757; --muted:#5B6879; --faint:#8B97A6;
+  --line:#DCE2EA; --hair:#E9EDF2; --track:#DFE4EB;
+  --native:#3E63DD; --direct:#0E9384; --codex:#C4551A;
+  --flag:#8A6A1E; --flag-bg:#F4EEDD;
+  --focus:#3E63DD;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0E1116; --surface:#14181F; --sunk:#191E26;
+  --ink:#E3E9F1; --ink-2:#B8C2CF; --muted:#8C97A7; --faint:#6B7686;
+  --line:#252C36; --hair:#1E242C; --track:#252C36;
+  --native:#6E8BF5; --direct:#1FA189; --codex:#D0722F;
+  --flag:#C9A85C; --flag-bg:#221E14;
+  --focus:#6E8BF5;
+}}
+:root[data-theme="dark"]{
+  --ground:#0E1116; --surface:#14181F; --sunk:#191E26;
+  --ink:#E3E9F1; --ink-2:#B8C2CF; --muted:#8C97A7; --faint:#6B7686;
+  --line:#252C36; --hair:#1E242C; --track:#252C36;
+  --native:#6E8BF5; --direct:#1FA189; --codex:#D0722F;
+  --flag:#C9A85C; --flag-bg:#221E14;
+  --focus:#6E8BF5;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:400; line-height:1.6; letter-spacing:-.005em;
+  margin:0; padding-block:clamp(28px,5vw,56px); padding-left:20px; padding-right:20px;
+}
+html[lang="ja"] body{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",-apple-system,BlinkMacSystemFont,sans-serif; letter-spacing:0;}
+html[lang="zh-CN"] body{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif; letter-spacing:0;}
+html[lang="en"] body{font-family:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
+.wrap{max-width:1120px; margin:0 auto; display:flex; flex-direction:column; gap:clamp(28px,4vw,44px);}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin:0;}
+a{color:var(--native); text-underline-offset:3px; text-decoration-thickness:1px;}
+:focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:2px;}
+
+/* ── header ───────────────────────────── */
+header{display:flex; flex-direction:column; gap:14px;}
+.topbar{display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; justify-content:space-between;}
+.langs{display:inline-flex; border:1px solid var(--line); border-radius:2px; overflow:hidden; background:var(--sunk);}
+.langs button{font:inherit; font-size:.74rem; font-weight:500; padding:5px 11px; border:none; background:transparent; color:var(--muted); cursor:pointer; white-space:nowrap;}
+.langs button[aria-pressed="true"]{background:var(--ink); color:var(--surface);}
+h1{font-size:clamp(1.6rem,4.4vw,2.3rem); font-weight:700; letter-spacing:-.03em; margin:0; text-wrap:balance; line-height:1.2;}
+html[lang="ja"] h1, html[lang="zh-CN"] h1{letter-spacing:-.01em;}
+.deck{color:var(--ink-2); margin:0; font-size:.95rem; max-width:64ch;}
+.deck b{font-weight:600; color:var(--ink);}
+.meta{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.78rem; color:var(--muted);}
+.meta span{display:inline-flex; gap:6px; align-items:baseline;}
+.flagnote{display:flex; gap:10px; align-items:flex-start; font-size:.82rem; color:var(--ink-2);
+  background:var(--flag-bg); border:1px solid color-mix(in srgb,var(--flag) 26%,transparent);
+  padding:11px 14px; border-radius:2px; max-width:78ch;}
+.flagnote::before{content:"⚑"; color:var(--flag); font-size:.9rem; line-height:1.5;}
+
+/* ── readout strip ────────────────────── */
+.readout{display:flex; flex-wrap:wrap; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--surface);}
+.readout div{flex:1 1 140px; padding:14px 18px; border-right:1px solid var(--hair);}
+.readout div:last-child{border-right:none;}
+.readout b{display:block; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-size:1.45rem; font-weight:500; letter-spacing:-.02em; line-height:1.15;}
+.readout span{font-size:.72rem; color:var(--muted); letter-spacing:.02em;}
+
+/* ── panel ────────────────────────────── */
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:clamp(18px,3vw,26px);}
+.panel-head{display:flex; flex-wrap:wrap; gap:12px 20px; align-items:flex-end; justify-content:space-between; margin-bottom:6px;}
+h2{font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0;}
+.sub{color:var(--muted); font-size:.82rem; margin:6px 0 0; max-width:76ch;}
+
+/* ── controls ─────────────────────────── */
+.controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:18px 0 12px;}
+.seg{display:inline-flex; border:1px solid var(--line); border-radius:2px; overflow:hidden; background:var(--sunk);}
+.seg button{font:inherit; font-size:.78rem; font-weight:500; padding:6px 15px; border:none; background:transparent; color:var(--muted); cursor:pointer;}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--surface);}
+.hint{font-size:.74rem; color:var(--faint);}
+.legend{display:flex; flex-wrap:wrap; gap:8px 16px; font-size:.74rem; color:var(--muted); align-items:center;}
+.legend i{display:inline-block; width:10px; height:10px; border-radius:1px; margin-right:6px; vertical-align:-1px;}
+.legend i.out{background:transparent; border:1.5px solid var(--muted);}
+
+/* ── matrix ───────────────────────────── */
+.scroller{overflow-x:auto; margin-top:4px;}
+table.mx{border-collapse:collapse; width:100%; min-width:900px;}
+table.mx th{text-align:left; vertical-align:bottom; padding:0 12px 8px 0; border-bottom:1px solid var(--line);}
+table.mx th button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted); background:none; border:none; padding:0; cursor:pointer; display:inline-flex; gap:5px; align-items:center;}
+html[lang="ja"] table.mx th button, html[lang="zh-CN"] table.mx th button, html[lang="ko"] table.mx th button{font-family:inherit; letter-spacing:.04em; font-size:.72rem;}
+table.mx th button:hover{color:var(--ink);}
+table.mx th button .dir{font-size:.7rem; opacity:0; }
+table.mx th[aria-sort] button{color:var(--ink); font-weight:600;}
+table.mx th[aria-sort] button .dir{opacity:1;}
+.scale{margin-top:7px; height:11px; position:relative; overflow:hidden; font-family:"IBM Plex Mono",monospace; font-size:.6rem; color:var(--faint); letter-spacing:0; font-weight:400; text-transform:none;}
+.scale span{position:absolute; top:0; transform:translateX(-50%); white-space:nowrap;}
+.scale span:first-child{transform:none;}
+.scale span:last-child{transform:translateX(-100%);}
+.scale span:only-child{transform:none;}
+table.mx td{padding:11px 12px 11px 0; border-bottom:1px solid var(--hair); vertical-align:middle;}
+table.mx tbody tr:hover{background:var(--sunk);}
+table.mx tbody tr.dim td{opacity:.42;}
+
+.mdl{display:flex; flex-direction:column; gap:3px; min-width:172px;}
+.mdl .nm{font-weight:600; font-size:.92rem; letter-spacing:-.01em; display:flex; align-items:center; gap:7px;}
+.swatch{width:9px; height:9px; border-radius:1px; flex:none;}
+.mdl .st{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--muted); letter-spacing:.02em; padding-left:16px;}
+.pv{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.06em; color:var(--flag);
+  border:1px solid color-mix(in srgb,var(--flag) 40%,transparent); border-radius:2px; padding:0 4px; white-space:nowrap;}
+.done{font-family:"IBM Plex Mono",monospace; font-size:.8rem; white-space:nowrap;}
+.done small{display:block; font-size:.64rem; color:var(--muted); letter-spacing:.02em; font-family:"IBM Plex Mono",monospace;}
+
+.cell{display:flex; flex-direction:column; gap:5px; min-width:150px;}
+.bar{position:relative; height:13px; background:var(--track); border-radius:1px;}
+.bar .rng{position:absolute; top:0; height:13px; border-radius:1px; min-width:3px;}
+.bar .rng.out{background:transparent!important; border:1.5px solid currentColor;}
+.bar .med{position:absolute; top:-2px; width:2px; height:17px; background:var(--ink); border-radius:1px;}
+.bar .pt{position:absolute; top:1px; width:11px; height:11px; border-radius:50%; transform:translateX(-5.5px);}
+.figs{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-size:.76rem; white-space:nowrap; letter-spacing:-.01em;}
+.figs em{font-style:normal; font-weight:600;}
+.figs small{color:var(--muted); font-size:.92em;}
+.na{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--faint);}
+
+.dots{display:flex; gap:3px; align-items:center; min-width:96px;}
+.dots i{width:7px; height:7px; border-radius:50%; background:var(--track); flex:none;}
+.dots i.on{background:currentColor;}
+
+.callout{margin-top:20px; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start;
+  border-top:2px solid var(--ink); padding-top:14px;}
+.callout .eyebrow{white-space:nowrap; padding-top:3px;}
+.callout p{margin:0; font-size:.87rem; color:var(--ink-2); max-width:80ch;}
+.callout p b{color:var(--ink); font-weight:600;}
+.callout p + p{margin-top:8px;}
+
+/* ── cards ────────────────────────────── */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:14px;}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:18px 20px 20px; display:flex; flex-direction:column; gap:9px;}
+.card h3{margin:0; font-size:.98rem; font-weight:600; letter-spacing:-.015em; display:flex; align-items:center; gap:7px; flex-wrap:wrap;}
+.card .exp{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--faint); letter-spacing:.04em; margin:0;}
+.card ul{margin:0; padding-left:15px; display:flex; flex-direction:column; gap:6px;}
+.card li{font-size:.83rem; color:var(--ink-2); line-height:1.55;}
+.card li b{color:var(--ink); font-weight:600;}
+.card .cav{margin:2px 0 0; font-size:.73rem; color:var(--muted); padding-top:9px; border-top:1px dotted var(--line);}
+
+/* ── drawers ──────────────────────────── */
+details{background:var(--surface); border:1px solid var(--line); border-radius:3px;}
+details + details{margin-top:10px;}
+summary{cursor:pointer; padding:15px 20px; font-weight:600; font-size:.92rem; letter-spacing:-.015em; display:flex; gap:10px; align-items:baseline; list-style:none;}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+"; font-family:"IBM Plex Mono",monospace; color:var(--faint); font-weight:400;}
+details[open] summary::before{content:"–";}
+summary small{font-weight:400; color:var(--muted); font-size:.76rem;}
+.body{padding:0 20px 20px; display:flex; flex-direction:column; gap:12px;}
+.body p, .body li{font-size:.84rem; color:var(--ink-2); max-width:82ch; margin:0; line-height:1.62;}
+.body h4{margin:8px 0 0; font-size:.85rem; font-weight:600; color:var(--ink);}
+.body ul{margin:0; padding-left:17px; display:flex; flex-direction:column; gap:7px;}
+table.raw{border-collapse:collapse; width:100%; min-width:840px; font-size:.78rem;}
+table.raw th{font-family:"IBM Plex Mono",monospace; font-size:.63rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:left; font-weight:500; padding:7px 10px 7px 0; border-bottom:1px solid var(--line);}
+html[lang="ja"] table.raw th, html[lang="zh-CN"] table.raw th, html[lang="ko"] table.raw th{font-family:inherit; letter-spacing:.04em; font-size:.68rem;}
+table.raw td{padding:7px 10px 7px 0; border-bottom:1px solid var(--hair); vertical-align:top;}
+table.raw td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap;}
+table.raw td.g{font-weight:600;}
+
+footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); padding-top:16px;}
+
+@media (max-width:640px){
+  .readout div{flex-basis:50%;}
+  .callout{grid-template-columns:1fr; gap:6px;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+</head><body>
+<div class="wrap">
+
+<header>
+  <div class="topbar">
+    <p class="eyebrow" data-i18n="eyebrow"></p>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-lang="en" lang="en">English</button>
+      <button type="button" data-lang="ko" lang="ko">한국어</button>
+      <button type="button" data-lang="ja" lang="ja">日本語</button>
+      <button type="button" data-lang="zh" lang="zh-CN">中文</button>
+    </div>
+  </div>
+  <h1 data-i18n="h1"></h1>
+  <p class="deck" data-i18n="deck"></p>
+  <div class="meta">
+    <span class="mono" data-i18n="metaModels"></span><span class="mono" data-i18n="metaConds"></span><span class="mono" data-i18n="metaRuns"></span>
+    <span data-i18n="metaNote"></span>
+    <span><a href="https://github.com/roboco-io/coding-agent-benchmark" data-i18n="metaLink"></a></span>
+  </div>
+  <p class="flagnote"><span data-i18n="flag"></span></p>
+</header>
+
+<div class="readout">
+  <div><b>61 / 61</b><span data-i18n="ro1"></span></div>
+  <div><b>57</b><span data-i18n="ro2"></span></div>
+  <div><b>41×</b><span data-i18n="ro3"></span></div>
+  <div><b>0</b><span data-i18n="ro4"></span></div>
+  <div><b>0</b><span data-i18n="ro5"></span></div>
+</div>
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2 data-i18n="mxTitle"></h2>
+      <p class="sub" data-i18n="mxSub"></p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Prompt language condition">
+      <button type="button" id="lang-en" data-plang="en" aria-pressed="true" data-i18n="segEn"></button>
+      <button type="button" id="lang-ko" data-plang="ko" aria-pressed="false" data-i18n="segKo"></button>
+    </div>
+    <span class="hint" id="langhint"></span>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--native)"></i><span data-i18n="lgNative"></span></span>
+    <span><i style="background:var(--direct)"></i><span data-i18n="lgDirect"></span></span>
+    <span><i style="background:var(--codex)"></i><span data-i18n="lgCodex"></span></span>
+    <span><i class="out"></i><span data-i18n="lgOut"></span></span>
+  </div>
+
+  <div class="scroller">
+    <table class="mx">
+      <thead>
+        <tr>
+          <th scope="col"><button type="button" data-sort="name"><span data-i18n="colModel"></span> <span class="dir">↓</span></button></th>
+          <th scope="col"><button type="button" data-sort="done"><span data-i18n="colDone"></span> <span class="dir">↓</span></button></th>
+          <th scope="col">
+            <button type="button" data-sort="time"><span data-i18n="colTime"></span> <span class="dir">↓</span></button>
+            <div class="scale" data-scale="time"></div>
+          </th>
+          <th scope="col">
+            <button type="button" data-sort="spread"><span data-i18n="colSpread"></span> <span class="dir">↓</span></button>
+            <div class="scale" data-scale="spread"></div>
+          </th>
+          <th scope="col"><button type="button" data-sort="commits"><span data-i18n="colCommits"></span> <span class="dir">↓</span></button>
+            <div class="scale" data-scale="commits"></div>
+          </th>
+          <th scope="col">
+            <button type="button" data-sort="output"><span data-i18n="colOutput"></span> <span class="dir">↓</span></button>
+            <div class="scale" data-scale="output"></div>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="mxbody"></tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p class="eyebrow" data-i18n="howEyebrow"></p>
+    <div>
+      <p data-i18n="how1"></p>
+      <p data-i18n="how2"></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow" style="margin-bottom:12px" data-i18n="cardsEyebrow"></p>
+  <div class="cards" id="cards"></div>
+</section>
+
+<section>
+  <details>
+    <summary><span data-i18n="rawTitle"></span> <small data-i18n="rawSmall"></small></summary>
+    <div class="body">
+      <p data-i18n="rawIntro"></p>
+      <div class="scroller">
+      <table class="raw">
+        <thead><tr id="rawhead"></tr></thead>
+        <tbody id="rawbody"></tbody>
+      </table>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-i18n="notesTitle"></span> <small data-i18n="notesSmall"></small></summary>
+    <div class="body" id="notesBody"></div>
+  </details>
+
+  <details>
+    <summary><span data-i18n="cavTitle"></span> <small data-i18n="cavSmall"></small></summary>
+    <div class="body"><ul id="cavList"></ul></div>
+  </details>
+</section>
+
+<footer data-i18n="footer"></footer>
+
+</div>
+
+<script>
+/* ───────────────────────── data (language-neutral) ───────────────────────── */
+const M = [
+  { name:"gpt-5.6-sol", stack:"codex", meas:"rollout",
+    en:{ exp:"EXP-011/016", t:[5.77,10.0,5.28], c:[3,4,4], o:[13.3,21.8,12.2], done:"3/3", iter:"iterMixed" },
+    ko:{ exp:"EXP-019", t:[7.53,8.72,6.90], c:[4,6,1], o:[16.2,17.3,13.7], done:"3/3", iter:"iterAll1" } },
+  { name:"gpt-6-astra", stack:"codex", meas:"rollout", koNote:"noteAstra",
+    en:{ exp:"EXP-021", t:[7.60,7.10,7.08], c:[4,3,3], o:[12.5,12.2,12.6], done:"3/3", iter:"iterAll1" },
+    ko:null },
+  { name:"DeepSeek V4.1-Flash", stack:"direct", provider:"DeepSeek", meas:"jsonl",
+    en:{ exp:"EXP-025", t:[4.57,5.98,4.82], c:[5,4,3], o:[41.1,43.3,47.6], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-025", t:[8.42,6.32,4.23], c:[6,7,4], o:[53.7,58.9,38.9], done:"3/3", iter:"iterAll1" } },
+  { name:"DeepSeek V4-Pro", stack:"direct", provider:"DeepSeek", meas:"jsonl",
+    en:{ exp:"EXP-025", t:[13.33,12.08,15.83], c:[4,3,5], o:[62.5,65.5,69.6], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-025", t:[13.37,13.35,13.72], c:[4,4,4], o:[64.8,59.6,62.2], done:"3/3", iter:"iterAll1" } },
+  { name:"kimi-k3", stack:"direct", provider:"Moonshot", meas:"jsonl",
+    en:{ exp:"EXP-014/016", t:[21.30,7.62,7.87], c:[4,2,1], o:[31.3,14.4,14.2], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-017", t:[15.88,13.67,10.60], c:[4,5,3], o:[24.0,18.8,17.2], done:"3/3", iter:"iterAll1" } },
+  { name:"Opus 5.5", stack:"native", meas:"jsonl",
+    en:{ exp:"EXP-026", t:[8.35,3.98,4.20], c:[5,6,4], o:[28.2,19.9,18.6], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-026", t:[4.00,4.22,3.95], c:[4,1,4], o:[20.9,21.1,20.1], done:"3/3", iter:"iterAll1" } },
+  { name:"Opus 4.8", stack:"native", meas:"jsonl",
+    en:{ exp:"EXP-010", t:[8.70,8.30,7.80], c:[2,1,1], o:[37.1,32.1,29.6], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-019", t:[8.48,7.12,8.30], c:[1,1,1], o:[29.2,26.5,31.7], done:"3/3", iter:"iterAll1" } },
+  { name:"Fable 5.1", stack:"native", meas:"jsonl", koNote:"noteFable",
+    en:{ exp:"EXP-023", t:[6.90,7.77,6.15], c:[4,3,2], o:[31.1,35.8,28.7], done:"3/3", iter:"iterAll1" },
+    ko:null },
+  { name:"Opus 5", stack:"native", meas:"jsonl",
+    en:{ exp:"EXP-009/010", t:[12.2,11.6,8.9,13.8,17.6,9.4], c:[6,6,7,5,8,4], o:[48.4,47.7,42.6,47.9,46.2,41.1], done:"6/6", iter:"iterAll1" },
+    ko:{ exp:"EXP-019", t:[11.15,11.07,9.92], c:[3,5,5], o:[48.7,45.5,39.1], done:"3/3", iter:"iterAll1" } },
+  { name:"qwen3.8-max", stack:"direct", provider:"DashScope", meas:"jsonl",
+    en:{ exp:"EXP-013/016", t:[15.08,15.58,14.62], c:[4,6,6], o:[34.6,40.9,37.0], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-017", t:[22.78,22.32,23.50], c:[8,4,5], o:[45.8,32.8,44.4], done:"3/3", iter:"iterAll1" } },
+  { name:"Solar Open 2", stack:"direct", provider:"Upstage", meas:"jsonl", preview:true, koNote:"notePreview",
+    en:{ exp:"EXP-015", t:[58.25], c:[2], o:[252.3], done:"1/1", iter:"iter2" },
+    ko:null },
+  { name:"Solar Pro 4", stack:"direct", provider:"Upstage", meas:"jsonl", preview:true, koNote:"notePreview",
+    en:{ exp:"EXP-020", t:[258.38,171.40,118.67], c:[4,1,1], o:[195.6,113.5,103.6], done:"3/3", iter:"iter123" },
+    ko:null }
+];
+
+/* raw table rows: [model, exp, stack, promptLang, n, done, iter, timeLo, timeHi|null|"58m15s", commits, output, noteKey] */
+const RAW = [
+  ["Opus 4.8","EXP-010","native","EN",3,"3/3","1",7.8,8.7,"1–2","29.6–37.1K","r1"],
+  ["Opus 4.8","EXP-019","native","KO",3,"3/3","1",7.1,8.5,"1","26.5–31.7K","r2"],
+  ["Opus 5","EXP-009","native","EN",3,"3/3","1",8.9,12.2,"6–7","42.6–48.4K","r3"],
+  ["Opus 5","EXP-010","native","EN",3,"3/3","1",9.4,17.6,"4–8","41.1–47.9K","r4"],
+  ["Opus 5","EXP-019","native","KO",3,"3/3","1",9.9,11.2,"3–5","39.1–48.7K","r2"],
+  ["Fable 5.1","EXP-023","native","EN",3,"3/3","1",6.2,7.8,"2–4","28.7–35.8K","r6"],
+  ["Opus 5.5","EXP-026","native","EN",3,"3/3","1",4.0,8.4,"4–6","18.6–28.2K","r20"],
+  ["Opus 5.5","EXP-026","native","KO",3,"3/3","1",4.0,4.2,"1–4","20.1–21.1K","r21"],
+  ["DeepSeek V4.1-Flash","EXP-025","direct","EN",3,"3/3","1",4.6,6.0,"3–5","41.1–47.6K","r16"],
+  ["DeepSeek V4.1-Flash","EXP-025","direct","KO",3,"3/3","1",4.2,8.4,"4–7","38.9–58.9K","r17"],
+  ["DeepSeek V4-Pro","EXP-025","direct","EN",3,"3/3","1",12.1,15.8,"3–5","62.5–69.6K","r18"],
+  ["DeepSeek V4-Pro","EXP-025","direct","KO",3,"3/3","1",13.4,13.7,"4","59.6–64.8K","r19"],
+  ["gpt-5.6-sol","EXP-011/016","codex","EN",3,"3/3","1–2",5.3,10.0,"3–4","12.2–21.8K","r7"],
+  ["gpt-5.6-sol","EXP-019","codex","KO",3,"3/3","1",6.9,8.7,"1–6","13.7–17.3K","r8"],
+  ["gpt-6-astra","EXP-021","codex","EN",3,"3/3","1",7.1,7.6,"3–4","12.2–12.6K","r9"],
+  ["qwen3.8-max","EXP-013/016","direct","EN",3,"3/3","1",14.6,15.6,"4–6","34.6–40.9K","r10"],
+  ["qwen3.8-max","EXP-017","direct","KO",3,"3/3","1",22.3,23.5,"4–8","32.8–45.8K","r11"],
+  ["kimi-k3","EXP-014/016","direct","EN",3,"3/3","1",7.6,21.3,"1–4","14.2–31.3K","r12"],
+  ["kimi-k3","EXP-017","direct","KO",3,"3/3","1",10.6,15.9,"3–5","17.2–24.0K","r13"],
+  ["Solar Open 2","EXP-015","direct","EN",1,"one","2","58m15s",null,"2","252.3K","r14"],
+  ["Solar Pro 4","EXP-020","direct","EN",3,"3/3","1–3",118.7,258.4,"1–4","103.6–195.6K","r15"]
+];
+
+/* card order + swatch stack */
+const CARDS = [
+  {key:"dsflash", stack:"direct"}, {key:"dspro", stack:"direct"}, {key:"sol", stack:"codex"}, {key:"astra", stack:"codex"}, {key:"kimi", stack:"direct"},
+  {key:"opus55", stack:"native"}, {key:"opus48", stack:"native"}, {key:"fable", stack:"native"}, {key:"opus5", stack:"native"},
+  {key:"qwen", stack:"direct"}, {key:"open2", stack:"direct", preview:true}, {key:"pro4", stack:"direct", preview:true}
+];
+
+/* ───────────────────────── translations ───────────────────────── */
+const T = {
+en: {
+  htmlLang:"en", title:"Ralph Loop Model Benchmark",
+  eyebrow:"Ralph loop benchmark · 2026-07-24 → 09-23",
+  h1:"Ralph loop completion by model",
+  deck:"The same task — a RealWorld backend graded by the official Hurl suite (13 files, 154 requests) — was handed to an isolated autonomous loop, and <b>12 models</b> were measured on whether they finish without intervention, and how. Completion is the only verdict. <b>All 61 runs completed</b>, so what separates the models is the <b>shape</b> of the four metrics below.",
+  metaModels:"12 models", metaConds:"21 conditions", metaRuns:"61 runs",
+  metaNote:"Main conditions n=3 · every completed run passed the gate plus 2 independent re-checks",
+  metaLink:"Design · reports · raw data ↗",
+  flag:"<b>Solar Open 2 and Solar Pro 4 were measured on preview APIs.</b> Their endpoints were application-only betas, not commercial GA: no prompt caching, long round-trips, and withdrawal without notice. Time and usage there confound model ability with preview infrastructure — do not read them as production performance.",
+  ro1:"runs completed", ro2:"completed at iteration 1", ro3:"fastest ↔ slowest model, median", ro4:"false completion claims", ro5:"harness interventions",
+  mxTitle:"Performance matrix",
+  mxSub:"One row per model. The bar spans the min–max of its runs; the thick vertical tick is the median. Time and output span orders of magnitude, so they use a <b>log scale</b> — see the ticks under each column header. Click a header to sort by that metric.",
+  segEn:"EN prompt", segKo:"KO prompt",
+  hintEn:"English canonical prompt — all 12 models", hintKo:"Korean canonical prompt (all deliverables in Korean) — 8 models tested",
+  lgNative:"Claude Code native", lgDirect:"Claude Code direct (ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
+  lgOut:"output measured from Codex rollout totals — not comparable with jsonl-measured (filled) bars",
+  colModel:"Model", colDone:"Completed", colTime:"Wall-clock", colSpread:"Run-to-run spread", colCommits:"Commit discipline", colOutput:"Output tokens",
+  min:" min", minTick:"min", commitsScale:"filled dots = median · scale 1–8",
+  iterAll1:"all iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
+  stNative:"Claude Code native", stDirect:"Direct", stCodex:"Codex CLI",
+  koMissing:"KO condition not tested — ", noteAstra:"new GPT-6 generation", noteFable:"new Claude 5 top-tier model", notePreview:"endpoint withdrawn / new model",
+  n1na:"n=1 · not assessable", span:"span {x} min", n1:"n=1", singleRun:"single run", sameAll:"same in every run",
+  howEyebrow:"How to read",
+  how1:"Scan a column for the ranking on that metric; scan a row for a model's character. In the <b>time column</b>, the top ten models cluster in one band of 4–23 minutes and only the Solar family sits an order of magnitude away (58 min · 119–258 min) — but that gap is confounded with preview infrastructure. A longer <b>spread bar</b> means a model whose next run is hard to predict (kimi 2.8× vs qwen 1.07×). The <b>commit column</b> is style, not ability: Opus 4.8 lands everything in one commit (median 1) while Opus 5 slices finely (median 6) on the same prompt. The fastest slot now belongs to Opus 5.5 (EN median 4.2 min, KO 4.0 min) on the Claude Code native stack, just ahead of DeepSeek V4.1-Flash (4.8 min) on the direct stack. In the <b>output column</b>, the Claude 5 top-tier model Fable 5.1 (31.1K) stands next to Opus 4.8 (32.1K), not Opus 5 (47.0K) — expanded output is an Opus 5 trait, not a generational one. Opus 5.5 goes lower still (about 20K).",
+  how2:"The KO toggle flips only the prompt canon to Korean (all deliverables instructed in Korean, EXP-017/019). <b>Completion rate was unaffected for all eight models</b>; qwen is the only one that slowed beyond the EN range — and since runs were on different days, that is not attributed to language.",
+  cardsEyebrow:"Model profiles · the character behind the numbers",
+  cards:{
+    dsflash:{ exp:"Direct · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash, released 2026-09-10", li:["<b>Fastest direct model</b> — EN median 4.8 min (4.6–6.0), below gpt-5.6-sol on Codex; second only to Opus 5.5 (4.2). 6/6 iteration-1 completions across EN and KO, no serving incidents.","<b>Cheapest by far</b> — about $0.08–0.12 per run at list price (cache-hit input $0.006/M), roughly a fifth of V4-Pro.","<b>Full editor trajectory</b> — uses Read/Write/Edit alongside Bash (the other direct models lean on Bash), and in KO still emits Korean commits and READMEs."], cav:"Metered API (not subscription). Cost is a list-price estimate from usage; DeepSeek reports cache reads but no cache-creation field." },
+    dspro:{ exp:"Direct · DeepSeek · EXP-025 (EN · KO) · V4-Pro-0813", li:["6/6 iteration-1 completions, but <b>2.5–3× slower than Flash</b> (EN 12.1–15.8 min, KO 13.4–13.7 min) with the largest jsonl-measured output outside Solar (59.6–69.6K).","<b>Tightest KO variance in the whole table</b> — three KO runs within 0.4 min of each other, commits 4/4/4.","Docs said V4-Pro might be routed to Flash; every response in all 6 runs reported <span class=\"mono\">deepseek-v4-pro</span>, so the model held."], cav:"About $0.42–0.57 per run at list price. Older build than Flash (08-13 vs 09-10) — a generation confound inside the same provider." },
+    sol:{ exp:"Codex CLI · EXP-011/016 (EN) · EXP-019 (KO)", li:["<b>Fastest on the Codex stack</b> (median 5.8 min) and fastest of all until DeepSeek Flash and Opus 5.5. The <b>only iteration-2 completion</b> among 40+ completed runs (sol-2) is also this model.","An English-first model, yet in the KO condition every commit and README was <b>fully Korean, zero language drift</b>."], cav:"Harness is Codex CLI, so absolute time is a reference figure. Output is a rollout total." },
+    astra:{ exp:"Codex CLI · EXP-021 (EN) · first GPT-6 generation check", li:["Six days after release: 3/3 iteration-1 completions, zero serving stalls or 5xx. A 0.5-minute range — <b>among the least variable</b>.","<b>+23–32% time versus its predecessor sol</b> — the official “1.9× faster” figure did not reproduce in this harness.","OpenAI offers no Anthropic-compatible endpoint, so <b>Codex CLI is the only consistent path</b>. The harness changed one element: the model ID."], cav:"Auth is ChatGPT-plan OAuth (not metered API) — token records are identical, only dollar conversion is unavailable." },
+    kimi:{ exp:"Direct · Moonshot · EXP-014/016 (EN) · EXP-017 (KO)", li:["<b>Largest run-to-run spread</b> — 7.6–21.3 min (2.8×), commits 1–4 vary per run. <b>The median alone misleads.</b>","<b>Compressed output</b> — the smallest in jsonl-measured runs (14.4K) passed the same gate. Volume and result quality are separate things."], cav:"Thinking cannot be disabled (on by default). cache_create is 0 yet cache_read hits — a Moonshot accounting difference." },
+    opus55:{ exp:"Native · EXP-026 (EN · KO) · new model, 2026-09", li:["<b>Fastest of all conditions</b> — 5 of 6 runs finished in 4.0–4.2 min (EN median 4.2, KO 4.0); en-1 took 8.4 min while debugging a port clash in its own e2e script. 6/6 iteration-1 completions.","<b>Lowest native output</b> (18.6–28.2K, mostly about 20K) — below Fable 5.1 and Opus 4.8, far from Opus 5's expanded profile. Commits 1–6.","<b>Bash-only trajectory</b> — no MCP, Skill or subagent calls despite being exposed; EN runs answered in English despite a global Korean-reply setting, and KO commits and READMEs were fully Korean."], cav:"Non-isolated condition, same as the other native baselines, but run weeks later with Claude Code 2.1.280 — the speed lead is an observation, not a confirmed advantage." },
+    opus48:{ exp:"Native · EXP-010 (EN) · EXP-019 (KO)", li:["<b>Top-speed and the most stable</b> — all 6 runs in 7.1–8.7 min, and the median stays 8.3 min under the KO flip.","<b>All-at-once commits</b> (median 1) — builds the whole thing, then finishes. Every KO run: exactly one commit."], cav:"" },
+    fable:{ exp:"Native · EXP-023 (EN) · Claude 5 top-tier model", li:["<b>Fastest native model before Opus 5.5</b> (6.2–7.8 min, median 6.9) — below even Opus 4.8's floor (7.8). 3/3 iteration-1 completions, no rate-limit or serving incidents.","<b>Output at Opus 4.8 level</b> (28.7–35.8K) — does not overlap Opus 5's expanded profile (41–48K). Commits 2–4, between the two Opus models.","<b>Bash-only trajectory</b> — 71 Bash calls across 3 runs, 2 Write, zero Read/Edit."], cav:"Non-isolated condition (global MCP and language settings exposed) — same condition as the EXP-009/010 baselines, but 7 weeks apart." },
+    opus5:{ exp:"Native · EXP-009/010 (EN n=6) · EXP-019 (KO)", li:["<b>Expanded-output profile</b> — the largest jsonl-measured output (47.0K), with no overlap against Opus 4.8.","<b>Fine-grained commit discipline</b> (median 6) — the opposite style from 4.8 on the same prompt. Under KO, variance actually shrank."], cav:"" },
+    qwen:{ exp:"Direct · DashScope · EXP-013/016 (EN) · EXP-017 (KO)", li:["<b>The most predictable model</b> — EN range 1.0 min, KO 1.2 min. Practically no variance.","Direct port with <b>zero troubleshooting</b> — completed by swapping three env values (the founding case for the direct-connection standard).","<b>The only one of five models that slowed beyond the EN range under KO</b> (15.1 → 22.8 min). Recorded as direction only."], cav:"" },
+    open2:{ exp:"Direct · Upstage · EXP-015 (EN n=1)", li:["Wall-clock <b>an order of magnitude beyond the fast band</b> (58 min 15 s), with a thinking-heavy output profile (252.3K).","A legitimate iteration-2 completion was falsely rejected by the gate (port-detection flaw) — confirmed after the measure v4 fix by two matching re-grades."], cav:"Trial ended; endpoint withdrawn 2026-08-05 — n=1 is the final record and cannot be extended. Lineage continues in Solar Pro 4." },
+    pro4:{ exp:"Direct · Upstage · EXP-020 (EN n=3)", li:["<b>Longest of all conditions</b> (effective 119–258 min). Cause pinned from session logs — <b>no caching × 37-second average round-trip × 88% thinking</b>, multiplied.","Completion itself is 3/3. The slowness is preview serving and cache behaviour, not a capability defect.","pro4-1 had 9 legitimate claims rejected by the gate (an unrelated npm package's shim shadowed the grading binary) — confirmed retroactively."], cav:"The Upstage endpoint reports no cache fields in usage — all input is counted as uncached." }
+  },
+  rawTitle:"Per-experiment figures", rawSmall:"21 conditions · 61 runs",
+  rawIntro:"Every completed row went through triple confirmation: the gate (or a direct re-grade) plus two independent re-checks. Time is wall-clock; output is comparable only within a condition.",
+  rawHead:["Model","Experiment","Condition","n","Completed","iter","Time","Commits","Output","Note"],
+  doneOne:"done", t58:"58 min 15 s", condNative:"Native", condDirect:"Direct", condCodex:"Codex CLI",
+  rawNotes:{ r1:"Same-day crossover A/B", r2:"All-Korean output · overlaps EN range", r3:"EN canonical prompt established", r4:"Expanded-output profile", r6:"Claude 5 top tier · output at 4.8 level", r16:"Fastest direct model · cheapest · Read/Write/Edit trajectory", r17:"All-Korean", r20:"Fastest of all conditions (median 4.2) · lowest native output", r21:"All-Korean · fastest KO condition (3.95–4.22 min)", r18:"Model held (v4-pro on every response) · 2.5–3× slower than Flash", r19:"All-Korean · tightest variance (0.4 min)", r7:"Fastest on M axis · only sol-2 needed iter 2", r8:"English-first model, still all-Korean output", r9:"First GPT-6 check · 0 false rejections · +23–32% vs sol", r10:"0 troubleshooting · least variance", r11:"All-Korean · does not overlap EN range", r12:"Largest run-to-run spread (2.8×)", r13:"All-Korean (one “feat:” prefix)", r14:"1 gate false rejection · fixed in measure v4", r15:"Longest of all · pro4-1 loop extended by false rejection, confirmed retroactively" },
+  notesTitle:"Investigation notes", notesSmall:"why ccr is excluded · 3 gate false rejections · corrections",
+  notes:[
+    ["① Why ccr (translation proxy) is out of the comparison","ccr (claude-code-router) live-translates Claude Code's Anthropic dialect into the OpenAI dialect and back. Documented defects: <b>corrupted tool-call arguments</b> (EXP-006 — only the first of several SSE deltas was handled, turning <span class=\"mono\">python3</span> into <span class=\"mono\">3</span>), <b>lost usage metering</b> (EXP-012), a custom transformer required per model, stream stalls and crashes from unadjusted context limits. Providers' official Anthropic-compatible direct endpoints (Upstage, DashScope, Moonshot as measured) needed zero troubleshooting. <b>The ban rests on failure modes and metering distortion, not on speed</b> — speed loss is confounded with the model and was never proven. OpenAI, which has no compatible endpoint at all, is connected through its own official harness (Codex CLI). Raw data and reports for EXP-005/006/012 remain in the repository."],
+    ["② The grading gate also gets it wrong","Three cases of the gate rejecting a legitimate completion — EXP-010 48-1 (grading files not copied), EXP-015 iter 2 (<span class=\"mono\">npx tsx</span> leaves no repo path on the process command line, so port detection failed → measure v4 added a process-CWD check), EXP-020 pro4-1 (an unrelated npm package <span class=\"mono\">@hurl/cli</span>, installed 11 days before the experiment, shadowed the real Hurl 8.0.1 on PATH and rejected 9 consecutive legitimate claims). Lesson: <b>confirm a rejection only after a grader-log autopsy, and treat the grader's external dependencies (binary paths) as something to isolate too.</b> EXP-021, the first to pin an absolute path from the start, had zero false rejections in three runs."],
+    ["③ Corrections and exclusions (2026-08-04)","An early write-up mislabelled EXP-006 open2-2 and EXP-008 as ccr stacks; both were in fact Upstage direct connections. The dashboard and repository documents were corrected together and the “direct vs ccr speed” narrative withdrawn. EXP-008 (pre-canon prompt, iter 10, about 173 min) is replaced by EXP-015, which reproduces the same model and stack under the current standard, and is excluded from the comparison."],
+    ["","<b>The shared conclusion of all three investigations:</b> benchmark reliability is decided by harness hygiene, not by the model — remove translation layers, isolate the environment, and treat even the grader's rejections as claims to be verified."]
+  ],
+  cavTitle:"Reading caveats", cavSmall:"what these numbers cannot say",
+  cavs:[
+    "<b>The verdict is completion only.</b> Completion rate (61/61) is the only stable metric; time, commits and output vary up to 2.8× under identical conditions — any efficiency ranking waits until measurement is standardised.",
+    "<b>Measurement differs by condition.</b> Output comes from two sources — session jsonl or Codex rollout — so filled and outlined bars in the matrix cannot be compared. Cache accounting also differs by provider (DashScope both sides · Moonshot read only · Upstage none).",
+    "<b>Different harness, reference-only time.</b> gpt-5.6-sol and gpt-6-astra run on Codex CLI, the rest on Claude Code — startup and tool-call overhead differ. Only the sol ↔ astra pair holds the stack constant.",
+    "<b>Experiments span different dates</b> (2026-07-24 – 09-23). EN and KO runs are also days apart (direct 1 day, Codex 2–3 days, Opus 12 days), so language effects are not asserted. gpt-6-astra, Fable 5.1 and Opus 5.5 sit 3–9 weeks from the other conditions, so cross-generation speed comparisons carry a timing confound too.",
+    "<b>The two Solar models used preview (application-only beta) APIs.</b> No caching, 37-second average round-trips, withdrawal without notice — do not read their time or usage as production-grade performance.",
+    "<b>gpt-6-astra authenticated via ChatGPT-plan OAuth</b> (not metered API) — token records are identical, but dollar comparisons are unavailable.",
+    "The two non-completions (EXP-005/006) were traced in the autopsy (EXP-007) to environment contamination and metering distortion, and flipped to completion after isolation — “this model cannot finish” is not a conclusion available without isolation and an autopsy."
+  ],
+  footer:"coding-agent-benchmark · latest update EXP-026 (2026-09-23) · raw logs, usage CSVs and orchestrator logs are kept in each experiment's <span class=\"mono\">runs/</span> directory."
+},
+
+ko: {
+  htmlLang:"ko", title:"랄프 루프 모델별 완주 비교",
+  eyebrow:"Ralph loop benchmark · 2026-07-24 → 09-23",
+  h1:"랄프 루프 모델별 완주 비교",
+  deck:"동일 과제(RealWorld 백엔드 · 공식 Hurl 13파일 154요청)를 격리된 자율 루프에 걸고 <b>모델 12종</b>이 무개입으로 완주하는지, 그리고 어떤 방식으로 완주하는지를 측정했다. 판정은 완주 여부 단일 — <b>61 run 전부 완주</b>했으므로, 모델을 가르는 것은 아래 네 지표의 <b>모양</b>이다.",
+  metaModels:"12 모델", metaConds:"21 조건", metaRuns:"61 run",
+  metaNote:"주요 조건 n=3 · 완주 run 전부 게이트 + 독립 재검증 2회",
+  metaLink:"설계·report·원시 데이터 ↗",
+  flag:"<b>Solar Open 2 · Solar Pro 4는 프리뷰 API 측정값이다.</b> 두 모델의 엔드포인트는 상용 제공(GA)이 아닌 신청제 베타로, prompt caching 미지원·긴 왕복 지연·예고 없는 회수가 걸려 있다. 시간·usage는 모델 능력과 프리뷰 인프라가 교락된 값이니 상용 기준 성능으로 읽지 말 것.",
+  ro1:"완주 run", ro2:"iteration 1 완주", ro3:"최속↔최장 모델 중앙값 차", ro4:"완주 run 허위 신고", ro5:"하네스 개입",
+  mxTitle:"성능 매트릭스",
+  mxSub:"한 행이 한 모델. 막대는 run 최소–최대 범위, 굵은 세로선이 중앙값이다. 시간·output은 값의 폭이 자릿수 단위라 <b>로그 눈금</b>을 쓴다 — 열 제목 아래 눈금 참조. 열 제목을 누르면 그 지표로 정렬된다.",
+  segEn:"EN 정본", segKo:"KO 정본",
+  hintEn:"영문 프롬프트 정본 — 12 모델 전부", hintKo:"한국어 번역 정본(전 산출물 한국어 지시) — 8 모델만 실험됨",
+  lgNative:"Claude Code 네이티브", lgDirect:"Claude Code 직결(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
+  lgOut:"output이 rollout 누계 계측 — jsonl 계측(칠한 막대)과 직접 비교 금지",
+  colModel:"모델", colDone:"완주", colTime:"소요 시간", colSpread:"run 간 변동", colCommits:"커밋 규율", colOutput:"output 토큰",
+  min:"분", minTick:"분", commitsScale:"채운 점 = 중앙값 · 눈금 1–8",
+  iterAll1:"전부 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
+  stNative:"Claude Code 네이티브", stDirect:"직결", stCodex:"Codex CLI",
+  koMissing:"KO 조건 미실험 — ", noteAstra:"GPT-6 세대 신규", noteFable:"Claude 5 상위 모델 신규", notePreview:"엔드포인트 회수/신규 모델",
+  n1na:"n=1 · 판단 불가", span:"폭 {x}분", n1:"n=1", singleRun:"단일 run", sameAll:"전 run 동일",
+  howEyebrow:"읽는 법",
+  how1:"세로로 훑으면 각 지표의 순위가, 가로로 훑으면 한 모델의 성격이 보인다. <b>시간 열</b>에서 상위 10개 모델은 4–23분 한 뭉치로 모여 있고 Solar 계열만 자릿수가 다르다(58분 · 119–258분) — 단 그 차이는 프리뷰 인프라와 교락된 값이다. <b>변동 열</b>이 길수록 \"이번 run이 어떻게 나올지 모르는\" 모델이다(kimi 2.8배 vs qwen 1.07배). <b>커밋 열</b>은 능력이 아니라 스타일 — 전부를 한 번에 몰아 커밋하는 Opus 4.8(중앙값 1)과 잘게 쪼개는 Opus 5(6)가 같은 프롬프트에서 정반대로 갈린다. 최속 자리는 Claude Code 네이티브의 Opus 5.5(EN 중앙값 4.2분, KO 4.0분)이며, 직결의 DeepSeek V4.1-Flash(4.8분)가 바로 뒤에 있다. <b>output 열</b>에서는 Claude 5 세대 상위 모델 Fable 5.1(31.1K)이 Opus 5(47.0K)가 아닌 Opus 4.8(32.1K) 옆에 선다 — 산출량 확대는 세대가 아닌 Opus 5 고유 프로파일이다. Opus 5.5는 그보다도 낮다(약 20K).",
+  how2:"KO 토글은 프롬프트 정본만 한국어로 반전한 조건이다(전 산출물 한국어 지시, EXP-017/019). <b>8개 모델 전부 완주율에 영향이 없었고</b>, EN과 분포가 겹치지 않을 만큼 느려진 것은 qwen 하나뿐이다 — 실행 시점이 달라 언어 효과로 단정하지는 않는다.",
+  cardsEyebrow:"모델 프로파일 · 수치 뒤의 성격",
+  cards:{
+    dsflash:{ exp:"직결 · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash, 2026-09-10 출시", li:["<b>직결 최속</b> — EN 중앙값 4.8분(4.6–6.0)으로 Codex의 gpt-5.6-sol보다 아래, Opus 5.5(4.2분) 다음. EN·KO 합쳐 6/6 iteration 1 완주, 서빙 장애 0건.","<b>압도적으로 저렴</b> — 공개 단가 기준 run당 약 $0.08–0.12(캐시 히트 입력 $0.006/M), V4-Pro의 1/5 수준.","<b>편집기형 궤적</b> — 다른 직결 모델이 Bash에 기대는 것과 달리 Read/Write/Edit를 고루 사용. KO에서도 커밋·README 전수 한국어."], cav:"API 종량(구독 아님). 비용은 usage×공개 단가 추정치. DeepSeek는 cache_read만 계상하고 cache_creation 필드는 0." },
+    dspro:{ exp:"직결 · DeepSeek · EXP-025 (EN · KO) · V4-Pro-0813", li:["6/6 iteration 1 완주이나 <b>Flash 대비 2.5–3배 느림</b>(EN 12.1–15.8분, KO 13.4–13.7분), output은 Solar를 제외한 jsonl 계측 내 최다(59.6–69.6K).","<b>표 전체에서 KO 변동 최소</b> — KO 3 run이 0.4분 안에 몰리고 커밋 4/4/4.","문서상 V4-Pro가 Flash로 라우팅될 수 있다는 공지가 있었으나 6 run 전 응답이 <span class=\"mono\">deepseek-v4-pro</span>로 기록 — 모델 유지 확인."], cav:"공개 단가 기준 run당 약 $0.42–0.57. Flash보다 구형 빌드(08-13 vs 09-10) — 같은 제공자 안의 세대 교락." },
+    sol:{ exp:"Codex CLI · EXP-011/016 (EN) · EXP-019 (KO)", li:["<b>Codex 스택 최속</b>(중앙값 5.8분), DeepSeek Flash·Opus 5.5 이전까지는 전 조건 최속. 완주 run 중 <b>유일한 iteration 2 완주</b>(sol-2)도 이 모델이다.","영어권 모델인데 KO 조건에서 커밋·README <b>전수 한국어, 언어 이탈 0건</b>."], cav:"하네스가 Codex CLI라 시간 절대 비교는 참고치. output은 rollout 누계." },
+    astra:{ exp:"Codex CLI · EXP-021 (EN) · GPT-6 세대 첫 검증", li:["출시 6일차 모델이 3/3 iteration 1 완주, 서빙 스톨·5xx 0건. 범위 폭 0.5분으로 <b>변동 최소급</b>.","<b>전작 sol 대비 +23–32% 시간</b> — 공식 \"1.9배 고속\" 수치는 이 하네스에서 재현되지 않았다.","OpenAI는 Anthropic 호환 엔드포인트가 없어 <b>Codex CLI가 유일한 정합 경로</b>. 하네스는 모델 ID 1요소만 치환했다."], cav:"인증이 ChatGPT 플랜 OAuth(종량 API 아님) — 토큰 기록은 동일, 달러 환산만 불가." },
+    kimi:{ exp:"직결 · Moonshot · EXP-014/016 (EN) · EXP-017 (KO)", li:["<b>run 간 변동 최대</b> — 7.6–21.3분(2.8배), 커밋도 1–4로 run마다 다르다. <b>중앙값만 보면 오판한다.</b>","<b>압축형 output</b> — jsonl 계측 내 최소(14.4K)로 같은 게이트를 통과. 산출량과 결과 품질은 별개다."], cav:"thinking 끄기 불가(기본 ON). cache_create 0인데 cache_read 적중 — Moonshot의 캐시 계상 방식 차이." },
+    opus55:{ exp:"네이티브 · EXP-026 (EN · KO) · 2026-09 신규 모델", li:["<b>전 조건 최속</b> — 6 run 중 5개가 4.0–4.2분(EN 중앙값 4.2, KO 4.0). en-1은 자체 e2e 스크립트의 포트 충돌을 디버깅하느라 8.4분. 6/6 iteration 1 완주.","<b>네이티브 최저 output</b>(18.6–28.2K, 대부분 약 20K) — Fable 5.1·Opus 4.8보다 아래이고 Opus 5 확대 프로파일과는 거리가 멀다. 커밋 1–6.","<b>Bash 단일 도구 궤적</b> — MCP·Skill·서브에이전트가 노출돼 있었지만 호출 0건. EN run은 글로벌 한국어 응답 설정에도 영어로 답했고, KO는 커밋·README 전수 한국어."], cav:"다른 네이티브 기준선과 같은 비격리 조건이나 수 주 뒤 Claude Code 2.1.280으로 실행 — 속도 선두는 관측값이며 우위 확정이 아니다." },
+    opus48:{ exp:"네이티브 · EXP-010 (EN) · EXP-019 (KO)", li:["<b>최속급이면서 가장 안정적</b> — 6 run 전부 7.1–8.7분, KO 반전에도 중앙값이 8.3분으로 동일하다.","<b>몰아치기 커밋</b>(중앙값 1) — 전체를 한 번에 구현하고 끝낸다. KO는 3 run 모두 커밋 1."], cav:"" },
+    fable:{ exp:"네이티브 · EXP-023 (EN) · Claude 5 세대 상위 모델", li:["<b>Opus 5.5 이전 네이티브 최속</b>(6.2–7.8분, 중앙값 6.9분) — Opus 4.8 하한(7.8분)보다도 아래. 3/3 iteration 1 완주, rate limit·서빙 장애 0건.","<b>output은 Opus 4.8 수준</b>(28.7–35.8K) — Opus 5의 확대 프로파일(41–48K)과 분포가 겹치지 않는다. 커밋 2–4로 두 Opus 사이.","<b>Bash 단일 도구 궤적</b> — 3 run 합계 Bash 71회에 Write 2회, Read/Edit 0회."], cav:"비격리 조건(글로벌 MCP·언어 설정 노출) — 기준선 EXP-009/010과 같은 조건이나 시점 차 7주." },
+    opus5:{ exp:"네이티브 · EXP-009/010 (EN n=6) · EXP-019 (KO)", li:["<b>산출량 확대 프로파일</b> — jsonl 계측 내 최다(47.0K)로, Opus 4.8과 분포가 겹치지 않는다.","<b>잘게 이행하는 커밋 규율</b>(중앙값 6) — 같은 프롬프트에서 4.8과 정반대 스타일. KO에서는 오히려 변동이 줄었다."], cav:"" },
+    qwen:{ exp:"직결 · DashScope · EXP-013/016 (EN) · EXP-017 (KO)", li:["<b>가장 예측 가능한 모델</b> — EN 범위 폭 1.0분, KO도 1.2분. 변동이 사실상 없다.","직결 이식 <b>트러블슈팅 0건</b> — env 3요소 치환만으로 완주(직결 표준의 근거 사례).","<b>5모델 중 유일하게 KO에서 분포 비겹침으로 느려짐</b>(15.1→22.8분). 방향성만 기록한다."], cav:"" },
+    open2:{ exp:"직결 · Upstage · EXP-015 (EN n=1)", li:["최속 대역과 <b>자릿수가 다른 소요 시간</b>(58분 15초), thinking 비중이 큰 output 프로파일(252.3K).","정당한 iteration 2 완주를 게이트가 오검 기각(포트 탐지 결함) — measure v4 수정 후 재채점 2회 일치로 완주 확정."], cav:"시험 운영 종료로 2026-08-05 엔드포인트 회수 — n=1이 마지막 기록이며 확충 불가. 계보는 Solar Pro 4로 승계." },
+    pro4:{ exp:"직결 · Upstage · EXP-020 (EN n=3)", li:["<b>전 조건 최장</b>(유효 119–258분). 원인은 세션 로그 분해로 특정 — <b>캐시 미지원 × 왕복 평균 37초 × thinking 88%</b>의 곱.","완주 자체는 3/3. 느린 것은 프리뷰 인프라의 서빙·캐시 특성이지 능력 결함이 아니다.","pro4-1은 게이트 오검(무관 npm 패키지의 shim이 채점 바이너리를 가림)으로 정당 신고 9회 기각 — 소급 재채점으로 유효 완주 확정."], cav:"Upstage 엔드포인트는 usage에 캐시 필드를 계상하지 않는다 — input 전량이 비캐시로 잡힘." }
+  },
+  rawTitle:"실험 단위 원 수치", rawSmall:"21 조건 · 61 run",
+  rawIntro:"모든 완주 행은 게이트(또는 직접 재채점) + 독립 재검증 2회의 3중 확인을 거쳤다. 시간은 wall-clock, output은 조건 내 비교만 유효하다.",
+  rawHead:["모델","실험","조건","n","완주","iter","시간","커밋","output","비고"],
+  doneOne:"완주", t58:"58분 15초", condNative:"네이티브", condDirect:"직결", condCodex:"Codex CLI",
+  rawNotes:{ r1:"동시점 교차 A/B", r2:"전수 한국어 · EN 분포와 겹침", r3:"EN 프롬프트 정본 확립", r4:"산출량 확대 프로파일", r6:"Claude 5 상위 모델 · output은 4.8 수준", r16:"직결 최속 · 최저 비용 · Read/Write/Edit 궤적", r17:"전수 한국어", r20:"전 조건 최속(중앙값 4.2분) · 네이티브 최저 output", r21:"전수 한국어 · KO 조건 최속(3.95–4.22분)", r18:"모델 유지 확인(전 응답 v4-pro) · Flash 대비 2.5–3배", r19:"전수 한국어 · 변동 최소(0.4분)", r7:"M축 최단 · sol-2만 iter 2", r8:"영어권 모델도 전수 한국어", r9:"GPT-6 첫 검증 · 오검 0건 · sol 대비 +23–32%", r10:"트러블슈팅 0 · 변동 최소", r11:"전수 한국어 · EN과 분포 비겹침", r12:"run 간 변동 최대 (2.8배)", r13:"전수 한국어 (feat: 접두어 1건)", r14:"게이트 오검 1건 · measure v4로 수정", r15:"전 조건 최장 · pro4-1 오검으로 루프 연장, 소급 확정" },
+  notesTitle:"조사 노트", notesSmall:"ccr 제외 사유 · 게이트 오검 3건 · 정정 이력",
+  notes:[
+    ["① ccr(변환 프록시)은 왜 비교에서 빠졌나","ccr(claude-code-router)은 Claude Code의 Anthropic 방언을 OpenAI 방언으로 실시간 이중 번역한다. 실증된 결함: <b>tool call 인자 훼손</b>(EXP-006 — SSE 멀티 델타 중 첫 요소만 처리해 <span class=\"mono\">python3→3</span>), <b>usage 계측 유실</b>(EXP-012), 모델별 커스텀 transformer 필수, 스트림 스톨·컨텍스트 한도 미조정 크래시. 반면 제공자 공식 Anthropic 호환 직결(Upstage·DashScope·Moonshot 실측)은 트러블슈팅 0건. <b>금지 근거는 속도가 아니라 실패 모드와 계측 왜곡이다</b> — 속도 저하는 모델 교락으로 입증되지 않았다. 호환 엔드포인트가 아예 없는 OpenAI는 자사 공식 하네스(Codex CLI)로 연결한다. EXP-005/006/012의 원 데이터·report는 리포지토리에 보존돼 있다."],
+    ["② 채점 게이트도 오검한다","정당한 완주를 게이트가 기각한 사례 3건 — EXP-010 48-1(채점 파일 미복사), EXP-015 iter 2(<span class=\"mono\">npx tsx</span> 실행 시 프로세스 command line에 리포 경로가 없어 포트 탐지 실패 → 프로세스 CWD 판정을 추가한 measure v4로 수정), EXP-020 pro4-1(실험 11일 전 설치된 무관 npm 패키지 <span class=\"mono\">@hurl/cli</span>의 shim이 진짜 Hurl 8.0.1을 PATH에서 가려 정당 신고 9회 연속 기각). 교훈: <b>기각 판정은 채점기 로그 부검 후에만 확정하고, 채점기의 외부 의존(바이너리 경로)도 격리 대상이다.</b> 절대 경로 고정을 처음부터 적용한 EXP-021은 3 run 연속 오검 0건."],
+    ["③ 정정·제외 이력 (2026-08-04)","초기 정리에서 EXP-006 open2-2와 EXP-008을 ccr 스택으로 오기했으나 실측 결과 둘 다 Upstage 직결이었다 — 대시보드와 리포 문서를 일괄 정정하고 \"직결 vs ccr 속도 비교\" 서사를 철회했다. EXP-008(정본 확정 이전 프롬프트, iter 10·약 173분)은 같은 모델·스택을 현행 표준 조건으로 재현한 EXP-015로 대체돼 비교에서 제외했다."],
+    ["","<b>세 조사의 공통 결론:</b> 벤치마크의 신뢰성을 좌우하는 것은 모델이 아니라 하네스 위생이다 — 변환 계층을 없애고, 환경을 격리하고, 채점기의 기각조차 부검으로 검증할 것."]
+  ],
+  cavTitle:"해석 주의", cavSmall:"이 숫자로 하면 안 되는 말",
+  cavs:[
+    "<b>판정은 완주 여부 단일이다.</b> 완주율(61/61)만이 안정된 지표이며, 시간·커밋·output은 같은 조건에서도 최대 2.8배 변동한다 — 효율 순위 서사는 계측 표준화 전까지 유보한다.",
+    "<b>계측 방식이 조건마다 다르다.</b> output은 세션 jsonl / Codex rollout 2종으로, 매트릭스에서 칠한 막대와 테두리 막대는 서로 비교할 수 없다. 캐시 계상도 제공자별 상이(DashScope 양측 · Moonshot read만 · Upstage 무계상).",
+    "<b>하네스가 다르면 시간 절대 비교는 참고치다.</b> gpt-5.6-sol·gpt-6-astra는 Codex CLI, 나머지는 Claude Code — 기동·도구 호출 오버헤드가 다르다. sol↔astra 간 비교만 스택이 통제된다.",
+    "<b>실험 시점이 다르다</b>(2026-07-24 – 09-23). EN·KO도 실행 간격이 벌어져(직결 1일, Codex 2–3일, Opus 12일) 언어 효과를 단정하지 않는다. gpt-6-astra·Fable 5.1·Opus 5.5는 타 조건과 3–9주 간격이라 세대 간 속도 비교에도 시점 교락이 걸려 있다.",
+    "<b>Solar 두 모델은 프리뷰(신청제 베타) API다.</b> 캐시 미지원·평균 37초 왕복·예고 없는 회수 — 시간·usage를 상용 인프라 기준 성능으로 읽지 말 것.",
+    "<b>gpt-6-astra의 인증은 ChatGPT 플랜 OAuth</b>(종량 API 아님) — 토큰 기록은 동일하나 달러 환산 비교는 불가하다.",
+    "미완주 2건(EXP-005/006)은 부검(EXP-007)에서 환경 오염·계측 왜곡이 지배 요인으로 판별됐고 격리 후 완주로 뒤집혔다 — \"모델이 완주 못 한다\"는 결론은 격리·부검 없이 내릴 수 없다."
+  ],
+  footer:"coding-agent-benchmark · 최신 반영 EXP-026 (2026-09-23) · 원시 로그·usage CSV·오케스트레이터 로그는 각 실험 <span class=\"mono\">runs/</span> 디렉토리에 보존."
+},
+
+ja: {
+  htmlLang:"ja", title:"Ralphループ モデル別完走比較",
+  eyebrow:"Ralph loop benchmark · 2026-07-24 → 09-23",
+  h1:"Ralphループ モデル別完走比較",
+  deck:"同一課題（RealWorldバックエンド・公式Hurl 13ファイル154リクエスト）を隔離した自律ループにかけ、<b>12モデル</b>が無介入で完走できるか、そしてどのように完走するかを測定した。判定は完走の可否のみ——<b>61 run全てが完走</b>したため、モデルを分けるのは以下4指標の<b>かたち</b>である。",
+  metaModels:"12モデル", metaConds:"21条件", metaRuns:"61 run",
+  metaNote:"主要条件 n=3 · 完走runは全てゲート + 独立再検証2回を通過",
+  metaLink:"設計・レポート・生データ ↗",
+  flag:"<b>Solar Open 2・Solar Pro 4はプレビューAPIでの測定値。</b> 両モデルのエンドポイントは商用提供(GA)ではなく申請制ベータで、prompt caching非対応・長い往復遅延・予告なしの提供終了を伴う。時間・usageはモデル能力とプレビュー基盤が交絡した値であり、商用基準の性能として読まないこと。",
+  ro1:"完走run", ro2:"iteration 1で完走", ro3:"最速↔最遅モデルの中央値比", ro4:"完走の虚偽申告", ro5:"ハーネス介入",
+  mxTitle:"性能マトリクス",
+  mxSub:"1行が1モデル。バーはrunの最小–最大範囲、太い縦線が中央値。時間・outputは桁単位で幅があるため<b>対数目盛</b>を使う——列見出し下の目盛を参照。列見出しをクリックするとその指標で並び替わる。",
+  segEn:"EN正本", segKo:"KO正本",
+  hintEn:"英語プロンプト正本——12モデル全て", hintKo:"韓国語翻訳正本（全成果物を韓国語で指示）——8モデルのみ実験",
+  lgNative:"Claude Code ネイティブ", lgDirect:"Claude Code 直結(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
+  lgOut:"outputがrollout累計計測——jsonl計測（塗りつぶしバー）との直接比較不可",
+  colModel:"モデル", colDone:"完走", colTime:"所要時間", colSpread:"run間変動", colCommits:"コミット規律", colOutput:"outputトークン",
+  min:"分", minTick:"分", commitsScale:"塗りつぶし点 = 中央値 · 目盛 1–8",
+  iterAll1:"全run iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
+  stNative:"Claude Code ネイティブ", stDirect:"直結", stCodex:"Codex CLI",
+  koMissing:"KO条件は未実験——", noteAstra:"GPT-6世代の新モデル", noteFable:"Claude 5上位モデルの新規", notePreview:"エンドポイント終了/新モデル",
+  n1na:"n=1 · 判断不可", span:"幅 {x}分", n1:"n=1", singleRun:"単一run", sameAll:"全run同一",
+  howEyebrow:"読み方",
+  how1:"縦に見れば各指標の順位が、横に見れば1モデルの性格が見える。<b>時間列</b>では上位10モデルが4–23分の一塊にまとまり、Solar系だけ桁が異なる（58分 · 119–258分）——ただしその差はプレビュー基盤と交絡した値である。<b>変動列</b>が長いほど「今回のrunがどう出るか分からない」モデル（kimi 2.8倍 vs qwen 1.07倍）。<b>コミット列</b>は能力ではなくスタイル——全てを一度にまとめてコミットするOpus 4.8（中央値1）と細かく刻むOpus 5（6）が同じプロンプトで正反対に分かれる。最速の座はClaude CodeネイティブのOpus 5.5（EN中央値4.2分、KO 4.0分）で、直結のDeepSeek V4.1-Flash（4.8分）がすぐ後に続く。<b>output列</b>ではClaude 5世代の上位モデルFable 5.1（31.1K）がOpus 5（47.0K）ではなくOpus 4.8（32.1K）の隣に立つ——出力量拡大は世代ではなくOpus 5固有のプロファイルである。Opus 5.5はさらに低い（約20K）。",
+  how2:"KOトグルはプロンプト正本のみ韓国語に反転した条件（全成果物を韓国語で指示、EXP-017/019）。<b>8モデル全てで完走率に影響はなく</b>、ENと分布が重ならないほど遅くなったのはqwen 1つだけ——実行時点が異なるため言語効果とは断定しない。",
+  cardsEyebrow:"モデルプロファイル · 数値の裏の性格",
+  cards:{
+    dsflash:{ exp:"直結 · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash、2026-09-10リリース", li:["<b>直結最速</b>——EN中央値4.8分（4.6–6.0）でCodexのgpt-5.6-solを下回り、Opus 5.5（4.2分）に次ぐ。EN・KO合わせて6/6 iteration 1完走、サービング障害0件。","<b>圧倒的に安価</b>——公開単価でrunあたり約$0.08–0.12（キャッシュヒット入力$0.006/M）、V4-Proの1/5程度。","<b>エディタ型の軌跡</b>——他の直結モデルがBashに寄るのに対しRead/Write/Editを均等に使う。KOでもコミット・READMEは全て韓国語。"], cav:"API従量（サブスクリプションではない）。費用はusage×公開単価の推定。DeepSeekはcache_readのみ計上しcache_creationは0。" },
+    dspro:{ exp:"直結 · DeepSeek · EXP-025 (EN · KO) · V4-Pro-0813", li:["6/6 iteration 1完走だが<b>Flash比2.5–3倍遅い</b>（EN 12.1–15.8分、KO 13.4–13.7分）、outputはSolarを除くjsonl計測内で最多（59.6–69.6K）。","<b>表全体でKO変動最小</b>——KO 3 runが0.4分以内に収まり、コミット4/4/4。","文書ではV4-ProがFlashへルーティングされうるとの告知があったが、6 run全応答が<span class=\"mono\">deepseek-v4-pro</span>——モデル維持を確認。"], cav:"公開単価でrunあたり約$0.42–0.57。Flashより古いビルド（08-13 vs 09-10）——同一プロバイダ内の世代交絡。" },
+    sol:{ exp:"Codex CLI · EXP-011/016 (EN) · EXP-019 (KO)", li:["<b>Codexスタック最速</b>（中央値5.8分）、DeepSeek Flash・Opus 5.5以前は全条件最速。完走runの中で<b>唯一のiteration 2完走</b>（sol-2）もこのモデル。","英語圏モデルだがKO条件でコミット・READMEが<b>全て韓国語、言語逸脱0件</b>。"], cav:"ハーネスがCodex CLIのため時間の絶対比較は参考値。outputはrollout累計。" },
+    astra:{ exp:"Codex CLI · EXP-021 (EN) · GPT-6世代初の検証", li:["リリース6日目のモデルが3/3 iteration 1完走、サービングのストール・5xx 0件。範囲幅0.5分で<b>変動最小級</b>。","<b>前作sol比 +23–32%の時間</b>——公式の「1.9倍高速」はこのハーネスでは再現しなかった。","OpenAIはAnthropic互換エンドポイントを持たないため<b>Codex CLIが唯一の整合経路</b>。ハーネスはモデルID 1要素のみ差し替え。"], cav:"認証はChatGPTプランのOAuth（従量APIではない）——トークン記録は同一、ドル換算のみ不可。" },
+    kimi:{ exp:"直結 · Moonshot · EXP-014/016 (EN) · EXP-017 (KO)", li:["<b>run間変動最大</b>——7.6–21.3分（2.8倍）、コミットも1–4とrunごとに異なる。<b>中央値だけ見ると誤る。</b>","<b>圧縮型output</b>——jsonl計測内最小（14.4K）で同じゲートを通過。出力量と結果の品質は別物。"], cav:"thinkingは無効化不可（デフォルトON）。cache_createが0なのにcache_readがヒット——Moonshotのキャッシュ計上方式の違い。" },
+    opus55:{ exp:"ネイティブ · EXP-026 (EN · KO) · 2026-09の新モデル", li:["<b>全条件最速</b>——6 run中5 runが4.0–4.2分（EN中央値4.2、KO 4.0）。en-1は自作e2eスクリプトのポート競合をデバッグして8.4分。6/6 iteration 1完走。","<b>ネイティブ最低のoutput</b>（18.6–28.2K、大半は約20K）——Fable 5.1・Opus 4.8より下で、Opus 5の拡大プロファイルとは大きく離れる。コミット1–6。","<b>Bash単一ツール軌跡</b>——MCP・Skill・サブエージェントは露出していたが呼び出し0件。ENはグローバルの韓国語応答設定があっても英語で応答し、KOはコミット・READMEが全て韓国語。"], cav:"他のネイティブ基準線と同じ非隔離条件だが、数週間後にClaude Code 2.1.280で実行——速度の首位は観測値であり優位の確定ではない。" },
+    opus48:{ exp:"ネイティブ · EXP-010 (EN) · EXP-019 (KO)", li:["<b>最速級かつ最も安定</b>——6 run全て7.1–8.7分、KO反転でも中央値は8.3分で同一。","<b>一括コミット</b>（中央値1）——全体を一度に実装して終える。KOは3 run全てコミット1。"], cav:"" },
+    fable:{ exp:"ネイティブ · EXP-023 (EN) · Claude 5世代の上位モデル", li:["<b>Opus 5.5以前のネイティブ最速</b>（6.2–7.8分、中央値6.9分）——Opus 4.8の下限（7.8分）よりも下。3/3 iteration 1完走、rate limit・サービング障害0件。","<b>outputはOpus 4.8水準</b>（28.7–35.8K）——Opus 5の拡大プロファイル（41–48K）と分布が重ならない。コミット2–4で両Opusの中間。","<b>Bash単一ツール軌跡</b>——3 run合計Bash 71回にWrite 2回、Read/Edit 0回。"], cav:"非隔離条件（グローバルMCP・言語設定が露出）——基準線EXP-009/010と同条件だが時点差7週。" },
+    opus5:{ exp:"ネイティブ · EXP-009/010 (EN n=6) · EXP-019 (KO)", li:["<b>出力量拡大プロファイル</b>——jsonl計測内最多（47.0K）で、Opus 4.8と分布が重ならない。","<b>細かく刻むコミット規律</b>（中央値6）——同じプロンプトで4.8と正反対のスタイル。KOではむしろ変動が減った。"], cav:"" },
+    qwen:{ exp:"直結 · DashScope · EXP-013/016 (EN) · EXP-017 (KO)", li:["<b>最も予測可能なモデル</b>——EN範囲幅1.0分、KOも1.2分。変動が事実上ない。","直結移植で<b>トラブルシューティング0件</b>——env 3要素の差し替えだけで完走（直結標準の根拠事例）。","<b>5モデル中唯一KOで分布が重ならないほど遅くなった</b>（15.1→22.8分）。方向性のみ記録。"], cav:"" },
+    open2:{ exp:"直結 · Upstage · EXP-015 (EN n=1)", li:["最速帯と<b>桁が異なる所要時間</b>（58分15秒）、thinking比率の大きいoutputプロファイル（252.3K）。","正当なiteration 2完走をゲートが誤って棄却（ポート検出の欠陥）——measure v4修正後の再採点2回一致で完走確定。"], cav:"試験運用終了により2026-08-05にエンドポイント終了——n=1が最後の記録で拡充不可。系譜はSolar Pro 4へ継承。" },
+    pro4:{ exp:"直結 · Upstage · EXP-020 (EN n=3)", li:["<b>全条件最長</b>（有効119–258分）。原因はセッションログの分解で特定——<b>キャッシュ非対応 × 往復平均37秒 × thinking 88%</b>の積。","完走自体は3/3。遅いのはプレビュー基盤のサービング・キャッシュ特性であり能力の欠陥ではない。","pro4-1はゲートの誤棄却（無関係なnpmパッケージのshimが採点バイナリを隠した）で正当申告9回棄却——遡及再採点で有効完走確定。"], cav:"Upstageエンドポイントはusageにキャッシュ項目を計上しない——input全量が非キャッシュとして記録される。" }
+  },
+  rawTitle:"実験単位の生数値", rawSmall:"21条件 · 61 run",
+  rawIntro:"全ての完走行はゲート（または直接再採点）+ 独立再検証2回の三重確認を経ている。時間はwall-clock、outputは条件内比較のみ有効。",
+  rawHead:["モデル","実験","条件","n","完走","iter","時間","コミット","output","備考"],
+  doneOne:"完走", t58:"58分15秒", condNative:"ネイティブ", condDirect:"直結", condCodex:"Codex CLI",
+  rawNotes:{ r1:"同時点交差A/B", r2:"全て韓国語 · EN分布と重なる", r3:"ENプロンプト正本の確立", r4:"出力量拡大プロファイル", r6:"Claude 5上位モデル · outputは4.8水準", r16:"直結最速 · 最低コスト · Read/Write/Edit軌跡", r17:"全て韓国語", r20:"全条件最速（中央値4.2分）· ネイティブ最低output", r21:"全て韓国語 · KO条件最速（3.95–4.22分）", r18:"モデル維持確認（全応答v4-pro）· Flash比2.5–3倍", r19:"全て韓国語 · 変動最小（0.4分）", r7:"M軸最短 · sol-2のみiter 2", r8:"英語圏モデルでも全て韓国語", r9:"GPT-6初検証 · 誤棄却0件 · sol比+23–32%", r10:"トラブルシューティング0 · 変動最小", r11:"全て韓国語 · ENと分布が重ならない", r12:"run間変動最大（2.8倍）", r13:"全て韓国語（feat:接頭辞1件）", r14:"ゲート誤棄却1件 · measure v4で修正", r15:"全条件最長 · pro4-1は誤棄却でループ延長、遡及確定" },
+  notesTitle:"調査ノート", notesSmall:"ccr除外の理由 · ゲート誤棄却3件 · 訂正履歴",
+  notes:[
+    ["① ccr（変換プロキシ）はなぜ比較から外れたか","ccr（claude-code-router）はClaude CodeのAnthropic方言をOpenAI方言へリアルタイムに二重翻訳する。実証された欠陥：<b>tool call引数の破損</b>（EXP-006——SSEマルチデルタの先頭要素だけ処理し<span class=\"mono\">python3→3</span>）、<b>usage計測の欠落</b>（EXP-012）、モデルごとのカスタムtransformer必須、ストリームのストール・コンテキスト上限未調整によるクラッシュ。一方、プロバイダ公式のAnthropic互換直結（Upstage・DashScope・Moonshot実測）はトラブルシューティング0件。<b>禁止の根拠は速度ではなく失敗モードと計測の歪みである</b>——速度低下はモデルとの交絡で立証されていない。互換エンドポイントを持たないOpenAIは自社公式ハーネス（Codex CLI）で接続する。EXP-005/006/012の生データ・レポートはリポジトリに保存されている。"],
+    ["② 採点ゲートも誤棄却する","正当な完走をゲートが棄却した事例3件——EXP-010 48-1（採点ファイル未コピー）、EXP-015 iter 2（<span class=\"mono\">npx tsx</span>実行時にプロセスのコマンドラインにリポジトリパスがなくポート検出失敗→プロセスCWD判定を追加したmeasure v4で修正）、EXP-020 pro4-1（実験11日前に導入された無関係なnpmパッケージ<span class=\"mono\">@hurl/cli</span>のshimが本物のHurl 8.0.1をPATH上で隠し、正当申告9回連続棄却）。教訓：<b>棄却判定は採点器ログの検死後にのみ確定し、採点器の外部依存（バイナリパス）も隔離対象とする。</b> 絶対パス固定を最初から適用したEXP-021は3 run連続で誤棄却0件。"],
+    ["③ 訂正・除外履歴（2026-08-04）","初期整理でEXP-006 open2-2とEXP-008をccrスタックと誤記したが、実測の結果いずれもUpstage直結だった——ダッシュボードとリポジトリ文書を一括訂正し「直結 vs ccr速度比較」の叙述を撤回した。EXP-008（正本確定前のプロンプト、iter 10・約173分）は同一モデル・スタックを現行標準条件で再現したEXP-015に置き換え、比較から除外した。"],
+    ["","<b>3つの調査に共通する結論：</b> ベンチマークの信頼性を左右するのはモデルではなくハーネス衛生である——変換層をなくし、環境を隔離し、採点器の棄却さえ検死で検証すること。"]
+  ],
+  cavTitle:"解釈上の注意", cavSmall:"この数字で言ってはいけないこと",
+  cavs:[
+    "<b>判定は完走の可否のみ。</b> 完走率（61/61）だけが安定した指標で、時間・コミット・outputは同条件でも最大2.8倍変動する——効率順位の叙述は計測標準化まで保留。",
+    "<b>計測方式が条件ごとに異なる。</b> outputはセッションjsonl / Codex rolloutの2種で、マトリクスの塗りつぶしバーと枠線バーは互いに比較できない。キャッシュ計上もプロバイダごとに異なる（DashScope両側 · Moonshot readのみ · Upstage計上なし）。",
+    "<b>ハーネスが異なれば時間の絶対比較は参考値。</b> gpt-5.6-sol・gpt-6-astraはCodex CLI、残りはClaude Code——起動・ツール呼び出しのオーバーヘッドが異なる。sol↔astra間の比較のみスタックが統制されている。",
+    "<b>実験時点が異なる</b>（2026-07-24 – 09-23）。EN・KOも実行間隔が空いており（直結1日、Codex 2–3日、Opus 12日）言語効果は断定しない。gpt-6-astra・Fable 5.1・Opus 5.5は他条件と3–9週の間隔があり、世代間の速度比較にも時点の交絡がかかる。",
+    "<b>Solar 2モデルはプレビュー（申請制ベータ）API。</b> キャッシュ非対応・平均37秒の往復・予告なしの終了——時間・usageを商用基盤基準の性能として読まないこと。",
+    "<b>gpt-6-astraの認証はChatGPTプランのOAuth</b>（従量APIではない）——トークン記録は同一だがドル換算比較は不可。",
+    "未完走2件（EXP-005/006）は検死（EXP-007）で環境汚染・計測の歪みが支配要因と判明し、隔離後に完走へ覆った——「モデルが完走できない」という結論は隔離・検死なしには下せない。"
+  ],
+  footer:"coding-agent-benchmark · 最新反映 EXP-026（2026-09-23）· 生ログ・usage CSV・オーケストレータログは各実験の<span class=\"mono\">runs/</span>ディレクトリに保存。"
+},
+
+zh: {
+  htmlLang:"zh-CN", title:"Ralph 循环各模型完成率对比",
+  eyebrow:"Ralph loop benchmark · 2026-07-24 → 09-23",
+  h1:"Ralph 循环各模型完成率对比",
+  deck:"将同一任务（RealWorld 后端 · 官方 Hurl 13 个文件 154 个请求）交给隔离的自主循环，测量 <b>12 个模型</b>能否在无人干预下完成，以及以何种方式完成。判定只看是否完成——<b>61 个 run 全部完成</b>，因此区分模型的是下面四项指标的<b>形态</b>。",
+  metaModels:"12 个模型", metaConds:"21 个条件", metaRuns:"61 个 run",
+  metaNote:"主要条件 n=3 · 所有完成的 run 均通过门控 + 2 次独立复验",
+  metaLink:"设计 · 报告 · 原始数据 ↗",
+  flag:"<b>Solar Open 2 和 Solar Pro 4 是在预览 API 上测得的。</b> 这两个模型的端点并非商用正式版（GA），而是需申请的测试版：不支持 prompt caching、往返延迟长、可能无预告下线。其时间与 usage 混合了模型能力和预览基础设施的影响，不要当作商用性能来解读。",
+  ro1:"完成的 run", ro2:"在 iteration 1 完成", ro3:"最快↔最慢模型中位数之比", ro4:"虚假完成申报", ro5:"测试框架干预",
+  mxTitle:"性能矩阵",
+  mxSub:"一行一个模型。横条为各 run 的最小–最大范围，粗竖线为中位数。时间与 output 的取值跨数量级，因此使用<b>对数刻度</b>——见各列标题下方的刻度。点击列标题可按该指标排序。",
+  segEn:"EN 标准版", segKo:"KO 标准版",
+  hintEn:"英文标准提示词——全部 12 个模型", hintKo:"韩文翻译标准版（要求全部产出为韩文）——仅 8 个模型测试",
+  lgNative:"Claude Code 原生", lgDirect:"Claude Code 直连(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
+  lgOut:"output 按 rollout 累计计量——不可与 jsonl 计量（实心条）直接比较",
+  colModel:"模型", colDone:"完成", colTime:"耗时", colSpread:"run 间波动", colCommits:"提交纪律", colOutput:"output token",
+  min:"分钟", minTick:"分钟", commitsScale:"实心点 = 中位数 · 刻度 1–8",
+  iterAll1:"全部 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
+  stNative:"Claude Code 原生", stDirect:"直连", stCodex:"Codex CLI",
+  koMissing:"KO 条件未测试——", noteAstra:"GPT-6 世代新模型", noteFable:"Claude 5 高阶新模型", notePreview:"端点已下线/新模型",
+  n1na:"n=1 · 无法判断", span:"跨度 {x} 分钟", n1:"n=1", singleRun:"单个 run", sameAll:"所有 run 相同",
+  howEyebrow:"阅读方法",
+  how1:"纵向看是各指标的排名，横向看是单个模型的性格。<b>时间列</b>中前 10 个模型聚在 4–23 分钟的一簇里，只有 Solar 系列相差一个数量级（58 分钟 · 119–258 分钟）——但这一差距与预览基础设施相混淆。<b>波动列</b>越长，越是“这次 run 结果难以预料”的模型（kimi 2.8 倍 vs qwen 1.07 倍）。<b>提交列</b>反映的是风格而非能力——一次性全部提交的 Opus 4.8（中位数 1）与细分提交的 Opus 5（6）在同一提示词下走向相反。最快的位置属于 Claude Code 原生栈上的 Opus 5.5（EN 中位数 4.2 分钟，KO 4.0 分钟），直连栈上的 DeepSeek V4.1-Flash（4.8 分钟）紧随其后。<b>output 列</b>中，Claude 5 世代的高阶模型 Fable 5.1（31.1K）站在 Opus 4.8（32.1K）旁边而非 Opus 5（47.0K）——输出量扩大不是世代特征，而是 Opus 5 独有的特征。Opus 5.5 更低（约 20K）。",
+  how2:"KO 开关仅将提示词标准版翻转为韩文（要求全部产出为韩文，EXP-017/019）。<b>8 个模型的完成率均未受影响</b>，慢到与 EN 分布不重叠的只有 qwen 一个——由于执行时间不同，不将其断定为语言效应。",
+  cardsEyebrow:"模型画像 · 数字背后的性格",
+  cards:{
+    dsflash:{ exp:"直连 · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash，2026-09-10 发布", li:["<b>直连最快</b>——EN 中位数 4.8 分钟（4.6–6.0），低于 Codex 上的 gpt-5.6-sol，仅次于 Opus 5.5（4.2 分钟）。EN·KO 合计 6/6 在 iteration 1 完成，服务故障 0 起。","<b>成本极低</b>——按公开单价每 run 约 $0.08–0.12（缓存命中输入 $0.006/M），约为 V4-Pro 的 1/5。","<b>编辑器型轨迹</b>——其他直连模型偏重 Bash，它均衡使用 Read/Write/Edit。KO 下提交·README 也全部为韩文。"], cav:"按量 API（非订阅）。成本为 usage×公开单价的估算。DeepSeek 只计 cache_read，cache_creation 字段为 0。" },
+    dspro:{ exp:"直连 · DeepSeek · EXP-025 (EN · KO) · V4-Pro-0813", li:["6/6 在 iteration 1 完成，但<b>比 Flash 慢 2.5–3 倍</b>（EN 12.1–15.8 分钟，KO 13.4–13.7 分钟），output 是 Solar 之外 jsonl 计量中最多的（59.6–69.6K）。","<b>全表 KO 波动最小</b>——KO 3 个 run 相差不到 0.4 分钟，提交 4/4/4。","文档曾提示 V4-Pro 可能被路由到 Flash，但 6 个 run 的全部响应均记录为 <span class=\"mono\">deepseek-v4-pro</span>——确认模型保持。"], cav:"按公开单价每 run 约 $0.42–0.57。比 Flash 更早的构建（08-13 vs 09-10）——同一提供商内的世代混淆。" },
+    sol:{ exp:"Codex CLI · EXP-011/016 (EN) · EXP-019 (KO)", li:["<b>Codex 栈最快</b>（中位数 5.8 分钟），在 DeepSeek Flash·Opus 5.5 之前为全部条件最快。完成的 run 中<b>唯一在 iteration 2 完成</b>的（sol-2）也是这个模型。","英语系模型，但在 KO 条件下提交信息与 README <b>全部为韩文，语言偏离 0 起</b>。"], cav:"测试框架为 Codex CLI，时间的绝对比较仅供参考。output 为 rollout 累计。" },
+    astra:{ exp:"Codex CLI · EXP-021 (EN) · GPT-6 世代首次验证", li:["发布第 6 天的模型 3/3 在 iteration 1 完成，服务停滞·5xx 为 0。范围跨度 0.5 分钟，<b>波动最小之一</b>。","<b>比前代 sol 多用 +23–32% 时间</b>——官方“快 1.9 倍”的数字在此框架中未能复现。","OpenAI 没有 Anthropic 兼容端点，<b>Codex CLI 是唯一一致的路径</b>。框架只替换了模型 ID 这一项。"], cav:"认证为 ChatGPT 套餐 OAuth（非按量 API）——token 记录相同，仅无法折算美元。" },
+    kimi:{ exp:"直连 · Moonshot · EXP-014/016 (EN) · EXP-017 (KO)", li:["<b>run 间波动最大</b>——7.6–21.3 分钟（2.8 倍），提交数也在 1–4 之间逐 run 不同。<b>只看中位数会误判。</b>","<b>压缩型 output</b>——以 jsonl 计量中最小的 14.4K 通过同一门控。输出量与结果质量是两回事。"], cav:"thinking 无法关闭（默认开启）。cache_create 为 0 但 cache_read 有命中——Moonshot 缓存计量方式不同。" },
+    opus55:{ exp:"原生 · EXP-026 (EN · KO) · 2026-09 新模型", li:["<b>全部条件中最快</b>——6 个 run 中 5 个为 4.0–4.2 分钟（EN 中位数 4.2，KO 4.0）；en-1 因调试自建 e2e 脚本的端口冲突用了 8.4 分钟。6/6 在 iteration 1 完成。","<b>原生最低 output</b>（18.6–28.2K，多数约 20K）——低于 Fable 5.1 与 Opus 4.8，远离 Opus 5 的扩大特征。提交 1–6 次。","<b>仅用 Bash 的轨迹</b>——MCP·Skill·子代理均已暴露但调用 0 次；EN run 即使有全局韩文回复设置仍用英文回答，KO 的提交·README 全部为韩文。"], cav:"与其他原生基线同为非隔离条件，但在数周后以 Claude Code 2.1.280 运行——速度领先是观测值，并非确定的优势。" },
+    opus48:{ exp:"原生 · EXP-010 (EN) · EXP-019 (KO)", li:["<b>最快一档且最稳定</b>——6 个 run 全部 7.1–8.7 分钟，翻转到 KO 后中位数仍为 8.3 分钟。","<b>一次性集中提交</b>（中位数 1）——整体实现后一次提交收尾。KO 的 3 个 run 均只有 1 次提交。"], cav:"" },
+    fable:{ exp:"原生 · EXP-023 (EN) · Claude 5 世代高阶模型", li:["<b>Opus 5.5 之前的原生最快</b>（6.2–7.8 分钟，中位数 6.9）——甚至低于 Opus 4.8 的下限（7.8 分钟）。3/3 在 iteration 1 完成，rate limit·服务故障 0 起。","<b>output 处于 Opus 4.8 水平</b>（28.7–35.8K）——与 Opus 5 的扩大特征（41–48K）分布不重叠。提交 2–4 次，介于两个 Opus 之间。","<b>仅用 Bash 的工具轨迹</b>——3 个 run 合计 Bash 71 次、Write 2 次，Read/Edit 0 次。"], cav:"非隔离条件（全局 MCP·语言设置暴露）——与基线 EXP-009/010 条件相同，但相隔 7 周。" },
+    opus5:{ exp:"原生 · EXP-009/010 (EN n=6) · EXP-019 (KO)", li:["<b>输出量扩大特征</b>——jsonl 计量中最多（47.0K），与 Opus 4.8 分布不重叠。","<b>细粒度提交纪律</b>（中位数 6）——同一提示词下与 4.8 风格截然相反。在 KO 下波动反而缩小。"], cav:"" },
+    qwen:{ exp:"直连 · DashScope · EXP-013/016 (EN) · EXP-017 (KO)", li:["<b>最可预测的模型</b>——EN 范围跨度 1.0 分钟，KO 也只有 1.2 分钟。几乎没有波动。","直连移植<b>零故障排查</b>——仅替换 3 个 env 值即完成（直连标准的依据案例）。","<b>5 个模型中唯一在 KO 下慢到分布不重叠</b>（15.1→22.8 分钟）。仅记录方向性。"], cav:"" },
+    open2:{ exp:"直连 · Upstage · EXP-015 (EN n=1)", li:["耗时与最快一档<b>相差一个数量级</b>（58 分 15 秒），thinking 占比高的 output 特征（252.3K）。","合法的 iteration 2 完成被门控误判拒绝（端口探测缺陷）——measure v4 修复后 2 次重评一致，确认完成。"], cav:"试运行结束，端点于 2026-08-05 下线——n=1 为最终记录，无法扩充。谱系由 Solar Pro 4 继承。" },
+    pro4:{ exp:"直连 · Upstage · EXP-020 (EN n=3)", li:["<b>全部条件中最长</b>（有效 119–258 分钟）。原因通过会话日志分解定位——<b>不支持缓存 × 平均往返 37 秒 × thinking 占 88%</b> 的乘积。","完成本身为 3/3。慢是预览基础设施的服务与缓存特性，不是能力缺陷。","pro4-1 因门控误判（无关 npm 包的 shim 遮蔽了评分二进制）9 次合法申报被拒——追溯重评后确认有效完成。"], cav:"Upstage 端点在 usage 中不计缓存字段——全部 input 被记为未缓存。" }
+  },
+  rawTitle:"逐实验原始数值", rawSmall:"21 个条件 · 61 个 run",
+  rawIntro:"每一完成行都经过三重确认：门控（或直接重评）+ 2 次独立复验。时间为 wall-clock，output 仅在同一条件内可比。",
+  rawHead:["模型","实验","条件","n","完成","iter","时间","提交","output","备注"],
+  doneOne:"完成", t58:"58 分 15 秒", condNative:"原生", condDirect:"直连", condCodex:"Codex CLI",
+  rawNotes:{ r1:"同时点交叉 A/B", r2:"全部韩文 · 与 EN 分布重叠", r3:"确立 EN 标准提示词", r4:"输出量扩大特征", r6:"Claude 5 高阶模型 · output 为 4.8 水平", r16:"直连最快 · 成本最低 · Read/Write/Edit 轨迹", r17:"全部韩文", r20:"全部条件最快（中位数 4.2 分钟）· 原生最低 output", r21:"全部韩文 · KO 条件最快（3.95–4.22 分钟）", r18:"确认模型保持（全部响应 v4-pro）· 比 Flash 慢 2.5–3 倍", r19:"全部韩文 · 波动最小（0.4 分钟）", r7:"M 轴最短 · 仅 sol-2 为 iter 2", r8:"英语系模型也全部韩文", r9:"GPT-6 首次验证 · 误判 0 起 · 比 sol +23–32%", r10:"故障排查 0 · 波动最小", r11:"全部韩文 · 与 EN 分布不重叠", r12:"run 间波动最大（2.8 倍）", r13:"全部韩文（feat: 前缀 1 处）", r14:"门控误判 1 起 · measure v4 修复", r15:"全部条件中最长 · pro4-1 因误判延长循环，追溯确认" },
+  notesTitle:"调查笔记", notesSmall:"排除 ccr 的理由 · 门控误判 3 起 · 更正记录",
+  notes:[
+    ["① ccr（转换代理）为何被排除在比较之外","ccr（claude-code-router）将 Claude Code 的 Anthropic 方言实时双向翻译为 OpenAI 方言。已证实的缺陷：<b>tool call 参数损坏</b>（EXP-006——SSE 多段 delta 只处理第一段，<span class=\"mono\">python3→3</span>）、<b>usage 计量丢失</b>（EXP-012）、每个模型需要自定义 transformer、流停滞以及未调整上下文上限导致的崩溃。相反，提供商官方的 Anthropic 兼容直连（Upstage·DashScope·Moonshot 实测）故障排查为 0。<b>禁用的依据是失败模式和计量失真，而非速度</b>——速度下降与模型相混淆，未被证实。完全没有兼容端点的 OpenAI 通过其官方框架（Codex CLI）接入。EXP-005/006/012 的原始数据与报告保留在仓库中。"],
+    ["② 评分门控也会误判","门控拒绝合法完成的案例 3 起——EXP-010 48-1（评分文件未复制）、EXP-015 iter 2（<span class=\"mono\">npx tsx</span> 运行时进程命令行中没有仓库路径，端口探测失败→在 measure v4 中加入进程 CWD 判定后修复）、EXP-020 pro4-1（实验前 11 天安装的无关 npm 包 <span class=\"mono\">@hurl/cli</span> 的 shim 在 PATH 中遮蔽了真正的 Hurl 8.0.1，连续 9 次拒绝合法申报）。教训：<b>拒绝判定只有在对评分器日志做剖析后才能确定，评分器的外部依赖（二进制路径）同样是隔离对象。</b> 从一开始就固定绝对路径的 EXP-021 连续 3 个 run 误判 0 起。"],
+    ["③ 更正与排除记录（2026-08-04）","早期整理将 EXP-006 open2-2 与 EXP-008 误记为 ccr 栈，实测结果两者均为 Upstage 直连——已统一更正仪表板和仓库文档，并撤回“直连 vs ccr 速度比较”的叙述。EXP-008（标准版确定前的提示词，iter 10·约 173 分钟）被在现行标准条件下复现同一模型·同一栈的 EXP-015 取代，排除出比较。"],
+    ["","<b>三项调查的共同结论：</b> 决定基准可信度的不是模型而是测试框架的卫生——去掉转换层、隔离环境、连评分器的拒绝也要通过剖析来验证。"]
+  ],
+  cavTitle:"解读注意", cavSmall:"这些数字不能说明什么",
+  cavs:[
+    "<b>判定只看是否完成。</b> 只有完成率（61/61）是稳定指标，时间·提交·output 在同一条件下也会波动至 2.8 倍——效率排名的叙述在计量标准化之前保留。",
+    "<b>计量方式因条件而异。</b> output 有会话 jsonl / Codex rollout 两种来源，矩阵中的实心条与描边条不能互相比较。缓存计量也因提供商而异（DashScope 双向 · Moonshot 仅 read · Upstage 不计）。",
+    "<b>框架不同时，时间的绝对比较仅供参考。</b> gpt-5.6-sol·gpt-6-astra 使用 Codex CLI，其余使用 Claude Code——启动与工具调用开销不同。只有 sol↔astra 之间的比较控制了栈。",
+    "<b>实验时间不同</b>（2026-07-24 – 09-23）。EN·KO 的执行间隔也有差异（直连 1 天、Codex 2–3 天、Opus 12 天），因此不断定语言效应。gpt-6-astra·Fable 5.1·Opus 5.5 与其他条件相隔 3–9 周，世代间速度比较也存在时间混淆。",
+    "<b>两个 Solar 模型使用的是预览（需申请的测试版）API。</b> 不支持缓存·平均往返 37 秒·无预告下线——不要把时间·usage 当作商用基础设施上的性能来解读。",
+    "<b>gpt-6-astra 的认证为 ChatGPT 套餐 OAuth</b>（非按量 API）——token 记录相同，但无法进行美元折算比较。",
+    "2 起未完成（EXP-005/006）在剖析（EXP-007）中被判定为环境污染·计量失真是主导因素，隔离后翻转为完成——没有隔离与剖析，无法得出“模型无法完成”的结论。"
+  ],
+  footer:"coding-agent-benchmark · 最新更新 EXP-026（2026-09-23）· 原始日志·usage CSV·编排器日志保存在各实验的 <span class=\"mono\">runs/</span> 目录。"
+}
+};
+
+/* ───────────────────────── i18n plumbing ───────────────────────── */
+const LANGS = ["en","ko","ja","zh"];
+let lang = "en";
+const t = k => (T[lang] && T[lang][k] != null) ? T[lang][k] : T.en[k];
+
+function detectLang() {
+  try {
+    const q = new URLSearchParams(location.search).get("lang");
+    if (q && LANGS.includes(q)) return q;
+  } catch (e) {}
+  try {
+    const s = localStorage.getItem("dash-lang");
+    if (s && LANGS.includes(s)) return s;
+  } catch (e) {}
+  try {
+    const navs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+    for (const n of navs) {
+      const p = String(n).toLowerCase().split("-")[0];
+      if (p === "ko" || p === "ja" || p === "zh") return p;
+      if (p === "en") return "en";
+    }
+  } catch (e) {}
+  return "en";
+}
+
+function setLang(l, persist) {
+  lang = LANGS.includes(l) ? l : "en";
+  document.documentElement.setAttribute("lang", t("htmlLang"));
+  document.title = t("title");
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  if (persist) { try { localStorage.setItem("dash-lang", lang); } catch (e) {} }
+  applyStatic();
+  scales();
+  render();
+  renderCards();
+  renderRaw();
+  renderNotes();
+}
+
+function applyStatic() {
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.getElementById("langhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
+}
+
+/* ───────────────────────── matrix ───────────────────────── */
+const T_MIN = 3.5, T_MAX = 260, O_MIN = 10, O_MAX = 260, S_MAX = 3, C_MAX = 8;
+const lg = (v, lo, hi) => Math.max(0, Math.min(100, (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) * 100));
+const med = a => { const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
+const lo = a => Math.min(...a), hi = a => Math.max(...a);
+const f1 = v => (Math.round(v * 10) / 10).toFixed(1);
+
+let plang = "en", sortKey = "time", sortDir = 1;
+
+function stackLabel(m) {
+  if (m.stack === "native") return t("stNative");
+  if (m.stack === "codex") return t("stCodex");
+  return t("stDirect") + " · " + m.provider;
+}
+
+function stats(d) {
+  if (!d) return null;
+  return { tMed: med(d.t), tLo: lo(d.t), tHi: hi(d.t), n: d.t.length,
+           spread: lo(d.t) > 0 ? hi(d.t) / lo(d.t) : 1,
+           cMed: med(d.c), cLo: lo(d.c), cHi: hi(d.c),
+           oMed: med(d.o), oLo: lo(d.o), oHi: hi(d.o), done: d.done, iter: t(d.iter), exp: d.exp };
+}
+
+function rangeBar(loV, hiV, medV, n, scaleLo, scaleHi, color, outlined) {
+  if (n === 1) {
+    return `<div class="bar"><div class="pt" style="left:${lg(medV, scaleLo, scaleHi)}%;background:${color}"></div></div>`;
+  }
+  const a = lg(loV, scaleLo, scaleHi), b = lg(hiV, scaleLo, scaleHi);
+  const fill = outlined ? `color:${color}` : `background:${color}`;
+  return `<div class="bar"><div class="rng${outlined ? " out" : ""}" style="left:${a}%;width:${Math.max(b - a, 0.8)}%;${fill}"></div>`
+       + `<div class="med" style="left:calc(${lg(medV, scaleLo, scaleHi)}% - 1px)"></div></div>`;
+}
+
+function linBar(v, max, color) {
+  return `<div class="bar"><div class="rng" style="left:0;width:${Math.max(v / max * 100, 1)}%;background:${color}"></div></div>`;
+}
+
+function dots(medV, color) {
+  let h = `<div class="dots" style="color:${color}">`;
+  for (let i = 1; i <= C_MAX; i++) h += `<i class="${i <= medV ? "on" : ""}"></i>`;
+  return h + "</div>";
+}
+
+function render() {
+  const rows = M.map(m => ({ m, s: stats(m[plang]) }));
+  const present = rows.filter(r => r.s), absent = rows.filter(r => !r.s);
+  const key = {
+    name: r => r.m.name.toLowerCase(), done: r => r.s.n,
+    time: r => r.s.tMed, spread: r => r.s.spread, commits: r => r.s.cMed, output: r => r.s.oMed
+  }[sortKey];
+  present.sort((a, b) => { const x = key(a), y = key(b); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
+  const min = t("min");
+
+  const body = [...present, ...absent].map(({ m, s }) => {
+    const color = `var(--${m.stack})`;
+    const nameCell = `<td><div class="mdl"><span class="nm"><span class="swatch" style="background:${color}"></span>${m.name}`
+      + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + `</span>`
+      + `<span class="st">${stackLabel(m)}${s ? " · " + s.exp : ""}</span></div></td>`;
+    if (!s) return `<tr class="dim">${nameCell}<td colspan="5"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
+
+    const spreadTxt = s.n === 1 ? `<span class="na">${t("n1na")}</span>`
+      : `<span class="figs"><em>${f1(s.spread)}×</em> <small>${t("span").replace("{x}", f1(s.tHi - s.tLo))}</small></span>`;
+    const spreadBar = s.n === 1 ? `<div class="bar"></div>` : linBar(Math.min(s.spread, S_MAX) - 1, S_MAX - 1, color);
+
+    return `<tr>${nameCell}`
+      + `<td><span class="done">${s.done}<small>${s.iter}</small></span></td>`
+      + `<td><div class="cell">${rangeBar(s.tLo, s.tHi, s.tMed, s.n, T_MIN, T_MAX, color, false)}`
+      + `<span class="figs"><em>${f1(s.tMed)}${min}</em>${s.n > 1 ? ` <small>${f1(s.tLo)}–${f1(s.tHi)}</small>` : ` <small>${t("n1")}</small>`}</span></div></td>`
+      + `<td><div class="cell">${spreadBar}${spreadTxt}</div></td>`
+      + `<td><div class="cell">${dots(s.cMed, color)}`
+      + `<span class="figs"><em>${s.cMed}</em> <small>${s.n === 1 ? t("singleRun") : s.cLo === s.cHi ? t("sameAll") : s.cLo + "–" + s.cHi}</small></span></div></td>`
+      + `<td><div class="cell">${rangeBar(s.oLo, s.oHi, s.oMed, s.n, O_MIN, O_MAX, color, m.meas === "rollout")}`
+      + `<span class="figs"><em>${f1(s.oMed)}K</em> <small>${m.meas}</small></span></div></td></tr>`;
+  }).join("");
+
+  document.getElementById("mxbody").innerHTML = body;
+  document.querySelectorAll("table.mx th").forEach(th => {
+    const b = th.querySelector("button");
+    if (!b) return;
+    if (b.dataset.sort === sortKey) { th.setAttribute("aria-sort", sortDir === 1 ? "ascending" : "descending"); b.querySelector(".dir").textContent = sortDir === 1 ? "↑" : "↓"; }
+    else th.removeAttribute("aria-sort");
+  });
+}
+
+function scales() {
+  const put = (sel, marks) => {
+    const el = document.querySelector(`.scale[data-scale="${sel}"]`);
+    if (el) el.innerHTML = marks.map(([label, pct]) => `<span style="left:${pct}%">${label}</span>`).join("");
+  };
+  const mt = t("minTick");
+  put("time", [["3.5 " + mt, 0], ["10", lg(10, T_MIN, T_MAX)], ["30", lg(30, T_MIN, T_MAX)], ["100", lg(100, T_MIN, T_MAX)], ["260 " + mt, 100]]);
+  put("spread", [["1.0×", 0], ["2×", 50], ["3×", 100]]);
+  const cm = document.querySelector('.scale[data-scale="commits"]');
+  if (cm) cm.innerHTML = `<span style="left:0">${t("commitsScale")}</span>`;
+  put("output", [["10K", 0], ["30", lg(30, O_MIN, O_MAX)], ["100", lg(100, O_MIN, O_MAX)], ["260K", 100]]);
+}
+
+/* ───────────────────────── cards / raw / notes ───────────────────────── */
+const NAMES = { dsflash:"DeepSeek V4.1-Flash", dspro:"DeepSeek V4-Pro", sol:"gpt-5.6-sol", astra:"gpt-6-astra", kimi:"kimi-k3", opus55:"Opus 5.5", opus48:"Opus 4.8", fable:"Fable 5.1", opus5:"Opus 5", qwen:"qwen3.8-max", open2:"Solar Open 2", pro4:"Solar Pro 4" };
+
+function renderCards() {
+  const cards = t("cards");
+  document.getElementById("cards").innerHTML = CARDS.map(c => {
+    const d = cards[c.key];
+    return `<article class="card">
+      <h3><span class="swatch" style="background:var(--${c.stack})"></span>${NAMES[c.key]}${c.preview ? ` <span class="pv">PREVIEW API</span>` : ""}</h3>
+      <p class="exp">${d.exp}</p>
+      <ul>${d.li.map(x => `<li>${x}</li>`).join("")}</ul>
+      ${d.cav ? `<p class="cav">${d.cav}</p>` : ""}
+    </article>`;
+  }).join("");
+}
+
+function renderRaw() {
+  document.getElementById("rawhead").innerHTML = t("rawHead").map(h => `<th>${h}</th>`).join("");
+  const notes = t("rawNotes"), min = t("min");
+  const cond = { native: t("condNative"), direct: t("condDirect"), codex: t("condCodex") };
+  const span = {}; RAW.forEach(r => { span[r[0]] = (span[r[0]] || 0) + 1; });
+  const seen = {};
+  document.getElementById("rawbody").innerHTML = RAW.map(r => {
+    const [model, exp, stack, pl, n, done, iter, tlo, thi, commits, out, nk] = r;
+    let first = "";
+    if (!seen[model]) { seen[model] = true; first = `<td${span[model] > 1 ? ` rowspan="${span[model]}"` : ""} class="g">${model}</td>`; }
+    const time = tlo === "58m15s" ? t("t58") : `${tlo}–${thi}${min}`;
+    return `<tr>${first}<td class="n">${exp}</td><td>${cond[stack]} · ${pl}</td><td class="n">${n}</td><td class="n">${done === "one" ? t("doneOne") : done}</td><td class="n">${iter}</td><td class="n">${time}</td><td class="n">${commits}</td><td class="n">${out}</td><td>${notes[nk]}</td></tr>`;
+  }).join("");
+}
+
+function renderNotes() {
+  document.getElementById("notesBody").innerHTML = t("notes").map(([h, p]) => (h ? `<h4>${h}</h4>` : "") + `<p>${p}</p>`).join("");
+  document.getElementById("cavList").innerHTML = t("cavs").map(x => `<li>${x}</li>`).join("");
+}
+
+/* ───────────────────────── events ───────────────────────── */
+document.querySelectorAll("table.mx th button").forEach(b => {
+  b.addEventListener("click", () => {
+    const k = b.dataset.sort;
+    if (sortKey === k) sortDir *= -1; else { sortKey = k; sortDir = 1; }
+    render();
+  });
+});
+document.querySelectorAll(".seg button").forEach(b => {
+  b.addEventListener("click", () => {
+    plang = b.dataset.plang;
+    document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.plang === plang)));
+    document.getElementById("langhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
+    render();
+  });
+});
+document.querySelectorAll(".langs button").forEach(b => {
+  b.addEventListener("click", () => setLang(b.dataset.lang, true));
+});
+
+setLang(detectLang(), false);
+</script>
+
+</body></html>

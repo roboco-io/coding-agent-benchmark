@@ -26,7 +26,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://claude.ai/code/artifact/137de971-ded4-4fc6-ac5e-79bc96a09237) —— 最新实验：EXP-026（2026-09-23）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco-io.github.io/coding-agent-benchmark/) —— 最新实验：EXP-026（2026-09-23）
 
 <!-- RESULTS:BEGIN -->
 <!-- 此区块由 scripts/update_readme_results.py 根据 experiments/*/report.md 自动生成（翻译来自 scripts/readme_i18n.json）。请勿手动编辑。 -->

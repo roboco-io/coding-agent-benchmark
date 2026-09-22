@@ -3,7 +3,7 @@ name: Deploy dashboard to GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ["dashboard/**", ".github/workflows/pages.yml"]
+    paths: ["dashboard/**", "scripts/og/**", "scripts/render_og.sh", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -24,6 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Render social preview image (dashboard/og.png)
+        run: ./scripts/render_og.sh
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dashboard

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* 1200×630 Open Graph 카드 — scripts/render_og.sh가 __DATA__를 dashboard/index.html 데이터로 치환해 렌더링한다 */
+:root{--ground:#EDF0F4;--surface:#FBFCFE;--ink:#131A24;--ink-2:#3C4757;--muted:#5B6879;--line:#DCE2EA;--track:#DFE4EB;
+  --native:#3E63DD;--direct:#0E9384;--codex:#C4551A;--flag:#8A6A1E;}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,sans-serif;padding:56px 64px;display:grid;grid-template-columns:470px 1fr;gap:56px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.left{display:flex;flex-direction:column;gap:22px}
+.eyebrow{font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:50px;line-height:1.1;font-weight:700;letter-spacing:-.03em}
+.ko{font-size:21px;color:var(--ink-2);line-height:1.45}
+.stats{margin-top:auto;display:flex;gap:34px;border-top:2px solid var(--ink);padding-top:18px}
+.stats b{display:block;font-size:40px;font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.stats span{font-size:15px;color:var(--muted)}
+.right{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:24px 26px;display:flex;flex-direction:column;gap:9px}
+.cap{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:4px}
+.row{display:grid;grid-template-columns:170px 1fr 58px;align-items:center;gap:12px;font-size:16px}
+.row .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.bar{height:14px;background:var(--track);border-radius:1px;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:1px}
+.bar i.pv{opacity:.45}
+.row .v{text-align:right;font-size:15px}
+.legend{margin-top:auto;display:flex;gap:18px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:1px}
+</style></head><body>
+<div class="left">
+  <p class="eyebrow mono">Ralph loop benchmark</p>
+  <h1>Which coding agents finish a backend unattended?</h1>
+  <p class="ko">같은 RealWorld 백엔드 과제를 모델·하네스 조합별로 무개입 자율 루프에 맡기고, 공식 Hurl 테스트로 완주를 판정했습니다.</p>
+  <div class="stats">
+    <div><b class="mono" id="runs"></b><span>runs completed</span></div>
+    <div><b class="mono" id="models"></b><span>models</span></div>
+    <div><b class="mono" id="latest"></b><span>latest</span></div>
+  </div>
+</div>
+<div class="right">
+  <div class="cap"><span>Median wall-clock · EN prompt</span><span class="mono">log scale</span></div>
+  <div id="rows" style="display:flex;flex-direction:column;gap:9px"></div>
+  <div class="legend"><span><i style="background:var(--native)"></i>Claude Code native</span><span><i style="background:var(--direct)"></i>direct endpoint</span><span><i style="background:var(--codex)"></i>Codex CLI</span></div>
+</div>
+<script>
+const D = __DATA__;
+const lg = v => Math.max(3, (Math.log10(v) - Math.log10(3)) / (Math.log10(200) - Math.log10(3)) * 100);
+document.getElementById("runs").textContent = D.runs + "/" + D.runs;
+document.getElementById("models").textContent = D.models;
+document.getElementById("latest").textContent = D.latest;
+document.getElementById("rows").innerHTML = D.rows.map(([n, s, t, pv]) =>
+  `<div class="row"><span class="nm">${n}</span><div class="bar"><i class="${pv ? "pv" : ""}" style="width:${lg(t)}%;background:var(--${s})"></i></div><span class="v mono">${t < 100 ? t.toFixed(1) : Math.round(t)}m</span></div>`).join("");
+</script>
+</body></html>

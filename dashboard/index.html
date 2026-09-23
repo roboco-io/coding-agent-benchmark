@@ -78,12 +78,6 @@ html[lang="ja"] h1, html[lang="zh-CN"] h1{letter-spacing:-.01em;}
   padding:11px 14px; border-radius:2px; max-width:78ch;}
 .flagnote::before{content:"⚑"; color:var(--flag); font-size:.9rem; line-height:1.5;}
 
-/* ── readout strip ────────────────────── */
-.readout{display:flex; flex-wrap:wrap; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--surface);}
-.readout div{flex:1 1 140px; padding:14px 18px; border-right:1px solid var(--hair);}
-.readout div:last-child{border-right:none;}
-.readout b{display:block; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-size:1.45rem; font-weight:500; letter-spacing:-.02em; line-height:1.15;}
-.readout span{font-size:.72rem; color:var(--muted); letter-spacing:.02em;}
 
 /* ── panel ────────────────────────────── */
 .panel{background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:clamp(18px,3vw,26px);}
@@ -184,7 +178,6 @@ table.raw td.g{font-weight:600;}
 footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); padding-top:16px;}
 
 @media (max-width:640px){
-  .readout div{flex-basis:50%;}
   .callout{grid-template-columns:1fr; gap:6px;}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
@@ -213,13 +206,6 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
   <p class="flagnote"><span data-i18n="flag"></span></p>
 </header>
 
-<div class="readout">
-  <div><b>61 / 61</b><span data-i18n="ro1"></span></div>
-  <div><b>57</b><span data-i18n="ro2"></span></div>
-  <div><b>41×</b><span data-i18n="ro3"></span></div>
-  <div><b>0</b><span data-i18n="ro4"></span></div>
-  <div><b>0</b><span data-i18n="ro5"></span></div>
-</div>
 
 <section class="panel">
   <div class="panel-head">
@@ -400,7 +386,6 @@ en: {
   metaNote:"Main conditions n=3 · every completed run passed the gate plus 2 independent re-checks",
   metaLink:"Design · reports · raw data ↗",
   flag:"<b>Solar Open 2 and Solar Pro 4 were measured on preview APIs.</b> Their endpoints were application-only betas, not commercial GA: no prompt caching, long round-trips, and withdrawal without notice. Time and usage there confound model ability with preview infrastructure — do not read them as production performance.",
-  ro1:"runs completed", ro2:"completed at iteration 1", ro3:"fastest ↔ slowest model, median", ro4:"false completion claims", ro5:"harness interventions",
   mxTitle:"Performance matrix",
   mxSub:"One row per model. The bar spans the min–max of its runs; the thick vertical tick is the median. Time and output span orders of magnitude, so they use a <b>log scale</b> — see the ticks under each column header. Click a header to sort by that metric.",
   segEn:"EN prompt", segKo:"KO prompt",
@@ -466,7 +451,6 @@ ko: {
   metaNote:"주요 조건 n=3 · 완주 run 전부 게이트 + 독립 재검증 2회",
   metaLink:"설계·report·원시 데이터 ↗",
   flag:"<b>Solar Open 2 · Solar Pro 4는 프리뷰 API 측정값이다.</b> 두 모델의 엔드포인트는 상용 제공(GA)이 아닌 신청제 베타로, prompt caching 미지원·긴 왕복 지연·예고 없는 회수가 걸려 있다. 시간·usage는 모델 능력과 프리뷰 인프라가 교락된 값이니 상용 기준 성능으로 읽지 말 것.",
-  ro1:"완주 run", ro2:"iteration 1 완주", ro3:"최속↔최장 모델 중앙값 차", ro4:"완주 run 허위 신고", ro5:"하네스 개입",
   mxTitle:"성능 매트릭스",
   mxSub:"한 행이 한 모델. 막대는 run 최소–최대 범위, 굵은 세로선이 중앙값이다. 시간·output은 값의 폭이 자릿수 단위라 <b>로그 눈금</b>을 쓴다 — 열 제목 아래 눈금 참조. 열 제목을 누르면 그 지표로 정렬된다.",
   segEn:"EN 정본", segKo:"KO 정본",
@@ -532,7 +516,6 @@ ja: {
   metaNote:"主要条件 n=3 · 完走runは全てゲート + 独立再検証2回を通過",
   metaLink:"設計・レポート・生データ ↗",
   flag:"<b>Solar Open 2・Solar Pro 4はプレビューAPIでの測定値。</b> 両モデルのエンドポイントは商用提供(GA)ではなく申請制ベータで、prompt caching非対応・長い往復遅延・予告なしの提供終了を伴う。時間・usageはモデル能力とプレビュー基盤が交絡した値であり、商用基準の性能として読まないこと。",
-  ro1:"完走run", ro2:"iteration 1で完走", ro3:"最速↔最遅モデルの中央値比", ro4:"完走の虚偽申告", ro5:"ハーネス介入",
   mxTitle:"性能マトリクス",
   mxSub:"1行が1モデル。バーはrunの最小–最大範囲、太い縦線が中央値。時間・outputは桁単位で幅があるため<b>対数目盛</b>を使う——列見出し下の目盛を参照。列見出しをクリックするとその指標で並び替わる。",
   segEn:"EN正本", segKo:"KO正本",
@@ -598,7 +581,6 @@ zh: {
   metaNote:"主要条件 n=3 · 所有完成的 run 均通过门控 + 2 次独立复验",
   metaLink:"设计 · 报告 · 原始数据 ↗",
   flag:"<b>Solar Open 2 和 Solar Pro 4 是在预览 API 上测得的。</b> 这两个模型的端点并非商用正式版（GA），而是需申请的测试版：不支持 prompt caching、往返延迟长、可能无预告下线。其时间与 usage 混合了模型能力和预览基础设施的影响，不要当作商用性能来解读。",
-  ro1:"完成的 run", ro2:"在 iteration 1 完成", ro3:"最快↔最慢模型中位数之比", ro4:"虚假完成申报", ro5:"测试框架干预",
   mxTitle:"性能矩阵",
   mxSub:"一行一个模型。横条为各 run 的最小–最大范围，粗竖线为中位数。时间与 output 的取值跨数量级，因此使用<b>对数刻度</b>——见各列标题下方的刻度。点击列标题可按该指标排序。",
   segEn:"EN 标准版", segKo:"KO 标准版",

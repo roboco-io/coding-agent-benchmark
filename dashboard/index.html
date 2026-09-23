@@ -103,7 +103,7 @@ h2{font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0;}
 
 /* ── matrix ───────────────────────────── */
 .scroller{overflow-x:auto; margin-top:4px;}
-table.mx{border-collapse:collapse; width:100%; min-width:1040px;}
+table.mx{border-collapse:collapse; width:100%; min-width:940px;}
 table.mx th{text-align:left; vertical-align:bottom; padding:0 12px 8px 0; border-bottom:1px solid var(--line);}
 table.mx th button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
   color:var(--muted); background:none; border:none; padding:0; cursor:pointer; display:inline-flex; gap:5px; align-items:center;}
@@ -248,7 +248,6 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
       <thead>
         <tr>
           <th scope="col"><button type="button" data-sort="name"><span data-i18n="colModel"></span> <span class="dir">↓</span></button></th>
-          <th scope="col"><button type="button" data-sort="done"><span data-i18n="colDone"></span> <span class="dir">↓</span></button></th>
           <th scope="col">
             <button type="button" data-sort="time"><span data-i18n="colTime"></span> <span class="dir">↓</span></button>
             <div class="scale" data-scale="time"></div>
@@ -750,7 +749,7 @@ function render() {
   const rows = M.map(m => ({ m, s: stats(m[plang]) }));
   const present = rows.filter(r => r.s), absent = rows.filter(r => !r.s);
   const key = {
-    name: r => r.m.name.toLowerCase(), done: r => r.s.n,
+    name: r => r.m.name.toLowerCase(),
     time: r => r.s.tMed, spread: r => r.s.spread, commits: r => r.s.cMed, output: r => r.s.oMed,
     cost: r => r.s.usd.length ? med(r.s.usd) : Infinity
   }[sortKey];
@@ -761,15 +760,14 @@ function render() {
     const color = `var(--${m.stack})`;
     const nameCell = `<td><div class="mdl"><span class="nm"><span class="swatch" style="background:${color}"></span>${m.name}`
       + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + `</span>`
-      + `<span class="st">${stackLabel(m)}${s ? " · " + s.exp : ""}</span></div></td>`;
-    if (!s) return `<tr class="dim">${nameCell}<td colspan="6"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
+      + `<span class="st">${stackLabel(m)}${s ? " · " + s.exp : ""}${s && m[plang].iter !== "iterAll1" ? " · " + s.iter : ""}</span></div></td>`;
+    if (!s) return `<tr class="dim">${nameCell}<td colspan="5"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
 
     const spreadTxt = s.n === 1 ? `<span class="na">${t("n1na")}</span>`
       : `<span class="figs"><em>${f1(s.spread)}×</em> <small>${t("span").replace("{x}", f1(s.tHi - s.tLo))}</small></span>`;
     const spreadBar = s.n === 1 ? `<div class="bar"></div>` : linBar(Math.min(s.spread, S_MAX) - 1, S_MAX - 1, color);
 
     return `<tr>${nameCell}`
-      + `<td><span class="done">${s.done}<small>${s.iter}</small></span></td>`
       + `<td><div class="cell">${rangeBar(s.tLo, s.tHi, s.tMed, s.n, T_MIN, T_MAX, color, false)}`
       + `<span class="figs"><em>${f1(s.tMed)}${min}</em>${s.n > 1 ? ` <small>${f1(s.tLo)}–${f1(s.tHi)}</small>` : ` <small>${t("n1")}</small>`}</span></div></td>`
       + `<td><div class="cell">${spreadBar}${spreadTxt}</div></td>`
@@ -799,7 +797,7 @@ function scales() {
     if (el) el.innerHTML = marks.map(([label, pct]) => `<span style="left:${pct}%">${label}</span>`).join("");
   };
   const mt = t("minTick");
-  put("time", [["3.5 " + mt, 0], ["10", lg(10, T_MIN, T_MAX)], ["30", lg(30, T_MIN, T_MAX)], ["260 " + mt, 100]]);
+  put("time", [["3.5", 0], ["10", lg(10, T_MIN, T_MAX)], ["30", lg(30, T_MIN, T_MAX)], ["260 " + mt, 100]]);
   put("spread", [["1.0×", 0], ["2×", 50], ["3×", 100]]);
   const cm = document.querySelector('.scale[data-scale="commits"]');
   if (cm) cm.innerHTML = `<span style="left:0">${t("commitsScale")}</span>`;

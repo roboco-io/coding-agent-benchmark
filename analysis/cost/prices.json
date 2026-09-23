@@ -1,0 +1,103 @@
+{
+  "_meta": {
+    "unit": "USD per 1M tokens",
+    "accessed": "2026-09-23",
+    "note": "공개 단가 환산 추정용. 실제 청구액 아님.",
+    "cache_write_rule": "cache_write_1h는 1h 단가, 5m은 5m 단가. 단가가 없으면(null) 5m 단가, 그것도 없으면 입력 단가. unsplit(EXP-019 KO)은 같은 하네스 실측이 모두 1h였으므로 1h 단가로 가정"
+  },
+  "Opus 4.8": {
+    "input": 5,
+    "cache_read": 0.5,
+    "cache_write_5m": 6.25,
+    "cache_write_1h": 10,
+    "output": 25,
+    "src": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  "Opus 5": {
+    "input": 5,
+    "cache_read": 0.5,
+    "cache_write_5m": 6.25,
+    "cache_write_1h": 10,
+    "output": 25,
+    "src": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  "Opus 5.5": {
+    "input": 4,
+    "cache_read": 0.2,
+    "cache_write_5m": 5,
+    "cache_write_1h": 8,
+    "output": 20,
+    "src": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  "Fable 5.1": {
+    "input": 10,
+    "cache_read": 0.25,
+    "cache_write_5m": 12.5,
+    "cache_write_1h": 20,
+    "output": 50,
+    "src": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  "DeepSeek V4.1-Flash": {
+    "input": 0.3,
+    "cache_read": 0.006,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 1.2,
+    "src": "https://api-docs.deepseek.com/quick_start/pricing",
+    "caveat": "피크 단가(상한). 오프피크는 절반. 캐시 쓰기 요금 없음"
+  },
+  "DeepSeek V4-Pro": {
+    "input": 1.32,
+    "cache_read": 0.044,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 3.96,
+    "src": "https://api-docs.deepseek.com/quick_start/pricing",
+    "caveat": "피크 단가(상한). 오프피크는 절반"
+  },
+  "qwen3.8-max": {
+    "input": 2,
+    "cache_read": 0.25,
+    "cache_write_5m": 2.5,
+    "cache_write_1h": null,
+    "output": 6,
+    "src": "https://www.qwencloud.com/models/qwen3.8-max",
+    "caveat": "싱가포르 리전. Claude Code가 cache_control을 보내 캐시 생성이 계상되므로 명시 캐시 생성 단가 2.50 적용, 캐시 읽기는 보수적으로 암묵 캐시 0.25(명시 0.17). 공식 페이지 간 캐시 단가 불일치"
+  },
+  "kimi-k3": {
+    "input": 3,
+    "cache_read": 0.3,
+    "cache_write_5m": 3,
+    "cache_write_1h": 6,
+    "output": 15,
+    "src": "https://platform.kimi.ai/docs/pricing/chat"
+  },
+  "gpt-5.6-sol": {
+    "input": 4,
+    "cache_read": 0.4,
+    "cache_write_5m": 5,
+    "cache_write_1h": null,
+    "output": 20,
+    "src": "https://developers.openai.com/api/docs/pricing",
+    "caveat": "프로모션 단가(2026-11-21까지). reasoning 과금 방식 미확인"
+  },
+  "gpt-6-astra": {
+    "input": 10,
+    "cache_read": 1.0,
+    "cache_write_5m": 12.5,
+    "cache_write_1h": null,
+    "output": 50,
+    "src": "https://developers.openai.com/api/docs/pricing",
+    "caveat": "단문맥 단가. 장문맥 기준 미공개"
+  },
+  "Solar Pro 4": {
+    "input": 0.3,
+    "cache_read": 0.06,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 1.2,
+    "src": "https://www.upstage.ai/pricing",
+    "caveat": "정가. 실험 시점(2026-08)은 프리뷰·프로모션 구간"
+  },
+  "Solar Open 2": null
+}

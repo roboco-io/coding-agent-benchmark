@@ -103,7 +103,7 @@ h2{font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0;}
 
 /* ── matrix ───────────────────────────── */
 .scroller{overflow-x:auto; margin-top:4px;}
-table.mx{border-collapse:collapse; width:100%; min-width:900px;}
+table.mx{border-collapse:collapse; width:100%; min-width:1040px;}
 table.mx th{text-align:left; vertical-align:bottom; padding:0 12px 8px 0; border-bottom:1px solid var(--line);}
 table.mx th button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
   color:var(--muted); background:none; border:none; padding:0; cursor:pointer; display:inline-flex; gap:5px; align-items:center;}
@@ -264,6 +264,10 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
             <button type="button" data-sort="output"><span data-i18n="colOutput"></span> <span class="dir">↓</span></button>
             <div class="scale" data-scale="output"></div>
           </th>
+          <th scope="col">
+            <button type="button" data-sort="cost"><span data-i18n="colCost"></span> <span class="dir">↓</span></button>
+            <div class="scale" data-scale="cost"></div>
+          </th>
         </tr>
       </thead>
       <tbody id="mxbody"></tbody>
@@ -317,40 +321,40 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
 /* ───────────────────────── data (language-neutral) ───────────────────────── */
 const M = [
   { name:"gpt-5.6-sol", stack:"codex", meas:"rollout",
-    en:{ exp:"EXP-011/016", t:[5.77,10.0,5.28], c:[3,4,4], o:[13.3,21.8,12.2], done:"3/3", iter:"iterMixed" },
-    ko:{ exp:"EXP-019", t:[7.53,8.72,6.90], c:[4,6,1], o:[16.2,17.3,13.7], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-011/016", t:[5.77,10.0,5.28], c:[3,4,4], o:[13.3,21.8,12.2], usd:[1.012,1.762,1.048], done:"3/3", iter:"iterMixed" },
+    ko:{ exp:"EXP-019", t:[7.53,8.72,6.90], c:[4,6,1], o:[16.2,17.3,13.7], usd:[1.156,1.372,0.983], done:"3/3", iter:"iterAll1" } },
   { name:"gpt-6-astra", stack:"codex", meas:"rollout", koNote:"noteAstra",
-    en:{ exp:"EXP-021", t:[7.60,7.10,7.08], c:[4,3,3], o:[12.5,12.2,12.6], done:"3/3", iter:"iterAll1" },
+    en:{ exp:"EXP-021", t:[7.60,7.10,7.08], c:[4,3,3], o:[12.5,12.2,12.6], usd:[2.506,2.017,1.809], done:"3/3", iter:"iterAll1" },
     ko:null },
   { name:"DeepSeek V4.1-Flash", stack:"direct", provider:"DeepSeek", meas:"jsonl",
-    en:{ exp:"EXP-025", t:[4.57,5.98,4.82], c:[5,4,3], o:[41.1,43.3,47.6], done:"3/3", iter:"iterAll1" },
-    ko:{ exp:"EXP-025", t:[8.42,6.32,4.23], c:[6,7,4], o:[53.7,58.9,38.9], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-025", t:[4.57,5.98,4.82], c:[5,4,3], o:[41.1,43.3,47.6], usd:[0.081,0.092,0.099], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-025", t:[8.42,6.32,4.23], c:[6,7,4], o:[53.7,58.9,38.9], usd:[0.118,0.121,0.081], done:"3/3", iter:"iterAll1" } },
   { name:"DeepSeek V4-Pro", stack:"direct", provider:"DeepSeek", meas:"jsonl",
-    en:{ exp:"EXP-025", t:[13.33,12.08,15.83], c:[4,3,5], o:[62.5,65.5,69.6], done:"3/3", iter:"iterAll1" },
-    ko:{ exp:"EXP-025", t:[13.37,13.35,13.72], c:[4,4,4], o:[64.8,59.6,62.2], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-025", t:[13.33,12.08,15.83], c:[4,3,5], o:[62.5,65.5,69.6], usd:[0.516,0.418,0.574], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-025", t:[13.37,13.35,13.72], c:[4,4,4], o:[64.8,59.6,62.2], usd:[0.501,0.475,0.448], done:"3/3", iter:"iterAll1" } },
   { name:"kimi-k3", stack:"direct", provider:"Moonshot", meas:"jsonl",
-    en:{ exp:"EXP-014/016", t:[21.30,7.62,7.87], c:[4,2,1], o:[31.3,14.4,14.2], done:"3/3", iter:"iterAll1" },
-    ko:{ exp:"EXP-017", t:[15.88,13.67,10.60], c:[4,5,3], o:[24.0,18.8,17.2], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-014/016", t:[21.30,7.62,7.87], c:[4,2,1], o:[31.3,14.4,14.2], usd:[1.415,0.717,0.783], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-017", t:[15.88,13.67,10.60], c:[4,5,3], o:[24.0,18.8,17.2], usd:[0.923,0.957,0.779], done:"3/3", iter:"iterAll1" } },
   { name:"Opus 5.5", stack:"native", meas:"jsonl",
-    en:{ exp:"EXP-026", t:[8.35,3.98,4.20], c:[5,6,4], o:[28.2,19.9,18.6], done:"3/3", iter:"iterAll1" },
-    ko:{ exp:"EXP-026", t:[4.00,4.22,3.95], c:[4,1,4], o:[20.9,21.1,20.1], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-026", t:[8.35,3.98,4.20], c:[5,6,4], o:[28.2,19.9,18.6], usd:[1.717,1.253,1.178], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-026", t:[4.00,4.22,3.95], c:[4,1,4], o:[20.9,21.1,20.1], usd:[1.208,1.224,1.172], done:"3/3", iter:"iterAll1" } },
   { name:"Opus 4.8", stack:"native", meas:"jsonl",
-    en:{ exp:"EXP-010", t:[8.70,8.30,7.80], c:[2,1,1], o:[37.1,32.1,29.6], done:"3/3", iter:"iterAll1" },
-    ko:{ exp:"EXP-019", t:[8.48,7.12,8.30], c:[1,1,1], o:[29.2,26.5,31.7], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-010", t:[8.70,8.30,7.80], c:[2,1,1], o:[37.1,32.1,29.6], usd:[4.205,3.132,3.240], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-019", t:[8.48,7.12,8.30], c:[1,1,1], o:[29.2,26.5,31.7], usd:[2.804,2.888,2.855], done:"3/3", iter:"iterAll1" } },
   { name:"Fable 5.1", stack:"native", meas:"jsonl", koNote:"noteFable",
-    en:{ exp:"EXP-023", t:[6.90,7.77,6.15], c:[4,3,2], o:[31.1,35.8,28.7], done:"3/3", iter:"iterAll1" },
+    en:{ exp:"EXP-023", t:[6.90,7.77,6.15], c:[4,3,2], o:[31.1,35.8,28.7], usd:[3.512,4.067,3.231], done:"3/3", iter:"iterAll1" },
     ko:null },
   { name:"Opus 5", stack:"native", meas:"jsonl",
-    en:{ exp:"EXP-009/010", t:[12.2,11.6,8.9,13.8,17.6,9.4], c:[6,6,7,5,8,4], o:[48.4,47.7,42.6,47.9,46.2,41.1], done:"6/6", iter:"iterAll1" },
-    ko:{ exp:"EXP-019", t:[11.15,11.07,9.92], c:[3,5,5], o:[48.7,45.5,39.1], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-009/010", t:[12.2,11.6,8.9,13.8,17.6,9.4], c:[6,6,7,5,8,4], o:[48.4,47.7,42.6,47.9,46.2,41.1], usd:[5.695,6.322,3.913,5.818,5.950,4.206], done:"6/6", iter:"iterAll1" },
+    ko:{ exp:"EXP-019", t:[11.15,11.07,9.92], c:[3,5,5], o:[48.7,45.5,39.1], usd:[4.105,4.676,4.353], done:"3/3", iter:"iterAll1" } },
   { name:"qwen3.8-max", stack:"direct", provider:"DashScope", meas:"jsonl",
-    en:{ exp:"EXP-013/016", t:[15.08,15.58,14.62], c:[4,6,6], o:[34.6,40.9,37.0], done:"3/3", iter:"iterAll1" },
-    ko:{ exp:"EXP-017", t:[22.78,22.32,23.50], c:[8,4,5], o:[45.8,32.8,44.4], done:"3/3", iter:"iterAll1" } },
+    en:{ exp:"EXP-013/016", t:[15.08,15.58,14.62], c:[4,6,6], o:[34.6,40.9,37.0], usd:[0.954,1.406,1.111], done:"3/3", iter:"iterAll1" },
+    ko:{ exp:"EXP-017", t:[22.78,22.32,23.50], c:[8,4,5], o:[45.8,32.8,44.4], usd:[1.669,1.163,1.562], done:"3/3", iter:"iterAll1" } },
   { name:"Solar Open 2", stack:"direct", provider:"Upstage", meas:"jsonl", preview:true, koNote:"notePreview",
-    en:{ exp:"EXP-015", t:[58.25], c:[2], o:[252.3], done:"1/1", iter:"iter2" },
+    en:{ exp:"EXP-015", t:[58.25], c:[2], o:[252.3], usd:[null], done:"1/1", iter:"iter2" },
     ko:null },
   { name:"Solar Pro 4", stack:"direct", provider:"Upstage", meas:"jsonl", preview:true, koNote:"notePreview",
-    en:{ exp:"EXP-020", t:[258.38,171.40,118.67], c:[4,1,1], o:[195.6,113.5,103.6], done:"3/3", iter:"iter123" },
+    en:{ exp:"EXP-020", t:[258.38,171.40,118.67], c:[4,1,1], o:[195.6,113.5,103.6], usd:[15.629,7.966,4.747], done:"3/3", iter:"iter123" },
     ko:null }
 ];
 
@@ -404,14 +408,14 @@ en: {
   hintEn:"English canonical prompt — all 12 models", hintKo:"Korean canonical prompt (all deliverables in Korean) — 8 models tested",
   lgNative:"Claude Code native", lgDirect:"Claude Code direct (ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgOut:"output measured from Codex rollout totals — not comparable with jsonl-measured (filled) bars",
-  colModel:"Model", colDone:"Completed", colTime:"Wall-clock", colSpread:"Run-to-run spread", colCommits:"Commit discipline", colOutput:"Output tokens",
+  colModel:"Model", colDone:"Completed", colTime:"Wall-clock", colSpread:"Run-to-run spread", colCommits:"Commit discipline", colOutput:"Output tokens", colCost:"Est. cost / run", costNa:"no public price",
   min:" min", minTick:"min", commitsScale:"filled dots = median · scale 1–8",
   iterAll1:"all iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
   stNative:"Claude Code native", stDirect:"Direct", stCodex:"Codex CLI",
   koMissing:"KO condition not tested — ", noteAstra:"new GPT-6 generation", noteFable:"new Claude 5 top-tier model", notePreview:"endpoint withdrawn / new model",
   n1na:"n=1 · not assessable", span:"span {x} min", n1:"n=1", singleRun:"single run", sameAll:"same in every run",
   howEyebrow:"How to read",
-  how1:"Scan a column for the ranking on that metric; scan a row for a model's character. In the <b>time column</b>, the top ten models cluster in one band of 4–23 minutes and only the Solar family sits an order of magnitude away (58 min · 119–258 min) — but that gap is confounded with preview infrastructure. A longer <b>spread bar</b> means a model whose next run is hard to predict (kimi 2.8× vs qwen 1.07×). The <b>commit column</b> is style, not ability: Opus 4.8 lands everything in one commit (median 1) while Opus 5 slices finely (median 6) on the same prompt. The fastest slot now belongs to Opus 5.5 (EN median 4.2 min, KO 4.0 min) on the Claude Code native stack, just ahead of DeepSeek V4.1-Flash (4.8 min) on the direct stack. In the <b>output column</b>, the Claude 5 top-tier model Fable 5.1 (31.1K) stands next to Opus 4.8 (32.1K), not Opus 5 (47.0K) — expanded output is an Opus 5 trait, not a generational one. Opus 5.5 goes lower still (about 20K).",
+  how1:"Scan a column for the ranking on that metric; scan a row for a model's character. In the <b>time column</b>, the top ten models cluster in one band of 4–23 minutes and only the Solar family sits an order of magnitude away (58 min · 119–258 min) — but that gap is confounded with preview infrastructure. A longer <b>spread bar</b> means a model whose next run is hard to predict (kimi 2.8× vs qwen 1.07×). The <b>commit column</b> is style, not ability: Opus 4.8 lands everything in one commit (median 1) while Opus 5 slices finely (median 6) on the same prompt. The fastest slot now belongs to Opus 5.5 (EN median 4.2 min, KO 4.0 min) on the Claude Code native stack, just ahead of DeepSeek V4.1-Flash (4.8 min) on the direct stack. In the <b>output column</b>, the Claude 5 top-tier model Fable 5.1 (31.1K) stands next to Opus 4.8 (32.1K), not Opus 5 (47.0K) — expanded output is an Opus 5 trait, not a generational one. Opus 5.5 goes lower still (about 20K). The <b>cost column</b> converts each run's tokens at public list prices: DeepSeek V4.1-Flash is cheapest (median $0.09), and Opus 5.5 ($1.25) costs about a fifth of Opus 5 ($5.76) and less than Opus 4.8 or Fable 5.1 — speed and price do not rank the same way.",
   how2:"The KO toggle flips only the prompt canon to Korean (all deliverables instructed in Korean, EXP-017/019). <b>Completion rate was unaffected for all eight models</b>; qwen is the only one that slowed beyond the EN range — and since runs were on different days, that is not attributed to language.",
   cardsEyebrow:"Model profiles · the character behind the numbers",
   cards:{
@@ -442,6 +446,7 @@ en: {
   ],
   cavTitle:"Reading caveats", cavSmall:"what these numbers cannot say",
   cavs:[
+    "<b>Cost is a list-price estimate, not what was paid.</b> Each run's tokens (uncached input, cache read, cache write, output) are multiplied by public prices accessed 2026-09-23. Claude runs used a subscription, GPT models ChatGPT-plan OAuth, and Solar a free/promotional preview — none of these amounts were actually billed. DeepSeek uses peak rates (an upper bound; off-peak is half), gpt-5.6-sol a promotional rate, qwen Singapore rates, Claude cache writes the 1-hour TTL. Retries and extra sessions inside a run are included. Solar Open 2 has no public price. <a href=\"https://github.com/roboco-io/coding-agent-benchmark/tree/main/analysis/cost\">Method, prices and per-run data ↗</a>",
     "<b>The verdict is completion only.</b> Completion rate (61/61) is the only stable metric; time, commits and output vary up to 2.8× under identical conditions — any efficiency ranking waits until measurement is standardised.",
     "<b>Measurement differs by condition.</b> Output comes from two sources — session jsonl or Codex rollout — so filled and outlined bars in the matrix cannot be compared. Cache accounting also differs by provider (DashScope both sides · Moonshot read only · Upstage none).",
     "<b>Different harness, reference-only time.</b> gpt-5.6-sol and gpt-6-astra run on Codex CLI, the rest on Claude Code — startup and tool-call overhead differ. Only the sol ↔ astra pair holds the stack constant.",
@@ -469,14 +474,14 @@ ko: {
   hintEn:"영문 프롬프트 정본 — 12 모델 전부", hintKo:"한국어 번역 정본(전 산출물 한국어 지시) — 8 모델만 실험됨",
   lgNative:"Claude Code 네이티브", lgDirect:"Claude Code 직결(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgOut:"output이 rollout 누계 계측 — jsonl 계측(칠한 막대)과 직접 비교 금지",
-  colModel:"모델", colDone:"완주", colTime:"소요 시간", colSpread:"run 간 변동", colCommits:"커밋 규율", colOutput:"output 토큰",
+  colModel:"모델", colDone:"완주", colTime:"소요 시간", colSpread:"run 간 변동", colCommits:"커밋 규율", colOutput:"output 토큰", colCost:"run당 환산 비용", costNa:"공개 단가 없음",
   min:"분", minTick:"분", commitsScale:"채운 점 = 중앙값 · 눈금 1–8",
   iterAll1:"전부 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
   stNative:"Claude Code 네이티브", stDirect:"직결", stCodex:"Codex CLI",
   koMissing:"KO 조건 미실험 — ", noteAstra:"GPT-6 세대 신규", noteFable:"Claude 5 상위 모델 신규", notePreview:"엔드포인트 회수/신규 모델",
   n1na:"n=1 · 판단 불가", span:"폭 {x}분", n1:"n=1", singleRun:"단일 run", sameAll:"전 run 동일",
   howEyebrow:"읽는 법",
-  how1:"세로로 훑으면 각 지표의 순위가, 가로로 훑으면 한 모델의 성격이 보인다. <b>시간 열</b>에서 상위 10개 모델은 4–23분 한 뭉치로 모여 있고 Solar 계열만 자릿수가 다르다(58분 · 119–258분) — 단 그 차이는 프리뷰 인프라와 교락된 값이다. <b>변동 열</b>이 길수록 \"이번 run이 어떻게 나올지 모르는\" 모델이다(kimi 2.8배 vs qwen 1.07배). <b>커밋 열</b>은 능력이 아니라 스타일 — 전부를 한 번에 몰아 커밋하는 Opus 4.8(중앙값 1)과 잘게 쪼개는 Opus 5(6)가 같은 프롬프트에서 정반대로 갈린다. 최속 자리는 Claude Code 네이티브의 Opus 5.5(EN 중앙값 4.2분, KO 4.0분)이며, 직결의 DeepSeek V4.1-Flash(4.8분)가 바로 뒤에 있다. <b>output 열</b>에서는 Claude 5 세대 상위 모델 Fable 5.1(31.1K)이 Opus 5(47.0K)가 아닌 Opus 4.8(32.1K) 옆에 선다 — 산출량 확대는 세대가 아닌 Opus 5 고유 프로파일이다. Opus 5.5는 그보다도 낮다(약 20K).",
+  how1:"세로로 훑으면 각 지표의 순위가, 가로로 훑으면 한 모델의 성격이 보인다. <b>시간 열</b>에서 상위 10개 모델은 4–23분 한 뭉치로 모여 있고 Solar 계열만 자릿수가 다르다(58분 · 119–258분) — 단 그 차이는 프리뷰 인프라와 교락된 값이다. <b>변동 열</b>이 길수록 \"이번 run이 어떻게 나올지 모르는\" 모델이다(kimi 2.8배 vs qwen 1.07배). <b>커밋 열</b>은 능력이 아니라 스타일 — 전부를 한 번에 몰아 커밋하는 Opus 4.8(중앙값 1)과 잘게 쪼개는 Opus 5(6)가 같은 프롬프트에서 정반대로 갈린다. 최속 자리는 Claude Code 네이티브의 Opus 5.5(EN 중앙값 4.2분, KO 4.0분)이며, 직결의 DeepSeek V4.1-Flash(4.8분)가 바로 뒤에 있다. <b>output 열</b>에서는 Claude 5 세대 상위 모델 Fable 5.1(31.1K)이 Opus 5(47.0K)가 아닌 Opus 4.8(32.1K) 옆에 선다 — 산출량 확대는 세대가 아닌 Opus 5 고유 프로파일이다. Opus 5.5는 그보다도 낮다(약 20K). <b>비용 열</b>은 run별 토큰을 공개 단가로 환산한 값이다 — DeepSeek V4.1-Flash가 가장 싸고(중앙값 $0.09), Opus 5.5($1.25)는 Opus 5($5.76)의 약 1/5이며 Opus 4.8·Fable 5.1보다도 싸다. 속도 순위와 비용 순위는 같지 않다.",
   how2:"KO 토글은 프롬프트 정본만 한국어로 반전한 조건이다(전 산출물 한국어 지시, EXP-017/019). <b>8개 모델 전부 완주율에 영향이 없었고</b>, EN과 분포가 겹치지 않을 만큼 느려진 것은 qwen 하나뿐이다 — 실행 시점이 달라 언어 효과로 단정하지는 않는다.",
   cardsEyebrow:"모델 프로파일 · 수치 뒤의 성격",
   cards:{
@@ -507,6 +512,7 @@ ko: {
   ],
   cavTitle:"해석 주의", cavSmall:"이 숫자로 하면 안 되는 말",
   cavs:[
+    "<b>비용은 실제 지출이 아니라 공개 단가 환산 추정치다.</b> run별 토큰(비캐시 입력·캐시 읽기·캐시 쓰기·출력)에 2026-09-23 확인한 공개 단가를 곱했다. Claude run은 구독, GPT는 ChatGPT 플랜 OAuth, Solar는 무료·프로모션 프리뷰로 실행해 이 금액이 실제로 청구되지 않았다. DeepSeek는 피크 단가(상한, 오프피크는 절반), gpt-5.6-sol은 프로모션 단가, qwen은 싱가포르 단가, Claude 캐시 쓰기는 1시간 TTL 단가를 썼다. run 안의 재시도·추가 세션을 포함한다. Solar Open 2는 공개 단가가 없다. <a href=\"https://github.com/roboco-io/coding-agent-benchmark/tree/main/analysis/cost\">산출 방법·단가·run별 데이터 ↗</a>",
     "<b>판정은 완주 여부 단일이다.</b> 완주율(61/61)만이 안정된 지표이며, 시간·커밋·output은 같은 조건에서도 최대 2.8배 변동한다 — 효율 순위 서사는 계측 표준화 전까지 유보한다.",
     "<b>계측 방식이 조건마다 다르다.</b> output은 세션 jsonl / Codex rollout 2종으로, 매트릭스에서 칠한 막대와 테두리 막대는 서로 비교할 수 없다. 캐시 계상도 제공자별 상이(DashScope 양측 · Moonshot read만 · Upstage 무계상).",
     "<b>하네스가 다르면 시간 절대 비교는 참고치다.</b> gpt-5.6-sol·gpt-6-astra는 Codex CLI, 나머지는 Claude Code — 기동·도구 호출 오버헤드가 다르다. sol↔astra 간 비교만 스택이 통제된다.",
@@ -534,14 +540,14 @@ ja: {
   hintEn:"英語プロンプト正本——12モデル全て", hintKo:"韓国語翻訳正本（全成果物を韓国語で指示）——8モデルのみ実験",
   lgNative:"Claude Code ネイティブ", lgDirect:"Claude Code 直結(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgOut:"outputがrollout累計計測——jsonl計測（塗りつぶしバー）との直接比較不可",
-  colModel:"モデル", colDone:"完走", colTime:"所要時間", colSpread:"run間変動", colCommits:"コミット規律", colOutput:"outputトークン",
+  colModel:"モデル", colDone:"完走", colTime:"所要時間", colSpread:"run間変動", colCommits:"コミット規律", colOutput:"outputトークン", colCost:"runあたり換算コスト", costNa:"公開単価なし",
   min:"分", minTick:"分", commitsScale:"塗りつぶし点 = 中央値 · 目盛 1–8",
   iterAll1:"全run iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
   stNative:"Claude Code ネイティブ", stDirect:"直結", stCodex:"Codex CLI",
   koMissing:"KO条件は未実験——", noteAstra:"GPT-6世代の新モデル", noteFable:"Claude 5上位モデルの新規", notePreview:"エンドポイント終了/新モデル",
   n1na:"n=1 · 判断不可", span:"幅 {x}分", n1:"n=1", singleRun:"単一run", sameAll:"全run同一",
   howEyebrow:"読み方",
-  how1:"縦に見れば各指標の順位が、横に見れば1モデルの性格が見える。<b>時間列</b>では上位10モデルが4–23分の一塊にまとまり、Solar系だけ桁が異なる（58分 · 119–258分）——ただしその差はプレビュー基盤と交絡した値である。<b>変動列</b>が長いほど「今回のrunがどう出るか分からない」モデル（kimi 2.8倍 vs qwen 1.07倍）。<b>コミット列</b>は能力ではなくスタイル——全てを一度にまとめてコミットするOpus 4.8（中央値1）と細かく刻むOpus 5（6）が同じプロンプトで正反対に分かれる。最速の座はClaude CodeネイティブのOpus 5.5（EN中央値4.2分、KO 4.0分）で、直結のDeepSeek V4.1-Flash（4.8分）がすぐ後に続く。<b>output列</b>ではClaude 5世代の上位モデルFable 5.1（31.1K）がOpus 5（47.0K）ではなくOpus 4.8（32.1K）の隣に立つ——出力量拡大は世代ではなくOpus 5固有のプロファイルである。Opus 5.5はさらに低い（約20K）。",
+  how1:"縦に見れば各指標の順位が、横に見れば1モデルの性格が見える。<b>時間列</b>では上位10モデルが4–23分の一塊にまとまり、Solar系だけ桁が異なる（58分 · 119–258分）——ただしその差はプレビュー基盤と交絡した値である。<b>変動列</b>が長いほど「今回のrunがどう出るか分からない」モデル（kimi 2.8倍 vs qwen 1.07倍）。<b>コミット列</b>は能力ではなくスタイル——全てを一度にまとめてコミットするOpus 4.8（中央値1）と細かく刻むOpus 5（6）が同じプロンプトで正反対に分かれる。最速の座はClaude CodeネイティブのOpus 5.5（EN中央値4.2分、KO 4.0分）で、直結のDeepSeek V4.1-Flash（4.8分）がすぐ後に続く。<b>output列</b>ではClaude 5世代の上位モデルFable 5.1（31.1K）がOpus 5（47.0K）ではなくOpus 4.8（32.1K）の隣に立つ——出力量拡大は世代ではなくOpus 5固有のプロファイルである。Opus 5.5はさらに低い（約20K）。<b>コスト列</b>はrunごとのトークンを公開単価で換算した値——DeepSeek V4.1-Flashが最も安く（中央値$0.09）、Opus 5.5（$1.25）はOpus 5（$5.76）の約1/5で、Opus 4.8・Fable 5.1よりも安い。速度の順位とコストの順位は一致しない。",
   how2:"KOトグルはプロンプト正本のみ韓国語に反転した条件（全成果物を韓国語で指示、EXP-017/019）。<b>8モデル全てで完走率に影響はなく</b>、ENと分布が重ならないほど遅くなったのはqwen 1つだけ——実行時点が異なるため言語効果とは断定しない。",
   cardsEyebrow:"モデルプロファイル · 数値の裏の性格",
   cards:{
@@ -572,6 +578,7 @@ ja: {
   ],
   cavTitle:"解釈上の注意", cavSmall:"この数字で言ってはいけないこと",
   cavs:[
+    "<b>コストは実際の支出ではなく公開単価による換算推定値。</b> runごとのトークン（非キャッシュ入力・キャッシュ読み取り・キャッシュ書き込み・出力）に2026-09-23確認の公開単価を掛けた。Claudeはサブスクリプション、GPTはChatGPTプランのOAuth、Solarは無料・プロモーションのプレビューで実行しており、この金額は実際には請求されていない。DeepSeekはピーク単価（上限、オフピークは半額）、gpt-5.6-solはプロモーション単価、qwenはシンガポール単価、Claudeのキャッシュ書き込みは1時間TTL単価。run内の再試行・追加セッションを含む。Solar Open 2は公開単価なし。<a href=\"https://github.com/roboco-io/coding-agent-benchmark/tree/main/analysis/cost\">算出方法・単価・runごとのデータ ↗</a>",
     "<b>判定は完走の可否のみ。</b> 完走率（61/61）だけが安定した指標で、時間・コミット・outputは同条件でも最大2.8倍変動する——効率順位の叙述は計測標準化まで保留。",
     "<b>計測方式が条件ごとに異なる。</b> outputはセッションjsonl / Codex rolloutの2種で、マトリクスの塗りつぶしバーと枠線バーは互いに比較できない。キャッシュ計上もプロバイダごとに異なる（DashScope両側 · Moonshot readのみ · Upstage計上なし）。",
     "<b>ハーネスが異なれば時間の絶対比較は参考値。</b> gpt-5.6-sol・gpt-6-astraはCodex CLI、残りはClaude Code——起動・ツール呼び出しのオーバーヘッドが異なる。sol↔astra間の比較のみスタックが統制されている。",
@@ -599,14 +606,14 @@ zh: {
   hintEn:"英文标准提示词——全部 12 个模型", hintKo:"韩文翻译标准版（要求全部产出为韩文）——仅 8 个模型测试",
   lgNative:"Claude Code 原生", lgDirect:"Claude Code 直连(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgOut:"output 按 rollout 累计计量——不可与 jsonl 计量（实心条）直接比较",
-  colModel:"模型", colDone:"完成", colTime:"耗时", colSpread:"run 间波动", colCommits:"提交纪律", colOutput:"output token",
+  colModel:"模型", colDone:"完成", colTime:"耗时", colSpread:"run 间波动", colCommits:"提交纪律", colOutput:"output token", colCost:"每 run 折算成本", costNa:"无公开单价",
   min:"分钟", minTick:"分钟", commitsScale:"实心点 = 中位数 · 刻度 1–8",
   iterAll1:"全部 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3",
   stNative:"Claude Code 原生", stDirect:"直连", stCodex:"Codex CLI",
   koMissing:"KO 条件未测试——", noteAstra:"GPT-6 世代新模型", noteFable:"Claude 5 高阶新模型", notePreview:"端点已下线/新模型",
   n1na:"n=1 · 无法判断", span:"跨度 {x} 分钟", n1:"n=1", singleRun:"单个 run", sameAll:"所有 run 相同",
   howEyebrow:"阅读方法",
-  how1:"纵向看是各指标的排名，横向看是单个模型的性格。<b>时间列</b>中前 10 个模型聚在 4–23 分钟的一簇里，只有 Solar 系列相差一个数量级（58 分钟 · 119–258 分钟）——但这一差距与预览基础设施相混淆。<b>波动列</b>越长，越是“这次 run 结果难以预料”的模型（kimi 2.8 倍 vs qwen 1.07 倍）。<b>提交列</b>反映的是风格而非能力——一次性全部提交的 Opus 4.8（中位数 1）与细分提交的 Opus 5（6）在同一提示词下走向相反。最快的位置属于 Claude Code 原生栈上的 Opus 5.5（EN 中位数 4.2 分钟，KO 4.0 分钟），直连栈上的 DeepSeek V4.1-Flash（4.8 分钟）紧随其后。<b>output 列</b>中，Claude 5 世代的高阶模型 Fable 5.1（31.1K）站在 Opus 4.8（32.1K）旁边而非 Opus 5（47.0K）——输出量扩大不是世代特征，而是 Opus 5 独有的特征。Opus 5.5 更低（约 20K）。",
+  how1:"纵向看是各指标的排名，横向看是单个模型的性格。<b>时间列</b>中前 10 个模型聚在 4–23 分钟的一簇里，只有 Solar 系列相差一个数量级（58 分钟 · 119–258 分钟）——但这一差距与预览基础设施相混淆。<b>波动列</b>越长，越是“这次 run 结果难以预料”的模型（kimi 2.8 倍 vs qwen 1.07 倍）。<b>提交列</b>反映的是风格而非能力——一次性全部提交的 Opus 4.8（中位数 1）与细分提交的 Opus 5（6）在同一提示词下走向相反。最快的位置属于 Claude Code 原生栈上的 Opus 5.5（EN 中位数 4.2 分钟，KO 4.0 分钟），直连栈上的 DeepSeek V4.1-Flash（4.8 分钟）紧随其后。<b>output 列</b>中，Claude 5 世代的高阶模型 Fable 5.1（31.1K）站在 Opus 4.8（32.1K）旁边而非 Opus 5（47.0K）——输出量扩大不是世代特征，而是 Opus 5 独有的特征。Opus 5.5 更低（约 20K）。<b>成本列</b>是按公开单价折算每个 run 的 token——DeepSeek V4.1-Flash 最便宜（中位数 $0.09），Opus 5.5（$1.25）约为 Opus 5（$5.76）的 1/5，也低于 Opus 4.8 和 Fable 5.1。速度排名与成本排名并不一致。",
   how2:"KO 开关仅将提示词标准版翻转为韩文（要求全部产出为韩文，EXP-017/019）。<b>8 个模型的完成率均未受影响</b>，慢到与 EN 分布不重叠的只有 qwen 一个——由于执行时间不同，不将其断定为语言效应。",
   cardsEyebrow:"模型画像 · 数字背后的性格",
   cards:{
@@ -637,6 +644,7 @@ zh: {
   ],
   cavTitle:"解读注意", cavSmall:"这些数字不能说明什么",
   cavs:[
+    "<b>成本是按公开单价折算的估算值，并非实际支出。</b> 将每个 run 的 token（未缓存输入·缓存读取·缓存写入·输出）乘以 2026-09-23 核实的公开单价。Claude 使用订阅、GPT 使用 ChatGPT 套餐 OAuth、Solar 使用免费·促销预览运行，这些金额并未实际计费。DeepSeek 按高峰单价（上限，非高峰减半），gpt-5.6-sol 按促销单价，qwen 按新加坡单价，Claude 缓存写入按 1 小时 TTL 单价。包含 run 内的重试与额外会话。Solar Open 2 无公开单价。<a href=\"https://github.com/roboco-io/coding-agent-benchmark/tree/main/analysis/cost\">计算方法·单价·逐 run 数据 ↗</a>",
     "<b>判定只看是否完成。</b> 只有完成率（61/61）是稳定指标，时间·提交·output 在同一条件下也会波动至 2.8 倍——效率排名的叙述在计量标准化之前保留。",
     "<b>计量方式因条件而异。</b> output 有会话 jsonl / Codex rollout 两种来源，矩阵中的实心条与描边条不能互相比较。缓存计量也因提供商而异（DashScope 双向 · Moonshot 仅 read · Upstage 不计）。",
     "<b>框架不同时，时间的绝对比较仅供参考。</b> gpt-5.6-sol·gpt-6-astra 使用 Codex CLI，其余使用 Claude Code——启动与工具调用开销不同。只有 sol↔astra 之间的比较控制了栈。",
@@ -694,11 +702,12 @@ function applyStatic() {
 }
 
 /* ───────────────────────── matrix ───────────────────────── */
-const T_MIN = 3.5, T_MAX = 260, O_MIN = 10, O_MAX = 260, S_MAX = 3, C_MAX = 8;
+const U_MIN = 0.05, U_MAX = 20, T_MIN = 3.5, T_MAX = 260, O_MIN = 10, O_MAX = 260, S_MAX = 3, C_MAX = 8;
 const lg = (v, lo, hi) => Math.max(0, Math.min(100, (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) * 100));
 const med = a => { const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
 const lo = a => Math.min(...a), hi = a => Math.max(...a);
 const f1 = v => (Math.round(v * 10) / 10).toFixed(1);
+const usd = v => v < 1 ? v.toFixed(2) : v < 10 ? v.toFixed(1) : Math.round(v).toString();
 
 let plang = "en", sortKey = "time", sortDir = 1;
 
@@ -713,7 +722,8 @@ function stats(d) {
   return { tMed: med(d.t), tLo: lo(d.t), tHi: hi(d.t), n: d.t.length,
            spread: lo(d.t) > 0 ? hi(d.t) / lo(d.t) : 1,
            cMed: med(d.c), cLo: lo(d.c), cHi: hi(d.c),
-           oMed: med(d.o), oLo: lo(d.o), oHi: hi(d.o), done: d.done, iter: t(d.iter), exp: d.exp };
+           oMed: med(d.o), oLo: lo(d.o), oHi: hi(d.o), done: d.done, iter: t(d.iter), exp: d.exp,
+           usd: (d.usd || []).filter(v => v != null) };
 }
 
 function rangeBar(loV, hiV, medV, n, scaleLo, scaleHi, color, outlined) {
@@ -741,7 +751,8 @@ function render() {
   const present = rows.filter(r => r.s), absent = rows.filter(r => !r.s);
   const key = {
     name: r => r.m.name.toLowerCase(), done: r => r.s.n,
-    time: r => r.s.tMed, spread: r => r.s.spread, commits: r => r.s.cMed, output: r => r.s.oMed
+    time: r => r.s.tMed, spread: r => r.s.spread, commits: r => r.s.cMed, output: r => r.s.oMed,
+    cost: r => r.s.usd.length ? med(r.s.usd) : Infinity
   }[sortKey];
   present.sort((a, b) => { const x = key(a), y = key(b); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
   const min = t("min");
@@ -751,7 +762,7 @@ function render() {
     const nameCell = `<td><div class="mdl"><span class="nm"><span class="swatch" style="background:${color}"></span>${m.name}`
       + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + `</span>`
       + `<span class="st">${stackLabel(m)}${s ? " · " + s.exp : ""}</span></div></td>`;
-    if (!s) return `<tr class="dim">${nameCell}<td colspan="5"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
+    if (!s) return `<tr class="dim">${nameCell}<td colspan="6"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
 
     const spreadTxt = s.n === 1 ? `<span class="na">${t("n1na")}</span>`
       : `<span class="figs"><em>${f1(s.spread)}×</em> <small>${t("span").replace("{x}", f1(s.tHi - s.tLo))}</small></span>`;
@@ -765,7 +776,12 @@ function render() {
       + `<td><div class="cell">${dots(s.cMed, color)}`
       + `<span class="figs"><em>${s.cMed}</em> <small>${s.n === 1 ? t("singleRun") : s.cLo === s.cHi ? t("sameAll") : s.cLo + "–" + s.cHi}</small></span></div></td>`
       + `<td><div class="cell">${rangeBar(s.oLo, s.oHi, s.oMed, s.n, O_MIN, O_MAX, color, m.meas === "rollout")}`
-      + `<span class="figs"><em>${f1(s.oMed)}K</em> <small>${m.meas}</small></span></div></td></tr>`;
+      + `<span class="figs"><em>${f1(s.oMed)}K</em> <small>${m.meas}</small></span></div></td>`
+      + (s.usd.length
+          ? `<td><div class="cell">${rangeBar(lo(s.usd), hi(s.usd), med(s.usd), s.usd.length, U_MIN, U_MAX, color, false)}`
+            + `<span class="figs"><em>$${usd(med(s.usd))}</em>${s.usd.length > 1 ? ` <small>${usd(lo(s.usd))}–${usd(hi(s.usd))}</small>` : ""}</span></div></td>`
+          : `<td><span class="na">${t("costNa")}</span></td>`)
+      + `</tr>`;
   }).join("");
 
   document.getElementById("mxbody").innerHTML = body;
@@ -783,10 +799,11 @@ function scales() {
     if (el) el.innerHTML = marks.map(([label, pct]) => `<span style="left:${pct}%">${label}</span>`).join("");
   };
   const mt = t("minTick");
-  put("time", [["3.5 " + mt, 0], ["10", lg(10, T_MIN, T_MAX)], ["30", lg(30, T_MIN, T_MAX)], ["100", lg(100, T_MIN, T_MAX)], ["260 " + mt, 100]]);
+  put("time", [["3.5 " + mt, 0], ["10", lg(10, T_MIN, T_MAX)], ["30", lg(30, T_MIN, T_MAX)], ["260 " + mt, 100]]);
   put("spread", [["1.0×", 0], ["2×", 50], ["3×", 100]]);
   const cm = document.querySelector('.scale[data-scale="commits"]');
   if (cm) cm.innerHTML = `<span style="left:0">${t("commitsScale")}</span>`;
+  put("cost", [["$0.05", 0], ["$0.5", lg(0.5, U_MIN, U_MAX)], ["$20", 100]]);
   put("output", [["10K", 0], ["30", lg(30, O_MIN, O_MAX)], ["100", lg(100, O_MIN, O_MAX)], ["260K", 100]]);
 }
 

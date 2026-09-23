@@ -145,6 +145,9 @@ table.mx tbody tr.dim td{opacity:.42;}
 .callout p{margin:0; font-size:.87rem; color:var(--ink-2); max-width:80ch;}
 .callout p b{color:var(--ink); font-weight:600;}
 .callout p + p{margin-top:8px;}
+.howlist{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:8px; max-width:80ch;}
+.howlist li{font-size:.87rem; color:var(--ink-2); line-height:1.6;}
+.howlist li b{color:var(--ink); font-weight:600;}
 
 /* ── cards ────────────────────────────── */
 .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:14px;}
@@ -261,10 +264,7 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
 
   <div class="callout">
     <p class="eyebrow" data-i18n="howEyebrow"></p>
-    <div>
-      <p data-i18n="how1"></p>
-      <p data-i18n="how2"></p>
-    </div>
+    <ul class="howlist" id="howList"></ul>
   </div>
 </section>
 
@@ -399,8 +399,7 @@ en: {
   koMissing:"KO condition not tested — ", noteAstra:"new GPT-6 generation", noteFable:"new Claude 5 top-tier model", notePreview:"endpoint withdrawn / new model",
   n1na:"n=1 · not assessable", span:"span {x} min", n1:"n=1", singleRun:"single run", sameAll:"same in every run",
   howEyebrow:"How to read",
-  how1:"Scan a column for the ranking on that metric; scan a row for a model's character. In the <b>time column</b>, the top ten models cluster in one band of 4–23 minutes and only the Solar family sits an order of magnitude away (58 min · 119–258 min) — but that gap is confounded with preview infrastructure. A longer <b>spread bar</b> means a model whose next run is hard to predict (kimi 2.8× vs qwen 1.07×). The <b>commit column</b> is style, not ability: Opus 4.8 lands everything in one commit (median 1) while Opus 5 slices finely (median 6) on the same prompt. The fastest slot now belongs to Opus 5.5 (EN median 4.2 min, KO 4.0 min) on the Claude Code native stack, just ahead of DeepSeek V4.1-Flash (4.8 min) on the direct stack. In the <b>output column</b>, the Claude 5 top-tier model Fable 5.1 (31.1K) stands next to Opus 4.8 (32.1K), not Opus 5 (47.0K) — expanded output is an Opus 5 trait, not a generational one. Opus 5.5 goes lower still (about 20K). The <b>cost column</b> converts each run's tokens at public list prices: DeepSeek V4.1-Flash is cheapest (median $0.09), and Opus 5.5 ($1.25) costs about a fifth of Opus 5 ($5.76) and less than Opus 4.8 or Fable 5.1 — speed and price do not rank the same way.",
-  how2:"The KO toggle flips only the prompt canon to Korean (all deliverables instructed in Korean, EXP-017/019). <b>Completion rate was unaffected for all eight models</b>; qwen is the only one that slowed beyond the EN range — and since runs were on different days, that is not attributed to language.",
+  howItems:["<b>Reading the bars</b> — Each row is one model. A bar spans the smallest to the largest value across that model's runs; the white tick is the median. Click a column header to sort by it.", "<b>Wall-clock</b> — How long the agent session took to finish the task in one run. Most models have medians between 4 and 15 minutes. The two Solar models (58 min, 119–258 min) also reflect slow preview-API responses and missing caching, so don't use them to compare model performance.", "<b>Run-to-run spread</b> — How many times longer the slowest run took than the fastest under the same condition. The larger it is, the harder it is to predict the next run. For example: kimi-k3 2.8×, qwen3.8-max 1.1×.", "<b>Commit discipline</b> — Git commits made in one run (filled dots = median). This shows working style, not result quality. On the same prompt, Opus 4.8 usually commits once (median 1) while Opus 5 splits work into many commits (median 6).", "<b>Output tokens</b> — Tokens the model generated, thinking included. Outlined bars (gpt-5.6-sol, gpt-6-astra) are measured from Codex's own records and can't be compared directly with filled bars.", "<b>Est. cost / run</b> — The run's tokens multiplied by public API prices. This is an estimate, not what was billed (runs used subscriptions and previews). Prices and assumptions are under \"Reading caveats\" below.", "<b>Key observations</b> — The fastest model is Opus 5.5 (median 4.2 min); the cheapest is DeepSeek V4.1-Flash (about $0.09 per run). Fast is not the same as cheap: Fable 5.1 is quick at 6.9 min but costs about $3.5 per run, roughly 3× Opus 5.5 ($1.25).", "<b>KO prompt toggle</b> — The prompt is swapped for a Korean translation and the deliverables (commits, README) must be written in Korean. All 8 models tested still finished. Only qwen3.8-max was clearly slower than in English (15.1 → 22.8 min); the two conditions ran on different days, so this is not attributed to language."],
   cardsEyebrow:"Model profiles · the character behind the numbers",
   cards:{
     dsflash:{ exp:"Direct · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash, released 2026-09-10", li:["<b>Fastest direct model</b> — EN median 4.8 min (4.6–6.0), below gpt-5.6-sol on Codex; second only to Opus 5.5 (4.2). 6/6 iteration-1 completions across EN and KO, no serving incidents.","<b>Cheapest by far</b> — about $0.08–0.12 per run at list price (cache-hit input $0.006/M), roughly a fifth of V4-Pro.","<b>Full editor trajectory</b> — uses Read/Write/Edit alongside Bash (the other direct models lean on Bash), and in KO still emits Korean commits and READMEs."], cav:"Metered API (not subscription). Cost is a list-price estimate from usage; DeepSeek reports cache reads but no cache-creation field." },
@@ -464,8 +463,7 @@ ko: {
   koMissing:"KO 조건 미실험 — ", noteAstra:"GPT-6 세대 신규", noteFable:"Claude 5 상위 모델 신규", notePreview:"엔드포인트 회수/신규 모델",
   n1na:"n=1 · 판단 불가", span:"폭 {x}분", n1:"n=1", singleRun:"단일 run", sameAll:"전 run 동일",
   howEyebrow:"읽는 법",
-  how1:"세로로 훑으면 각 지표의 순위가, 가로로 훑으면 한 모델의 성격이 보인다. <b>시간 열</b>에서 상위 10개 모델은 4–23분 한 뭉치로 모여 있고 Solar 계열만 자릿수가 다르다(58분 · 119–258분) — 단 그 차이는 프리뷰 인프라와 교락된 값이다. <b>변동 열</b>이 길수록 \"이번 run이 어떻게 나올지 모르는\" 모델이다(kimi 2.8배 vs qwen 1.07배). <b>커밋 열</b>은 능력이 아니라 스타일 — 전부를 한 번에 몰아 커밋하는 Opus 4.8(중앙값 1)과 잘게 쪼개는 Opus 5(6)가 같은 프롬프트에서 정반대로 갈린다. 최속 자리는 Claude Code 네이티브의 Opus 5.5(EN 중앙값 4.2분, KO 4.0분)이며, 직결의 DeepSeek V4.1-Flash(4.8분)가 바로 뒤에 있다. <b>output 열</b>에서는 Claude 5 세대 상위 모델 Fable 5.1(31.1K)이 Opus 5(47.0K)가 아닌 Opus 4.8(32.1K) 옆에 선다 — 산출량 확대는 세대가 아닌 Opus 5 고유 프로파일이다. Opus 5.5는 그보다도 낮다(약 20K). <b>비용 열</b>은 run별 토큰을 공개 단가로 환산한 값이다 — DeepSeek V4.1-Flash가 가장 싸고(중앙값 $0.09), Opus 5.5($1.25)는 Opus 5($5.76)의 약 1/5이며 Opus 4.8·Fable 5.1보다도 싸다. 속도 순위와 비용 순위는 같지 않다.",
-  how2:"KO 토글은 프롬프트 정본만 한국어로 반전한 조건이다(전 산출물 한국어 지시, EXP-017/019). <b>8개 모델 전부 완주율에 영향이 없었고</b>, EN과 분포가 겹치지 않을 만큼 느려진 것은 qwen 하나뿐이다 — 실행 시점이 달라 언어 효과로 단정하지는 않는다.",
+  howItems:["<b>막대 읽는 법</b> — 한 행이 한 모델입니다. 막대는 그 모델의 run 중 가장 작은 값부터 가장 큰 값까지의 범위이고, 흰 세로선은 중앙값입니다. 열 제목을 누르면 그 기준으로 정렬됩니다.", "<b>소요 시간</b> — run 하나가 과제를 완주하기까지 걸린 에이전트 세션 시간입니다. 대부분의 모델이 중앙값 기준 4–15분에 모여 있습니다. Solar 두 모델(58분, 119–258분)은 프리뷰 API의 느린 응답과 캐시 미지원이 함께 반영된 값이므로 모델 성능 비교에 쓰지 마세요.", "<b>run 간 변동</b> — 같은 조건에서 가장 느린 run이 가장 빠른 run의 몇 배였는지입니다. 값이 클수록 다음 run이 얼마나 걸릴지 예측하기 어렵습니다. 예: kimi-k3 2.8배, qwen3.8-max 1.1배.", "<b>커밋 규율</b> — run 하나에서 만든 git 커밋 수입니다(채운 점 = 중앙값). 결과 품질이 아니라 작업 방식의 차이를 보여 줍니다. 같은 프롬프트에서 Opus 4.8은 대개 한 번에 커밋하고(중앙값 1), Opus 5는 여러 번 나눠 커밋합니다(중앙값 6).", "<b>output 토큰</b> — 모델이 생성한 토큰 수(thinking 포함)입니다. 테두리만 있는 막대(gpt-5.6-sol, gpt-6-astra)는 Codex 기록 방식으로 계측한 값이라 칠한 막대와 직접 비교할 수 없습니다.", "<b>run당 환산 비용</b> — run에서 쓴 토큰에 공개 API 단가를 곱한 추정치입니다. 실제 청구 금액이 아닙니다(구독·프리뷰로 실행). 적용한 단가와 가정은 아래 \"해석 주의\"에 있습니다.", "<b>핵심 관찰</b> — 가장 빠른 모델은 Opus 5.5(중앙값 4.2분), 가장 싼 모델은 DeepSeek V4.1-Flash(run당 약 $0.09)입니다. 빠르다고 싸지는 않습니다. Fable 5.1은 6.9분으로 빠른 편이지만 run당 약 $3.5로 Opus 5.5($1.25)의 약 3배입니다.", "<b>KO 정본 토글</b> — 프롬프트를 한국어 번역본으로 바꾸고 산출물(커밋·README)도 한국어로 쓰게 한 조건입니다. 실험한 8개 모델이 모두 완주했습니다. 영어 조건보다 확실히 느려진 모델은 qwen3.8-max 하나(15.1분 → 22.8분)이며, 두 조건의 실행 날짜가 달라 언어 때문이라고 단정하지 않습니다."],
   cardsEyebrow:"모델 프로파일 · 수치 뒤의 성격",
   cards:{
     dsflash:{ exp:"직결 · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash, 2026-09-10 출시", li:["<b>직결 최속</b> — EN 중앙값 4.8분(4.6–6.0)으로 Codex의 gpt-5.6-sol보다 아래, Opus 5.5(4.2분) 다음. EN·KO 합쳐 6/6 iteration 1 완주, 서빙 장애 0건.","<b>압도적으로 저렴</b> — 공개 단가 기준 run당 약 $0.08–0.12(캐시 히트 입력 $0.006/M), V4-Pro의 1/5 수준.","<b>편집기형 궤적</b> — 다른 직결 모델이 Bash에 기대는 것과 달리 Read/Write/Edit를 고루 사용. KO에서도 커밋·README 전수 한국어."], cav:"API 종량(구독 아님). 비용은 usage×공개 단가 추정치. DeepSeek는 cache_read만 계상하고 cache_creation 필드는 0." },
@@ -529,8 +527,7 @@ ja: {
   koMissing:"KO条件は未実験——", noteAstra:"GPT-6世代の新モデル", noteFable:"Claude 5上位モデルの新規", notePreview:"エンドポイント終了/新モデル",
   n1na:"n=1 · 判断不可", span:"幅 {x}分", n1:"n=1", singleRun:"単一run", sameAll:"全run同一",
   howEyebrow:"読み方",
-  how1:"縦に見れば各指標の順位が、横に見れば1モデルの性格が見える。<b>時間列</b>では上位10モデルが4–23分の一塊にまとまり、Solar系だけ桁が異なる（58分 · 119–258分）——ただしその差はプレビュー基盤と交絡した値である。<b>変動列</b>が長いほど「今回のrunがどう出るか分からない」モデル（kimi 2.8倍 vs qwen 1.07倍）。<b>コミット列</b>は能力ではなくスタイル——全てを一度にまとめてコミットするOpus 4.8（中央値1）と細かく刻むOpus 5（6）が同じプロンプトで正反対に分かれる。最速の座はClaude CodeネイティブのOpus 5.5（EN中央値4.2分、KO 4.0分）で、直結のDeepSeek V4.1-Flash（4.8分）がすぐ後に続く。<b>output列</b>ではClaude 5世代の上位モデルFable 5.1（31.1K）がOpus 5（47.0K）ではなくOpus 4.8（32.1K）の隣に立つ——出力量拡大は世代ではなくOpus 5固有のプロファイルである。Opus 5.5はさらに低い（約20K）。<b>コスト列</b>はrunごとのトークンを公開単価で換算した値——DeepSeek V4.1-Flashが最も安く（中央値$0.09）、Opus 5.5（$1.25）はOpus 5（$5.76）の約1/5で、Opus 4.8・Fable 5.1よりも安い。速度の順位とコストの順位は一致しない。",
-  how2:"KOトグルはプロンプト正本のみ韓国語に反転した条件（全成果物を韓国語で指示、EXP-017/019）。<b>8モデル全てで完走率に影響はなく</b>、ENと分布が重ならないほど遅くなったのはqwen 1つだけ——実行時点が異なるため言語効果とは断定しない。",
+  howItems:["<b>バーの読み方</b>——1行が1モデルです。バーはそのモデルのrunの最小値から最大値までの範囲で、白い縦線が中央値です。列見出しをクリックするとその基準で並び替わります。", "<b>所要時間</b>——1回のrunで課題を完走するまでにかかったエージェントのセッション時間です。ほとんどのモデルは中央値で4–15分に集まっています。Solarの2モデル（58分、119–258分）はプレビューAPIの遅い応答とキャッシュ非対応の影響も含むため、モデル性能の比較には使わないでください。", "<b>run間変動</b>——同じ条件で最も遅いrunが最も速いrunの何倍かかったかです。大きいほど次のrunの所要時間を予測しにくくなります。例：kimi-k3 2.8倍、qwen3.8-max 1.1倍。", "<b>コミット規律</b>——1回のrunで作られたgitコミット数です（塗りつぶし点 = 中央値）。結果の品質ではなく作業スタイルの違いを示します。同じプロンプトでもOpus 4.8はたいてい一度にコミットし（中央値1）、Opus 5は何度にも分けてコミットします（中央値6）。", "<b>outputトークン</b>——モデルが生成したトークン数（thinkingを含む）です。枠線だけのバー（gpt-5.6-sol、gpt-6-astra）はCodexの記録方式で計測した値のため、塗りつぶしバーとは直接比較できません。", "<b>runあたり換算コスト</b>——runで使ったトークンに公開API単価を掛けた推定値です。実際の請求額ではありません（サブスクリプション・プレビューで実行）。適用した単価と前提は下の「解釈上の注意」にあります。", "<b>主な観察</b>——最も速いのはOpus 5.5（中央値4.2分）、最も安いのはDeepSeek V4.1-Flash（runあたり約$0.09）です。速いからといって安いわけではありません。Fable 5.1は6.9分と速いほうですが、runあたり約$3.5でOpus 5.5（$1.25）の約3倍です。", "<b>KO正本トグル</b>——プロンプトを韓国語訳に替え、成果物（コミット・README）も韓国語で書かせた条件です。実験した8モデルはすべて完走しました。英語条件より明らかに遅くなったのはqwen3.8-maxだけ（15.1分 → 22.8分）で、2条件の実行日が異なるため言語の影響とは断定しません。"],
   cardsEyebrow:"モデルプロファイル · 数値の裏の性格",
   cards:{
     dsflash:{ exp:"直結 · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash、2026-09-10リリース", li:["<b>直結最速</b>——EN中央値4.8分（4.6–6.0）でCodexのgpt-5.6-solを下回り、Opus 5.5（4.2分）に次ぐ。EN・KO合わせて6/6 iteration 1完走、サービング障害0件。","<b>圧倒的に安価</b>——公開単価でrunあたり約$0.08–0.12（キャッシュヒット入力$0.006/M）、V4-Proの1/5程度。","<b>エディタ型の軌跡</b>——他の直結モデルがBashに寄るのに対しRead/Write/Editを均等に使う。KOでもコミット・READMEは全て韓国語。"], cav:"API従量（サブスクリプションではない）。費用はusage×公開単価の推定。DeepSeekはcache_readのみ計上しcache_creationは0。" },
@@ -594,8 +591,7 @@ zh: {
   koMissing:"KO 条件未测试——", noteAstra:"GPT-6 世代新模型", noteFable:"Claude 5 高阶新模型", notePreview:"端点已下线/新模型",
   n1na:"n=1 · 无法判断", span:"跨度 {x} 分钟", n1:"n=1", singleRun:"单个 run", sameAll:"所有 run 相同",
   howEyebrow:"阅读方法",
-  how1:"纵向看是各指标的排名，横向看是单个模型的性格。<b>时间列</b>中前 10 个模型聚在 4–23 分钟的一簇里，只有 Solar 系列相差一个数量级（58 分钟 · 119–258 分钟）——但这一差距与预览基础设施相混淆。<b>波动列</b>越长，越是“这次 run 结果难以预料”的模型（kimi 2.8 倍 vs qwen 1.07 倍）。<b>提交列</b>反映的是风格而非能力——一次性全部提交的 Opus 4.8（中位数 1）与细分提交的 Opus 5（6）在同一提示词下走向相反。最快的位置属于 Claude Code 原生栈上的 Opus 5.5（EN 中位数 4.2 分钟，KO 4.0 分钟），直连栈上的 DeepSeek V4.1-Flash（4.8 分钟）紧随其后。<b>output 列</b>中，Claude 5 世代的高阶模型 Fable 5.1（31.1K）站在 Opus 4.8（32.1K）旁边而非 Opus 5（47.0K）——输出量扩大不是世代特征，而是 Opus 5 独有的特征。Opus 5.5 更低（约 20K）。<b>成本列</b>是按公开单价折算每个 run 的 token——DeepSeek V4.1-Flash 最便宜（中位数 $0.09），Opus 5.5（$1.25）约为 Opus 5（$5.76）的 1/5，也低于 Opus 4.8 和 Fable 5.1。速度排名与成本排名并不一致。",
-  how2:"KO 开关仅将提示词标准版翻转为韩文（要求全部产出为韩文，EXP-017/019）。<b>8 个模型的完成率均未受影响</b>，慢到与 EN 分布不重叠的只有 qwen 一个——由于执行时间不同，不将其断定为语言效应。",
+  howItems:["<b>如何看横条</b>——每一行是一个模型。横条表示该模型各次 run 的最小值到最大值的范围，白色竖线为中位数。点击列标题即可按该列排序。", "<b>耗时</b>——一次 run 完成任务所用的代理会话时间。大多数模型的中位数集中在 4–15 分钟。两个 Solar 模型（58 分钟、119–258 分钟）同时反映了预览 API 响应慢和不支持缓存的影响，请勿用于比较模型性能。", "<b>run 间波动</b>——同一条件下最慢的 run 是最快的 run 的几倍。数值越大，越难预测下一次 run 的耗时。例如：kimi-k3 2.8 倍，qwen3.8-max 1.1 倍。", "<b>提交纪律</b>——一次 run 中产生的 git 提交数（实心点 = 中位数）。它反映的是工作方式，而非结果质量。在同一提示词下，Opus 4.8 通常一次提交（中位数 1），Opus 5 则分成多次提交（中位数 6）。", "<b>output token</b>——模型生成的 token 数（含 thinking）。只有描边的横条（gpt-5.6-sol、gpt-6-astra）按 Codex 的记录方式计量，不能与实心横条直接比较。", "<b>每 run 折算成本</b>——将 run 使用的 token 乘以公开 API 单价得到的估算值，并非实际计费金额（使用订阅和预览运行）。所用单价与假设见下方“解读注意”。", "<b>主要观察</b>——最快的是 Opus 5.5（中位数 4.2 分钟），最便宜的是 DeepSeek V4.1-Flash（每 run 约 $0.09）。快不等于便宜：Fable 5.1 用时 6.9 分钟，算快的，但每 run 约 $3.5，约为 Opus 5.5（$1.25）的 3 倍。", "<b>KO 标准版切换</b>——把提示词换成韩文译本，并要求产出物（提交信息、README）也用韩文书写。参与测试的 8 个模型全部完成。比英文条件明显变慢的只有 qwen3.8-max（15.1 分钟 → 22.8 分钟）；两个条件的运行日期不同，因此不将其归因于语言。"],
   cardsEyebrow:"模型画像 · 数字背后的性格",
   cards:{
     dsflash:{ exp:"直连 · DeepSeek · EXP-025 (EN · KO) · V4.1-Flash，2026-09-10 发布", li:["<b>直连最快</b>——EN 中位数 4.8 分钟（4.6–6.0），低于 Codex 上的 gpt-5.6-sol，仅次于 Opus 5.5（4.2 分钟）。EN·KO 合计 6/6 在 iteration 1 完成，服务故障 0 起。","<b>成本极低</b>——按公开单价每 run 约 $0.08–0.12（缓存命中输入 $0.006/M），约为 V4-Pro 的 1/5。","<b>编辑器型轨迹</b>——其他直连模型偏重 Bash，它均衡使用 Read/Write/Edit。KO 下提交·README 也全部为韩文。"], cav:"按量 API（非订阅）。成本为 usage×公开单价的估算。DeepSeek 只计 cache_read，cache_creation 字段为 0。" },
@@ -820,6 +816,7 @@ function renderRaw() {
 
 function renderNotes() {
   document.getElementById("notesBody").innerHTML = t("notes").map(([h, p]) => (h ? `<h4>${h}</h4>` : "") + `<p>${p}</p>`).join("");
+  document.getElementById("howList").innerHTML = t("howItems").map(x => `<li>${x}</li>`).join("");
   document.getElementById("cavList").innerHTML = t("cavs").map(x => `<li>${x}</li>`).join("");
 }
 

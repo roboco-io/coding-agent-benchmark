@@ -102,7 +102,7 @@ h2{font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0;}
 
 /* ── matrix ───────────────────────────── */
 .scroller{overflow-x:auto; margin-top:4px;}
-table.mx{border-collapse:collapse; width:100%; min-width:1060px;}
+table.mx{border-collapse:collapse; width:100%; min-width:1000px;}
 table.mx th{text-align:left; vertical-align:bottom; padding:0 12px 8px 0; border-bottom:1px solid var(--line);}
 table.mx th button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
   color:var(--muted); background:none; border:none; padding:0; cursor:pointer; display:inline-flex; gap:5px; align-items:center;}
@@ -143,8 +143,11 @@ table.mx tbody tr.dim td{opacity:.42;}
 .figs small{color:var(--muted); font-size:.92em;}
 .na{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--faint);}
 
-.dots{display:flex; gap:3px; align-items:center; min-width:96px;}
-.dots i{width:7px; height:7px; border-radius:50%; background:var(--track); flex:none;}
+.dots{display:flex; gap:2px; align-items:center;}
+.cell.cm{min-width:66px; max-width:76px;}
+table.mx th.cm-h button{white-space:normal; text-align:left; max-width:64px; letter-spacing:.02em;}
+.cell.cm .figs{white-space:normal; line-height:1.35;}
+.dots i{width:6px; height:6px; border-radius:50%; background:var(--track); flex:none;}
 .dots i.on{background:currentColor;}
 
 .callout{margin-top:20px; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start;
@@ -255,7 +258,7 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
             <button type="button" data-sort="spread"><span data-i18n="colSpread"></span> <span class="dir">↓</span></button>
             <div class="scale" data-scale="spread"></div>
           </th>
-          <th scope="col"><button type="button" data-sort="commits"><span data-i18n="colCommits"></span> <span class="dir">↓</span></button>
+          <th scope="col" class="cm-h"><button type="button" data-sort="commits"><span data-i18n="colCommits"></span> <span class="dir">↓</span></button>
             <div class="scale" data-scale="commits"></div>
           </th>
           <th scope="col">
@@ -774,7 +777,7 @@ function render() {
       + `<td><div class="cell">${rangeBar(s.tLo, s.tHi, s.tMed, s.n, T_MIN, T_MAX, color, false)}`
       + `<span class="figs"><em>${f1(s.tMed)}${min}</em>${s.n > 1 ? ` <small>${f1(s.tLo)}–${f1(s.tHi)}</small>` : ` <small>${t("n1")}</small>`}</span></div></td>`
       + `<td><div class="cell">${spreadBar}${spreadTxt}</div></td>`
-      + `<td><div class="cell">${dots(s.cMed, color)}`
+      + `<td><div class="cell cm">${dots(s.cMed, color)}`
       + `<span class="figs"><em>${s.cMed}</em> <small>${s.n === 1 ? t("singleRun") : s.cLo === s.cHi ? t("sameAll") : s.cLo + "–" + s.cHi}</small></span></div></td>`
       + `<td><div class="cell">${rangeBar(s.oLo, s.oHi, s.oMed, s.n, O_MIN, O_MAX, color, m.meas === "rollout")}`
       + `<span class="figs"><em>${f1(s.oMed)}K</em> <small>${m.meas}</small></span></div></td>`

@@ -1,20 +1,20 @@
 # 가설 카탈로그
 
-상태: `미실험` → `진행중` → `검증` / `기각` / `보류`
+상태: `미실험` → `진행중` → `검증` / `기각` / `보류` / `기준 미달`
 
 ## S축 — 워크플로 전략
 
 | 코드 | 가설 | 상태 | 실험 |
 |------|------|------|------|
-| S-01 | Plan-then-execute(계획→아토믹 태스크 분할→태스크별 새 세션 병렬 구현, 문서 기반 컨텍스트 연속성)가 Ralph loop(골 지정 후 자율 루프)보다 동일 과제에서 토큰을 적게 쓴다 | 기각 (단일 세션에 들어가는 과제 기준, PTE가 8.7배 사용) | [EXP-001](../experiments/001-ralph-vs-plan-then-execute/report.md) |
-| S-02 | PTE의 컨텍스트를 스킬 공식 권고(문서 200줄 이하 분할, 스킬 메커니즘으로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 billable이 유의미하게(30%↑) 줄어든다 | 검증 (39.3% 감소, 수정 루프 소멸. 단 ralph 대비 여전히 5.3배) | [EXP-003](../experiments/003-pte-skills/report.md) |
-| S-03 | 단일 세션 ralph에 도메인 계약 스킬을 제공하면 스펙 탐색·시행착오가 줄어 스킬 없는 ralph 대비 billable이 감소한다 | 보류 (평균 +3.5%로 사실상 무효과 — 단일 세션은 스킬 전량 선로딩, 점진 공개 불성립) | [EXP-004](../experiments/004-ralph-skills/report.md) |
+| S-01 | Plan-then-execute(계획→아토믹 태스크 분할→태스크별 새 세션 병렬 구현, 문서 기반 컨텍스트 연속성)가 Ralph loop(골 지정 후 자율 루프)보다 동일 과제에서 토큰을 적게 쓴다 | 기각 (관측 범위 한정: 대리지표 8.27배, 채점 정본 불일치) | [EXP-001](../experiments/001-ralph-vs-plan-then-execute/report.md) |
+| S-02 | PTE의 컨텍스트를 스킬 공식 권고(문서 200줄 이하 분할, 스킬 메커니즘으로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 billable이 유의미하게(30%↑) 줄어든다 | 기준 미달 (정정: 22.45% 감소 < 사전 30%; 검증 철회) | [EXP-003](../experiments/003-pte-skills/report.md) |
+| S-03 | 단일 세션 ralph에 도메인 계약 스킬을 제공하면 스펙 탐색·시행착오가 줄어 스킬 없는 ralph 대비 billable이 감소한다 | 보류 (정정: 평균 +2.81%, 스킬 run 범위 959; 효과 없음 결론 철회) | [EXP-004](../experiments/004-ralph-skills/report.md) |
 
 ## L축 — 언어
 
 | 코드 | 가설 | 상태 | 실험 |
 |------|------|------|------|
-| L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 보류 (방향 일치·KO 10%↑이나 run 간 변동에 묻힘, n≥5 필요) | [EXP-002](../experiments/002-korean-vs-english/report.md) |
+| L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 보류 (정정: 평균 차 2,142 < 최대 조건 내 범위 23,033) | [EXP-002](../experiments/002-korean-vs-english/report.md) |
 | L-02 | qwen3.8-max·kimi-k3(직결)는 한국어 정본 프롬프트(전 산출물 한국어 지시) 조건에서도 랄프 루프로 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (각 n=3, 완주율 판정·과금 배제) | 검증 (6/6 iter 1 완주 — 게이트+재검증 일치, 커밋·README 전수 한국어·언어 이탈 0. qwen은 ko에서 +48% 느림(방향성 기록), kimi는 en 변동 범위 내) | [EXP-017](../experiments/017-ko-condition/report.md) |
 | L-03 | 네이티브 Opus 4.8·Opus 5(Claude Code)와 gpt-5.6-sol(Codex CLI)은 한국어 정본 프롬프트 조건에서도 랄프 루프로 RealWorld 백엔드를 상한 iter 안에 무개입 완주할 수 있다 (각 n=3, 완주율 판정·과금 배제) | 검증 (9/9 iter 1 완주 — 게이트+재검증 일치, 커밋·README 전수 한국어·언어 이탈 0, 영어권 모델 포함. 시간·커밋·output 전부 EN 분포와 겹침 — qwen ko +48%는 예외 사례로 판명. 언어 반전 누적 15/15 iter 1) | [EXP-019](../experiments/019-ko-native-codex/report.md) |
 
@@ -40,6 +40,8 @@
 | M-17 | Claude Code 네이티브 하네스에서 Fable 5.1(`claude-fable-5-1`, thinking 기본값)은 EN 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration 안에 무개입 완주할 수 있다 (n=3, 완주율 판정·과금 배제. 보조: output·커밋·시간 프로파일을 EXP-010 Opus 5와 병치) | 검증 (3/3 iter 1 완주 — 게이트 + 재검증 각 2회 일치, 6.2–7.8분·output 28.7–35.8K·커밋 2–4. 시간·output이 Opus 5 분포 아래·Opus 4.8과 겹침 — 산출량 확대는 세대 아닌 Opus 5 고유 프로파일로 재해석) | [EXP-023](../experiments/023-fable51-ralph/report.md) |
 | M-18 | Claude Code를 DeepSeek Anthropic 호환 엔드포인트로 `deepseek-flash`(V4.1-Flash)·`deepseek-v4-pro`에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 무개입 완주할 수 있다 (EN·KO 정본 각 n=3, 완주율 판정·과금 배제) | 검증 (12/12 iter 1 완주 — 4조건 각 3/3, 게이트+재검증 각 2회 일치, 모델 필드 전수 유지. Flash EN 4.6–6.0분·run당 약 $0.1로 전 조건 최속 대역, Pro 12–16분·약 $0.5. 관측값이며 우위 확정 아님) | [EXP-025](../experiments/025-deepseek-direct/report.md) |
 | M-19 | Claude Code 네이티브 하네스에서 Opus 5.5(`claude-opus-5-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제) | 검증 (6/6 iter 1 완주 — EN·KO 각 3/3, 게이트+재검증 각 2회 일치, 모델 필드 전수 유지. 세션 4.0–8.4분(5/6 run이 약 4분)·output 18.6–28.2K로 네이티브 최단·최저 대역, Opus 5 확대 프로파일 미재현. 관측값이며 우위 확정 아님) | [EXP-026](../experiments/026-opus55-ralph/report.md) |
+| M-20 | Codex CLI(`codex exec`) 하네스에서 gpt-6-sol·gpt-6-luna(effort medium)는 각각 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (각 n=3, 완주율 판정·과금 배제. `gpt-6-earth`는 존재하지 않는 ID로 제외, astra는 M-15 인용) | 검증 (sol 3/3·luna 3/3 iter 1 완주 — 게이트+재검증 각 2회 일치, 응답 모델 필드 전수 일치. sol 4.8–5.2분·output 약 11K, luna 5.4–10.0분·output 13.4–21.5K. 채점 인프라 행 1건(D-1)은 판정 무영향. 관측값이며 우위 확정 아님) | [EXP-027](../experiments/027-gpt6-sol-luna-codex/report.md) |
+| M-21 | Claude Code 네이티브 하네스에서 Sonnet 5(`claude-sonnet-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제) | 검증 (EN 3/3·KO 3/3 완주 — 게이트+재검증 각 2회 일치, 응답 모델 필드 전수 일치. 5 run iter 1, en-1은 에이전트가 작업을 나눠 iter 3 완주(반려 없음). 세션 11.2–16.8분·output 57.6–73.7K로 Opus 5.5·Fable 5.1보다 길고 많음. 관측값이며 우위 확정 아님) | [EXP-028](../experiments/028-sonnet5-ralph/report.md) |
 
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
@@ -110,3 +112,9 @@
 | H8-01 | 메인 스레드 탐색 (서브에이전트 미위임) | 미실험 | |
 | H8-02 | stdout 홍수 | 미실험 | |
 | H8-03 | 서브에이전트 남발 | 미실험 | |
+
+## P축 — 실무 조합 선택
+
+| 코드 | 질문 | 상태 | 실험 |
+|---|---|---|---|
+| P-01 | 동일 품질·30분 예산 아래 Fable 5.1×Claude Code와 Astra×Codex의 네 작업 유형별 합격률·시간·복구 양상은 어떠한가? (탐색, 구독만) | 설계·Phase 0 차단: Fable 자동 모델 전환, 본 실험 0/24 | [EXP-024](../experiments/024-practical-combinations/README.md) |

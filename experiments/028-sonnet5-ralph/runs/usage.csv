@@ -1,0 +1,9 @@
+run,part,sessions,messages,input_tokens,output_tokens,cache_creation_input_tokens,cache_read_input_tokens,models,tools
+sonnet5-en-1,main,3,104,208,73701,196886,7725591,claude-sonnet-5=104,Bash=62;Read=30;Write=22;Edit=13
+sonnet5-ko-1,main,1,96,192,64721,148810,11323343,claude-sonnet-5=96,Bash=55;Write=22;Edit=12;Read=6
+sonnet5-en-2,main,1,88,176,47925,111156,8520014,claude-sonnet-5=88,Bash=43;Write=21;Edit=14;Read=8;Agent=1
+sonnet5-en-2,subagent,1,2,4,9660,54264,29261,claude-sonnet-5=2,Read=12
+sonnet5-ko-2,main,1,140,280,72126,153903,14342610,claude-sonnet-5=140,Bash=88;Write=26;Edit=17;Read=8
+sonnet5-en-3,main,1,105,210,59152,133847,10351511,claude-sonnet-5=105,Bash=55;Write=25;Read=14;Edit=10
+sonnet5-ko-3,main,1,82,164,59186,115643,7208551,claude-sonnet-5=82,Bash=47;Write=23;Edit=8;Read=2;Agent=1
+sonnet5-ko-3,subagent,1,2,4,7174,40269,18887,claude-sonnet-5=2,Read=11

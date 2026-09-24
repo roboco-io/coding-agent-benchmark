@@ -1,19 +1,33 @@
 # Roadmap
 
-## Phase 1 — Claude Code 워크플로 전략 비교 (현재)
+우선 목표(2026-09-20 사용자 확정): **실무에서 사용할 모델·에이전트 조합 선택**. 계측 정정을 기반으로 작업 유형별 합격률·비용·시간·사람의 개입량을 비교하는 파일럿을 우선한다. 모델·도구의 원인 분리와 공개 벤치마크 확장은 후속으로 둔다.
 
-- [x] EXP-001: Ralph loop vs Plan-then-execute (RealWorld 백엔드, Opus 고정) — S-01 기각, [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
+## 현재 우선순위 (2026-09-21)
+
+- [x] Claude 메시지 집계 중복 수정 및 중복·누계 거부·누락 회귀 검증
+- [x] EXP-001~004 재집계와 판정 재검토, 보고서·카탈로그·README 4개 언어·번역 정정
+- [x] 프로젝트 목적·공통 과제 완료 기준 정리
+- [ ] 외부 Claude Artifact를 기존 URL로 정정 재배포 — 저장소 밖 배포물, 현재 도구에 편집 기능 없음. README에 미반영 표시
+- [ ] EXP-024: Fable 5.1×Claude Code / Astra×Codex, 기존 구독만, 4과제×3회×2조합 파일럿 — 설계·schedule 작성, Fable fallback으로 Phase 0 차단(0/24)
+- [ ] 공통 실행기·환경 manifest·보호된 채점기 및 정상/오류 채점 검증
+- [ ] 작업별 선택표: 예산 내 합격률·실패 포함 시간·비용 상태·개입량
+
+초기 전략 비교는 아래 연구 이력으로 보존한다. 완료 체크는 수행 이력이며 일반 효율 우위의 확정을 뜻하지 않는다.
+
+## 연구 이력 1 — Claude Code 워크플로 전략 비교
+
+- [x] EXP-001: Ralph loop vs Plan-then-execute (RealWorld 백엔드, Opus 고정) — S-01 관측 범위 한정 기각(대리지표 8.27배), [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
 - [x] EXP-002: 한국어 vs 영어 파이프라인 토큰 비교 (L-01, KO/EN × n=2) — 보류 판정, [보고서](experiments/002-korean-vs-english/report.md)
-- [x] EXP-003: PTE + 스킬식 점진 공개 (S-02) — 검증(-39.3%), [보고서](experiments/003-pte-skills/report.md)
-- [x] EXP-004: Ralph + 스킬 구조 (S-03) — 보류(무효과), [보고서](experiments/004-ralph-skills/report.md)
+- [x] EXP-003: PTE + 스킬식 점진 공개 (S-02) — 기준 미달(정정 -22.45%), [보고서](experiments/003-pte-skills/report.md)
+- [x] EXP-004: Ralph + 스킬 구조 (S-03) — 보류(효과 없음 해석 철회), [보고서](experiments/004-ralph-skills/report.md)
 - [ ] 측정 파이프라인 정리 (tokenhabit + ccusage 래퍼)
 
-## Phase 2 — 토큰 습관(H축) 실험
+## 후속 후보 — 토큰 습관(H축) 실험
 
 - [ ] tokenhabit H-코드 중 낭비 추정치가 큰 패턴부터 A/B 검증
 - [ ] 습관 교정 가이드(전역 CLAUDE.md 규칙)의 실효성 정량화
 
-## Phase 3 — 타 도구·타 모델 비교
+## 연구 이력 2 — 타 도구·타 모델 비교
 
 - [x] EXP-005: Claude Code × Upstage Solar Pro 3 백엔드 (M-01) — 보류(solar-1 미완주·조기중단), [보고서](experiments/005-solar-pro3-backend/report.md)
 - [x] EXP-006: Claude Code × Upstage Solar Open 2 백엔드 (M-02) — 보류(0/2 완주, 자율 TDD 루프는 확립·병목은 수렴 속도), [보고서](experiments/006-solar-open2-backend/report.md)
@@ -35,5 +49,7 @@
 - [x] EXP-023: Claude Code × Fable 5.1 네이티브 완주 검증 (M-17, n=3, EN 정본) — 검증(3/3 iter 1 완주·6–8분 네이티브 최속, output은 Opus 4.8 수준으로 Opus 5 확대 프로파일 미재현), [보고서](experiments/023-fable51-ralph/report.md)
 - [x] EXP-025: Claude Code × DeepSeek V4.1-Flash·V4-Pro 직결 완주 검증 (M-18, EN·KO 각 n=3, 총 12 run) — 검증(12/12 iter 1 완주, Flash EN 4.6–6.0분 전 조건 최속 대역·run당 약 $0.1, Pro 12–16분, 모델 유지 12/12), [보고서](experiments/025-deepseek-direct/report.md)
 - [x] EXP-026: Claude Code × Opus 5.5 네이티브 완주 검증 (M-19, EN·KO 각 n=3, 총 6 run) — 검증(6/6 iter 1 완주, 5/6 run이 약 4분·output 약 20K로 네이티브 최단·최저 대역, Opus 5 확대 프로파일 미재현), [보고서](experiments/026-opus55-ralph/report.md)
+- [x] EXP-027: Codex CLI × gpt-6-sol·gpt-6-luna 완주 검증 (M-20, 각 n=3, `ralph-model-benchmark` 스킬 첫 적용) — 검증(6/6 iter 1 완주, sol 약 5분·output 약 11K로 산포 작음, luna 5.4–10.0분, 채점기 행 결함 D-1 수정), [보고서](experiments/027-gpt6-sol-luna-codex/report.md)
+- [x] EXP-028: Claude Code × Sonnet 5 네이티브 완주 검증 (M-21, EN·KO 각 n=3, 스킬 `claude-native` 첫 적용) — 검증(6/6 완주, 5 run iter 1·en-1 iter 3, 세션 11.2–16.8분·output 57.6–73.7K), [보고서](experiments/028-sonnet5-ralph/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

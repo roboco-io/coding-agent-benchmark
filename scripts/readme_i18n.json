@@ -34,80 +34,80 @@
       "en": {
         "name": "Ralph loop vs Plan-then-execute",
         "hypothesis": "Plan-then-execute uses fewer tokens than a Ralph loop on the same task",
-        "verdict": "Rejected (refuted)",
-        "summary": "Plan-then-execute used **about 8.7× more** billable tokens"
+        "verdict": "Rejected within observed scope",
+        "summary": "Deduplicated token proxy: PTE 1,128,420 vs Ralph 136,506 (8.27×). Different grading suites prevent an equal-quality cost conclusion."
       },
       "ja": {
         "name": "Ralphループ vs Plan-then-execute",
         "hypothesis": "Plan-then-executeはRalphループより同一課題でトークンを少なく使う",
-        "verdict": "棄却（反証）",
-        "summary": "plan-then-executeがbillable基準で**約8.7倍多い**トークンを使用"
+        "verdict": "観測範囲で棄却",
+        "summary": "重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。"
       },
       "zh-CN": {
         "name": "Ralph 循环 vs Plan-then-execute",
         "hypothesis": "Plan-then-execute 在同一任务上比 Ralph 循环使用更少 token",
-        "verdict": "否定（反证）",
-        "summary": "plan-then-execute 按 billable 计使用了**约 8.7 倍**的 token"
+        "verdict": "在观测范围内否定",
+        "summary": "去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。"
       }
     },
     "EXP-002": {
       "en": {
         "name": "Korean vs English pipeline token comparison",
-        "hypothesis": "Running the whole pipeline in English cuts billable tokens meaningfully versus Korean",
-        "verdict": "Pending",
-        "summary": "The pre-registered rule (|KO mean − EN mean| > within-condition run-to-run spread) was not met. The language effect (29K mean difference) is buried under trajectory variance between runs (up to 138K)"
+        "hypothesis": "Running the whole pipeline in English cuts token proxy tokens meaningfully versus Korean",
+        "verdict": "Inconclusive",
+        "summary": "KO mean 114,605.5 vs EN 112,463.5. The 2,142 difference is below the largest within-condition range (23,033)."
       },
       "ja": {
         "name": "韓国語 vs 英語パイプラインのトークン比較",
-        "hypothesis": "全パイプラインを英語で進めると韓国語比でbillableトークンが有意に減る",
+        "hypothesis": "全パイプラインを英語で進めると韓国語比でtoken proxyトークンが有意に減る",
         "verdict": "保留",
-        "summary": "事前登録した判定規則（|KO平均−EN平均| > 条件内run間変動幅）を満たさず。言語効果（平均差29K）がrun間の軌跡変動（最大138K）に埋もれる"
+        "summary": "KO平均114,605.5、EN平均112,463.5。平均差2,142は条件内の最大範囲23,033を下回る。"
       },
       "zh-CN": {
         "name": "韩文 vs 英文流水线 token 比较",
-        "hypothesis": "全流程用英文进行可比韩文显著减少 billable token",
+        "hypothesis": "全流程用英文进行可比韩文显著减少 token proxy token",
         "verdict": "保留",
-        "summary": "未满足预先登记的判定规则（|KO 均值−EN 均值| > 条件内 run 间波动幅度）。语言效应（均值差 29K）被 run 间轨迹波动（最大 138K）淹没"
+        "summary": "KO均值114,605.5，EN均值112,463.5。均值差2,142低于条件内最大范围23,033。"
       }
     },
     "EXP-003": {
       "en": {
         "name": "PTE + skill-style progressive disclosure",
-        "hypothesis": "Structuring context per the official skill guidance (documents under 200 lines, load only what is needed via skills) cuts billable by 30%+ versus the EXP-001 PTE",
-        "verdict": "Verified",
-        "summary": "**39.3% reduction** (2,839,815 → 1,723,575). Same workflow; only the context structure changed."
+        "hypothesis": "Structuring context per the official skill guidance (documents under 200 lines, load only what is needed via skills) cuts token proxy by 30%+ versus the EXP-001 PTE",
+        "verdict": "Threshold not met (corrected)",
+        "summary": "Token proxy fell 22.45% (1,128,420 → 875,083), below the preregistered 30% threshold. The earlier verified verdict is withdrawn."
       },
       "ja": {
         "name": "PTE + スキル式の段階的開示",
-        "hypothesis": "コンテキストをスキル公式推奨（文書200行以下、スキルで必要なものだけロード）で構造化すればEXP-001のPTE比でbillableが30%以上減る",
-        "verdict": "検証",
-        "summary": "**39.3%減少**（2,839,815 → 1,723,575）。ワークフローは同一でコンテキスト構造だけを変えた。"
+        "hypothesis": "コンテキストをスキル公式推奨（文書200行以下、スキルで必要なものだけロード）で構造化すればEXP-001のPTE比でtoken proxyが30%以上減る",
+        "verdict": "基準未達（訂正）",
+        "summary": "トークン代理指標は22.45%減少（1,128,420 → 875,083）。事前基準30%未達のため検証判定を撤回。"
       },
       "zh-CN": {
         "name": "PTE + 技能式渐进披露",
-        "hypothesis": "按技能官方建议（文档不超过 200 行、通过技能只加载所需内容）组织上下文，可比 EXP-001 的 PTE 减少 30% 以上 billable",
-        "verdict": "验证",
-        "summary": "**减少 39.3%**（2,839,815 → 1,723,575）。工作流相同，只改变了上下文结构。"
+        "hypothesis": "按技能官方建议（文档不超过 200 行、通过技能只加载所需内容）组织上下文，可比 EXP-001 的 PTE 减少 30% 以上 token proxy",
+        "verdict": "未达标准（更正）",
+        "summary": "token 代理指标下降22.45%（1,128,420 → 875,083），未达预设30%标准，撤回已验证判定。"
       }
     },
     "EXP-004": {
       "en": {
         "name": "Ralph loop + skill structure",
-        "hypothesis": "Giving a single-session Ralph loop domain-contract skills reduces billable",
-        "verdict": "Pending (effectively no effect)",
-        "summary": "A +3.5% mean difference (opposite to the hypothesis) is completely buried under within-condition variance (200K)"
+        "hypothesis": "Giving a single-session Ralph loop domain-contract skills reduces token proxy",
+        "verdict": "Inconclusive",
+        "summary": "Skills runs: 117,352 / 118,311; mean +2.81% vs KO baseline. Range is 959; claims of no effect and twofold variability are withdrawn."
       },
       "ja": {
         "name": "Ralphループ + スキル構造",
-        "hypothesis": "単一セッションのralphにドメイン契約スキルを与えるとbillableが減る",
-        "verdict": "保留（事実上効果なし）",
-        "summary": "平均差+3.5%（方向は仮説と逆）が条件内変動幅（200K）に完全に埋もれる"
+        "hypothesis": "単一セッションのralphにドメイン契約スキルを与えるとtoken proxyが減る",
+        "verdict": "保留",
+        "summary": "スキルrunは117,352 / 118,311、KO基準比平均+2.81%。範囲は959で、無効果・2倍の変動という解釈を撤回。"
       },
       "zh-CN": {
         "name": "Ralph 循环 + 技能结构",
-        "hypothesis": "为单会话 ralph 提供领域契约技能可减少 billable",
-        "verdict": "保留（实际上无效果）",
-        "summary": "均值差 +3.5%（方向与假设相反）被条件内波动幅度（200K）完全淹没"
+        "hypothesis": "为单会话 ralph 提供领域契约技能可减少 token proxy",
+        "verdict": "保留",
+        "summary": "技能run为117,352 / 118,311，相对KO基线均值+2.81%。范围为959，撤回无效果及两倍波动的结论。"
       }
     },
     "EXP-005": {
@@ -508,6 +508,46 @@
         "hypothesis": "在 Claude Code 原生框架中，Opus 5.5（`claude-opus-5-5`，thinking 默认）使用 EN 与 KO 标准版提示的 Ralph 循环，能在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，完成率判定·排除计费）。",
         "verdict": "验证",
         "summary": "**6/6 run 全部在 iteration 1 完成**（EN 3/3·KO 3/3，门控通过 + 各 2 次独立复验 13/13·154/154 一致，干预 0，响应 model 字段全部为 `claude-opus-5-5`）。会话 4.0–8.4 分钟（6 个 run 中 5 个为 4.0–4.2 分钟），output 18.6–28.2K，为原生 Claude 条件中最短·最低一档，低于 Opus 5（8.9–17.6 分钟·39–49K）和 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）。为观测值，并非确定的优势。"
+      }
+    },
+    "EXP-027": {
+      "en": {
+        "name": "Codex CLI × gpt-6-sol · gpt-6-luna Ralph loop completion check (n=3 each)",
+        "hypothesis": "In the Codex CLI (`codex exec`) harness, gpt-6-sol and gpt-6-luna (effort medium) can each finish the RealWorld backend (Hurl 13/13 · 154/154) within a 30-iteration · 4-hour cap in an isolated Ralph loop without intervention (n=3 each).",
+        "verdict": "Verified",
+        "summary": "**sol 3/3 · luna 3/3 completed at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, response model field matched on every run). Sessions: sol 4.8–5.2 min · output 10.4–11.0K; luna 5.4–10.0 min · output 13.4–21.5K. One grader-infrastructure hang (D-1) was handled without touching the agent and did not affect the verdict. First experiment run with the `ralph-model-benchmark` skill. Observed values, not a confirmed ranking."
+      },
+      "ja": {
+        "name": "Codex CLI × gpt-6-sol・gpt-6-luna Ralphループ完走検証（各n=3）",
+        "hypothesis": "Codex CLI（`codex exec`）ハーネスで、gpt-6-sol・gpt-6-luna（effort medium）はそれぞれ隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（各n=3）。",
+        "verdict": "検証",
+        "summary": "**sol 3/3・luna 3/3 全てiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド全件一致）。セッション: sol 4.8–5.2分・output 10.4–11.0K、luna 5.4–10.0分・output 13.4–21.5K。採点インフラのハング1件（D-1）はエージェントに介入せず処理し判定に影響なし。`ralph-model-benchmark`スキルで実施した最初の実験。観測値であり順位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "Codex CLI × gpt-6-sol·gpt-6-luna Ralph 循环完成验证（各 n=3）",
+        "hypothesis": "在 Codex CLI（`codex exec`）框架中，gpt-6-sol 与 gpt-6-luna（effort medium）各自能在隔离、无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（各 n=3）。",
+        "verdict": "验证",
+        "summary": "**sol 3/3·luna 3/3 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，响应 model 字段全部一致）。会话：sol 4.8–5.2 分钟·output 10.4–11.0K；luna 5.4–10.0 分钟·output 13.4–21.5K。评分基础设施挂起 1 次（D-1）在未干预代理的情况下处理，不影响判定。首个使用 `ralph-model-benchmark` 技能执行的实验。为观测值，并非确定的排名。"
+      }
+    },
+    "EXP-028": {
+      "en": {
+        "name": "Claude Code × Sonnet 5 native Ralph loop completion check (EN·KO n=3 each)",
+        "hypothesis": "In the native Claude Code harness, Sonnet 5 (`claude-sonnet-5`, default thinking) can finish the RealWorld backend (Hurl 13/13 · 154/154) with the EN and KO canonical Ralph-loop prompts within a 10-iteration · 4-hour cap without intervention (EN·KO n=3 each).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3 · KO 3/3 completed** (gate pass plus two independent re-checks each at 13/13 · 154/154, no intervention, response model field `claude-sonnet-5` on every message). Five runs finished at iteration 1; en-1 split the work across three iterations on its own and finished at iteration 3 (no rejected claims). Sessions 11.2–16.8 min · output 57.6–73.7K, above the ranges seen for Opus 5.5 (EXP-026) and Fable 5.1 (EXP-023) in the same harness. Observed values, not a confirmed ranking."
+      },
+      "ja": {
+        "name": "Claude Code × Sonnet 5 ネイティブRalphループ完走検証（EN・KO各n=3）",
+        "hypothesis": "Claude Codeネイティブハーネスで、Sonnet 5（`claude-sonnet-5`、thinkingデフォルト）はEN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3・KO 3/3 完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全メッセージ`claude-sonnet-5`）。5 runはiteration 1で完走し、en-1はエージェント自身が作業を3 iterationに分けてiteration 3で完走（rejectedなし）。セッション11.2–16.8分・output 57.6–73.7Kで、同じハーネスのOpus 5.5（EXP-026）・Fable 5.1（EXP-023）の観測範囲より上。観測値であり順位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × Sonnet 5 原生 Ralph 循环完成验证（EN·KO 各 n=3）",
+        "hypothesis": "在 Claude Code 原生框架中，Sonnet 5（`claude-sonnet-5`，默认 thinking）能以 EN·KO 正本 Ralph 循环提示在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3·KO 3/3 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，所有消息的响应 model 字段均为 `claude-sonnet-5`）。5 个 run 在 iteration 1 完成；en-1 由代理自行把工作拆成 3 个 iteration，在 iteration 3 完成（无 rejected）。会话 11.2–16.8 分钟·output 57.6–73.7K，高于同一框架下 Opus 5.5（EXP-026）与 Fable 5.1（EXP-023）的观测范围。为观测值，并非确定的排名。"
       }
     }
   }

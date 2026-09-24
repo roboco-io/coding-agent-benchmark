@@ -90,6 +90,26 @@
     "src": "https://developers.openai.com/api/docs/pricing",
     "caveat": "단문맥 단가. 장문맥 기준 미공개"
   },
+  "gpt-6-sol": {
+    "input": 2,
+    "cache_read": 0.2,
+    "cache_write_5m": 2.5,
+    "cache_write_1h": null,
+    "output": 10,
+    "src": "https://developers.openai.com/api/docs/pricing",
+    "accessed": "2026-09-24",
+    "caveat": "Standard 단문맥 단가. 장문맥 기준 미공개"
+  },
+  "gpt-6-luna": {
+    "input": 0.1,
+    "cache_read": 0.01,
+    "cache_write_5m": 0.125,
+    "cache_write_1h": null,
+    "output": 0.5,
+    "src": "https://developers.openai.com/api/docs/pricing",
+    "accessed": "2026-09-24",
+    "caveat": "Standard 단문맥 단가. 장문맥 기준 미공개"
+  },
   "Solar Pro 4": {
     "input": 0.3,
     "cache_read": 0.06,

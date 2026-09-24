@@ -569,6 +569,26 @@
         "verdict": "验证",
         "summary": "**三个条件均 3/3 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部一致）。8 个 run 在 iteration 1 完成；qwen-en-1 因评分端口被外部进程占用而记录为 iteration 5 完成（其 iteration 1 代码复评也通过）。会话时长：flash 1.9–4.1 分钟（已反映 D-3 重跑），kimi 9.5–9.9 分钟，qwen 15.6–29.0 分钟。这是本仓库首次使用第三种框架（pi）；与此前 Claude Code 直连 run 的比较同时混杂了框架与 API 格式。为观测值，并非确定的排名。"
       }
+    },
+    "EXP-030": {
+      "en": {
+        "name": "pi coding agent × Opus 5.5 · gpt-6-sol Ralph loop completion check (EN n=3 each)",
+        "hypothesis": "With the pi coding agent (`pi -p` v0.87.1) running `anthropic/claude-opus-5-5` (Anthropic API key, direct) and `openai-codex/gpt-6-sol` (ChatGPT OAuth) at pi default thinking, both can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3 each; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**Both conditions 3/3, all six runs at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, no intervention, response model field matched on every message). Sessions: Opus 5.5 3.1–4.9 min, gpt-6-sol 4.2–5.6 min, overlapping the native-agent baselines (EXP-026 Opus 5.5 4.0–8.4 min, EXP-027 gpt-6-sol 4.8–5.2 min). Observed values, not a confirmed ranking."
+      },
+      "ja": {
+        "name": "pi coding agent × Opus 5.5・gpt-6-sol Ralphループ完走検証（EN各n=3）",
+        "hypothesis": "pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-opus-5-5`（Anthropic APIキー直結）と`openai-codex/gpt-6-sol`（ChatGPT OAuth）をpiデフォルトのthinkingで動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**2条件とも3/3完走、6 runすべてiteration 1**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件一致）。セッションはOpus 5.5が3.1–4.9分、gpt-6-solが4.2–5.6分で、ネイティブエージェントの基準線（EXP-026 Opus 5.5 4.0–8.4分、EXP-027 gpt-6-sol 4.8–5.2分）と範囲が重なる。観測値であり順位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "pi coding agent × Opus 5.5·gpt-6-sol Ralph 循环完成验证（EN 各 n=3）",
+        "hypothesis": "用 pi coding agent（`pi -p` v0.87.1）以 pi 默认 thinking 运行 `anthropic/claude-opus-5-5`（Anthropic API 密钥直连）和 `openai-codex/gpt-6-sol`（ChatGPT OAuth），两者都能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN 各 n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**两个条件均 3/3 完成，6 个 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部一致）。会话时长：Opus 5.5 为 3.1–4.9 分钟，gpt-6-sol 为 4.2–5.6 分钟，与原生代理基线（EXP-026 Opus 5.5 4.0–8.4 分钟，EXP-027 gpt-6-sol 4.8–5.2 分钟）范围重叠。为观测值，并非确定的排名。"
+      }
     }
   }
 }

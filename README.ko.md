@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-029 (2026-09-24)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-030 (2026-09-24)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -156,6 +156,7 @@ EN 3/3·KO 3/3 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154
 11. **GPT-6 계열 3개 모델(astra·sol·luna) 모두 Codex 하네스에서 모델 ID 치환만으로 완주했다 (EXP-021·027).** sol·luna 각 3/3 iter 1 완주(응답 model 필드 전수 일치). sol은 3 run 모두 4.8–5.2분·output 약 11K로 산포가 작았고, luna는 5.4–10.0분·output 13.4–21.5K로 "fast" 포지셔닝과 달리 이 과제에서 sol보다 짧은 run이 없었다. astra(EXP-021, 7분대)와는 시점·CLI 버전이 달라 모델 차이로 단정하지 않는다. EXP-027은 신규 모델 벤치마크 절차를 묶은 `ralph-model-benchmark` 스킬의 첫 적용이다.
 12. **Sonnet 5도 네이티브 하네스에서 EN·KO 모두 완주했지만, 같은 하네스의 상위 모델보다 느리고 출력이 많았다 (EXP-028).** EN 3/3·KO 3/3 완주(응답 model 필드 전수 `claude-sonnet-5`). 5 run은 iteration 1에 끝났고, en-1은 에이전트가 스캐폴딩·테스트 준비·구현을 3개 iteration으로 나눠 iteration 3에 완주했다(반려 없음). 세션 11.2–16.8분·output 57.6–73.7K로 Opus 5.5(EXP-026, 4.0–8.4분·18.6–28.2K)·Fable 5.1(EXP-023)의 관측 범위보다 위다. 측정일·Claude Code 버전이 달라 모델 단독 차이로 단정하지 않는다.
 13. **제3의 하네스 pi도 변환 계층 없이 오픈웨이트 계열 3개 모델로 완주했다 (EXP-029).** pi coding agent를 각 제공자의 OpenAI 호환 엔드포인트에 직결해 kimi-k3·qwen3.8-max·deepseek-flash 각 EN 3/3, 총 9/9 완주했다(응답 model 필드 전수 일치, 하네스 트러블슈팅 0건). 8 run은 iteration 1에 끝났고, qwen-en-1은 채점 포트를 외부 프로세스가 점유해 iteration 5로 기록됐다(iteration 1 코드도 재채점 통과). 세션은 flash 1.9–4.1분(D-3 재실행 반영), kimi 9.5–9.9분, qwen 15.6–29.0분이다. 같은 모델의 이전 Claude Code 직결 run(EXP-013·014·025)과는 하네스와 API 형식(Anthropic 호환 대 OpenAI 호환)이 함께 달라 차이를 pi의 효과로 분리하지 않는다. 이로써 랄프 루프 벤치마크는 Claude Code·Codex·pi 세 하네스에서 같은 절차로 재현된다.
+14. **pi는 제조사 기준 모델에서도 완주했다 (EXP-030).** pi로 Opus 5.5(Anthropic API 키 직결)와 gpt-6-sol(ChatGPT OAuth)을 돌려 각 EN 3/3, 6 run 모두 iteration 1에 완주했다. 세션은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분으로 네이티브 에이전트 기준선(EXP-026 Claude Code 4.0–8.4분, EXP-027 Codex 4.8–5.2분)과 범위가 겹쳤고, output은 pi 쪽이 낮았다(Opus 5.5 16.6–19.8K 대 18.6–28.2K, gpt-6-sol 7.0–8.6K 대 10.4–11.0K). 에이전트와 API 경로(시스템 프롬프트·도구·thinking 전달 방식·캐시 TTL)가 함께 달라 이 차이는 조합 전체의 차이이며 pi의 효과로 단정하지 않는다.
 
 ## 실험 라이프사이클
 

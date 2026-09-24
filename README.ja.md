@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-029（2026-09-24）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-030（2026-09-24）
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
@@ -56,7 +56,7 @@
 | [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol・gpt-6-luna Ralphループ完走検証（各n=3） | M-20: Codex CLI（`codex exec`）ハーネスで、gpt-6-sol・gpt-6-luna（effort medium）はそれぞれ隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（各n=3）。 | **検証** |
 | [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 ネイティブRalphループ完走検証（EN・KO各n=3） | M-21: Claude Codeネイティブハーネスで、Sonnet 5（`claude-sonnet-5`、thinkingデフォルト）はEN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3）。 | **検証** |
 | [EXP-029](experiments/029-pi-openweight/report.md) pi coding agent × kimi-k3・qwen3.8-max・deepseek-flash Ralphループ完走検証（EN各n=3） | M-22: pi coding agent（`pi -p` v0.87.1）を各提供者のOpenAI互換エンドポイントに直結して`kimi-k3`・`qwen3.8-max`・`deepseek-flash`（thinkingはpiデフォルト）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。 | **検証** |
-| [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3) | M-23: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-opus-5-5`(Anthropic API 키 직결)·`openai-codex/gpt-6-sol`(ChatGPT OAuth)을 돌리면(thinking pi 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제). | **검증** |
+| [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5・gpt-6-sol Ralphループ完走検証（EN各n=3） | M-23: pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-opus-5-5`（Anthropic APIキー直結）と`openai-codex/gpt-6-sol`（ChatGPT OAuth）をpiデフォルトのthinkingで動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。 | **検証** |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -139,8 +139,8 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-029 — pi coding agent × kimi-k3・qwen3.8-max・deepseek-flash Ralphループ完走検証（EN各n=3）** (検証)  
 **3条件すべて3/3完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件一致）。8 runはiteration 1で完走し、qwen-en-1は採点ポートを外部プロセスが占有していたためiteration 5で完走と記録された（iteration 1のコードも再採点で通過）。セッションはflash 1.9–4.1分（D-3再実行を反映）、kimi 9.5–9.9分、qwen 15.6–29.0分。このリポで初めての第3のハーネス（pi）であり、過去のClaude Code直結runとの比較はハーネスとAPI形式が交絡する。観測値であり順位の確定ではない。 → [レポート](experiments/029-pi-openweight/report.md)
 
-**EXP-030 — pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3)** (검증)  
-두 조건 모두 3/3 완주, 6 run 전부 iteration 1 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). 세션 시간은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분이며, 각 모델의 네이티브 에이전트 기준선(EXP-026 Opus 5.5 4.0–8.4분, EXP-027 gpt-6-sol 4.8–5.2분)과 범위가 겹친다. 관측값이며 우열 확정이 아니다. → [レポート](experiments/030-pi-frontier/report.md)
+**EXP-030 — pi coding agent × Opus 5.5・gpt-6-sol Ralphループ完走検証（EN各n=3）** (検証)  
+**2条件とも3/3完走、6 runすべてiteration 1**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件一致）。セッションはOpus 5.5が3.1–4.9分、gpt-6-solが4.2–5.6分で、ネイティブエージェントの基準線（EXP-026 Opus 5.5 4.0–8.4分、EXP-027 gpt-6-sol 4.8–5.2分）と範囲が重なる。観測値であり順位の確定ではない。 → [レポート](experiments/030-pi-frontier/report.md)
 
 <!-- RESULTS:END -->
 
@@ -156,6 +156,7 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 11. **GPT-6系3モデル（astra・sol・luna）はいずれもCodexハーネスでモデルIDの差し替えだけで完走した（EXP-021・027）。** sol・luna各3/3 iter 1完走（応答modelフィールド全件一致）。solは3 run全て4.8–5.2分・output約11Kでばらつきが小さく、lunaは5.4–10.0分・output 13.4–21.5Kで、「fast」の位置付けに反しこの課題ではsolより短いrunはなかった。astra（EXP-021、7分台）とは時点・CLIバージョンが異なるためモデル差とは断定しない。EXP-027は新モデルのベンチマーク手順をまとめた`ralph-model-benchmark`スキルの初適用である。
 12. **Sonnet 5もネイティブハーネスでEN・KOともに完走したが、同じハーネスの上位モデルより遅く出力が多かった（EXP-028）。** EN 3/3・KO 3/3完走（応答modelフィールドは全メッセージ`claude-sonnet-5`）。5 runはiteration 1で終わり、en-1はエージェントがスキャフォールド・テスト準備・実装を3 iterationに分けてiteration 3で完走した（rejectedなし）。セッション11.2–16.8分・output 57.6–73.7Kで、Opus 5.5（EXP-026、4.0–8.4分・18.6–28.2K）・Fable 5.1（EXP-023）の観測範囲より上。測定日・Claude Codeバージョンが異なるためモデル単独の差とは断定しない。
 13. **第3のハーネスpiも変換レイヤーなしでオープンウェイト系3モデルで完走した（EXP-029）。** pi coding agentを各提供者のOpenAI互換エンドポイントに直結し、kimi-k3・qwen3.8-max・deepseek-flashが各EN 3/3、計9/9完走した（応答modelフィールド全件一致、ハーネスのトラブルシューティング0件）。8 runはiteration 1で終わり、qwen-en-1は採点ポートを外部プロセスが占有していたためiteration 5と記録された（iteration 1のコードも再採点で通過）。セッションはflash 1.9–4.1分（D-3再実行を反映）、kimi 9.5–9.9分、qwen 15.6–29.0分。同じモデルの過去のClaude Code直結run（EXP-013・014・025）とはハーネスとAPI形式（Anthropic互換とOpenAI互換）が同時に異なるため、差をpiの効果として分離しない。これによりRalphループベンチマークはClaude Code・Codex・piの3ハーネスで同じ手順で再現できる。
+14. **piはベンダーの基準モデルでも完走した（EXP-030）。** piでOpus 5.5（Anthropic APIキー直結）とgpt-6-sol（ChatGPT OAuth）を動かし、各EN 3/3、6 runすべてiteration 1で完走した。セッションはOpus 5.5が3.1–4.9分、gpt-6-solが4.2–5.6分で、ネイティブエージェントの基準線（EXP-026 Claude Code 4.0–8.4分、EXP-027 Codex 4.8–5.2分）と範囲が重なり、outputはpi側が少なかった（Opus 5.5 16.6–19.8K対18.6–28.2K、gpt-6-sol 7.0–8.6K対10.4–11.0K）。エージェントとAPI経路（システムプロンプト・ツール・thinkingの渡し方・キャッシュTTL）が同時に異なるため、この差は組み合わせ全体の差であり、piの効果とは断定しない。
 
 ## 実験ライフサイクル
 

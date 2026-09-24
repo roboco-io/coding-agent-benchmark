@@ -25,9 +25,9 @@ for (const m of M) for (const k of ["en", "ko"]) if (m[k]) {
   for (const n of m[k].exp.match(/\d+/g)) latest = Math.max(latest, +n);
 }
 const rows = M.map(m => [m.name, m.stack, +med(m.en.t).toFixed(1), !!m.preview]).sort((a, b) => a[2] - b[2]);
-const data = { runs, models: M.length, latest: "EXP-" + String(latest).padStart(3, "0"), rows };
+const data = { runs, models: new Set(M.map(m => m.base || m.name)).size, latest: "EXP-" + String(latest).padStart(3, "0"), rows };
 fs.writeFileSync(out, fs.readFileSync(`${root}/scripts/og/og-card.html`, "utf8").replace("const D = __DATA__;", "const D = " + JSON.stringify(data) + ";"));
-console.log(`runs ${runs} · models ${M.length} · ${data.latest}`);
+console.log(`runs ${runs} · models ${data.models} · ${data.latest}`);
 JS
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
   --window-size=1200,630 --virtual-time-budget=8000 ${EXTRA[@]+"${EXTRA[@]}"} \

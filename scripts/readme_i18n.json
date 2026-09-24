@@ -549,6 +549,26 @@
         "verdict": "验证",
         "summary": "**EN 3/3·KO 3/3 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，所有消息的响应 model 字段均为 `claude-sonnet-5`）。5 个 run 在 iteration 1 完成；en-1 由代理自行把工作拆成 3 个 iteration，在 iteration 3 完成（无 rejected）。会话 11.2–16.8 分钟·output 57.6–73.7K，高于同一框架下 Opus 5.5（EXP-026）与 Fable 5.1（EXP-023）的观测范围。为观测值，并非确定的排名。"
       }
+    },
+    "EXP-029": {
+      "en": {
+        "name": "pi coding agent × kimi-k3 · qwen3.8-max · deepseek-flash Ralph loop completion check (EN n=3 each)",
+        "hypothesis": "With the pi coding agent (`pi -p` v0.87.1) connected directly to each provider's OpenAI-compatible endpoint, `kimi-k3`, `qwen3.8-max` and `deepseek-flash` (pi default thinking) can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3 each; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**All three conditions 3/3 completed** (gate pass plus two independent re-checks each at 13/13 · 154/154, no intervention, response model field matched on every message). Eight runs finished at iteration 1; qwen-en-1 was recorded at iteration 5 because an external process occupied the grading port (its iteration-1 code also passed on re-grading). Sessions: flash 1.9–7.7 min, kimi 9.5–9.9 min, qwen 15.6–29.0 min. First run of a third harness (pi) in this repo; comparison with earlier Claude Code direct runs mixes harness and API format. Observed values, not a confirmed ranking."
+      },
+      "ja": {
+        "name": "pi coding agent × kimi-k3・qwen3.8-max・deepseek-flash Ralphループ完走検証（EN各n=3）",
+        "hypothesis": "pi coding agent（`pi -p` v0.87.1）を各提供者のOpenAI互換エンドポイントに直結して`kimi-k3`・`qwen3.8-max`・`deepseek-flash`（thinkingはpiデフォルト）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**3条件すべて3/3完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件一致）。8 runはiteration 1で完走し、qwen-en-1は採点ポートを外部プロセスが占有していたためiteration 5で完走と記録された（iteration 1のコードも再採点で通過）。セッションはflash 1.9–7.7分、kimi 9.5–9.9分、qwen 15.6–29.0分。このリポで初めての第3のハーネス（pi）であり、過去のClaude Code直結runとの比較はハーネスとAPI形式が交絡する。観測値であり順位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "pi coding agent × kimi-k3·qwen3.8-max·deepseek-flash Ralph 循环完成验证（EN 各 n=3）",
+        "hypothesis": "将 pi coding agent（`pi -p` v0.87.1）直连各提供方的 OpenAI 兼容端点运行 `kimi-k3`·`qwen3.8-max`·`deepseek-flash`（thinking 为 pi 默认值），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN 各 n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**三个条件均 3/3 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部一致）。8 个 run 在 iteration 1 完成；qwen-en-1 因评分端口被外部进程占用而记录为 iteration 5 完成（其 iteration 1 代码复评也通过）。会话时长：flash 1.9–7.7 分钟，kimi 9.5–9.9 分钟，qwen 15.6–29.0 分钟。这是本仓库首次使用第三种框架（pi）；与此前 Claude Code 直连 run 的比较同时混杂了框架与 API 格式。为观测值，并非确定的排名。"
+      }
     }
   }
 }

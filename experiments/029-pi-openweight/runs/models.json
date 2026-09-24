@@ -1,0 +1,5 @@
+{"providers":{"dashscope":{"baseUrl":"https://dashscope-intl.aliyuncs.com/compatible-mode/v1","api":"openai-completions","apiKey":"$QWEN_API_KEY",
+ "models":[{"id":"qwen3.8-max","name":"Qwen3.8 Max","reasoning":true,"input":["text"],"contextWindow":1000000,"maxTokens":131072,
+  "cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0},
+  "compat":{"supportsStrictMode":true,"thinkingFormat":"qwen","supportsDeveloperRole":false,"supportsStore":false,"supportsReasoningEffort":true},
+  "thinkingLevelMap":{"off":null,"minimal":null,"low":"low","medium":"medium","high":null,"xhigh":"xhigh","max":null}}]}}}

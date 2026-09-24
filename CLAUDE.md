@@ -1,6 +1,14 @@
 # CLAUDE.md
 
-이 리포는 토큰 사용 실험 관리 리포다. 구조·방법론은 [README.md](README.md), 가설 상태는 [hypotheses/catalog.md](hypotheses/catalog.md) 참조.
+이 리포는 Ralph loop를 사용하는 모델·하네스 조합의 백엔드 구현 성능을 비교하는 실험 관리 리포다. 구조·방법론은 [README.md](README.md), 가설 상태는 [hypotheses/catalog.md](hypotheses/catalog.md) 참조.
+
+## 실험 설계·계측·판정 시 필수 규칙
+
+실험 설계·실행·집계·분석·보고 또는 기존 결과를 기준선으로 인용할 때 [실험 품질 규칙](docs/experiment-quality-rules.md)을 먼저 읽고 적용한다. Codex의 `AGENTS.md`도 같은 정본을 참조한다.
+
+- `scripts/aggregate_tokens.py` v2는 Claude message.id 중복 제거를 회귀 검증했다. Codex 누계는 지원하지 않으며 충돌은 오류로 중단한다. EXP-001~004 정정은 [정정 기록](docs/2026-09-21-corrections.md)을 따른다. 토큰 대리지표를 청구 비용으로 표현하지 않는다.
+- 새 실험은 `templates/experiment-readme.md`와 `templates/report.md`를 사용해 비교 조건, 예산, 계측 근거, 불확실성을 기록한다.
+- 이 규칙은 실험 관리용이다. 실험 대상 에이전트에 노출할 지침·스킬·MCP는 설계에서 고정하고 실제 노출 상태를 기록한다.
 
 ## 실험 종료 시 필수 절차
 
@@ -20,6 +28,7 @@
 2. **기본 연결은 제공자의 Anthropic 호환 엔드포인트 직결**(`ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN`)이다. 검증된 제공자: Upstage(EXP-006 open2-2·EXP-008에서 최초 사용, EXP-015 — Bearer만 수용. **단 2026-08-05 엔드포인트 회수됨** — EXP-018 보류 참조, 재사용 전 스모크 필수), DashScope(EXP-013), Moonshot(EXP-014). 템플릿은 직전 실험 하네스에서 env 3요소(엔드포인트/키/모델 ID)만 치환한다.
 3. Anthropic 호환 엔드포인트가 없는 모델은 벤치마크 대상에서 제외하거나, 부득이 변환 계층을 쓸 경우 설계 문서에 **사유와 계측 한계를 사전 등록**하고 결과 비교에서 별도 스택으로 표기한다.
 4. 격리(`CLAUDE_CONFIG_DIR` 전용 + `hasCompletedOnboarding` 우회)·PROMPT 정본 byte-identical·세션 jsonl usage(message.id dedup) 계측은 기존 원칙(EXP-007/008) 그대로 유지한다.
+5. **새 모델·에이전트 벤치마크는 `ralph-model-benchmark` 스킬(`.claude/skills/ralph-model-benchmark/`)로 수행한다.** 정본 PROMPT(EN/KO)·Hurl 13파일·공통 driver/measure/usage 스크립트가 스킬에 들어 있어, `bench.env` 하나로 codex / claude-native / claude-direct 하네스를 같은 절차로 재현한다 (EXP-027 첫 적용).
 
 ## 환경 주의
 

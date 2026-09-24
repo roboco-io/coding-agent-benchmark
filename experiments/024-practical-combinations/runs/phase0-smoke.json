@@ -1,0 +1,53 @@
+{
+  "purpose": "subscription availability only; not a benchmark run",
+  "conditions": [
+    {
+      "condition": "fable",
+      "command": [
+        "claude",
+        "-p",
+        "Reply with exactly OK. Do not use tools or inspect any files.",
+        "--model",
+        "claude-fable-5-1",
+        "--restricted",
+        "--tools",
+        "",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{\"mcpServers\":{}}",
+        "--setting-sources",
+        "",
+        "--no-session-persistence",
+        "--output-format",
+        "json"
+      ],
+      "seconds": 6.46,
+      "exit_code": 0,
+      "stdout": "[{\"type\":\"system\",\"subtype\":\"init\",\"cwd\":\"/private/var/folders/12/4bv943n16mg_3gzhbclnnzj80000gn/T/exp024-smoke-c9ck4qol\",\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\",\"tools\":[],\"mcp_servers\":[],\"model\":\"claude-fable-5-1\",\"permissionMode\":\"default\",\"slash_commands\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"loop\",\"schedule\",\"claude-api\",\"workflow-authoring\",\"run\",\"run-skill-generator\",\"advisor\",\"agents\",\"auto-mode-setup\",\"autocompact\",\"clear\",\"color\",\"compact\",\"config\",\"output-style\",\"context\",\"effort\",\"fast\",\"heapdump\",\"init\",\"mcp\",\"import\",\"model\",\"__remote-workflow\",\"workflow-launch-exec\",\"reload-plugins\",\"reload-skills\",\"rename\",\"ultrareview\",\"security-review\",\"usage-credits\",\"extra-usage\",\"usage\",\"insights\",\"recap\",\"skill-doctor\",\"goal\",\"design-consent\",\"design-revoke\",\"list-agents\",\"team-onboarding\"],\"terminal_slash_commands\":[\"doctor\",\"color\",\"reload-plugins\"],\"apiKeySource\":\"none\",\"claude_code_version\":\"2.1.278\",\"output_style\":\"default\",\"agents\":[\"claude\",\"Explore\",\"general-purpose\",\"Plan\",\"statusline-setup\"],\"skills\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"loop\",\"schedule\",\"claude-api\",\"workflow-authoring\",\"run\",\"run-skill-generator\"],\"plugins\":[],\"capabilities\":[\"interrupt_receipt_v1\",\"interrupt_cancel_queued_v1\",\"msg_lifecycle_v1\"],\"analytics_disabled\":false,\"product_feedback_disabled\":false,\"uuid\":\"87b6e56b-2e1b-4ea5-b2e5-218a996ad133\",\"messaging_socket_path\":\"/tmp/cc-socks/20972.sock\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\"},{\"type\":\"rate_limit_event\",\"rate_limit_info\":{\"status\":\"allowed\",\"resetsAt\":1789971000,\"rateLimitType\":\"five_hour\",\"overageStatus\":\"allowed\",\"overageResetsAt\":1790812800,\"isUsingOverage\":false,\"unifiedWindows\":{\"five_hour\":{\"utilization\":0,\"resetsAt\":1789971000},\"seven_day\":{\"utilization\":0,\"resetsAt\":1790553600},\"seven_day_overage_included\":{\"utilization\":0,\"resetsAt\":1790553600}}},\"uuid\":\"74dce511-8eea-40a2-8fa7-69a00608b3f9\",\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\"},{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"Your response above was stopped by a safety classifier \u2014 this is not a tool or API error. The rest of it was withheld, and tool calls in it that had not finished did not run. Do not produce that content again, even reworded.\"}]},\"parent_tool_use_id\":null,\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\",\"uuid\":\"b80d7232-8cbc-48f4-8344-2af160bcdfc3\",\"timestamp\":\"2026-09-21T01:28:43.797Z\",\"isSynthetic\":true},{\"type\":\"assistant\",\"message\":{\"model\":\"claude-opus-4-8\",\"id\":\"msg_011CfFiZSUmrcx51xR8QxQMA\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"fallback\",\"from\":{\"model\":\"claude-fable-5-1\"},\"to\":{\"model\":\"claude-opus-4-8\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":3277,\"cache_read_input_tokens\":531,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":3277},\"output_tokens\":1,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\",\"uuid\":\"cd1f71ba-bcad-4437-89e4-6b6e56c13d62\",\"timestamp\":\"2026-09-21T01:28:45.886Z\",\"request_id\":\"req_011CfFiZRAeCkq7njt7g249j\"},{\"type\":\"assistant\",\"message\":{\"model\":\"claude-opus-4-8\",\"id\":\"msg_011CfFiZSUmrcx51xR8QxQMA\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"OK\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":3277,\"cache_read_input_tokens\":531,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":3277},\"output_tokens\":1,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\",\"uuid\":\"c5b16637-70f9-424a-8e1a-6388896b2723\",\"timestamp\":\"2026-09-21T01:28:45.892Z\",\"request_id\":\"req_011CfFiZRAeCkq7njt7g249j\"},{\"type\":\"system\",\"subtype\":\"model_refusal_fallback\",\"trigger\":\"refusal\",\"direction\":\"retry\",\"scope\":\"session\",\"original_model\":\"claude-fable-5-1\",\"fallback_model\":\"claude-opus-4-8\",\"request_id\":\"req_011CfFiZRAeCkq7njt7g249j\",\"api_refusal_category\":\"cyber\",\"api_refusal_explanation\":null,\"refused_user_message_uuid\":\"3391be2a-0ede-42c4-a525-92f1cb169a76\",\"content\":\"Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. Send feedback with /feedback or learn more: https://support.claude.com/en/articles/15363606\\n\\nDetails: `[cyber]`\",\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\",\"uuid\":\"549fbb7f-63c1-455b-9244-4fced95d8a66\"},{\"duration_api_ms\":4023,\"stop_reason\":\"end_turn\",\"session_id\":\"72730932-203c-42fa-9710-5497182861fb\",\"total_cost_usd\":0.08522949999999999,\"usage\":{\"input_tokens\":4,\"cache_creation_input_tokens\":6488,\"cache_read_input_tokens\":1062,\"output_tokens\":4,\"output_tokens_details\":{\"thinking_tokens\":0},\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":6488,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"not_available\",\"iterations\":[],\"speed\":\"standard\"},\"modelUsage\":{\"claude-fable-5-1\":{\"inputTokens\":2,\"outputTokens\":0,\"cacheReadInputTokens\":531,\"cacheCreationInputTokens\":3211,\"webSearchRequests\":0,\"costUSD\":0.06437274999999999,\"contextWindow\":1000000,\"maxOutputTokens\":64000,\"thinkingTokens\":0,\"canonicalModel\":\"claude-fable-5-1\",\"provider\":\"firstParty\",\"costBasis\":\"list\"},\"claude-opus-5\":{\"inputTokens\":2,\"outputTokens\":4,\"cacheReadInputTokens\":531,\"cacheCreationInputTokens\":3277,\"webSearchRequests\":0,\"costUSD\":0.02085675,\"contextWindow\":1000000,\"maxOutputTokens\":64000,\"thinkingTokens\":0,\"canonicalModel\":\"claude-opus-5\",\"provider\":\"firstParty\",\"costBasis\":\"list\"}},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\",\"subagent_stats\":{\"spawned\":0,\"requested\":{\"background\":0,\"foreground\":0,\"unset\":0},\"started_in_background\":0,\"max_depth\":0,\"spawned_by_subagents\":0,\"completed\":0,\"failed\":0,\"killed\":{\"parent\":0,\"user\":0,\"system\":0},\"refused\":{\"depth_limit\":0,\"concurrency_limit\":0,\"budget\":0},\"by_type\":{}},\"is_error\":false,\"num_turns\":2,\"subtype\":\"success\",\"api_error_status\":null,\"result\":\"OK\",\"ttft_ms\":4018,\"type\":\"result\",\"duration_ms\":4097,\"uuid\":\"3bcc9cda-8c30-4db6-b36b-3f2444b02f2d\",\"ttft_stream_ms\":1922,\"time_to_request_ms\":71,\"first_content_frame_ms\":4019,\"queued_turn_count\":0,\"result_index\":0}]\n",
+      "stderr": ""
+    },
+    {
+      "condition": "astra",
+      "command": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--model",
+        "gpt-6-astra",
+        "-c",
+        "model_reasoning_effort=\"medium\"",
+        "--sandbox",
+        "read-only",
+        "--skip-git-repo-check",
+        "--ephemeral",
+        "--json",
+        "Reply with exactly OK. Do not use tools or inspect any files."
+      ],
+      "seconds": 6.62,
+      "exit_code": 0,
+      "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0c194-7398-76f0-9a4d-c356701850b7\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"OK\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":14424,\"cached_input_tokens\":11520,\"cache_write_input_tokens\":0,\"output_tokens\":5,\"reasoning_output_tokens\":0}}\n",
+      "stderr": "Reading additional input from stdin...\n"
+    }
+  ]
+}

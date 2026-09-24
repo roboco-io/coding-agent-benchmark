@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "experiment": "EXP-024",
+  "status": "phase0_blocked",
+  "question_type": "practical_combination_efficiency",
+  "strategy": "ralph_fresh_session",
+  "conditions": [
+    {
+      "id": "fable",
+      "harness": "claude",
+      "cli_version": "2.1.278",
+      "model": "claude-fable-5-1",
+      "reasoning": "default_unverified",
+      "auth": "claude.ai_subscription"
+    },
+    {
+      "id": "astra",
+      "harness": "codex",
+      "cli_version": "0.155.1",
+      "model": "gpt-6-astra",
+      "reasoning": "medium",
+      "auth": "chatgpt_subscription"
+    }
+  ],
+  "tasks": [
+    "build",
+    "bug",
+    "feature",
+    "migration"
+  ],
+  "repetitions": 3,
+  "seed": 20260921,
+  "limits": {
+    "run_wall_seconds": 1800,
+    "max_iterations": 10,
+    "planned_runs": 24,
+    "subscription_only": true,
+    "paid_overage_allowed": false,
+    "stop_campaign_on_limit": true
+  },
+  "cost_status": "subscription_unallocated",
+  "smoke_record": "runs/phase0-smoke.json",
+  "remaining_gates": [
+    "fable_model_fallback",
+    "astra_served_model_identity",
+    "paid_overage_disabled",
+    "task_and_grader_hashes",
+    "grader_positive_negative_fixtures",
+    "isolated_coding_environment",
+    "runner_usage_and_timeout_validation"
+  ]
+}

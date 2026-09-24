@@ -1,0 +1,170 @@
+[
+  {
+    "run_id": "feature-fable-1",
+    "block": 1,
+    "task": "feature",
+    "condition": "fable",
+    "repeat": 1
+  },
+  {
+    "run_id": "feature-astra-1",
+    "block": 1,
+    "task": "feature",
+    "condition": "astra",
+    "repeat": 1
+  },
+  {
+    "run_id": "migration-fable-2",
+    "block": 2,
+    "task": "migration",
+    "condition": "fable",
+    "repeat": 2
+  },
+  {
+    "run_id": "migration-astra-2",
+    "block": 2,
+    "task": "migration",
+    "condition": "astra",
+    "repeat": 2
+  },
+  {
+    "run_id": "build-fable-2",
+    "block": 3,
+    "task": "build",
+    "condition": "fable",
+    "repeat": 2
+  },
+  {
+    "run_id": "build-astra-2",
+    "block": 3,
+    "task": "build",
+    "condition": "astra",
+    "repeat": 2
+  },
+  {
+    "run_id": "bug-astra-3",
+    "block": 4,
+    "task": "bug",
+    "condition": "astra",
+    "repeat": 3
+  },
+  {
+    "run_id": "bug-fable-3",
+    "block": 4,
+    "task": "bug",
+    "condition": "fable",
+    "repeat": 3
+  },
+  {
+    "run_id": "build-fable-3",
+    "block": 5,
+    "task": "build",
+    "condition": "fable",
+    "repeat": 3
+  },
+  {
+    "run_id": "build-astra-3",
+    "block": 5,
+    "task": "build",
+    "condition": "astra",
+    "repeat": 3
+  },
+  {
+    "run_id": "bug-astra-2",
+    "block": 6,
+    "task": "bug",
+    "condition": "astra",
+    "repeat": 2
+  },
+  {
+    "run_id": "bug-fable-2",
+    "block": 6,
+    "task": "bug",
+    "condition": "fable",
+    "repeat": 2
+  },
+  {
+    "run_id": "feature-fable-2",
+    "block": 7,
+    "task": "feature",
+    "condition": "fable",
+    "repeat": 2
+  },
+  {
+    "run_id": "feature-astra-2",
+    "block": 7,
+    "task": "feature",
+    "condition": "astra",
+    "repeat": 2
+  },
+  {
+    "run_id": "feature-astra-3",
+    "block": 8,
+    "task": "feature",
+    "condition": "astra",
+    "repeat": 3
+  },
+  {
+    "run_id": "feature-fable-3",
+    "block": 8,
+    "task": "feature",
+    "condition": "fable",
+    "repeat": 3
+  },
+  {
+    "run_id": "bug-astra-1",
+    "block": 9,
+    "task": "bug",
+    "condition": "astra",
+    "repeat": 1
+  },
+  {
+    "run_id": "bug-fable-1",
+    "block": 9,
+    "task": "bug",
+    "condition": "fable",
+    "repeat": 1
+  },
+  {
+    "run_id": "migration-fable-3",
+    "block": 10,
+    "task": "migration",
+    "condition": "fable",
+    "repeat": 3
+  },
+  {
+    "run_id": "migration-astra-3",
+    "block": 10,
+    "task": "migration",
+    "condition": "astra",
+    "repeat": 3
+  },
+  {
+    "run_id": "build-astra-1",
+    "block": 11,
+    "task": "build",
+    "condition": "astra",
+    "repeat": 1
+  },
+  {
+    "run_id": "build-fable-1",
+    "block": 11,
+    "task": "build",
+    "condition": "fable",
+    "repeat": 1
+  },
+  {
+    "run_id": "migration-astra-1",
+    "block": 12,
+    "task": "migration",
+    "condition": "astra",
+    "repeat": 1
+  },
+  {
+    "run_id": "migration-fable-1",
+    "block": 12,
+    "task": "migration",
+    "condition": "fable",
+    "repeat": 1
+  }
+]

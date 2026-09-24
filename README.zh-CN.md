@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-027（2026-09-24）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-028（2026-09-24）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -54,6 +54,7 @@
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash·V4-Pro 直连 Ralph 循环完成验证（EN·KO 各 n=3） | M-18: 通过 DeepSeek 的 Anthropic 兼容端点将 Claude Code 直连到 `deepseek-flash`（DeepSeek-V4.1-Flash）和 `deepseek-v4-pro`（DeepSeek-V4-Pro-0813）（thinking 默认）后，能在隔离·无干扰的 Ralph 循环中于上限 30 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 标准版各 n=3，完成率判定·排除计费）。 | **验证** |
 | [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3） | M-19: 在 Claude Code 原生框架中，Opus 5.5（`claude-opus-5-5`，thinking 默认）使用 EN 与 KO 标准版提示的 Ralph 循环，能在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，完成率判定·排除计费）。 | **验证** |
 | [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol·gpt-6-luna Ralph 循环完成验证（各 n=3） | M-20: 在 Codex CLI（`codex exec`）框架中，gpt-6-sol 与 gpt-6-luna（effort medium）各自能在隔离、无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（各 n=3）。 | **验证** |
+| [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 原生 Ralph 循环完成验证（EN·KO 各 n=3） | M-21: 在 Claude Code 原生框架中，Sonnet 5（`claude-sonnet-5`，默认 thinking）能以 EN·KO 正本 Ralph 循环提示在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3）。 | **验证** |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -130,6 +131,9 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-027 — Codex CLI × gpt-6-sol·gpt-6-luna Ralph 循环完成验证（各 n=3）** (验证)  
 **sol 3/3·luna 3/3 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，响应 model 字段全部一致）。会话：sol 4.8–5.2 分钟·output 10.4–11.0K；luna 5.4–10.0 分钟·output 13.4–21.5K。评分基础设施挂起 1 次（D-1）在未干预代理的情况下处理，不影响判定。首个使用 `ralph-model-benchmark` 技能执行的实验。为观测值，并非确定的排名。 → [报告](experiments/027-gpt6-sol-luna-codex/report.md)
 
+**EXP-028 — Claude Code × Sonnet 5 原生 Ralph 循环完成验证（EN·KO 各 n=3）** (验证)  
+**EN 3/3·KO 3/3 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，所有消息的响应 model 字段均为 `claude-sonnet-5`）。5 个 run 在 iteration 1 完成；en-1 由代理自行把工作拆成 3 个 iteration，在 iteration 3 完成（无 rejected）。会话 11.2–16.8 分钟·output 57.6–73.7K，高于同一框架下 Opus 5.5（EXP-026）与 Fable 5.1（EXP-023）的观测范围。为观测值，并非确定的排名。 → [报告](experiments/028-sonnet5-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -142,6 +146,7 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 9. **DeepSeek V4.1-Flash 无需调整即通过直连标准，并显示出全部条件中最快一档·最低成本的特征（EXP-025）。** 仅替换 3 个 env 值，Flash·V4-Pro 在 EN·KO 各 3/3，共 12/12 在 iter 1 完成（响应 model 字段全部保持）。Flash EN 4.6–6.0 分钟·每 run 折算约 $0.1（缓存命中输入 $0.006/M），低于 Codex×sol（5.3–10.0 分钟）一档；Pro 12–16 分钟·约 $0.5，output 为 1.5 倍。因时点·框架混淆，不确定速度·成本优势；作为直连可复用案例（第 4 家）和特征记录保留。
 10. **Opus 5.5 仅替换模型 ID 即通过原生框架，并显示出原生 Claude 条件中最短·最低输出的特征（EXP-026）。** EN·KO 各 3/3，共 6/6 在 iter 1 完成（各 2 次复验一致）。6 个 run 中 5 个为 4.0–4.2 分钟·output 约 20K，低于 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）和 Opus 5（8.9–17.6 分钟·39–49K）的分布，KO 下也保持同一档。这与第 8 条的解释（输出量扩大是 Opus 5 特有特征）一致。但这是与时点·CLI 版本不同的基准并置，且为 n=3 观测，在同期交叉重测之前不确定速度优势。
 11. **GPT-6 系列 3 个模型（astra·sol·luna）在 Codex 框架中仅替换模型 ID 即全部完成（EXP-021·027）。** sol·luna 各 3/3 在 iter 1 完成（响应 model 字段全部一致）。sol 3 个 run 均为 4.8–5.2 分钟·output 约 11K，离散度小；luna 为 5.4–10.0 分钟·output 13.4–21.5K，与其 "fast" 定位不同，在此任务中没有比 sol 更短的 run。与 astra（EXP-021，7 分钟左右）的差异受时点·CLI 版本混杂影响，不归因于模型。EXP-027 是封装新模型基准流程的 `ralph-model-benchmark` 技能的首次应用。
+12. **Sonnet 5 在原生框架中 EN·KO 也都完成了，但比同一框架中的上位模型更慢、输出更多（EXP-028）。** EN 3/3·KO 3/3 完成（所有消息的响应 model 字段均为 `claude-sonnet-5`）。5 个 run 在 iteration 1 完成；en-1 由代理把脚手架、测试准备和实现拆成 3 个 iteration，在 iteration 3 完成（无 rejected）。会话 11.2–16.8 分钟·output 57.6–73.7K，高于 Opus 5.5（EXP-026，4.0–8.4 分钟·18.6–28.2K）与 Fable 5.1（EXP-023）的观测范围。测量日期与 Claude Code 版本不同，不归因于模型本身。
 
 ## 实验生命周期
 

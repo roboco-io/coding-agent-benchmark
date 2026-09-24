@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-027 (2026-09-24)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-028 (2026-09-24)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -54,6 +54,7 @@
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash·V4-Pro 직결 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-18: Claude Code를 DeepSeek Anthropic 호환 엔드포인트로 `deepseek-flash`(DeepSeek-V4.1-Flash)·`deepseek-v4-pro`(DeepSeek-V4-Pro-0813)에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 정본 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-19: Claude Code 네이티브 하네스에서 Opus 5.5(`claude-opus-5-5`, thinking 기본값)는 EN 정본·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol·gpt-6-luna 랄프 루프 완주 검증 (각 n=3) | M-20: Codex CLI(`codex exec`) 하네스에서 gpt-6-sol·gpt-6-luna(effort medium)는 각각 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (각 n=3). | **검증** |
+| [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-21: Claude Code 네이티브 하네스에서 Sonnet 5(`claude-sonnet-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -130,6 +131,9 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 **EXP-027 — Codex CLI × gpt-6-sol·gpt-6-luna 랄프 루프 완주 검증 (각 n=3)** (검증)  
 sol 3/3·luna 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 전수 일치). 채점 인프라 결함 1건(D-1)은 에이전트 개입 없이 처리했고 판정에 영향 없음. → [보고서](experiments/027-gpt6-sol-luna-codex/report.md)
 
+**EXP-028 — Claude Code × Sonnet 5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3)** (검증)  
+EN 3/3·KO 3/3 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-sonnet-5`). 5 run은 iteration 1, en-1은 에이전트가 작업을 3개 iteration으로 나눠 iteration 3에 완주했다. 세션 11.2–16.8분·output 57.6–73.7K로 같은 하네스의 Opus 5.5(EXP-026)·Fable 5.1(EXP-023)보다 길고 많은 대역에 놓인다. 관측값이며 우열 확정이 아니다. → [보고서](experiments/028-sonnet5-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (2026-09-21 정정 반영)
@@ -142,6 +146,7 @@ sol 3/3·luna 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2
 9. **DeepSeek V4.1-Flash는 직결 표준을 무조정으로 통과하며 전 조건 최속 대역·최저 비용 프로파일을 보였다 (EXP-025).** env 3요소 치환만으로 Flash·V4-Pro 모두 EN·KO 각 3/3, 총 12/12 iter 1 완주(응답 model 필드 전수 유지). Flash EN 4.6–6.0분·run당 환산 약 $0.1(캐시 히트 입력 $0.006/M)로 Codex×sol(5.3–10.0분)보다 아래 대역이고, Pro는 12–16분·약 $0.5로 output이 1.5배. 시점·하네스 교락으로 속도·비용 우위는 확정하지 않으며, 직결 재사용성 사례(4사째)와 프로파일 기록으로 남긴다.
 10. **Opus 5.5는 네이티브 하네스를 모델 ID 교체만으로 통과하며 네이티브 Claude 조건 중 최단·최저 산출 프로파일을 보였다 (EXP-026).** EN·KO 각 3/3, 총 6/6 iter 1 완주(재검증 각 2회 일치). 6 run 중 5개가 4.0–4.2분·output 약 20K로 Fable 5.1(6.2–7.8분·28.7–35.8K)과 Opus 5(8.9–17.6분·39–49K) 분포 아래에 있고, KO에서도 같은 대역을 유지했다. 8항의 해석(산출량 확대는 Opus 5 고유 특성)과 부합한다. 단 시점·CLI 버전이 다른 기준선과의 병치이며 n=3 관측이므로 속도 우위는 동시기 교차 재측정 전까지 확정하지 않는다.
 11. **GPT-6 계열 3개 모델(astra·sol·luna) 모두 Codex 하네스에서 모델 ID 치환만으로 완주했다 (EXP-021·027).** sol·luna 각 3/3 iter 1 완주(응답 model 필드 전수 일치). sol은 3 run 모두 4.8–5.2분·output 약 11K로 산포가 작았고, luna는 5.4–10.0분·output 13.4–21.5K로 "fast" 포지셔닝과 달리 이 과제에서 sol보다 짧은 run이 없었다. astra(EXP-021, 7분대)와는 시점·CLI 버전이 달라 모델 차이로 단정하지 않는다. EXP-027은 신규 모델 벤치마크 절차를 묶은 `ralph-model-benchmark` 스킬의 첫 적용이다.
+12. **Sonnet 5도 네이티브 하네스에서 EN·KO 모두 완주했지만, 같은 하네스의 상위 모델보다 느리고 출력이 많았다 (EXP-028).** EN 3/3·KO 3/3 완주(응답 model 필드 전수 `claude-sonnet-5`). 5 run은 iteration 1에 끝났고, en-1은 에이전트가 스캐폴딩·테스트 준비·구현을 3개 iteration으로 나눠 iteration 3에 완주했다(반려 없음). 세션 11.2–16.8분·output 57.6–73.7K로 Opus 5.5(EXP-026, 4.0–8.4분·18.6–28.2K)·Fable 5.1(EXP-023)의 관측 범위보다 위다. 측정일·Claude Code 버전이 달라 모델 단독 차이로 단정하지 않는다.
 
 ## 실험 라이프사이클
 

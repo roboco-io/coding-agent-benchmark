@@ -1,0 +1,213 @@
+{
+  "aggregator_version": 2,
+  "format": "claude-message-usage",
+  "scope": "one directory per run; top-level JSONL only",
+  "results": {
+    "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs": {
+      "input_tokens": 598,
+      "output_tokens": 289000,
+      "cache_creation_input_tokens": 838822,
+      "cache_read_input_tokens": 17552165,
+      "token_proxy": 1128420,
+      "sessions": 16,
+      "messages": 321,
+      "usage_rows": 782,
+      "duplicates": 461,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/001-ralph-vs-plan-then-execute/runs/ralph-loop/logs": {
+      "input_tokens": 101,
+      "output_tokens": 38090,
+      "cache_creation_input_tokens": 98315,
+      "cache_read_input_tokens": 4096470,
+      "token_proxy": 136506,
+      "sessions": 1,
+      "messages": 54,
+      "usage_rows": 112,
+      "duplicates": 58,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/002-korean-vs-english/runs/en-1/logs": {
+      "input_tokens": 77,
+      "output_tokens": 25278,
+      "cache_creation_input_tokens": 75592,
+      "cache_read_input_tokens": 2724719,
+      "token_proxy": 100947,
+      "sessions": 1,
+      "messages": 41,
+      "usage_rows": 70,
+      "duplicates": 29,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/002-korean-vs-english/runs/en-2/logs": {
+      "input_tokens": 81,
+      "output_tokens": 31719,
+      "cache_creation_input_tokens": 92180,
+      "cache_read_input_tokens": 3468089,
+      "token_proxy": 123980,
+      "sessions": 1,
+      "messages": 44,
+      "usage_rows": 94,
+      "duplicates": 50,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/002-korean-vs-english/runs/ko-1/logs": {
+      "input_tokens": 75,
+      "output_tokens": 29027,
+      "cache_creation_input_tokens": 82145,
+      "cache_read_input_tokens": 2936560,
+      "token_proxy": 111247,
+      "sessions": 1,
+      "messages": 40,
+      "usage_rows": 84,
+      "duplicates": 44,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/002-korean-vs-english/runs/ko-2/logs": {
+      "input_tokens": 455,
+      "output_tokens": 31913,
+      "cache_creation_input_tokens": 85596,
+      "cache_read_input_tokens": 2863848,
+      "token_proxy": 117964,
+      "sessions": 1,
+      "messages": 38,
+      "usage_rows": 82,
+      "duplicates": 44,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/003-pte-skills/runs/pte-skills/logs": {
+      "input_tokens": 589,
+      "output_tokens": 157000,
+      "cache_creation_input_tokens": 717494,
+      "cache_read_input_tokens": 16410040,
+      "token_proxy": 875083,
+      "sessions": 15,
+      "messages": 309,
+      "usage_rows": 512,
+      "duplicates": 203,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/004-ralph-skills/runs/skills-1/logs": {
+      "input_tokens": 59,
+      "output_tokens": 33698,
+      "cache_creation_input_tokens": 83595,
+      "cache_read_input_tokens": 2497725,
+      "token_proxy": 117352,
+      "sessions": 1,
+      "messages": 33,
+      "usage_rows": 100,
+      "duplicates": 67,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "experiments/004-ralph-skills/runs/skills-2/logs": {
+      "input_tokens": 110,
+      "output_tokens": 29588,
+      "cache_creation_input_tokens": 88613,
+      "cache_read_input_tokens": 4434199,
+      "token_proxy": 118311,
+      "sessions": 1,
+      "messages": 58,
+      "usage_rows": 87,
+      "duplicates": 29,
+      "missing_usage": 0,
+      "missing_fields": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    }
+  },
+  "provenance": {
+    "aggregator_sha256": "57bce06bdc3389350ce209fc3a33c0f89d0427273221a4b82000693e37ac89c7",
+    "command": "python3 scripts/aggregate_tokens.py --json experiments/00[1-4]-*/runs/*/logs",
+    "files": {
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/0624b407-f193-45eb-9b30-b403cd8c2045.jsonl": "4e11d345ecf22a19fa8ed56d601009192139f22da4aaaeeafde4deca310f17b3",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/1f3d7a87-9d6d-4313-8005-0d04b4ddf698.jsonl": "1ebbc835368406a13dce700aca199a2906e5f2efcd795909e4aae8b5eab6e856",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/3bab275a-4b89-4cec-a434-bddbfe878957.jsonl": "788e0b0982665971f18e5946852689e18144fbace68576aceb6b7e17319a4160",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/539d4956-e05f-4ef1-9306-6d14f706214f.jsonl": "815481c7a6829e5b408251361406941f6a6f02a3499b43c3dd5aacae05839843",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/5a61301c-de57-48c4-91ce-0af2586decfe.jsonl": "0b26cb2248d04e2d982ac4f06b5288b9cc4d75258b070bca00a61dbdbad0ebdc",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/5d54d848-7196-4e91-ae35-ce506ee5a2ee.jsonl": "e247be81fbbf2925443628a88cbd10cefd96eb66d32be4dcd5c5b1e1328fea7e",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/7218cab5-a309-4131-85b1-2077b11ba5cd.jsonl": "92ac581bcbbddfe4f1e7be97bfdae25840fa78858f25507ae7b58f7bf99bc07d",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/9192c3dd-c2bb-48f1-b7c6-7a20a5cf0d36.jsonl": "4c0edb316d41f8eca6da15003a13fd3be0f83e880d65a151d0d849ccca3799d4",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/993cdf0b-a97c-49ff-93f7-f355c0e157cf.jsonl": "3224ce1c91dccb4976d2e21518beafe13c1a2bebe7fcb5357d01194efb2f12b1",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/a0d950e3-5ff3-47fe-8bd9-e79714da073d.jsonl": "3ab5833377965fcbb322eb8f41728bf5ccf53b8c2cbededc5191651a64f0f1ac",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/a1684fed-5d9d-41d7-9962-a41e44a1aec8.jsonl": "408ece15e5739fb078d4e3f374d1fe2341ddd019bdaf3faf34f345444bd70aee",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/a92a9475-5c12-4f98-b1c7-b8ac20a1ccc4.jsonl": "b7991bd76631d816a186258f4dbb081e73d3ff581737c53a4b648c19b1caee89",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/b0defa43-c66e-49d7-af79-4b2894a4b529.jsonl": "c5ce01b0ddf3a211ef43016f9bbcb8d1a5df82719f860bba37deb590224f259d",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/b1b0456d-be5b-46f4-ae4a-d0ef8db4f32b.jsonl": "8767260b0638e14e85f91ecf193ea42527e105a84ee49b27abb3cbfabb304e91",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/cdfe82f2-3558-4ce6-8be1-cb8cf588838b.jsonl": "b1051a5367285f1f821f6e941e04513776ac64c8ca5be4c78e99fabf24bd0629",
+      "experiments/001-ralph-vs-plan-then-execute/runs/plan-then-execute/logs/e74f9612-a75e-4152-86fb-af2d8bb741c4.jsonl": "6b2feec0014a2e8f16e328289c8838ecee8a88d6eac78570a06149c4cd81e82c",
+      "experiments/001-ralph-vs-plan-then-execute/runs/ralph-loop/logs/e73035c8-d336-444c-bd2a-f23feecc3612.jsonl": "4922f876035a122ba8349ceef6f6b831e277f151094b1781b9e826aede19756b",
+      "experiments/002-korean-vs-english/runs/en-1/logs/dd5a1180-308b-41e4-afb8-9af174a3c527.jsonl": "5e2e9584c6e64efb9e6edcf084b500824b950b075ef0efb164c5de7cf84a4e45",
+      "experiments/002-korean-vs-english/runs/en-2/logs/d3ffb387-7616-4ea0-91e9-1afe72d05ebc.jsonl": "ff476e4c3cc0ee35799430c68ebd60b4d8184ea0a7bdfa333fbe574a72673c4b",
+      "experiments/002-korean-vs-english/runs/ko-1/logs/7d62ddc6-a088-43d6-8183-2677a791b99b.jsonl": "8b87bfabf0dcf5af95b830eb85e71ef4894e81b9d9f4141a27de5e2fac94d395",
+      "experiments/002-korean-vs-english/runs/ko-2/logs/ddc488f8-a708-4cbc-800a-57f9d7530c10.jsonl": "9a562519bb1186f81eed87e24bbf44228b3c21b8aad32a28883fd42905719769",
+      "experiments/003-pte-skills/runs/pte-skills/logs/0ca00cb6-fed7-4ad9-a7e4-7c754cfbd49b.jsonl": "bb24a9a1e8ffbb2fd1d41f24465207cae9a8da8b24f9350cf161cb9b85ff76d3",
+      "experiments/003-pte-skills/runs/pte-skills/logs/0d04ee9f-c0c7-4aea-a49e-c4eaaa106f41.jsonl": "1d719a03791a9a41c872f49bc371bf1e3f039d8adb487d9760ae923a14261cad",
+      "experiments/003-pte-skills/runs/pte-skills/logs/1d073d7c-bb3b-4a46-a6e1-f3a22a6caaa5.jsonl": "91372caf7f29d80994f69e4c90f2944a1dc4bd0f29b8eeb0b770aa885e0b4276",
+      "experiments/003-pte-skills/runs/pte-skills/logs/21026cad-e62e-42b0-9a55-aa9a2aeede12.jsonl": "8fb7bbf71f9e299026b4e10f0d8b660c78ecbf2f6f883cf46b53feab2da7a8c5",
+      "experiments/003-pte-skills/runs/pte-skills/logs/2a293621-b594-4308-9a52-376f9fff11d6.jsonl": "05e389431e00067fc3e8fe4489e53f6d45cb5f30fea44de8c78aa2d46709fa9d",
+      "experiments/003-pte-skills/runs/pte-skills/logs/42e5c101-b47a-4069-9d5b-47e69421f8b1.jsonl": "87649b72aea66e9b233f96eb202b964cb8f232350594da39e1701a8b3271249c",
+      "experiments/003-pte-skills/runs/pte-skills/logs/496b9b08-9777-419d-be03-a71566c3875a.jsonl": "09940f39820b818eb0a7768f1d26631515fe9886d1246db5dc0bfc781fb12cb5",
+      "experiments/003-pte-skills/runs/pte-skills/logs/602abd95-34aa-4d75-9e4b-97a5b9d96cd8.jsonl": "4f803297dab9b6d2e374dd8810569f3a49f61b63375a01421f47e6d382f4c16d",
+      "experiments/003-pte-skills/runs/pte-skills/logs/8d1fb5be-d1cf-47f5-9e73-aaf862c99e3c.jsonl": "49aab0cdce584d8ec6e9b9219c0a1f7a4b6c4c5271f5d33dbd20f62244bf432f",
+      "experiments/003-pte-skills/runs/pte-skills/logs/98af49aa-c1ba-4e66-8898-ee2e481b3e8c.jsonl": "2e4554e3ce9cdc0afe73e15e173a1c6b0d777244ec53f83da921686ce16f285d",
+      "experiments/003-pte-skills/runs/pte-skills/logs/9f3f53c5-7d24-4bcf-8988-b6bf7cb19a81.jsonl": "6bb84a01408671bdb0e1577931e190e673b416b8caf15755eb0e28a0dae87a38",
+      "experiments/003-pte-skills/runs/pte-skills/logs/c02a4c81-282a-4553-ba7c-5113b231e68d.jsonl": "e3eb4a09fbbefdc74f50a7a9555b6684e317243ee937ff3a6f8684242c29848b",
+      "experiments/003-pte-skills/runs/pte-skills/logs/c3c3c42c-f540-4afb-8ffe-57e952cee591.jsonl": "200bcaad1a578636f8765e34dac4f244d7157fd757680df86df3f9696b3d7af9",
+      "experiments/003-pte-skills/runs/pte-skills/logs/c4ccb6ab-859b-4869-9562-3c8752a333c3.jsonl": "138d6ec945cfd7070c57a23c702eaa034235832bbd676928dc94c41d1c547352",
+      "experiments/003-pte-skills/runs/pte-skills/logs/eba0ab81-8d6b-49ae-a0f8-409c6da4089a.jsonl": "a5befd57541f60f9a907044b57160087bb869ee1a841c53f977736f010fb6393",
+      "experiments/004-ralph-skills/runs/skills-1/logs/d282b447-b08a-48f5-8ea5-5bed03627e4c.jsonl": "90fc72d796e879fae7127b589bb73c38d7ec4f9b76cd086e49a14cf35040a010",
+      "experiments/004-ralph-skills/runs/skills-2/logs/c7775de7-242b-4029-b277-a3b8aceb5f92.jsonl": "9fd0eec6838f72f24df65914038941a3cf409d7905acca2ab95ba4b79b544204"
+    }
+  }
+}

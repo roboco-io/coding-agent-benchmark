@@ -25,6 +25,10 @@ case "$HARNESS" in
   pi)
     mkdir -p "$BASE/pi-agent"
     [ -n "${PI_MODELS_JSON:-}" ] && cp "$PI_MODELS_JSON" "$BASE/pi-agent/models.json"
+    # OAuth provider(openai-codex 등) 자격증명: ~/.pi/agent/auth.json 최신본 복사 (EXP-030, 만료 시 401 — codex 분기와 같은 이유)
+    if [ -f "$HOME/.pi/agent/auth.json" ]; then
+      install -m 600 "$HOME/.pi/agent/auth.json" "$BASE/pi-agent/auth.json"
+    fi
     command -v "$PI_BIN" >/dev/null || { echo "pi 없음 ($PI_BIN)" >&2; exit 1; } ;;
   claude-native) : ;;   # 사용자 기본 설정 사용 — 노출된 지침·스킬·MCP를 phase0.md에 기록할 것
   *) echo "unknown HARNESS=$HARNESS" >&2; exit 1 ;;

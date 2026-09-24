@@ -43,6 +43,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 |---|---|---|
 | PATH의 `hurl` 사용 | npm shim이 실 Hurl을 가려 0건 통과 오검(EXP-020) | measure.sh의 절대 경로 유지 |
 | 오래된 `auth.json` 사본 재사용 | Codex 401 (EXP-021) | setup.sh가 매번 `~/.codex/auth.json` 최신본 복사 |
+| pi OAuth provider(`openai-codex` 등) 자격증명 누락 | 격리 `pi-agent`에 인증 없음 → 실행 실패 | setup.sh가 매번 `~/.pi/agent/auth.json` 최신본을 `$BASE/pi-agent/auth.json`(600)으로 복사 (EXP-030). 사전에 `pi auth check --provider <p>` ready 확인 |
 | 공유 설정 디렉터리에서 실행 | 이전 세션·메모리 교란, usage 범위 혼입 (EXP-007) | `codex-home`/`claude-config` 격리, run별 `sessions-<run>` 분리 |
 | 프롬프트 수정·재작성 | 기존 실험과 비교 불가 | `assets/` 정본만 사용, 해시 불일치 시 setup 중단 |
 | 미인식 모델의 200k 창 제한 | 컨텍스트 조기 차단 | `claude-direct`는 `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` 포함 |

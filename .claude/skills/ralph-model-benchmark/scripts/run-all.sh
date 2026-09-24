@@ -10,6 +10,7 @@ archive_sessions(){ # $1 run
   case "$HARNESS" in
     codex) mv "$BASE/codex-home/sessions" "$BASE/sessions-$1" 2>/dev/null ;;
     claude-direct) mv "$BASE/claude-config/projects" "$BASE/sessions-$1" 2>/dev/null ;;
+    pi) : ;;   # driver가 --session-dir sessions-<run>에 직접 기록
     claude-native) # 기본 설정 디렉터리의 해당 app 프로젝트 로그만 복사
       local enc; enc=$(echo "$BASE/app-$1" | sed 's|[/.]|-|g')
       cp -r "$HOME/.claude/projects/$enc" "$BASE/sessions-$1" 2>/dev/null ;;

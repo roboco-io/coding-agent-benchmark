@@ -1,7 +1,7 @@
 #!/bin/bash
 # 사용: bash driver.sh <run>   (run = <조건>-<언어>-<n>, 예: sol-en-1)
 # 랄프 루프 1 run: iteration마다 에이전트 1회 호출 → measure.sh 채점 → .ralph-done 게이트.
-# EXP-011/021(codex)·EXP-025(claude-direct)·EXP-026(claude-native) driver의 공통형.
+# EXP-029(pi)·EXP-011/021(codex)·EXP-025(claude-direct)·EXP-026(claude-native) driver의 공통형.
 RUN="$1"
 BASE="$(cd "$(dirname "$0")" && pwd)"
 source "$BASE/bench.env"
@@ -22,6 +22,10 @@ invoke_agent() {
         ${EFFORT:+-c model_reasoning_effort="$EFFORT"} \
         --sandbox danger-full-access --skip-git-repo-check -C "$REPO" \
         "$(cat "$REPO/PROMPT.md")" ;;
+    pi)
+      source "$BASE/pi_env.sh"
+      "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/sessions-$RUN" \
+        --model "$MODEL" ${THINKING:+--thinking "$THINKING"} "$(cat "$REPO/PROMPT.md")" ;;
     claude-native)
       claude -p "$(cat "$REPO/PROMPT.md")" --model "$MODEL" --dangerously-skip-permissions ;;
     claude-direct)

@@ -28,9 +28,10 @@
 2. **기본 연결은 제공자의 Anthropic 호환 엔드포인트 직결**(`ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN`)이다. 검증된 제공자: Upstage(EXP-006 open2-2·EXP-008에서 최초 사용, EXP-015 — Bearer만 수용. **단 2026-08-05 엔드포인트 회수됨** — EXP-018 보류 참조, 재사용 전 스모크 필수), DashScope(EXP-013), Moonshot(EXP-014). 템플릿은 직전 실험 하네스에서 env 3요소(엔드포인트/키/모델 ID)만 치환한다.
 3. Anthropic 호환 엔드포인트가 없는 모델은 벤치마크 대상에서 제외하거나, 부득이 변환 계층을 쓸 경우 설계 문서에 **사유와 계측 한계를 사전 등록**하고 결과 비교에서 별도 스택으로 표기한다.
 4. 격리(`CLAUDE_CONFIG_DIR` 전용 + `hasCompletedOnboarding` 우회)·PROMPT 정본 byte-identical·세션 jsonl usage(message.id dedup) 계측은 기존 원칙(EXP-007/008) 그대로 유지한다.
-5. **새 모델·에이전트 벤치마크는 `ralph-model-benchmark` 스킬(`.claude/skills/ralph-model-benchmark/`)로 수행한다.** 정본 PROMPT(EN/KO)·Hurl 13파일·공통 driver/measure/usage 스크립트가 스킬에 들어 있어, `bench.env` 하나로 codex / claude-native / claude-direct 하네스를 같은 절차로 재현한다 (EXP-027 첫 적용).
+5. **새 모델·에이전트 벤치마크는 `ralph-model-benchmark` 스킬(`.claude/skills/ralph-model-benchmark/`)로 수행한다.** 정본 PROMPT(EN/KO)·Hurl 13파일·공통 driver/measure/usage 스크립트가 스킬에 들어 있어, `bench.env` 하나로 codex / claude-native / claude-direct / pi 하네스를 같은 절차로 재현한다 (EXP-027 첫 적용, pi는 EXP-029 추가).
 
 ## 환경 주의
 
 - 새로 클론한 환경에서는 `git config core.hooksPath hooks` 1회 실행 (pre-commit 훅 활성화).
+- **`hurl`은 채점기인 Orange의 Hurl(Rust, https://hurl.dev)만 뜻한다.** 이 머신의 PATH에서 가장 먼저 잡히는 `hurl`은 npm 패키지 `@hurl/cli`(asdf Node shim, `hurl --version` → `1.0.0`)로, 이름만 같은 다른 도구다. 실 Hurl은 `/opt/homebrew/bin/hurl`(2026-09-24 확인 `hurl 8.0.1`)이다. 채점·재검증·스모크는 반드시 이 절대 경로로 실행하고(`measure.sh`의 `HURL_BIN`), PATH의 `hurl`로 얻은 결과는 채점 근거로 쓰지 않는다. 버전 출력이 `hurl 8.x (... libcurl ...)` 형식이 아니면 실 Hurl이 아니다. 근거: EXP-020 게이트 오검(shim이 0건 통과를 반환). 실험 대상 에이전트가 PATH 충돌을 스스로 우회하는 것은 산출물 내부의 일이며 판정에 영향을 주지 않는다 — 판정은 항상 하네스의 절대 경로 채점기로 한다. 정본 PROMPT에는 이 안내를 넣지 않는다(기존 실험과 비교 가능성 유지).
 - 4개 README(README.ko.md·README.md·README.ja.md·README.zh-CN.md)의 `<!-- RESULTS:BEGIN/END -->` 마커 사이는 직접 수정 금지 (스크립트가 덮어씀). README.ko.md가 한국어 원문이며 README.md는 영어판이다.

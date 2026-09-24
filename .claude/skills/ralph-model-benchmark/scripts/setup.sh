@@ -12,7 +12,7 @@ cp "$SKILL"/assets/PROMPT-en.md "$SKILL"/assets/PROMPT-ko.md "$BASE/"
 rm -rf "$BASE/harness-hurl"; cp -r "$SKILL/assets/harness-hurl" "$BASE/"
 (cd "$SKILL/assets" && md5 -r PROMPT-en.md PROMPT-ko.md harness-hurl/*.hurl | diff - checksums.md5) \
   || { echo "정본 해시 불일치 — assets 변경 여부 확인" >&2; exit 1; }
-for f in driver.sh measure.sh run-all.sh smoke.sh usage_codex.py; do cp "$SKILL/scripts/$f" "$BASE/"; done
+for f in driver.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py pi_env.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
 
 case "$HARNESS" in
   codex)
@@ -22,6 +22,10 @@ case "$HARNESS" in
   claude-direct)
     mkdir -p "$BASE/claude-config"
     echo '{"hasCompletedOnboarding":true}' > "$BASE/claude-config/.claude.json" ;;
+  pi)
+    mkdir -p "$BASE/pi-agent"
+    [ -n "${PI_MODELS_JSON:-}" ] && cp "$PI_MODELS_JSON" "$BASE/pi-agent/models.json"
+    command -v "$PI_BIN" >/dev/null || { echo "pi 없음 ($PI_BIN)" >&2; exit 1; } ;;
   claude-native) : ;;   # 사용자 기본 설정 사용 — 노출된 지침·스킬·MCP를 phase0.md에 기록할 것
   *) echo "unknown HARNESS=$HARNESS" >&2; exit 1 ;;
 esac

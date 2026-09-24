@@ -56,6 +56,7 @@
 | [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol・gpt-6-luna Ralphループ完走検証（各n=3） | M-20: Codex CLI（`codex exec`）ハーネスで、gpt-6-sol・gpt-6-luna（effort medium）はそれぞれ隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（各n=3）。 | **検証** |
 | [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 ネイティブRalphループ完走検証（EN・KO各n=3） | M-21: Claude Codeネイティブハーネスで、Sonnet 5（`claude-sonnet-5`、thinkingデフォルト）はEN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3）。 | **検証** |
 | [EXP-029](experiments/029-pi-openweight/report.md) pi coding agent × kimi-k3・qwen3.8-max・deepseek-flash Ralphループ完走検証（EN各n=3） | M-22: pi coding agent（`pi -p` v0.87.1）を各提供者のOpenAI互換エンドポイントに直結して`kimi-k3`・`qwen3.8-max`・`deepseek-flash`（thinkingはpiデフォルト）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。 | **検証** |
+| [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3) | M-23: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-opus-5-5`(Anthropic API 키 직결)·`openai-codex/gpt-6-sol`(ChatGPT OAuth)을 돌리면(thinking pi 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제). | **검증** |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -137,6 +138,9 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 
 **EXP-029 — pi coding agent × kimi-k3・qwen3.8-max・deepseek-flash Ralphループ完走検証（EN各n=3）** (検証)  
 **3条件すべて3/3完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件一致）。8 runはiteration 1で完走し、qwen-en-1は採点ポートを外部プロセスが占有していたためiteration 5で完走と記録された（iteration 1のコードも再採点で通過）。セッションはflash 1.9–4.1分（D-3再実行を反映）、kimi 9.5–9.9分、qwen 15.6–29.0分。このリポで初めての第3のハーネス（pi）であり、過去のClaude Code直結runとの比較はハーネスとAPI形式が交絡する。観測値であり順位の確定ではない。 → [レポート](experiments/029-pi-openweight/report.md)
+
+**EXP-030 — pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3)** (검증)  
+두 조건 모두 3/3 완주, 6 run 전부 iteration 1 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). 세션 시간은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분이며, 각 모델의 네이티브 에이전트 기준선(EXP-026 Opus 5.5 4.0–8.4분, EXP-027 gpt-6-sol 4.8–5.2분)과 범위가 겹친다. 관측값이며 우열 확정이 아니다. → [レポート](experiments/030-pi-frontier/report.md)
 
 <!-- RESULTS:END -->
 

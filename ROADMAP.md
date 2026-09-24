@@ -52,5 +52,6 @@
 - [x] EXP-027: Codex CLI × gpt-6-sol·gpt-6-luna 완주 검증 (M-20, 각 n=3, `ralph-model-benchmark` 스킬 첫 적용) — 검증(6/6 iter 1 완주, sol 약 5분·output 약 11K로 산포 작음, luna 5.4–10.0분, 채점기 행 결함 D-1 수정), [보고서](experiments/027-gpt6-sol-luna-codex/report.md)
 - [x] EXP-028: Claude Code × Sonnet 5 네이티브 완주 검증 (M-21, EN·KO 각 n=3, 스킬 `claude-native` 첫 적용) — 검증(6/6 완주, 5 run iter 1·en-1 iter 3, 세션 11.2–16.8분·output 57.6–73.7K), [보고서](experiments/028-sonnet5-ralph/report.md)
 - [x] EXP-029: pi coding agent × kimi-k3·qwen3.8-max·deepseek-flash OpenAI 호환 직결 완주 검증 (M-22, EN 각 n=3, 스킬 `pi` 하네스 첫 적용) — 검증(9/9 완주, 8 run iter 1·qwen-en-1은 채점 포트 외부 점유(D-1)로 iter 5, 세션 flash 1.9–4.1분(D-3 재실행 반영)·kimi 9.5–9.9분·qwen 15.6–29.0분, Claude Code 직결과는 하네스·API 형식 교락), [보고서](experiments/029-pi-openweight/report.md)
+- [x] EXP-030: pi coding agent × Opus 5.5(Anthropic API 키)·gpt-6-sol(ChatGPT OAuth) 완주 검증 (M-23, EN 각 n=3) — 검증(6/6 iter 1 완주, 세션 opus 3.1–4.9분·sol 4.2–5.6분, output opus 16.6–19.8K·sol 7.0–8.6K. 네이티브 기준선 EXP-026·EXP-027과는 에이전트·API 경로 교락), [보고서](experiments/030-pi-frontier/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

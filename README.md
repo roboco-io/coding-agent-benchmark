@@ -56,6 +56,7 @@ Model–harness combinations and task types are the priority. Strategy (S), toke
 | [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol · gpt-6-luna Ralph loop completion check (n=3 each) | M-20: In the Codex CLI (`codex exec`) harness, gpt-6-sol and gpt-6-luna (effort medium) can each finish the RealWorld backend (Hurl 13/13 · 154/154) within a 30-iteration · 4-hour cap in an isolated Ralph loop without intervention (n=3 each). | **Verified** |
 | [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 native Ralph loop completion check (EN·KO n=3 each) | M-21: In the native Claude Code harness, Sonnet 5 (`claude-sonnet-5`, default thinking) can finish the RealWorld backend (Hurl 13/13 · 154/154) with the EN and KO canonical Ralph-loop prompts within a 10-iteration · 4-hour cap without intervention (EN·KO n=3 each). | **Verified** |
 | [EXP-029](experiments/029-pi-openweight/report.md) pi coding agent × kimi-k3 · qwen3.8-max · deepseek-flash Ralph loop completion check (EN n=3 each) | M-22: With the pi coding agent (`pi -p` v0.87.1) connected directly to each provider's OpenAI-compatible endpoint, `kimi-k3`, `qwen3.8-max` and `deepseek-flash` (pi default thinking) can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3 each; completion-rate verdict, billing excluded). | **Verified** |
+| [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3) | M-23: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-opus-5-5`(Anthropic API 키 직결)·`openai-codex/gpt-6-sol`(ChatGPT OAuth)을 돌리면(thinking pi 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제). | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (Rejected within observed scope)  
 Deduplicated token proxy: PTE 1,128,420 vs Ralph 136,506 (8.27×). Different grading suites prevent an equal-quality cost conclusion. → [report](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -137,6 +138,9 @@ External-to-model failure (pre-registered criterion): at the start of the experi
 
 **EXP-029 — pi coding agent × kimi-k3 · qwen3.8-max · deepseek-flash Ralph loop completion check (EN n=3 each)** (Verified)  
 **All three conditions 3/3 completed** (gate pass plus two independent re-checks each at 13/13 · 154/154, no intervention, response model field matched on every message). Eight runs finished at iteration 1; qwen-en-1 was recorded at iteration 5 because an external process occupied the grading port (its iteration-1 code also passed on re-grading). Sessions: flash 1.9–4.1 min (after the D-3 re-run), kimi 9.5–9.9 min, qwen 15.6–29.0 min. First run of a third harness (pi) in this repo; comparison with earlier Claude Code direct runs mixes harness and API format. Observed values, not a confirmed ranking. → [report](experiments/029-pi-openweight/report.md)
+
+**EXP-030 — pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3)** (검증)  
+두 조건 모두 3/3 완주, 6 run 전부 iteration 1 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). 세션 시간은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분이며, 각 모델의 네이티브 에이전트 기준선(EXP-026 Opus 5.5 4.0–8.4분, EXP-027 gpt-6-sol 4.8–5.2분)과 범위가 겹친다. 관측값이며 우열 확정이 아니다. → [report](experiments/030-pi-frontier/report.md)
 
 <!-- RESULTS:END -->
 

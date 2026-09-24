@@ -1,0 +1,6 @@
+WARN 3000번대 포트 외부 LISTEN — 본 실행 전 종료 권장:
+DeepSRT 127.0.0.1:3003
+=== anthropic/claude-opus-5-5 (pi) 2026-09-24 17:46:32 ===
+SMOKE-OK
+=== openai-codex/gpt-6-sol (pi) 2026-09-24 17:46:53 ===
+SMOKE-OK

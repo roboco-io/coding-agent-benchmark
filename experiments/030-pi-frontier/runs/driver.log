@@ -1,0 +1,12 @@
+=== RUN opus-en-1 (pi anthropic/claude-opus-5-5, PROMPT-en.md) start: 2026-09-24 17:47:32 ===
+=== RUN opus-en-1 finished: 2026-09-24 17:51:35 | 1,2026-09-24 17:51:35,0,13,154,1,pass ===
+=== RUN sol-en-1 (pi openai-codex/gpt-6-sol, PROMPT-en.md) start: 2026-09-24 17:51:35 ===
+=== RUN sol-en-1 finished: 2026-09-24 17:56:00 | 1,2026-09-24 17:56:00,0,13,154,1,pass ===
+=== RUN opus-en-2 (pi anthropic/claude-opus-5-5, PROMPT-en.md) start: 2026-09-24 17:56:00 ===
+=== RUN opus-en-2 finished: 2026-09-24 17:59:16 | 1,2026-09-24 17:59:16,0,13,154,1,pass ===
+=== RUN sol-en-2 (pi openai-codex/gpt-6-sol, PROMPT-en.md) start: 2026-09-24 17:59:16 ===
+=== RUN sol-en-2 finished: 2026-09-24 18:04:59 | 1,2026-09-24 18:04:59,0,13,154,1,pass ===
+=== RUN opus-en-3 (pi anthropic/claude-opus-5-5, PROMPT-en.md) start: 2026-09-24 18:04:59 ===
+=== RUN opus-en-3 finished: 2026-09-24 18:10:05 | 1,2026-09-24 18:10:05,0,13,154,1,pass ===
+=== RUN sol-en-3 (pi openai-codex/gpt-6-sol, PROMPT-en.md) start: 2026-09-24 18:10:06 ===
+=== RUN sol-en-3 finished: 2026-09-24 18:14:38 | 1,2026-09-24 18:14:38,0,13,154,1,pass ===

@@ -18,3 +18,4 @@
 === start flash-en-3 : 2026-09-24 15:38:59 ===
 === end flash-en-3 | 1,2026-09-24 15:42:26,0,13,154,1,pass : 2026-09-24 15:42:26 ===
 === ALL RUNS FINISHED : 2026-09-24 15:42:26 ===
+=== rerun flash-en-1r (replaces flash-en-1: port 3000/3001 VS Code 교란) start : 2026-09-24 16:59:37 ===

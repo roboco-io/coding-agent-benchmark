@@ -51,6 +51,6 @@
 - [x] EXP-026: Claude Code × Opus 5.5 네이티브 완주 검증 (M-19, EN·KO 각 n=3, 총 6 run) — 검증(6/6 iter 1 완주, 5/6 run이 약 4분·output 약 20K로 네이티브 최단·최저 대역, Opus 5 확대 프로파일 미재현), [보고서](experiments/026-opus55-ralph/report.md)
 - [x] EXP-027: Codex CLI × gpt-6-sol·gpt-6-luna 완주 검증 (M-20, 각 n=3, `ralph-model-benchmark` 스킬 첫 적용) — 검증(6/6 iter 1 완주, sol 약 5분·output 약 11K로 산포 작음, luna 5.4–10.0분, 채점기 행 결함 D-1 수정), [보고서](experiments/027-gpt6-sol-luna-codex/report.md)
 - [x] EXP-028: Claude Code × Sonnet 5 네이티브 완주 검증 (M-21, EN·KO 각 n=3, 스킬 `claude-native` 첫 적용) — 검증(6/6 완주, 5 run iter 1·en-1 iter 3, 세션 11.2–16.8분·output 57.6–73.7K), [보고서](experiments/028-sonnet5-ralph/report.md)
-- [x] EXP-029: pi coding agent × kimi-k3·qwen3.8-max·deepseek-flash OpenAI 호환 직결 완주 검증 (M-22, EN 각 n=3, 스킬 `pi` 하네스 첫 적용) — 검증(9/9 완주, 8 run iter 1·qwen-en-1은 채점 포트 외부 점유(D-1)로 iter 5, 세션 flash 1.9–7.7분·kimi 9.5–9.9분·qwen 15.6–29.0분, Claude Code 직결과는 하네스·API 형식 교락), [보고서](experiments/029-pi-openweight/report.md)
+- [x] EXP-029: pi coding agent × kimi-k3·qwen3.8-max·deepseek-flash OpenAI 호환 직결 완주 검증 (M-22, EN 각 n=3, 스킬 `pi` 하네스 첫 적용) — 검증(9/9 완주, 8 run iter 1·qwen-en-1은 채점 포트 외부 점유(D-1)로 iter 5, 세션 flash 1.9–4.1분(D-3 재실행 반영)·kimi 9.5–9.9분·qwen 15.6–29.0분, Claude Code 직결과는 하네스·API 형식 교락), [보고서](experiments/029-pi-openweight/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

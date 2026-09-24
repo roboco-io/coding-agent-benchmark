@@ -12,3 +12,10 @@
 ## D-2: qwen-en-3 스트림 1건 `terminated` (2026-09-24 15:24:23 KST)
 
 - assistant 메시지 1건이 `stopReason: error`, `errorMessage: terminated`로 기록됨. 같은 세션이 이어져 iteration 1에 완주. 제공자 스트림 중단으로 분류하며 개입 없음.
+
+## D-3: flash-en-1 대체 — 포트 3000·3001 외부 점유로 세션 시간 교란 (2026-09-24 확인·재실행)
+
+- 관측: flash-en-1(14:34–14:41, 7.7분)은 게이트 pass·재검증 13/13이지만, 세션 jsonl에서 에이전트의 `scripts/run-api-tests.sh`가 두 번 "Server did not become ready"로 대기 시간 초과(65초·66초)했다. `lsof` 결과 VS Code helper(`Code H`, PID 53713)가 3000과 3001을 LISTEN 중이었고, 에이전트가 4000으로 옮긴 뒤 통과했다. 첫 테스트 실행부터 포트 4000 전환까지 154초, assistant 응답 7건, output 약 2.4K가 이 우회에 쓰였다. 도구 실행 합계는 243초로 flash-en-2·3(40·44초)의 약 6배였다.
+- 판단: D-1과 같은 환경 교란이다. 판정(완주)에는 영향이 없으나 세션 시간·usage가 모델 거동이 아닌 채점 환경 문제를 포함한다.
+- 처리: 사용자 결정(2026-09-24)에 따라 같은 하네스·PROMPT·bench.env로 `flash-en-1r`을 1회 재실행해 flash-en-1을 대체한다. 기동 전 3000번대 외부 LISTEN이 3003(DeepSRT, D-1 재채점 때와 동일)뿐임을 확인했고 smoke 3/3 PASS. 결과: 16:59:37–17:03:41(4.1분), iteration 1 pass, 재검증 2회 `13,154`, output 42,919, pi 기록 비용 $0.070. 원 run 자료(`app-flash-en-1`, 세션·로그·metrics)는 보존하되 집계·대시보드에서는 flash-en-1r을 쓴다.
+- 한계: 대체 run은 원 run보다 약 2.5시간 뒤 실행돼 시점이 다르다. 조건당 n=3 구성은 유지되지만 flash-en-1r만 다른 시점 표본이다.

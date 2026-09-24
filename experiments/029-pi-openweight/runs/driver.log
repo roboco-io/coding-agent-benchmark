@@ -16,3 +16,5 @@
 === RUN qwen-en-3 finished: 2026-09-24 15:38:59 | 1,2026-09-24 15:38:59,0,13,154,1,pass ===
 === RUN flash-en-3 (pi deepseek/deepseek-flash, PROMPT-en.md) start: 2026-09-24 15:38:59 ===
 === RUN flash-en-3 finished: 2026-09-24 15:42:26 | 1,2026-09-24 15:42:26,0,13,154,1,pass ===
+=== RUN flash-en-1r (pi deepseek/deepseek-flash, PROMPT-en.md) start: 2026-09-24 16:59:37 ===
+=== RUN flash-en-1r finished: 2026-09-24 17:03:53 | 1,2026-09-24 17:03:53,0,13,154,1,pass ===

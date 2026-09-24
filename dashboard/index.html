@@ -102,7 +102,7 @@ h2{font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0;}
 
 /* ── matrix ───────────────────────────── */
 .scroller{overflow-x:auto; margin-top:4px;}
-table.mx{border-collapse:collapse; width:100%; min-width:940px;}
+table.mx{border-collapse:collapse; width:100%; min-width:1060px;}
 table.mx th{text-align:left; vertical-align:bottom; padding:0 12px 8px 0; border-bottom:1px solid var(--line);}
 table.mx th button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
   color:var(--muted); background:none; border:none; padding:0; cursor:pointer; display:inline-flex; gap:5px; align-items:center;}
@@ -124,6 +124,9 @@ table.mx tbody tr.dim td{opacity:.42;}
 .mdl .nm{font-weight:600; font-size:.92rem; letter-spacing:-.01em; display:flex; align-items:center; gap:7px;}
 .swatch{width:9px; height:9px; border-radius:1px; flex:none;}
 .mdl .st{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--muted); letter-spacing:.02em; padding-left:16px;}
+.agt{display:flex; flex-direction:column; gap:3px; min-width:112px;}
+.agt .an{font-weight:500; font-size:.84rem; white-space:nowrap;}
+.agt .ac{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--muted); letter-spacing:.02em; white-space:nowrap;}
 .pv{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.06em; color:var(--flag);
   border:1px solid color-mix(in srgb,var(--flag) 40%,transparent); border-radius:2px; padding:0 4px; white-space:nowrap;}
 .done{font-family:"IBM Plex Mono",monospace; font-size:.8rem; white-space:nowrap;}
@@ -243,6 +246,7 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
       <thead>
         <tr>
           <th scope="col"><button type="button" data-sort="name"><span data-i18n="colModel"></span> <span class="dir">↓</span></button></th>
+          <th scope="col"><button type="button" data-sort="agent"><span data-i18n="colAgent"></span> <span class="dir">↓</span></button></th>
           <th scope="col">
             <button type="button" data-sort="time"><span data-i18n="colTime"></span> <span class="dir">↓</span></button>
             <div class="scale" data-scale="time"></div>
@@ -416,20 +420,20 @@ en: {
   metaLink:"View on GitHub ↗",
   flag:"<b>Solar Open 2 and Solar Pro 4 were measured on preview APIs, not the full service.</b> These were apply-to-use betas with no caching, slow round-trips and shutdowns without notice, so their time and token counts reflect the preview service as much as the model. Don't read them as production performance.",
   mxTitle:"Performance matrix",
-  mxSub:"One row per model; the “How to read” list below explains each column. Time, output and cost vary by orders of magnitude, so they use a <b>log scale</b> (ticks under each header). Click a header to sort.",
+  mxSub:"One row per model × agent combination; the “How to read” list below explains each column. Time, output and cost vary by orders of magnitude, so they use a <b>log scale</b> (ticks under each header). Click a header to sort.",
   segEn:"EN prompt", segKo:"KO prompt",
   hintEn:"English canonical prompt — all 15 models (3 of them also on the pi harness)", hintKo:"Korean canonical prompt (all deliverables in Korean) — 9 models tested",
   lgNative:"Claude Code native", lgDirect:"Claude Code direct (ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgPi:"pi coding agent (OpenAI-compatible API, direct)", stPi:"pi", condPi:"pi", notePi:"EXP-029 ran the EN prompt only", iter511:"iter 5·1·1",
   lgOut:"output measured from Codex rollout totals — not comparable with jsonl-measured (filled) bars",
-  colModel:"Model", colDone:"Completed", colTime:"Wall-clock", colSpread:"Run-to-run spread", colCommits:"Commit discipline", colOutput:"Output tokens", colCost:"Est. cost / run", costNa:"no public price",
+  colModel:"Model", colAgent:"Agent", connNative:"native", colDone:"Completed", colTime:"Wall-clock", colSpread:"Run-to-run spread", colCommits:"Commit discipline", colOutput:"Output tokens", colCost:"Est. cost / run", costNa:"no public price",
   min:" min", minTick:"min", commitsScale:"filled dots = median · scale 1–8",
   iterAll1:"all iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
   stNative:"Claude Code native", stDirect:"Direct", stCodex:"Codex CLI",
   koMissing:"KO condition not tested — ", noteAstra:"new GPT-6 generation", noteFable:"new Claude 5 top-tier model", notePreview:"endpoint withdrawn / new model",
   n1na:"n=1 · not assessable", span:"span {x} min", n1:"n=1", singleRun:"single run", sameAll:"same in every run",
   howEyebrow:"How to read",
-  howItems:["<b>Reading the bars</b> — Each row is one model. A bar spans the smallest to the largest value across that model's runs; the white tick is the median. Click a column header to sort by it.", "<b>Wall-clock</b> — How long the agent session took to finish the task in one run. Most conditions have medians between 3 and 19 minutes. The two Solar models (58 min, 119–258 min) also reflect slow preview-API responses and missing caching, so don't use them to compare model performance.", "<b>Run-to-run spread</b> — How many times longer the slowest run took than the fastest under the same condition. The larger it is, the harder it is to predict the next run. For example: pi × DeepSeek V4.1-Flash 3.9×, kimi-k3 2.8×, qwen3.8-max 1.1×.", "<b>Commit discipline</b> — Git commits made in one run (filled dots = median). This shows working style, not result quality. On the same prompt, Opus 4.8 usually commits once (median 1) while Opus 5 splits work into many commits (median 6).", "<b>Output tokens</b> — Tokens the model generated, thinking included. Outlined bars (the four GPT models) are measured from Codex's own records and can't be compared directly with filled bars. The three pi rows are measured from pi's own session records (thinking included in output).", "<b>Est. cost / run</b> — The run's tokens multiplied by public API prices. This is an estimate, not what was billed (runs used subscriptions and previews). Prices and assumptions are under \"Reading caveats\" below.", "<b>Key observations</b> — The shortest median is pi × DeepSeek V4.1-Flash (3.3 min, though its runs ranged 1.9–7.7 min); on Claude Code the fastest is Opus 5.5 (median 4.2 min). The cheapest is gpt-6-luna (about $0.03 per run), followed by pi × DeepSeek V4.1-Flash (about $0.06) and DeepSeek V4.1-Flash on Claude Code (about $0.09). Fast is not the same as cheap: Fable 5.1 is quick at 6.9 min but costs about $3.5 per run, roughly 3× Opus 5.5 ($1.25).", "<b>KO prompt toggle</b> — The prompt is swapped for a Korean translation and the deliverables (commits, README) must be written in Korean. All 9 models tested still finished. Only qwen3.8-max was clearly slower than in English (15.1 → 22.8 min); the two conditions ran on different days, so this is not attributed to language."],
+  howItems:["<b>Reading the bars</b> — Each row is one model × agent combination. A bar spans the smallest to the largest value across that model's runs; the white tick is the median. Click a column header to sort by it.", "<b>Agent</b> — The coding-agent harness that ran the Ralph loop (Claude Code, Codex CLI, pi). The second line shows how the model was connected: native, OpenAI, or a direct connection to the named provider's API. The same model can appear on several agents.", "<b>Wall-clock</b> — How long the agent session took to finish the task in one run. Most conditions have medians between 3 and 19 minutes. The two Solar models (58 min, 119–258 min) also reflect slow preview-API responses and missing caching, so don't use them to compare model performance.", "<b>Run-to-run spread</b> — How many times longer the slowest run took than the fastest under the same condition. The larger it is, the harder it is to predict the next run. For example: pi × DeepSeek V4.1-Flash 3.9×, kimi-k3 2.8×, qwen3.8-max 1.1×.", "<b>Commit discipline</b> — Git commits made in one run (filled dots = median). This shows working style, not result quality. On the same prompt, Opus 4.8 usually commits once (median 1) while Opus 5 splits work into many commits (median 6).", "<b>Output tokens</b> — Tokens the model generated, thinking included. Outlined bars (the four GPT models) are measured from Codex's own records and can't be compared directly with filled bars. The three pi rows are measured from pi's own session records (thinking included in output).", "<b>Est. cost / run</b> — The run's tokens multiplied by public API prices. This is an estimate, not what was billed (runs used subscriptions and previews). Prices and assumptions are under \"Reading caveats\" below.", "<b>Key observations</b> — The shortest median is pi × DeepSeek V4.1-Flash (3.3 min, though its runs ranged 1.9–7.7 min); on Claude Code the fastest is Opus 5.5 (median 4.2 min). The cheapest is gpt-6-luna (about $0.03 per run), followed by pi × DeepSeek V4.1-Flash (about $0.06) and DeepSeek V4.1-Flash on Claude Code (about $0.09). Fast is not the same as cheap: Fable 5.1 is quick at 6.9 min but costs about $3.5 per run, roughly 3× Opus 5.5 ($1.25).", "<b>KO prompt toggle</b> — The prompt is swapped for a Korean translation and the deliverables (commits, README) must be written in Korean. All 9 models tested still finished. Only qwen3.8-max was clearly slower than in English (15.1 → 22.8 min); the two conditions ran on different days, so this is not attributed to language."],
   cardsEyebrow:"Model notes · ordered by wall-clock",
   cards:{
     piflash:{"exp": "pi coding agent → DeepSeek API (OpenAI-compatible), direct · EXP-029 · EN", "li": ["<b>Shortest median of any condition, 3.3 min</b>, including the shortest completed session in this repo (1.9 min). Another run took 7.7 min, a 3.9× spread, the largest of any condition.", "<b>About $0.06 per run</b> (0.04–0.08), second only to gpt-6-luna.", "All 3 runs finished at iteration 1 with 2–3 commits. Thinking stayed at pi's default (high)."], "cav": "Same model as DeepSeek V4.1-Flash on Claude Code (EXP-025, 4.6–6.0 min), but the tool and the API format both differ and the runs are three days apart, so the difference is not attributed to pi. Cost uses the peak-hour price; the billed amount was not measured."},
@@ -473,20 +477,20 @@ ko: {
   metaLink:"GitHub에서 보기 ↗",
   flag:"<b>Solar Open 2와 Solar Pro 4는 정식 서비스가 아닌 프리뷰 API로 측정했습니다.</b> 신청해야 쓸 수 있는 베타 서비스로, 캐시를 지원하지 않고 응답이 느렸으며 예고 없이 종료되기도 했습니다. 그래서 두 모델의 시간과 토큰 수에는 모델 성능과 프리뷰 서비스의 한계가 함께 반영돼 있습니다. 정식 서비스 성능으로 읽지 마세요.",
   mxTitle:"성능 매트릭스",
-  mxSub:"한 행이 한 모델이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 눈금</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다.",
+  mxSub:"한 행이 한 모델×에이전트 조합이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 눈금</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다.",
   segEn:"EN 정본", segKo:"KO 정본",
   hintEn:"영문 프롬프트 정본 — 15 모델 전부(그중 3 모델은 pi 하네스로도 실행)", hintKo:"한국어 번역 정본(전 산출물 한국어 지시) — 9 모델만 실험됨",
   lgNative:"Claude Code 네이티브", lgDirect:"Claude Code 직결(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgPi:"pi coding agent(OpenAI 호환 API 직결)", stPi:"pi", condPi:"pi", notePi:"EXP-029는 영어 조건만 실행", iter511:"iter 5·1·1",
   lgOut:"output이 rollout 누계 계측 — jsonl 계측(칠한 막대)과 직접 비교 금지",
-  colModel:"모델", colDone:"완주", colTime:"소요 시간", colSpread:"run 간 변동", colCommits:"커밋 규율", colOutput:"output 토큰", colCost:"run당 환산 비용", costNa:"공개 단가 없음",
+  colModel:"모델", colAgent:"에이전트", connNative:"네이티브", colDone:"완주", colTime:"소요 시간", colSpread:"run 간 변동", colCommits:"커밋 규율", colOutput:"output 토큰", colCost:"run당 환산 비용", costNa:"공개 단가 없음",
   min:"분", minTick:"분", commitsScale:"채운 점 = 중앙값 · 눈금 1–8",
   iterAll1:"전부 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
   stNative:"Claude Code 네이티브", stDirect:"직결", stCodex:"Codex CLI",
   koMissing:"KO 조건 미실험 — ", noteAstra:"GPT-6 세대 신규", noteFable:"Claude 5 상위 모델 신규", notePreview:"엔드포인트 회수/신규 모델",
   n1na:"n=1 · 판단 불가", span:"폭 {x}분", n1:"n=1", singleRun:"단일 run", sameAll:"전 run 동일",
   howEyebrow:"읽는 법",
-  howItems:["<b>막대 읽는 법</b> — 한 행이 한 모델입니다. 막대는 그 모델의 run 중 가장 작은 값부터 가장 큰 값까지의 범위이고, 흰 세로선은 중앙값입니다. 열 제목을 누르면 그 기준으로 정렬됩니다.", "<b>소요 시간</b> — run 하나가 과제를 완주하기까지 걸린 에이전트 세션 시간입니다. 대부분의 조건이 중앙값 기준 3–19분에 모여 있습니다. Solar 두 모델(58분, 119–258분)은 프리뷰 API의 느린 응답과 캐시 미지원이 함께 반영된 값이므로 모델 성능 비교에 쓰지 마세요.", "<b>run 간 변동</b> — 같은 조건에서 가장 느린 run이 가장 빠른 run의 몇 배였는지입니다. 값이 클수록 다음 run이 얼마나 걸릴지 예측하기 어렵습니다. 예: pi × DeepSeek V4.1-Flash 3.9배, kimi-k3 2.8배, qwen3.8-max 1.1배.", "<b>커밋 규율</b> — run 하나에서 만든 git 커밋 수입니다(채운 점 = 중앙값). 결과 품질이 아니라 작업 방식의 차이를 보여 줍니다. 같은 프롬프트에서 Opus 4.8은 대개 한 번에 커밋하고(중앙값 1), Opus 5는 여러 번 나눠 커밋합니다(중앙값 6).", "<b>output 토큰</b> — 모델이 생성한 토큰 수(thinking 포함)입니다. 테두리만 있는 막대(GPT 네 모델)는 Codex 기록 방식으로 계측한 값이라 칠한 막대와 직접 비교할 수 없습니다. pi 세 행은 pi 자체 세션 기록으로 계측했습니다(output에 thinking 포함).", "<b>run당 환산 비용</b> — run에서 쓴 토큰에 공개 API 단가를 곱한 추정치입니다. 실제 청구 금액이 아닙니다(구독·프리뷰로 실행). 적용한 단가와 가정은 아래 \"해석 주의\"에 있습니다.", "<b>핵심 관찰</b> — 중앙값이 가장 짧은 조건은 pi × DeepSeek V4.1-Flash(3.3분, 단 run별 1.9–7.7분)이고, Claude Code에서는 Opus 5.5(중앙값 4.2분)가 가장 빠릅니다. 가장 싼 모델은 gpt-6-luna(run당 약 $0.03)이고, 그다음이 pi × DeepSeek V4.1-Flash(약 $0.06), Claude Code의 DeepSeek V4.1-Flash(약 $0.09)입니다. 빠르다고 싸지는 않습니다. Fable 5.1은 6.9분으로 빠른 편이지만 run당 약 $3.5로 Opus 5.5($1.25)의 약 3배입니다.", "<b>KO 정본 토글</b> — 프롬프트를 한국어 번역본으로 바꾸고 산출물(커밋·README)도 한국어로 쓰게 한 조건입니다. 실험한 9개 모델이 모두 완주했습니다. 영어 조건보다 확실히 느려진 모델은 qwen3.8-max 하나(15.1분 → 22.8분)이며, 두 조건의 실행 날짜가 달라 언어 때문이라고 단정하지 않습니다."],
+  howItems:["<b>막대 읽는 법</b> — 한 행이 한 모델×에이전트 조합입니다. 막대는 그 모델의 run 중 가장 작은 값부터 가장 큰 값까지의 범위이고, 흰 세로선은 중앙값입니다. 열 제목을 누르면 그 기준으로 정렬됩니다.", "<b>에이전트</b> — 랄프 루프를 실행한 코딩 에이전트 하네스(Claude Code, Codex CLI, pi)입니다. 둘째 줄은 모델 연결 방식으로, 네이티브·OpenAI 또는 표시된 제공자 API 직결을 뜻합니다. 같은 모델이 여러 에이전트에 나타날 수 있습니다.", "<b>소요 시간</b> — run 하나가 과제를 완주하기까지 걸린 에이전트 세션 시간입니다. 대부분의 조건이 중앙값 기준 3–19분에 모여 있습니다. Solar 두 모델(58분, 119–258분)은 프리뷰 API의 느린 응답과 캐시 미지원이 함께 반영된 값이므로 모델 성능 비교에 쓰지 마세요.", "<b>run 간 변동</b> — 같은 조건에서 가장 느린 run이 가장 빠른 run의 몇 배였는지입니다. 값이 클수록 다음 run이 얼마나 걸릴지 예측하기 어렵습니다. 예: pi × DeepSeek V4.1-Flash 3.9배, kimi-k3 2.8배, qwen3.8-max 1.1배.", "<b>커밋 규율</b> — run 하나에서 만든 git 커밋 수입니다(채운 점 = 중앙값). 결과 품질이 아니라 작업 방식의 차이를 보여 줍니다. 같은 프롬프트에서 Opus 4.8은 대개 한 번에 커밋하고(중앙값 1), Opus 5는 여러 번 나눠 커밋합니다(중앙값 6).", "<b>output 토큰</b> — 모델이 생성한 토큰 수(thinking 포함)입니다. 테두리만 있는 막대(GPT 네 모델)는 Codex 기록 방식으로 계측한 값이라 칠한 막대와 직접 비교할 수 없습니다. pi 세 행은 pi 자체 세션 기록으로 계측했습니다(output에 thinking 포함).", "<b>run당 환산 비용</b> — run에서 쓴 토큰에 공개 API 단가를 곱한 추정치입니다. 실제 청구 금액이 아닙니다(구독·프리뷰로 실행). 적용한 단가와 가정은 아래 \"해석 주의\"에 있습니다.", "<b>핵심 관찰</b> — 중앙값이 가장 짧은 조건은 pi × DeepSeek V4.1-Flash(3.3분, 단 run별 1.9–7.7분)이고, Claude Code에서는 Opus 5.5(중앙값 4.2분)가 가장 빠릅니다. 가장 싼 모델은 gpt-6-luna(run당 약 $0.03)이고, 그다음이 pi × DeepSeek V4.1-Flash(약 $0.06), Claude Code의 DeepSeek V4.1-Flash(약 $0.09)입니다. 빠르다고 싸지는 않습니다. Fable 5.1은 6.9분으로 빠른 편이지만 run당 약 $3.5로 Opus 5.5($1.25)의 약 3배입니다.", "<b>KO 정본 토글</b> — 프롬프트를 한국어 번역본으로 바꾸고 산출물(커밋·README)도 한국어로 쓰게 한 조건입니다. 실험한 9개 모델이 모두 완주했습니다. 영어 조건보다 확실히 느려진 모델은 qwen3.8-max 하나(15.1분 → 22.8분)이며, 두 조건의 실행 날짜가 달라 언어 때문이라고 단정하지 않습니다."],
   cardsEyebrow:"모델별 특징 · 소요 시간 순",
   cards:{
     piflash:{"exp": "pi coding agent → DeepSeek API(OpenAI 호환) 직결 · EXP-029 · 영어", "li": ["<b>전 조건 중 중앙값 최단, 3.3분</b>. 이 리포에서 관측한 가장 짧은 완주 세션(1.9분)도 이 조건입니다. 다른 run은 7.7분이 걸려 run 간 변동이 3.9배로 전 조건 중 가장 컸습니다.", "<b>run당 약 $0.06</b>(0.04–0.08)로 gpt-6-luna 다음으로 저렴합니다.", "3 run 모두 iteration 1에 완주했고 커밋은 2–3개입니다. thinking은 pi 기본값(high) 그대로였습니다."], "cav": "Claude Code로 실행한 DeepSeek V4.1-Flash(EXP-025, 4.6–6.0분)와 같은 모델이지만, 도구와 API 형식이 함께 다르고 실행 시점도 3일 차이가 나므로 차이를 pi의 효과로 보지 않습니다. 비용은 피크 단가 기준이며 실제 청구액은 측정하지 않았습니다."},
@@ -530,20 +534,20 @@ ja: {
   metaLink:"GitHubで見る ↗",
   flag:"<b>Solar Open 2とSolar Pro 4は正式サービスではなくプレビューAPIで計測しました。</b>申請制のベータサービスで、キャッシュに対応せず、応答が遅く、予告なく終了することもありました。そのため2モデルの時間とトークン数には、モデルの性能とプレビューサービスの制約の両方が反映されています。正式サービスの性能として読まないでください。",
   mxTitle:"性能マトリクス",
-  mxSub:"1行が1モデルで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数目盛</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。",
+  mxSub:"1行が1つのモデル×エージェントの組み合わせで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数目盛</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。",
   segEn:"EN正本", segKo:"KO正本",
   hintEn:"英語プロンプト正本——15モデル全て（うち3モデルはpiハーネスでも実行）", hintKo:"韓国語翻訳正本（全成果物を韓国語で指示）——9モデルのみ実験",
   lgNative:"Claude Code ネイティブ", lgDirect:"Claude Code 直結(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgPi:"pi coding agent（OpenAI互換API直結）", stPi:"pi", condPi:"pi", notePi:"EXP-029は英語条件のみ実行", iter511:"iter 5·1·1",
   lgOut:"outputがrollout累計計測——jsonl計測（塗りつぶしバー）との直接比較不可",
-  colModel:"モデル", colDone:"完走", colTime:"所要時間", colSpread:"run間変動", colCommits:"コミット規律", colOutput:"outputトークン", colCost:"runあたり換算コスト", costNa:"公開単価なし",
+  colModel:"モデル", colAgent:"エージェント", connNative:"ネイティブ", colDone:"完走", colTime:"所要時間", colSpread:"run間変動", colCommits:"コミット規律", colOutput:"outputトークン", colCost:"runあたり換算コスト", costNa:"公開単価なし",
   min:"分", minTick:"分", commitsScale:"塗りつぶし点 = 中央値 · 目盛 1–8",
   iterAll1:"全run iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
   stNative:"Claude Code ネイティブ", stDirect:"直結", stCodex:"Codex CLI",
   koMissing:"KO条件は未実験——", noteAstra:"GPT-6世代の新モデル", noteFable:"Claude 5上位モデルの新規", notePreview:"エンドポイント終了/新モデル",
   n1na:"n=1 · 判断不可", span:"幅 {x}分", n1:"n=1", singleRun:"単一run", sameAll:"全run同一",
   howEyebrow:"読み方",
-  howItems:["<b>バーの読み方</b>——1行が1モデルです。バーはそのモデルのrunの最小値から最大値までの範囲で、白い縦線が中央値です。列見出しをクリックするとその基準で並び替わります。", "<b>所要時間</b>——1回のrunで課題を完走するまでにかかったエージェントのセッション時間です。ほとんどの条件は中央値で3–19分に集まっています。Solarの2モデル（58分、119–258分）はプレビューAPIの遅い応答とキャッシュ非対応の影響も含むため、モデル性能の比較には使わないでください。", "<b>run間変動</b>——同じ条件で最も遅いrunが最も速いrunの何倍かかったかです。大きいほど次のrunの所要時間を予測しにくくなります。例：pi × DeepSeek V4.1-Flash 3.9倍、kimi-k3 2.8倍、qwen3.8-max 1.1倍。", "<b>コミット規律</b>——1回のrunで作られたgitコミット数です（塗りつぶし点 = 中央値）。結果の品質ではなく作業スタイルの違いを示します。同じプロンプトでもOpus 4.8はたいてい一度にコミットし（中央値1）、Opus 5は何度にも分けてコミットします（中央値6）。", "<b>outputトークン</b>——モデルが生成したトークン数（thinkingを含む）です。枠線だけのバー（GPTの4モデル）はCodexの記録方式で計測した値のため、塗りつぶしバーとは直接比較できません。piの3行はpi自身のセッション記録で計測しました（outputにthinkingを含む）。", "<b>runあたり換算コスト</b>——runで使ったトークンに公開API単価を掛けた推定値です。実際の請求額ではありません（サブスクリプション・プレビューで実行）。適用した単価と前提は下の「解釈上の注意」にあります。", "<b>主な観察</b>——中央値が最も短い条件はpi × DeepSeek V4.1-Flash（3.3分、ただしrunごとに1.9–7.7分）で、Claude Codeで最も速いのはOpus 5.5（中央値4.2分）です。最も安いのはgpt-6-luna（runあたり約$0.03）、次がpi × DeepSeek V4.1-Flash（約$0.06）、Claude CodeのDeepSeek V4.1-Flash（約$0.09）です。速いからといって安いわけではありません。Fable 5.1は6.9分と速いほうですが、runあたり約$3.5でOpus 5.5（$1.25）の約3倍です。", "<b>KO正本トグル</b>——プロンプトを韓国語訳に替え、成果物（コミット・README）も韓国語で書かせた条件です。実験した9モデルはすべて完走しました。英語条件より明らかに遅くなったのはqwen3.8-maxだけ（15.1分 → 22.8分）で、2条件の実行日が異なるため言語の影響とは断定しません。"],
+  howItems:["<b>バーの読み方</b>——1行が1つのモデル×エージェントの組み合わせです。バーはそのモデルのrunの最小値から最大値までの範囲で、白い縦線が中央値です。列見出しをクリックするとその基準で並び替わります。", "<b>エージェント</b>——Ralphループを実行したコーディングエージェントのハーネス（Claude Code、Codex CLI、pi）です。2行目はモデルの接続方式で、ネイティブ・OpenAI、または表示されたプロバイダーAPIへの直結を示します。同じモデルが複数のエージェントに現れることがあります。", "<b>所要時間</b>——1回のrunで課題を完走するまでにかかったエージェントのセッション時間です。ほとんどの条件は中央値で3–19分に集まっています。Solarの2モデル（58分、119–258分）はプレビューAPIの遅い応答とキャッシュ非対応の影響も含むため、モデル性能の比較には使わないでください。", "<b>run間変動</b>——同じ条件で最も遅いrunが最も速いrunの何倍かかったかです。大きいほど次のrunの所要時間を予測しにくくなります。例：pi × DeepSeek V4.1-Flash 3.9倍、kimi-k3 2.8倍、qwen3.8-max 1.1倍。", "<b>コミット規律</b>——1回のrunで作られたgitコミット数です（塗りつぶし点 = 中央値）。結果の品質ではなく作業スタイルの違いを示します。同じプロンプトでもOpus 4.8はたいてい一度にコミットし（中央値1）、Opus 5は何度にも分けてコミットします（中央値6）。", "<b>outputトークン</b>——モデルが生成したトークン数（thinkingを含む）です。枠線だけのバー（GPTの4モデル）はCodexの記録方式で計測した値のため、塗りつぶしバーとは直接比較できません。piの3行はpi自身のセッション記録で計測しました（outputにthinkingを含む）。", "<b>runあたり換算コスト</b>——runで使ったトークンに公開API単価を掛けた推定値です。実際の請求額ではありません（サブスクリプション・プレビューで実行）。適用した単価と前提は下の「解釈上の注意」にあります。", "<b>主な観察</b>——中央値が最も短い条件はpi × DeepSeek V4.1-Flash（3.3分、ただしrunごとに1.9–7.7分）で、Claude Codeで最も速いのはOpus 5.5（中央値4.2分）です。最も安いのはgpt-6-luna（runあたり約$0.03）、次がpi × DeepSeek V4.1-Flash（約$0.06）、Claude CodeのDeepSeek V4.1-Flash（約$0.09）です。速いからといって安いわけではありません。Fable 5.1は6.9分と速いほうですが、runあたり約$3.5でOpus 5.5（$1.25）の約3倍です。", "<b>KO正本トグル</b>——プロンプトを韓国語訳に替え、成果物（コミット・README）も韓国語で書かせた条件です。実験した9モデルはすべて完走しました。英語条件より明らかに遅くなったのはqwen3.8-maxだけ（15.1分 → 22.8分）で、2条件の実行日が異なるため言語の影響とは断定しません。"],
   cardsEyebrow:"モデル別の特徴 · 所要時間順",
   cards:{
     piflash:{"exp": "pi coding agent → DeepSeek API（OpenAI互換）直結 · EXP-029 · 英語", "li": ["<b>全条件で中央値が最短、3.3分</b>。このリポで観測した最短の完走セッション（1.9分）もこの条件です。一方で7.7分かかったrunもあり、run間変動は3.9倍と全条件で最大でした。", "<b>runあたり約$0.06</b>（0.04–0.08）で、gpt-6-lunaに次いで安価です。", "3 runすべてiteration 1で完走し、コミットは2–3。thinkingはpiのデフォルト（high）のままでした。"], "cav": "Claude Codeで実行したDeepSeek V4.1-Flash（EXP-025、4.6–6.0分）と同じモデルですが、ツールとAPI形式が同時に異なり、実行時期も3日ずれているため、差をpiの効果とはみなしません。コストはピーク時間帯の単価で、実際の請求額は計測していません。"},
@@ -587,20 +591,20 @@ zh: {
   metaLink:"在 GitHub 上查看 ↗",
   flag:"<b>Solar Open 2 和 Solar Pro 4 是在预览 API 而非正式服务上测得的。</b>这是需要申请的测试服务，不支持缓存、响应慢，还可能无预告关闭。因此这两个模型的时间和 token 数同时反映了模型性能与预览服务的限制，请不要当作正式服务的性能。",
   mxTitle:"性能矩阵",
-  mxSub:"每行一个模型，各列的含义见下方“阅读方法”。时间、output 和成本在模型之间相差可达数十倍，因此使用<b>对数刻度</b>（见列标题下方的刻度）。点击列标题即可按该列排序。",
+  mxSub:"每行一个模型×代理组合，各列的含义见下方“阅读方法”。时间、output 和成本在模型之间相差可达数十倍，因此使用<b>对数刻度</b>（见列标题下方的刻度）。点击列标题即可按该列排序。",
   segEn:"EN 标准版", segKo:"KO 标准版",
   hintEn:"英文标准提示词——全部 15 个模型（其中 3 个也用 pi 框架运行）", hintKo:"韩文翻译标准版（要求全部产出为韩文）——仅 9 个模型测试",
   lgNative:"Claude Code 原生", lgDirect:"Claude Code 直连(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
   lgPi:"pi coding agent（OpenAI 兼容 API 直连）", stPi:"pi", condPi:"pi", notePi:"EXP-029 仅运行英文条件", iter511:"iter 5·1·1",
   lgOut:"output 按 rollout 累计计量——不可与 jsonl 计量（实心条）直接比较",
-  colModel:"模型", colDone:"完成", colTime:"耗时", colSpread:"run 间波动", colCommits:"提交纪律", colOutput:"output token", colCost:"每 run 折算成本", costNa:"无公开单价",
+  colModel:"模型", colAgent:"代理", connNative:"原生", colDone:"完成", colTime:"耗时", colSpread:"run 间波动", colCommits:"提交纪律", colOutput:"output token", colCost:"每 run 折算成本", costNa:"无公开单价",
   min:"分钟", minTick:"分钟", commitsScale:"实心点 = 中位数 · 刻度 1–8",
   iterAll1:"全部 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
   stNative:"Claude Code 原生", stDirect:"直连", stCodex:"Codex CLI",
   koMissing:"KO 条件未测试——", noteAstra:"GPT-6 世代新模型", noteFable:"Claude 5 高阶新模型", notePreview:"端点已下线/新模型",
   n1na:"n=1 · 无法判断", span:"跨度 {x} 分钟", n1:"n=1", singleRun:"单个 run", sameAll:"所有 run 相同",
   howEyebrow:"阅读方法",
-  howItems:["<b>如何看横条</b>——每一行是一个模型。横条表示该模型各次 run 的最小值到最大值的范围，白色竖线为中位数。点击列标题即可按该列排序。", "<b>耗时</b>——一次 run 完成任务所用的代理会话时间。大多数条件的中位数集中在 3–19 分钟。两个 Solar 模型（58 分钟、119–258 分钟）同时反映了预览 API 响应慢和不支持缓存的影响，请勿用于比较模型性能。", "<b>run 间波动</b>——同一条件下最慢的 run 是最快的 run 的几倍。数值越大，越难预测下一次 run 的耗时。例如：pi × DeepSeek V4.1-Flash 3.9 倍，kimi-k3 2.8 倍，qwen3.8-max 1.1 倍。", "<b>提交纪律</b>——一次 run 中产生的 git 提交数（实心点 = 中位数）。它反映的是工作方式，而非结果质量。在同一提示词下，Opus 4.8 通常一次提交（中位数 1），Opus 5 则分成多次提交（中位数 6）。", "<b>output token</b>——模型生成的 token 数（含 thinking）。只有描边的横条（4 个 GPT 模型）按 Codex 的记录方式计量，不能与实心横条直接比较。pi 的 3 行按 pi 自身的会话记录计量（output 含 thinking）。", "<b>每 run 折算成本</b>——将 run 使用的 token 乘以公开 API 单价得到的估算值，并非实际计费金额（使用订阅和预览运行）。所用单价与假设见下方“解读注意”。", "<b>主要观察</b>——中位数最短的条件是 pi × DeepSeek V4.1-Flash（3.3 分钟，但各 run 在 1.9–7.7 分钟之间），在 Claude Code 上最快的是 Opus 5.5（中位数 4.2 分钟）。最便宜的是 gpt-6-luna（每 run 约 $0.03），其次是 pi × DeepSeek V4.1-Flash（约 $0.06）和 Claude Code 上的 DeepSeek V4.1-Flash（约 $0.09）。快不等于便宜：Fable 5.1 用时 6.9 分钟，算快的，但每 run 约 $3.5，约为 Opus 5.5（$1.25）的 3 倍。", "<b>KO 标准版切换</b>——把提示词换成韩文译本，并要求产出物（提交信息、README）也用韩文书写。参与测试的 9 个模型全部完成。比英文条件明显变慢的只有 qwen3.8-max（15.1 分钟 → 22.8 分钟）；两个条件的运行日期不同，因此不将其归因于语言。"],
+  howItems:["<b>如何看横条</b>——每一行是一个模型×代理组合。横条表示该模型各次 run 的最小值到最大值的范围，白色竖线为中位数。点击列标题即可按该列排序。", "<b>代理</b>——运行 Ralph 循环的编码代理框架（Claude Code、Codex CLI、pi）。第二行为模型的连接方式：原生、OpenAI，或直连所示提供商的 API。同一模型可能出现在多个代理中。", "<b>耗时</b>——一次 run 完成任务所用的代理会话时间。大多数条件的中位数集中在 3–19 分钟。两个 Solar 模型（58 分钟、119–258 分钟）同时反映了预览 API 响应慢和不支持缓存的影响，请勿用于比较模型性能。", "<b>run 间波动</b>——同一条件下最慢的 run 是最快的 run 的几倍。数值越大，越难预测下一次 run 的耗时。例如：pi × DeepSeek V4.1-Flash 3.9 倍，kimi-k3 2.8 倍，qwen3.8-max 1.1 倍。", "<b>提交纪律</b>——一次 run 中产生的 git 提交数（实心点 = 中位数）。它反映的是工作方式，而非结果质量。在同一提示词下，Opus 4.8 通常一次提交（中位数 1），Opus 5 则分成多次提交（中位数 6）。", "<b>output token</b>——模型生成的 token 数（含 thinking）。只有描边的横条（4 个 GPT 模型）按 Codex 的记录方式计量，不能与实心横条直接比较。pi 的 3 行按 pi 自身的会话记录计量（output 含 thinking）。", "<b>每 run 折算成本</b>——将 run 使用的 token 乘以公开 API 单价得到的估算值，并非实际计费金额（使用订阅和预览运行）。所用单价与假设见下方“解读注意”。", "<b>主要观察</b>——中位数最短的条件是 pi × DeepSeek V4.1-Flash（3.3 分钟，但各 run 在 1.9–7.7 分钟之间），在 Claude Code 上最快的是 Opus 5.5（中位数 4.2 分钟）。最便宜的是 gpt-6-luna（每 run 约 $0.03），其次是 pi × DeepSeek V4.1-Flash（约 $0.06）和 Claude Code 上的 DeepSeek V4.1-Flash（约 $0.09）。快不等于便宜：Fable 5.1 用时 6.9 分钟，算快的，但每 run 约 $3.5，约为 Opus 5.5（$1.25）的 3 倍。", "<b>KO 标准版切换</b>——把提示词换成韩文译本，并要求产出物（提交信息、README）也用韩文书写。参与测试的 9 个模型全部完成。比英文条件明显变慢的只有 qwen3.8-max（15.1 分钟 → 22.8 分钟）；两个条件的运行日期不同，因此不将其归因于语言。"],
   cardsEyebrow:"各模型特点 · 按耗时排序",
   cards:{
     piflash:{"exp": "pi coding agent → DeepSeek API（OpenAI 兼容）直连 · EXP-029 · 英文", "li": ["<b>所有条件中中位数最短，3.3 分钟</b>。本仓库观测到的最短完成会话（1.9 分钟）也来自这一条件。但也有一个 run 用了 7.7 分钟，run 间波动 3.9 倍，为所有条件中最大。", "<b>每 run 约 $0.06</b>（0.04–0.08），仅次于 gpt-6-luna。", "3 个 run 均在 iteration 1 完成，提交 2–3 次。thinking 保持 pi 默认值（high）。"], "cav": "与在 Claude Code 上运行的 DeepSeek V4.1-Flash（EXP-025，4.6–6.0 分钟）是同一模型，但工具和 API 格式同时不同，运行时间也相隔三天，因此不把差异归因于 pi。成本按高峰时段单价计算，实际计费金额未测量。"},
@@ -689,10 +693,11 @@ const usd = v => v < 1 ? v.toFixed(2) : v < 10 ? v.toFixed(1) : Math.round(v).to
 
 let plang = "en", sortKey = "time", sortDir = 1;
 
-function stackLabel(m) {
-  if (m.stack === "native") return t("stNative");
-  if (m.stack === "codex") return t("stCodex");
-  if (m.stack === "pi") return t("stPi") + " · " + m.provider;
+const AGENT = { native:"Claude Code", direct:"Claude Code", codex:"Codex CLI", pi:"pi" };
+function agentName(m) { return AGENT[m.stack]; }
+function connLabel(m) {
+  if (m.stack === "native") return t("connNative");
+  if (m.stack === "codex") return "OpenAI";
   return t("stDirect") + " · " + m.provider;
 }
 
@@ -729,7 +734,8 @@ function render() {
   const rows = M.map(m => ({ m, s: stats(m[plang]) }));
   const present = rows.filter(r => r.s), absent = rows.filter(r => !r.s);
   const key = {
-    name: r => r.m.name.toLowerCase(),
+    name: r => (r.m.base || r.m.name).toLowerCase() + "\u0000" + agentName(r.m).toLowerCase(),
+    agent: r => agentName(r.m).toLowerCase() + "\u0000" + (r.m.base || r.m.name).toLowerCase(),
     time: r => r.s.tMed, spread: r => r.s.spread, commits: r => r.s.cMed, output: r => r.s.oMed,
     cost: r => r.s.usd.length ? med(r.s.usd) : Infinity
   }[sortKey];
@@ -738,9 +744,10 @@ function render() {
 
   const body = [...present, ...absent].map(({ m, s }) => {
     const color = `var(--${m.stack})`;
-    const nameCell = `<td><div class="mdl"><span class="nm"><span class="swatch" style="background:${color}"></span>${m.name}`
+    const nameCell = `<td><div class="mdl"><span class="nm"><span class="swatch" style="background:${color}"></span>${m.base || m.name}`
       + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + `</span>`
-      + `<span class="st">${stackLabel(m)}${s ? " · " + s.exp : ""}${s && m[plang].iter !== "iterAll1" ? " · " + s.iter : ""}</span></div></td>`;
+      + `<span class="st">${s ? s.exp : ""}${s && m[plang].iter !== "iterAll1" ? " · " + s.iter : ""}</span></div></td>`
+      + `<td><div class="agt"><span class="an">${agentName(m)}</span><span class="ac">${connLabel(m)}</span></div></td>`;
     if (!s) return `<tr class="dim">${nameCell}<td colspan="5"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
 
     const spreadTxt = s.n === 1 ? `<span class="na">${t("n1na")}</span>`

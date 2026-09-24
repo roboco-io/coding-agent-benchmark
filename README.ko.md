@@ -2,41 +2,37 @@
 
 🌐 [English](README.md) · **한국어** · [日本語](README.ja.md) · [中文](README.zh-CN.md)
 
-바이브 코딩이 표준으로 도입되면서 여러 조직이 심각한 토큰 부족 현상을 겪고 있다.
-이 리포지토리는 토큰 사용에 대한 가설을 세우고, 통제된 실험으로 실제 절약 효과를 검증하기 위한 실험 관리 리포지토리이다.
+이 프로젝트는 **Ralph loop를 사용하는 모델·하네스 조합의 백엔드 구현 성능**을 비교한다. 목표는 작업별 품질·예산 조건에 맞는 실무 조합 선택이다. 초기 Ralph 대 Plan-then-execute 실험은 연구 이력으로 보존한다.
 
 ## 실험 방법론
 
-- **공통 과제**: [RealWorld App](https://github.com/gothinkster/realworld) 백엔드 구현 — 조건 간 비교를 위한 고정 벤치마크 과제. 스펙은 [`tasks/realworld-backend/`](tasks/realworld-backend/) 참조.
-- **모델 고정**: 모든 실험은 **Claude Opus 단일 모델**로 수행한다 (모델 차이로 인한 교란 제거).
-- **측정 도구**: 기존 도구를 활용한다 — [tokenhabit](https://github.com/epoko77-ai/tokenhabit) (`habit_scan.py`), [ccusage](https://github.com/ryoppippi/ccusage). `scripts/`에는 실험 구간 추출·비교 집계용 최소 래퍼만 둔다.
-- **1차 대상 도구**: Claude Code. 타 도구 비교는 [`ROADMAP.md`](ROADMAP.md) 참조.
+- 평가 단위: **모델 × 하네스 × 추론 설정 × 제공자·연결 환경**. Claude Code와 Codex를 포함하며 조합 차이를 모델 단독 효과로 단정하지 않는다.
+- 기본 과제: [RealWorld 백엔드](tasks/realworld-backend/). 신규 구현에 이어 기존 코드의 버그 수정·기능 추가·DB 마이그레이션을 평가할 계획이다.
+- 주 지표: **예산 내 합격률·실패 포함 비용·시간·사람 개입량**. 토큰은 진단용이며 청구 비용과 구분한다.
+- 기준: [실험 품질 규칙](docs/experiment-quality-rules.md), [정정 기록](docs/2026-09-21-corrections.md), [ROADMAP](ROADMAP.md).
+- 다음 파일럿: Claude Code + Fable 5.1 대 Codex + Astra. [설계](experiments/024-practical-combinations/README.md).
 
-## 가설의 축
+## 연구 축
 
-1. **워크플로 전략 (S축)**: 같은 과제를 어떤 전략으로 수행하느냐에 따른 토큰 차이
-   - Ralph loop: 골을 지정한 뒤 랄프 루프로 자율 진행
-   - Plan-then-execute: 계획 수립 → 태스크 분할 → 개별 태스크 병렬 구현
-2. **토큰 습관 (H축)**: tokenhabit의 H1–H8 습관 패턴 교정 전/후의 토큰 차이
-3. **언어 (L축)**: 프롬프트·산출 문서의 언어(한국어/영어)에 따른 토큰 차이
-
-전체 가설 목록과 실험 상태는 [`hypotheses/catalog.md`](hypotheses/catalog.md)에서 관리한다.
+현재 우선순위는 모델·하네스 조합과 작업 유형별 성능이다. 전략(S)·토큰 습관(H)·언어(L)는 후속 진단 축이며 [가설 카탈로그](hypotheses/catalog.md)에 이력을 보관한다.
 
 ## 실험 결과
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-026 (2026-09-23)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-027 (2026-09-24)
+
+> 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
 <!-- RESULTS:BEGIN -->
 <!-- 이 블록은 scripts/update_readme_results.py가 experiments/*/report.md에서 자동 생성한다. 직접 수정 금지. -->
 
 | 실험 | 가설 | 판정 |
 |------|------|------|
-| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralph loop vs Plan-then-execute | S-01: Plan-then-execute가 Ralph loop보다 동일 과제에서 토큰을 적게 쓴다 | **기각 (반증)** |
-| [EXP-002](experiments/002-korean-vs-english/report.md) 한국어 vs 영어 파이프라인 토큰 비교 | L-01: 전 파이프라인 영어 진행이 한국어 대비 billable 토큰을 유의미하게 줄인다 | **보류** |
-| [EXP-003](experiments/003-pte-skills/report.md) PTE + 스킬식 점진 공개 | S-02: 컨텍스트를 스킬 공식 권고(문서 200줄 이하, 스킬로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 billable 30% 이상 감소 | **검증** |
-| [EXP-004](experiments/004-ralph-skills/report.md) Ralph loop + 스킬 구조 | S-03: 단일 세션 ralph에 도메인 계약 스킬을 제공하면 billable이 감소한다 | **보류 (사실상 효과 없음)** |
+| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralph loop vs Plan-then-execute | S-01: Plan-then-execute가 Ralph loop보다 동일 과제에서 토큰을 적게 쓴다 | **기각 (관측 범위 한정)** |
+| [EXP-002](experiments/002-korean-vs-english/report.md) 한국어 vs 영어 파이프라인 토큰 비교 | L-01: 전 파이프라인 영어 진행이 한국어 대비 토큰 대리지표 토큰을 유의미하게 줄인다 | **보류** |
+| [EXP-003](experiments/003-pte-skills/report.md) PTE + 스킬식 점진 공개 | S-02: 컨텍스트를 스킬 공식 권고(문서 200줄 이하, 스킬로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 토큰 대리지표 30% 이상 감소 | **기준 미달 (정정)** |
+| [EXP-004](experiments/004-ralph-skills/report.md) Ralph loop + 스킬 구조 | S-03: 단일 세션 ralph에 도메인 계약 스킬을 제공하면 토큰 대리지표이 감소한다 | **보류** |
 | [EXP-005](experiments/005-solar-pro3-backend/report.md) Claude Code × Upstage Solar Pro 3 백엔드 | M-01: Claude Code의 백엔드를 Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다. | **보류** |
 | [EXP-006](experiments/006-solar-open2-backend/report.md) Claude Code × Upstage Solar Open 2 백엔드 | M-02: Claude Code의 백엔드를 Solar Open 2로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다. | **보류** |
 | [EXP-007](experiments/007-solar-open2-autopsy/report.md) Solar Open 2 미완주 원인 부검 | M-03: EXP-006(Solar Open 2) 미완주는 수렴 속도 단일 병목이 아니라 복수 실패 요인(모델 행동 결함 · 실험 환경 오염 · 계측 왜곡)의 중첩이다. | **검증** |
@@ -57,18 +53,19 @@
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 네이티브 랄프 루프 완주 검증 (n=3) | M-17: Claude Code 네이티브 하네스에서 Fable 5.1(`claude-fable-5-1`, thinking 기본값)은 EN 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration 안에 무개입 완주할 수 있다 (n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash·V4-Pro 직결 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-18: Claude Code를 DeepSeek Anthropic 호환 엔드포인트로 `deepseek-flash`(DeepSeek-V4.1-Flash)·`deepseek-v4-pro`(DeepSeek-V4-Pro-0813)에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 정본 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-19: Claude Code 네이티브 하네스에서 Opus 5.5(`claude-opus-5-5`, thinking 기본값)는 EN 정본·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
+| [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol·gpt-6-luna 랄프 루프 완주 검증 (각 n=3) | M-20: Codex CLI(`codex exec`) 하네스에서 gpt-6-sol·gpt-6-luna(effort medium)는 각각 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (각 n=3). | **검증** |
 
-**EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
-plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
+**EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
+보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
 
 **EXP-002 — 한국어 vs 영어 파이프라인 토큰 비교** (보류)  
-사전 등록한 판정 규칙(|KO평균−EN평균| > 조건 내 run 간 변동폭)을 충족하지 못함. 언어 효과(평균 차 29K)가 run 간 궤적 변동(최대 138K)에 묻힘 → [보고서](experiments/002-korean-vs-english/report.md)
+토큰 대리지표 KO 평균 114,605.5, EN 평균 112,463.5. 평균 차 2,142가 최대 조건 내 범위 23,033보다 작아 사전 규칙 미충족. → [보고서](experiments/002-korean-vs-english/report.md)
 
-**EXP-003 — PTE + 스킬식 점진 공개** (검증)  
-**39.3% 감소** (2,839,815 → 1,723,575). 워크플로는 동일하고 컨텍스트 구조만 바꿨다. → [보고서](experiments/003-pte-skills/report.md)
+**EXP-003 — PTE + 스킬식 점진 공개** (기준 미달 (정정))  
+토큰 대리지표 1,128,420 → 875,083으로 22.45% 감소. 사전 30% 절감 기준 미달이며 기존 검증 판정을 철회한다. → [보고서](experiments/003-pte-skills/report.md)
 
-**EXP-004 — Ralph loop + 스킬 구조** (보류 (사실상 효과 없음))  
-평균 차 +3.5%(방향은 가설 반대)가 조건 내 변동폭(200K)에 완전히 묻힘 → [보고서](experiments/004-ralph-skills/report.md)
+**EXP-004 — Ralph loop + 스킬 구조** (보류)  
+스킬 토큰 대리지표 117,352 / 118,311, 기준 KO 평균 대비 +2.81%. 두 스킬 run의 범위는 959이며 효과 없음·두 배 변동 주장을 철회한다. → [보고서](experiments/004-ralph-skills/report.md)
 
 **EXP-005 — Claude Code × Upstage Solar Pro 3 백엔드** (보류)  
 solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조기 중단): 연동 스택은 검증됐으나 headless 자율 루프에서 허락-대기·컨텍스트 초과 실패 모드가 반복되어 완주 궤도에 오르지 못함. → [보고서](experiments/005-solar-pro3-backend/report.md)
@@ -130,24 +127,21 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 **EXP-026 — Claude Code × Opus 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3)** (검증)  
 **6/6 run 전부 iteration 1 완주** (EN 3/3·KO 3/3, 게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-opus-5-5`). 세션 4.0–8.4분(6 run 중 5개가 4.0–4.2분)·output 18.6–28.2K로 네이티브 Claude 조건 중 최단·최저 대역이며, Opus 5(8.9–17.6분·39–49K)와 Fable 5.1(6.2–7.8분·28.7–35.8K) 분포 아래에 놓인다. 관측값이며 우위 확정이 아니다. → [보고서](experiments/026-opus55-ralph/report.md)
 
+**EXP-027 — Codex CLI × gpt-6-sol·gpt-6-luna 랄프 루프 완주 검증 (각 n=3)** (검증)  
+sol 3/3·luna 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 전수 일치). 채점 인프라 결함 1건(D-1)은 에이전트 개입 없이 처리했고 판정에 영향 없음. → [보고서](experiments/027-gpt6-sol-luna-codex/report.md)
+
 <!-- RESULTS:END -->
 
-### 종합 인사이트 (실험이 쌓일 때마다 갱신)
+### 종합 인사이트 (2026-09-21 정정 반영)
 
-네 실험(RealWorld 백엔드, Opus 고정)을 관통하는 결론:
-
-1. **토큰 비용의 지배 변수는 컨텍스트(캐시) 재사용이다.** 단일 세션 ralph(약 290K)는 한 번 만든 컨텍스트를 끝까지 재활용한다 — 기술적 배경(prefix 기반 프롬프트 캐싱, 0.1배 cache read, 달러 환산 재계산)은 [docs/context-reuse-mechanism.md](docs/context-reuse-mechanism.md) 참조. 세션을 나누는 순간 기동 고정비(세션당 약 20.6K)와 컨텍스트 재구축 비용이 누적되어 같은 과제가 6–9배 비싸진다 (EXP-001).
-2. **점진 공개(스킬)는 멀티 세션 전용 처방이다.** 세션이 전체 컨텍스트의 부분집합만 필요할 때(PTE 태스크 세션) 반복 읽기와 수정 루프를 없애 -39.3% (EXP-003). 반면 전체가 필요한 단일 세션은 스킬을 전량 선로딩해 효과가 없다 (EXP-004).
-3. **에이전트의 작업 궤적 변동은 ±수십만 토큰의 상수 노이즈다.** 동일 조건의 run이 2배까지 벌어진다 (EXP-002 EN 191K–329K, EXP-004 199K–400K). 약 10% 수준의 효과(예: 언어)는 n=2로 판별 불가.
-4. **실용 지침**: 과제가 단일 세션에 들어가면 단일 세션으로 돌려라. 분할이 불가피하면 컨텍스트를 스킬로 구조화해 손실을 줄여라. 문서 언어(한/영)는 이 두 결정보다 훨씬 작은 변수다.
-5. **"모델이 완주 못 한다"의 지배 요인은 실험 환경 오염이었다 (M축, EXP-005–008).** Solar 백엔드 4부작의 서사: EXP-005(자율성 부재로 미완주) → EXP-006(TDD 확립했으나 3/13 미완주) → EXP-007(부검: usage 3.07배 과대 계상 착시 + superpowers 훅·글로벌 CLAUDE.md 오염이 iteration 23% 잠식 + 모델 결함) → **EXP-008(오염 제거 클린 run에서 iteration 10 만에 13/13·154/154 완주, 커밋 4회까지 이행)**. 동일 모델·동일 PROMPT·동일 env에서 격리 하나로 판정이 뒤집혔고, 완주 시점이 EXP-006 상한 안쪽이라 상한 증가는 기여하지 않았다. 교훈 셋: (a) **자율 루프 실험에서 실험자 로컬 환경(훅·전역 설정) 격리는 전제 조건**이다 — 이를 어기면 "모델 능력" 측정이 "오염 순응도" 측정이 된다. (b) 완주 실패의 원인은 로그 부검 없이 모델 귀책으로 단정하지 마라 — 변환 계층 결함(CCR 멀티 델타 버그)·계측 오류(usage 행 합산, message.id dedup 필수)·환경 오염, 그리고 **채점 게이트 자체의 오검**(EXP-010 48-1 채점 파일 미복사, EXP-015 iter 2 포트 탐지 결함 — measure v4로 수정)일 수 있다. (c) 모델 내재 결함(허락-대기 1회, thinking 94%, 회차 경계 실행 불가 상태)은 잔존해도 랄프 루프의 반복 구조가 흡수 가능하다. 비용 우위 판정은 여전히 단가 미공개로 불능.
-6. **랄프 루프 프로토콜은 하네스 독립적으로 이식되고, 완주는 모델·궤적은 하네스가 결정했다 (EXP-011/012 쌍).** 동일 PROMPT·게이트·모델(gpt-5.6-sol, effort medium)로 하네스만 바꾼 쌍 실험에서 둘 다 무개입 완주 — Codex CLI는 iteration 1·5분 46초·단일 파일 436줄·커밋 3회, Claude Code(ccr 경유)는 iteration 11·58분·모듈형 11파일·커밋 11회. "가장 중요한 한 조각" 지시를 Codex는 완주까지로, Claude Code 쪽은 문자 그대로 한 조각으로 해석해 소형 iteration을 랄프 루프가 흡수했다. 격리 원칙(전용 CODEX_HOME/CLAUDE_CONFIG_DIR)과 iteration별 외부 채점 게이트는 도구를 가리지 않고 성립. 도구 간 토큰 효율 비교는 계측 방식(rollout 누계 vs ccr 탭 vs ccusage) 표준화가 선행 과제다. Codex 하네스는 모델 세대 교체에도 그대로 이식된다 — GPT-6 첫 모델 gpt-6-astra(Anthropic 호환 엔드포인트 부재로 Codex 경로가 유일 정합)를 모델 ID 1요소 치환만으로 연결해 3/3 iter 1 완주(EXP-021, 세션 7분대·오검 0건). 단 sol 대비 세션 시간 +23–32%로 공식 "1.9x 고속" 수치는 이 하네스에서 미재현 — 속도 서사는 판단 유보.
-7. **서드파티 모델 연결은 변환 계층(ccr)보다 Anthropic 호환 엔드포인트 직결이 구조적으로 우월하고, 직결 템플릿은 제공자를 넘어 재사용된다 (EXP-013/014).** qwen3.8-max(DashScope)와 kimi-k3(Moonshot)를 `ANTHROPIC_BASE_URL` 직결로 연결하자 ccr 스택에서 반복된 실패 모드(usage 유실→별도 탭 구축, transformer 체인 조정, 스트림 스톨)가 전부 소멸 — 두 실험 모두 Phase 0 무조정 통과·iteration 1 완주(15분 5초 / 21분 18초)·세션 jsonl usage 정상. EXP-014는 EXP-013 하네스에서 env 3요소(엔드포인트/키/모델 ID)만 치환해 그대로 동작 — 방법이 제공자 독립적. 직결은 계측도 Claude 표준 경로(jsonl + message.id dedup)로 회귀시켜 6번의 표준화 선행 과제를 부분 해소하나, 캐시 계상 방식은 제공자별로 다르다(Moonshot은 cache_create 0 계상). ccr 대비 비교는 모델이 달라 스택·모델 효과 교락 — 제공자가 Anthropic 호환 엔드포인트를 제공하면 직결을 기본 선택지로 삼되, 스택 간 정량 비교는 동일 모델 실험이 필요하다. **재현성은 n=3으로 확정 (EXP-016)**: Codex×gpt-5.6-sol·qwen 직결·kimi 직결 세 조건 각 3/3 완주(합산 9/9, 8/9가 iter 1) — 단 완주 외 지표(시간·커밋·output)는 같은 조건에서도 최대 3배 변동(kimi 21분→7분대)해, S축의 "궤적 변동은 상수 노이즈" 결론이 M축에서도 성립. 완주율만이 안정된 지표다. **한국어 조건도 완주율을 훼손하지 않는다 (EXP-017/019)**: 한국어 정본(전 산출물 한국어 지시)에서 qwen·kimi·Opus 4.8·Opus 5·Codex×gpt-5.6-sol 5개 조건 각 3/3, **누적 15/15 iter 1 완주**, 커밋·README 전수 한국어·언어 이탈 0 — 영어권 모델(gpt-5.6-sol)까지 준수해 한국어 이행은 모델 계열이 아닌 지시 이행의 문제로 판명. 시간·커밋·output도 EXP-019 3조건 전부 EN 분포와 겹침 — qwen의 ko +48% 시간(EXP-017)은 예외 사례이며 방향성 기록으로만 남긴다(L-01 원칙). 모델 프로파일(4.8 단일 커밋 vs 5 잘게 이행)은 언어 반전 후에도 유지. **단 직결 재현성은 제공자에 종속된다 (EXP-018)**: EXP-015 완주 하루 뒤 Upstage가 Anthropic 호환 엔드포인트와 solar-open2 hosted API를 공지 없이 회수(신청제 베타 종료)해 재현 창이 닫혔다 — 서드파티 벤치마크는 실험 시점 명기가 재현성 주장의 한계를 규정하며, 하네스 재사용 전 제공자 스모크가 필수다. 2주 뒤 엔드포인트가 solar-pro4로 복구되어 직결 3/3 완주를 확인(EXP-020) — 완주 능력은 직결 상위권과 동급이나 유효 시간 119–258분(qwen의 8–17배)의 최장 프로파일로, 원인은 캐시 미지원(전 호출 cache 0, 매 호출 ~8만 토큰 재프리필)·왕복 37초·thinking 88%의 곱. **주의: solar-open2·solar-pro4 엔드포인트는 상용 제공(GA) API가 아닌 프리뷰(신청제 베타) 상태**로 인프라 제약(prompt caching 미지원, 긴 왕복 지연, 예고 없는 엔드포인트 회수)이 상시 걸려 있어, Solar 계열의 시간·usage 프로파일은 모델 능력과 프리뷰 인프라 특성이 교락된 값이다 — 상용 인프라 기준 성능으로 읽지 말 것. 게이트 오검 3번째 사례(글로벌 npm 오염이 hurl 바이너리를 가림)로 **채점 바이너리 절대 경로 고정** 교훈 추가.
-
-8. **산출량 확대 프로파일은 세대가 아니라 모델 고유 특성이다 (EXP-023).** Claude 5 세대 상위 모델 Fable 5.1은 동일 하네스·EN 정본에서 3/3 iter 1 완주하면서 output 28.7–35.8K·6.2–7.8분으로 Opus 4.8 분포(29.6–37.1K·7.8–8.7분)와 겹치고 Opus 5(41.1–48.4K·8.9–17.6분)와는 겹치지 않았다. EXP-010이 "세대 특성"으로 확정한 Opus 5의 output·커밋 확대는 같은 세대의 상위 모델에서 재현되지 않으므로 Opus 5 고유 프로파일로 재해석한다 (n=3·시점 차 7주, 방향성 기록).
+- EXP-001의 PTE/Ralph 토큰 대리지표 비율은 정정 후 8.27배다. 채점 정본이 달라 동일 품질의 비용 비교로 해석하지 않는다.
+- EXP-003은 22.45% 감소로 사전 30% 기준 미달이다. EXP-004의 두 배 변동 및 효과 없음 해석은 철회했다.
+- 최근 첫 iteration 완주는 해당 조건의 구현 가능성 증거다. 반복 루프의 추가 기여와 실무 유지보수 성능은 별도 평가가 필요하다.
+- n=3 성공·다른 시점의 시간 차이로 일반 순위나 모델·하네스의 인과 효과를 확정하지 않는다. 구독 실행의 비용 미측정은 무료를 뜻하지 않는다.
 
 9. **DeepSeek V4.1-Flash는 직결 표준을 무조정으로 통과하며 전 조건 최속 대역·최저 비용 프로파일을 보였다 (EXP-025).** env 3요소 치환만으로 Flash·V4-Pro 모두 EN·KO 각 3/3, 총 12/12 iter 1 완주(응답 model 필드 전수 유지). Flash EN 4.6–6.0분·run당 환산 약 $0.1(캐시 히트 입력 $0.006/M)로 Codex×sol(5.3–10.0분)보다 아래 대역이고, Pro는 12–16분·약 $0.5로 output이 1.5배. 시점·하네스 교락으로 속도·비용 우위는 확정하지 않으며, 직결 재사용성 사례(4사째)와 프로파일 기록으로 남긴다.
 10. **Opus 5.5는 네이티브 하네스를 모델 ID 교체만으로 통과하며 네이티브 Claude 조건 중 최단·최저 산출 프로파일을 보였다 (EXP-026).** EN·KO 각 3/3, 총 6/6 iter 1 완주(재검증 각 2회 일치). 6 run 중 5개가 4.0–4.2분·output 약 20K로 Fable 5.1(6.2–7.8분·28.7–35.8K)과 Opus 5(8.9–17.6분·39–49K) 분포 아래에 있고, KO에서도 같은 대역을 유지했다. 8항의 해석(산출량 확대는 Opus 5 고유 특성)과 부합한다. 단 시점·CLI 버전이 다른 기준선과의 병치이며 n=3 관측이므로 속도 우위는 동시기 교차 재측정 전까지 확정하지 않는다.
+11. **GPT-6 계열 3개 모델(astra·sol·luna) 모두 Codex 하네스에서 모델 ID 치환만으로 완주했다 (EXP-021·027).** sol·luna 각 3/3 iter 1 완주(응답 model 필드 전수 일치). sol은 3 run 모두 4.8–5.2분·output 약 11K로 산포가 작았고, luna는 5.4–10.0분·output 13.4–21.5K로 "fast" 포지셔닝과 달리 이 과제에서 sol보다 짧은 run이 없었다. astra(EXP-021, 7분대)와는 시점·CLI 버전이 달라 모델 차이로 단정하지 않는다. EXP-027은 신규 모델 벤치마크 절차를 묶은 `ralph-model-benchmark` 스킬의 첫 적용이다.
 
 ## 실험 라이프사이클
 

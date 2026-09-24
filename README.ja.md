@@ -2,41 +2,37 @@
 
 🌐 [English](README.md) · [한국어](README.ko.md) · **日本語** · [中文](README.zh-CN.md)
 
-バイブコーディングが標準として導入されるにつれ、多くの組織が深刻なトークン不足に直面している。
-このリポジトリはトークン使用に関する仮説を立て、統制された実験で実際の節約効果を検証するための実験管理リポジトリである。
+本プロジェクトは**Ralphループを使うモデル・ハーネスの組み合わせによるバックエンド実装性能**を比較する。課題・品質・予算に応じた実務上の選択が目的である。初期の戦略比較は研究履歴として保存する。
 
 ## 実験方法論
 
-- **共通課題**: [RealWorld App](https://github.com/gothinkster/realworld) バックエンドの実装——条件間比較のための固定ベンチマーク課題。仕様は [`tasks/realworld-backend/`](tasks/realworld-backend/) を参照。
-- **モデル固定**: 全ての実験は **Claude Opus 単一モデル** で行う（モデル差による攪乱を除去）。
-- **測定ツール**: 既存ツールを活用する——[tokenhabit](https://github.com/epoko77-ai/tokenhabit)（`habit_scan.py`）、[ccusage](https://github.com/ryoppippi/ccusage)。`scripts/` には実験区間の抽出・比較集計用の最小ラッパーのみ置く。
-- **一次対象ツール**: Claude Code。他ツールとの比較は [`ROADMAP.md`](ROADMAP.md) を参照。
+- 比較単位：**モデル × ハーネス × 推論設定 × 提供者・接続環境**。Claude CodeとCodexを含む。組み合わせの差をモデル単独の効果と断定しない。
+- 基本課題：[RealWorldバックエンド](tasks/realworld-backend/)。既存コードのバグ修正・機能追加・DB移行へ拡張する計画。
+- 主指標：**予算内合格率・失敗込みの費用・時間・人の介入量**。トークン代理指標と請求費用は区別する。
+- [品質規則](docs/experiment-quality-rules.md)、[訂正記録](docs/2026-09-21-corrections.md)、[ロードマップ](ROADMAP.md)。
+- 次のパイロット：Claude Code + Fable 5.1 対 Codex + Astra。[設計](experiments/024-practical-combinations/README.md)。
 
-## 仮説の軸
+## 研究軸
 
-1. **ワークフロー戦略（S軸）**: 同じ課題をどの戦略で遂行するかによるトークン差
-   - Ralphループ: ゴールを指定した後、Ralphループで自律進行
-   - Plan-then-execute: 計画策定 → タスク分割 → 個別タスクの並列実装
-2. **トークン習慣（H軸）**: tokenhabit の H1–H8 習慣パターン矯正前後のトークン差
-3. **言語（L軸）**: プロンプト・成果物文書の言語（韓国語/英語）によるトークン差
-
-全ての仮説一覧と実験状態は [`hypotheses/catalog.md`](hypotheses/catalog.md) で管理する。
+優先はモデル・ハーネスと課題タイプの比較。戦略(S)・トークン習慣(H)・言語(L)は診断軸として[カタログ](hypotheses/catalog.md)に保存する。
 
 ## 実験結果
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-026（2026-09-23）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-027（2026-09-24）
+
+> 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
 <!-- RESULTS:BEGIN -->
 <!-- このブロックは scripts/update_readme_results.py が experiments/*/report.md から自動生成する（翻訳は scripts/readme_i18n.json）。直接編集禁止。 -->
 
 | 実験 | 仮説 | 判定 |
 |------|------|------|
-| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralphループ vs Plan-then-execute | S-01: Plan-then-executeはRalphループより同一課題でトークンを少なく使う | **棄却（反証）** |
-| [EXP-002](experiments/002-korean-vs-english/report.md) 韓国語 vs 英語パイプラインのトークン比較 | L-01: 全パイプラインを英語で進めると韓国語比でbillableトークンが有意に減る | **保留** |
-| [EXP-003](experiments/003-pte-skills/report.md) PTE + スキル式の段階的開示 | S-02: コンテキストをスキル公式推奨（文書200行以下、スキルで必要なものだけロード）で構造化すればEXP-001のPTE比でbillableが30%以上減る | **検証** |
-| [EXP-004](experiments/004-ralph-skills/report.md) Ralphループ + スキル構造 | S-03: 単一セッションのralphにドメイン契約スキルを与えるとbillableが減る | **保留（事実上効果なし）** |
+| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralphループ vs Plan-then-execute | S-01: Plan-then-executeはRalphループより同一課題でトークンを少なく使う | **観測範囲で棄却** |
+| [EXP-002](experiments/002-korean-vs-english/report.md) 韓国語 vs 英語パイプラインのトークン比較 | L-01: 全パイプラインを英語で進めると韓国語比でtoken proxyトークンが有意に減る | **保留** |
+| [EXP-003](experiments/003-pte-skills/report.md) PTE + スキル式の段階的開示 | S-02: コンテキストをスキル公式推奨（文書200行以下、スキルで必要なものだけロード）で構造化すればEXP-001のPTE比でtoken proxyが30%以上減る | **基準未達（訂正）** |
+| [EXP-004](experiments/004-ralph-skills/report.md) Ralphループ + スキル構造 | S-03: 単一セッションのralphにドメイン契約スキルを与えるとtoken proxyが減る | **保留** |
 | [EXP-005](experiments/005-solar-pro3-backend/report.md) Claude Code × Upstage Solar Pro 3 バックエンド | M-01: Claude CodeのバックエンドをSolar Pro 3に置き換えると同一課題（RealWorldバックエンド）を無介入で完走でき、完走時の総費用がOpus比で有意に低い。 | **保留** |
 | [EXP-006](experiments/006-solar-open2-backend/report.md) Claude Code × Upstage Solar Open 2 バックエンド | M-02: Claude CodeのバックエンドをSolar Open 2に置き換えると同一課題（RealWorldバックエンド）を無介入で完走でき、完走時の総費用がOpus比で有意に低い。 | **保留** |
 | [EXP-007](experiments/007-solar-open2-autopsy/report.md) Solar Open 2 未完走原因の検死 | M-03: EXP-006（Solar Open 2）の未完走は収束速度という単一ボトルネックではなく、複数の失敗要因（モデル行動欠陥・実験環境汚染・計測歪み）の重なりである。 | **検証** |
@@ -57,18 +53,19 @@
 | [EXP-023](experiments/023-fable51-ralph/report.md) Claude Code × Fable 5.1 ネイティブRalphループ完走検証（n=3） | M-17: Claude CodeネイティブハーネスでFable 5.1（`claude-fable-5-1`、thinkingデフォルト）はEN正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration以内に無介入で完走できる（n=3、完走率判定・課金除外）。 | **検証** |
 | [EXP-025](experiments/025-deepseek-direct/report.md) Claude Code × DeepSeek V4.1-Flash・V4-Pro 直結Ralphループ完走検証（EN・KO各n=3） | M-18: Claude CodeをDeepSeekのAnthropic互換エンドポイントで`deepseek-flash`（DeepSeek-V4.1-Flash）・`deepseek-v4-pro`（DeepSeek-V4-Pro-0813）に直結すると（thinkingデフォルト）、隔離・無攪乱のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に無介入で完走できる（EN・KO正本各n=3、完走率判定・課金除外）。 | **検証** |
 | [EXP-026](experiments/026-opus55-ralph/report.md) Claude Code × Opus 5.5 ネイティブRalphループ完走検証（EN・KO各n=3） | M-19: Claude Codeネイティブハーネスで、Opus 5.5（`claude-opus-5-5`、thinkingデフォルト）はEN正本・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3、完走率判定・課金除外）。 | **検証** |
+| [EXP-027](experiments/027-gpt6-sol-luna-codex/report.md) Codex CLI × gpt-6-sol・gpt-6-luna Ralphループ完走検証（各n=3） | M-20: Codex CLI（`codex exec`）ハーネスで、gpt-6-sol・gpt-6-luna（effort medium）はそれぞれ隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（各n=3）。 | **検証** |
 
-**EXP-001 — Ralphループ vs Plan-then-execute** (棄却（反証）)  
-plan-then-executeがbillable基準で**約8.7倍多い**トークンを使用 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
+**EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
+重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
 
 **EXP-002 — 韓国語 vs 英語パイプラインのトークン比較** (保留)  
-事前登録した判定規則（|KO平均−EN平均| > 条件内run間変動幅）を満たさず。言語効果（平均差29K）がrun間の軌跡変動（最大138K）に埋もれる → [レポート](experiments/002-korean-vs-english/report.md)
+KO平均114,605.5、EN平均112,463.5。平均差2,142は条件内の最大範囲23,033を下回る。 → [レポート](experiments/002-korean-vs-english/report.md)
 
-**EXP-003 — PTE + スキル式の段階的開示** (検証)  
-**39.3%減少**（2,839,815 → 1,723,575）。ワークフローは同一でコンテキスト構造だけを変えた。 → [レポート](experiments/003-pte-skills/report.md)
+**EXP-003 — PTE + スキル式の段階的開示** (基準未達（訂正）)  
+トークン代理指標は22.45%減少（1,128,420 → 875,083）。事前基準30%未達のため検証判定を撤回。 → [レポート](experiments/003-pte-skills/report.md)
 
-**EXP-004 — Ralphループ + スキル構造** (保留（事実上効果なし）)  
-平均差+3.5%（方向は仮説と逆）が条件内変動幅（200K）に完全に埋もれる → [レポート](experiments/004-ralph-skills/report.md)
+**EXP-004 — Ralphループ + スキル構造** (保留)  
+スキルrunは117,352 / 118,311、KO基準比平均+2.81%。範囲は959で、無効果・2倍の変動という解釈を撤回。 → [レポート](experiments/004-ralph-skills/report.md)
 
 **EXP-005 — Claude Code × Upstage Solar Pro 3 バックエンド** (保留)  
 solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点で早期中断）：連携スタックは検証されたが、headless自律ループで許可待ち・コンテキスト超過の失敗モードが繰り返され完走軌道に乗らなかった。 → [レポート](experiments/005-solar-pro3-backend/report.md)
@@ -130,23 +127,21 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-026 — Claude Code × Opus 5.5 ネイティブRalphループ完走検証（EN・KO各n=3）** (検証)  
 **6/6 run全てiteration 1で完走**（EN 3/3・KO 3/3、ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールド全件`claude-opus-5-5`）。セッション4.0–8.4分（6 run中5 runが4.0–4.2分）・output 18.6–28.2Kでネイティブ Claude条件中最短・最低帯、Opus 5（8.9–17.6分・39–49K）とFable 5.1（6.2–7.8分・28.7–35.8K）の分布より下。観測値であり優位の確定ではない。 → [レポート](experiments/026-opus55-ralph/report.md)
 
+**EXP-027 — Codex CLI × gpt-6-sol・gpt-6-luna Ralphループ完走検証（各n=3）** (検証)  
+**sol 3/3・luna 3/3 全てiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド全件一致）。セッション: sol 4.8–5.2分・output 10.4–11.0K、luna 5.4–10.0分・output 13.4–21.5K。採点インフラのハング1件（D-1）はエージェントに介入せず処理し判定に影響なし。`ralph-model-benchmark`スキルで実施した最初の実験。観測値であり順位の確定ではない。 → [レポート](experiments/027-gpt6-sol-luna-codex/report.md)
+
 <!-- RESULTS:END -->
 
-### 総合インサイト（実験が積み重なるたびに更新）
+### 総合インサイト（2026-09-21訂正反映）
 
-実験群（RealWorldバックエンド、Opus固定）を貫く結論：
-
-1. **トークンコストの支配変数はコンテキスト（キャッシュ）の再利用である。** 単一セッションのralph（約290K）は一度作ったコンテキストを最後まで再活用する——技術的背景（prefixベースのプロンプトキャッシング、0.1倍のcache read、ドル換算の再計算）は [docs/context-reuse-mechanism.md](docs/context-reuse-mechanism.md) を参照。セッションを分けた瞬間、起動固定費（セッションあたり約20.6K）とコンテキスト再構築コストが累積し、同じ課題が6–9倍高くなる（EXP-001）。
-2. **段階的開示（スキル）はマルチセッション専用の処方である。** セッションが全コンテキストの部分集合だけを必要とする場合（PTEタスクセッション）、繰り返し読みと修正ループをなくして −39.3%（EXP-003）。一方、全体が必要な単一セッションはスキルを全量プリロードするため効果がない（EXP-004）。
-3. **エージェントの作業軌跡の変動は±数十万トークンの定常ノイズである。** 同一条件のrunが2倍まで開く（EXP-002 EN 191K–329K、EXP-004 199K–400K）。約10%程度の効果（例：言語）はn=2では判別不能。
-4. **実用指針**: 課題が単一セッションに収まるなら単一セッションで回せ。分割が避けられないならコンテキストをスキルで構造化して損失を減らせ。文書言語（韓/英）はこの2つの決定よりはるかに小さい変数である。
-5. **「モデルが完走できない」の支配要因は実験環境の汚染だった（M軸、EXP-005–008）。** Solarバックエンド4部作の叙述：EXP-005（自律性欠如で未完走）→ EXP-006（TDDは確立したが3/13で未完走）→ EXP-007（検死：usage 3.07倍過大計上の錯覚 + superpowersフック・グローバルCLAUDE.md汚染がiterationの23%を浸食 + モデル欠陥）→ **EXP-008（汚染除去クリーンrunでiteration 10のうちに13/13・154/154完走、コミット4回まで履行）**。同一モデル・同一PROMPT・同一envで隔離ひとつで判定が覆り、完走時点がEXP-006の上限内だったため上限増加は寄与しなかった。教訓3つ：(a) **自律ループ実験では実験者のローカル環境（フック・グローバル設定）の隔離が前提条件**——これを破ると「モデル能力」の測定が「汚染順応度」の測定になる。(b) 完走失敗の原因をログ検死なしにモデル起因と断定するな——変換層の欠陥（CCRマルチデルタバグ）・計測誤り（usage行の合算、message.id dedup必須）・環境汚染、そして**採点ゲート自体の誤棄却**（EXP-010 48-1採点ファイル未コピー、EXP-015 iter 2ポート検出欠陥——measure v4で修正）でありうる。(c) モデル内在の欠陥（許可待ち1回、thinking 94%、ターン境界での実行不能状態）は残存してもRalphループの反復構造が吸収可能。コスト優位の判定は依然として単価未公開のため不能。
-6. **Ralphループのプロトコルはハーネス非依存に移植され、完走はモデルが・軌跡はハーネスが決めた（EXP-011/012ペア）。** 同一PROMPT・ゲート・モデル（gpt-5.6-sol、effort medium）でハーネスだけを変えたペア実験で両方とも無介入完走——Codex CLIはiteration 1・5分46秒・単一ファイル436行・コミット3回、Claude Code（ccr経由）はiteration 11・58分・モジュール型11ファイル・コミット11回。「最も重要な一片」の指示をCodexは完走までと解釈し、Claude Code側は文字通り一片と解釈して小型iterationをRalphループが吸収した。隔離原則（専用CODEX_HOME/CLAUDE_CONFIG_DIR）とiterationごとの外部採点ゲートはツールを問わず成立。ツール間のトークン効率比較は計測方式（rollout累計 vs ccrタブ vs ccusage）の標準化が先行課題。Codexハーネスはモデル世代交代にもそのまま移植される——GPT-6初のモデルgpt-6-astra（Anthropic互換エンドポイント不在のためCodex経路が唯一の整合）をモデルID 1要素の差し替えだけで接続し3/3 iter 1完走（EXP-021、セッション7分台・誤棄却0件）。ただしsol比でセッション時間+23–32%で公式の「1.9倍高速」はこのハーネスでは再現せず——速度の叙述は判断保留。
-7. **サードパーティモデルの接続は変換層（ccr）よりAnthropic互換エンドポイントへの直結が構造的に優れ、直結テンプレートはプロバイダを越えて再利用される（EXP-013/014）。** qwen3.8-max（DashScope）とkimi-k3（Moonshot）を`ANTHROPIC_BASE_URL`直結で接続すると、ccrスタックで繰り返された失敗モード（usage欠落→別タブ構築、transformerチェーン調整、ストリームのストール）が全て消滅——両実験ともPhase 0を無調整で通過・iteration 1完走（15分5秒 / 21分18秒）・セッションjsonlのusage正常。EXP-014はEXP-013のハーネスでenv 3要素（エンドポイント/キー/モデルID）だけを差し替えてそのまま動作——方法がプロバイダ非依存。直結は計測もClaude標準経路（jsonl + message.id dedup）に回帰させ、6番の標準化先行課題を部分的に解消するが、キャッシュ計上方式はプロバイダごとに異なる（Moonshotはcache_create 0計上）。ccr比の比較はモデルが異なるためスタック・モデル効果が交絡——プロバイダがAnthropic互換エンドポイントを提供するなら直結を既定の選択肢とするが、スタック間の定量比較には同一モデル実験が必要。**再現性はn=3で確定（EXP-016）**：Codex×gpt-5.6-sol・qwen直結・kimi直結の3条件それぞれ3/3完走（合算9/9、8/9がiter 1）——ただし完走以外の指標（時間・コミット・output）は同条件でも最大3倍変動し（kimi 21分→7分台）、S軸の「軌跡変動は定常ノイズ」という結論がM軸でも成立。完走率だけが安定した指標である。**韓国語条件も完走率を損なわない（EXP-017/019）**：韓国語正本（全成果物の韓国語指示）でqwen・kimi・Opus 4.8・Opus 5・Codex×gpt-5.6-solの5条件それぞれ3/3、**累計15/15 iter 1完走**、コミット・README全て韓国語・言語逸脱0——英語圏モデル（gpt-5.6-sol）まで遵守し、韓国語の履行はモデル系統ではなく指示遵守の問題と判明。時間・コミット・outputもEXP-019の3条件全てEN分布と重なる——qwenのko +48%時間（EXP-017）は例外事例で、方向性の記録としてのみ残す（L-01原則）。モデルプロファイル（4.8単一コミット vs 5細かく刻む）は言語反転後も維持。**ただし直結の再現性はプロバイダに従属する（EXP-018）**：EXP-015完走の翌日、UpstageがAnthropic互換エンドポイントとsolar-open2 hosted APIを予告なく終了（申請制ベータ終了）し再現の窓が閉じた——サードパーティのベンチマークは実験時点の明記が再現性主張の限界を規定し、ハーネス再利用前のプロバイダスモークが必須。2週間後にエンドポイントがsolar-pro4として復旧し直結3/3完走を確認（EXP-020）——完走能力は直結上位と同等だが有効時間119–258分（qwenの8–17倍）の最長プロファイルで、原因はキャッシュ非対応（全呼び出しcache 0、毎回約8万トークンを再プリフィル）・往復37秒・thinking 88%の積。**注意：solar-open2・solar-pro4のエンドポイントは商用提供（GA）APIではなくプレビュー（申請制ベータ）状態**で、基盤制約（prompt caching非対応、長い往復遅延、予告なしのエンドポイント終了）が常時かかっており、Solar系の時間・usageプロファイルはモデル能力とプレビュー基盤特性が交絡した値——商用基盤基準の性能として読まないこと。ゲート誤棄却の3例目（グローバルnpm汚染がhurlバイナリを隠した）により**採点バイナリの絶対パス固定**の教訓を追加。
-8. **出力量拡大プロファイルは世代ではなくモデル固有の特性である（EXP-023）。** Claude 5世代の上位モデルFable 5.1は同一ハーネス・EN正本で3/3 iter 1完走しつつ、output 28.7–35.8K・6.2–7.8分でOpus 4.8の分布（29.6–37.1K・7.8–8.7分）と重なり、Opus 5（41.1–48.4K・8.9–17.6分）とは重ならなかった。EXP-010が「世代特性」と確定したOpus 5のoutput・コミット拡大は同世代の上位モデルで再現しないため、Opus 5固有のプロファイルとして再解釈する（n=3・時点差7週、方向性の記録）。
+- EXP-001の訂正後のPTE/Ralph比率は8.27倍。採点セットが異なり同品質の費用比較ではない。
+- EXP-003は22.45%減で事前基準30%未達。EXP-004の2倍変動・無効果の解釈は撤回。
+- 初回iterationの成功は当該条件での実装可能性を示す。反復による回復と保守性能は別途評価が必要。
+- 3回の成功や異なる時点の時間から一般順位や因果関係を断定しない。サブスクリプション費用の未測定は無料を意味しない。
 
 9. **DeepSeek V4.1-Flashは直結標準を無調整で通過し、全条件最速帯・最低コストのプロファイルを示した（EXP-025）。** env 3要素の差し替えだけでFlash・V4-ProともEN・KO各3/3、計12/12 iter 1完走（応答modelフィールド全件維持）。Flash EN 4.6–6.0分・runあたり換算約$0.1（キャッシュヒット入力$0.006/M）でCodex×sol（5.3–10.0分）より下の帯、Proは12–16分・約$0.5でoutputが1.5倍。時点・ハーネスの交絡により速度・コスト優位は確定せず、直結再利用性の事例（4社目）とプロファイル記録として残す。
 10. **Opus 5.5はモデルIDの差し替えだけでネイティブハーネスを通過し、ネイティブClaude条件中で最短・最低出力のプロファイルを示した（EXP-026）。** EN・KO各3/3、計6/6 iter 1完走（再検証各2回一致）。6 run中5 runが4.0–4.2分・output約20KでFable 5.1（6.2–7.8分・28.7–35.8K）とOpus 5（8.9–17.6分・39–49K）の分布より下にあり、KOでも同じ帯を維持した。第8項の解釈（出力量拡大はOpus 5固有の特性）と整合する。ただし時点・CLIバージョンが異なる基準線との並置かつn=3の観測であり、速度優位は同時期の交差再測定まで確定しない。
+11. **GPT-6系3モデル（astra・sol・luna）はいずれもCodexハーネスでモデルIDの差し替えだけで完走した（EXP-021・027）。** sol・luna各3/3 iter 1完走（応答modelフィールド全件一致）。solは3 run全て4.8–5.2分・output約11Kでばらつきが小さく、lunaは5.4–10.0分・output 13.4–21.5Kで、「fast」の位置付けに反しこの課題ではsolより短いrunはなかった。astra（EXP-021、7分台）とは時点・CLIバージョンが異なるためモデル差とは断定しない。EXP-027は新モデルのベンチマーク手順をまとめた`ralph-model-benchmark`スキルの初適用である。
 
 ## 実験ライフサイクル
 

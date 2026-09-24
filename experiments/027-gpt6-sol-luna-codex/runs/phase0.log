@@ -1,0 +1,40 @@
+=== gpt-6-sol (codex) 2026-09-24 08:46:56 ===
+Reading additional input from stdin...
+OpenAI Codex v0.155.1
+--------
+workdir: /Users/dohyunjung/ralph-exp027/smoke-tmp
+model: gpt-6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a0d0aa-4ec1-7023-898b-7bb5063fae9d
+--------
+user
+Output exactly the string SMOKE-OK and nothing else.
+codex
+SMOKE-OK
+tokens used
+2,267
+SMOKE-OK
+=== gpt-6-luna (codex) 2026-09-24 08:47:05 ===
+Reading additional input from stdin...
+OpenAI Codex v0.155.1
+--------
+workdir: /Users/dohyunjung/ralph-exp027/smoke-tmp
+model: gpt-6-luna
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a0d0aa-6dca-7c81-b796-599ee43f5fb2
+--------
+user
+Output exactly the string SMOKE-OK and nothing else.
+codex
+SMOKE-OK
+tokens used
+756
+SMOKE-OK

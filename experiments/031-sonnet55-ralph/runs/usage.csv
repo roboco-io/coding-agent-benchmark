@@ -1,0 +1,7 @@
+run,part,sessions,messages,input_tokens,output_tokens,cache_creation_input_tokens,cache_read_input_tokens,models,tools
+sonnet55-en-1,main,1,18,36,15203,58537,1091648,claude-sonnet-5-5=18,Bash=17
+sonnet55-ko-1,main,1,19,38,17432,68039,1264606,claude-sonnet-5-5=19,Bash=19
+sonnet55-en-2,main,1,24,48,16223,55615,1461879,claude-sonnet-5-5=24,Bash=23
+sonnet55-ko-2,main,1,16,32,17129,72209,1058011,claude-sonnet-5-5=16,Bash=16
+sonnet55-en-3,main,1,20,40,19993,69493,1404798,claude-sonnet-5-5=20,Bash=21
+sonnet55-ko-3,main,1,23,46,20892,71504,1618187,claude-sonnet-5-5=23,Bash=23

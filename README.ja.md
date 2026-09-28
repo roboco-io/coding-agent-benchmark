@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-030（2026-09-24）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-031（2026-09-29）
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
@@ -57,6 +57,7 @@
 | [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 ネイティブRalphループ完走検証（EN・KO各n=3） | M-21: Claude Codeネイティブハーネスで、Sonnet 5（`claude-sonnet-5`、thinkingデフォルト）はEN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3）。 | **検証** |
 | [EXP-029](experiments/029-pi-openweight/report.md) pi coding agent × kimi-k3・qwen3.8-max・deepseek-flash Ralphループ完走検証（EN各n=3） | M-22: pi coding agent（`pi -p` v0.87.1）を各提供者のOpenAI互換エンドポイントに直結して`kimi-k3`・`qwen3.8-max`・`deepseek-flash`（thinkingはpiデフォルト）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。 | **検証** |
 | [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5・gpt-6-sol Ralphループ完走検証（EN各n=3） | M-23: pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-opus-5-5`（Anthropic APIキー直結）と`openai-codex/gpt-6-sol`（ChatGPT OAuth）をpiデフォルトのthinkingで動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。 | **検証** |
+| [EXP-031](experiments/031-sonnet55-ralph/report.md) Claude Code × Sonnet 5.5 ネイティブ Ralphループ完走検証（EN・KO各n=3） | M-24: Claude Codeネイティブハーネスで Sonnet 5.5（`claude-sonnet-5-5`、thinkingデフォルト）は、EN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3、完走率で判定・課金は対象外）。 | **検証** |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -142,6 +143,9 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-030 — pi coding agent × Opus 5.5・gpt-6-sol Ralphループ完走検証（EN各n=3）** (検証)  
 **2条件とも3/3完走、6 runすべてiteration 1**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件一致）。セッションはOpus 5.5が3.1–4.9分、gpt-6-solが4.2–5.6分で、ネイティブエージェントの基準線（EXP-026 Opus 5.5 4.0–8.4分、EXP-027 gpt-6-sol 4.8–5.2分）と範囲が重なる。観測値であり順位の確定ではない。 → [レポート](experiments/030-pi-frontier/report.md)
 
+**EXP-031 — Claude Code × Sonnet 5.5 ネイティブ Ralphループ完走検証（EN・KO各n=3）** (検証)  
+**EN 3/3・KO 3/3、6 runすべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション2.5–4.2分、output 15.2–20.9K、API呼び出し16–24回、Bashのみ使用で、同じネイティブハーネスのOpus 5.5・Fable 5.1・Sonnet 5より短く少ない。ハーネスが空きポートを`PORT`で注入した最初の実験。日付・CLIバージョンが交絡する観測値であり順位の確定ではない。 → [レポート](experiments/031-sonnet55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 総合インサイト（2026-09-21訂正反映）
@@ -152,11 +156,12 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 - 3回の成功や異なる時点の時間から一般順位や因果関係を断定しない。サブスクリプション費用の未測定は無料を意味しない。
 
 9. **DeepSeek V4.1-Flashは直結標準を無調整で通過し、全条件最速帯・最低コストのプロファイルを示した（EXP-025）。** env 3要素の差し替えだけでFlash・V4-ProともEN・KO各3/3、計12/12 iter 1完走（応答modelフィールド全件維持）。Flash EN 4.6–6.0分・runあたり換算約$0.1（キャッシュヒット入力$0.006/M）でCodex×sol（5.3–10.0分）より下の帯、Proは12–16分・約$0.5でoutputが1.5倍。時点・ハーネスの交絡により速度・コスト優位は確定せず、直結再利用性の事例（4社目）とプロファイル記録として残す。
-10. **Opus 5.5はモデルIDの差し替えだけでネイティブハーネスを通過し、ネイティブClaude条件中で最短・最低出力のプロファイルを示した（EXP-026）。** EN・KO各3/3、計6/6 iter 1完走（再検証各2回一致）。6 run中5 runが4.0–4.2分・output約20KでFable 5.1（6.2–7.8分・28.7–35.8K）とOpus 5（8.9–17.6分・39–49K）の分布より下にあり、KOでも同じ帯を維持した。第8項の解釈（出力量拡大はOpus 5固有の特性）と整合する。ただし時点・CLIバージョンが異なる基準線との並置かつn=3の観測であり、速度優位は同時期の交差再測定まで確定しない。
+10. **Opus 5.5はモデルIDの差し替えだけでネイティブハーネスを通過し、ネイティブClaude条件中で最短・最低出力のプロファイルを示した（EXP-026）。** EN・KO各3/3、計6/6 iter 1完走（再検証各2回一致）。6 run中5 runが4.0–4.2分・output約20KでFable 5.1（6.2–7.8分・28.7–35.8K）とOpus 5（8.9–17.6分・39–49K）の分布より下にあり、KOでも同じ帯を維持した。第8項の解釈（出力量拡大はOpus 5固有の特性）と整合する。ただし時点・CLIバージョンが異なる基準線との並置かつn=3の観測であり、速度優位は同時期の交差再測定まで確定しない。 （EXP-031でSonnet 5.5がこの最短・最少の基準をさらに更新した — 15番参照。）
 11. **GPT-6系3モデル（astra・sol・luna）はいずれもCodexハーネスでモデルIDの差し替えだけで完走した（EXP-021・027）。** sol・luna各3/3 iter 1完走（応答modelフィールド全件一致）。solは3 run全て4.8–5.2分・output約11Kでばらつきが小さく、lunaは5.4–10.0分・output 13.4–21.5Kで、「fast」の位置付けに反しこの課題ではsolより短いrunはなかった。astra（EXP-021、7分台）とは時点・CLIバージョンが異なるためモデル差とは断定しない。EXP-027は新モデルのベンチマーク手順をまとめた`ralph-model-benchmark`スキルの初適用である。
 12. **Sonnet 5もネイティブハーネスでEN・KOともに完走したが、同じハーネスの上位モデルより遅く出力が多かった（EXP-028）。** EN 3/3・KO 3/3完走（応答modelフィールドは全メッセージ`claude-sonnet-5`）。5 runはiteration 1で終わり、en-1はエージェントがスキャフォールド・テスト準備・実装を3 iterationに分けてiteration 3で完走した（rejectedなし）。セッション11.2–16.8分・output 57.6–73.7Kで、Opus 5.5（EXP-026、4.0–8.4分・18.6–28.2K）・Fable 5.1（EXP-023）の観測範囲より上。測定日・Claude Codeバージョンが異なるためモデル単独の差とは断定しない。
 13. **第3のハーネスpiも変換レイヤーなしでオープンウェイト系3モデルで完走した（EXP-029）。** pi coding agentを各提供者のOpenAI互換エンドポイントに直結し、kimi-k3・qwen3.8-max・deepseek-flashが各EN 3/3、計9/9完走した（応答modelフィールド全件一致、ハーネスのトラブルシューティング0件）。8 runはiteration 1で終わり、qwen-en-1は採点ポートを外部プロセスが占有していたためiteration 5と記録された（iteration 1のコードも再採点で通過）。セッションはflash 1.9–4.1分（D-3再実行を反映）、kimi 9.5–9.9分、qwen 15.6–29.0分。同じモデルの過去のClaude Code直結run（EXP-013・014・025）とはハーネスとAPI形式（Anthropic互換とOpenAI互換）が同時に異なるため、差をpiの効果として分離しない。これによりRalphループベンチマークはClaude Code・Codex・piの3ハーネスで同じ手順で再現できる。
 14. **piはベンダーの基準モデルでも完走した（EXP-030）。** piでOpus 5.5（Anthropic APIキー直結）とgpt-6-sol（ChatGPT OAuth）を動かし、各EN 3/3、6 runすべてiteration 1で完走した。セッションはOpus 5.5が3.1–4.9分、gpt-6-solが4.2–5.6分で、ネイティブエージェントの基準線（EXP-026 Claude Code 4.0–8.4分、EXP-027 Codex 4.8–5.2分）と範囲が重なり、outputはpi側が少なかった（Opus 5.5 16.6–19.8K対18.6–28.2K、gpt-6-sol 7.0–8.6K対10.4–11.0K）。エージェントとAPI経路（システムプロンプト・ツール・thinkingの渡し方・キャッシュTTL）が同時に異なるため、この差は組み合わせ全体の差であり、piの効果とは断定しない。
+15. **Sonnet 5.5はネイティブハーネスでこれまでのClaude条件の中で最も短い経路で完走した（EXP-031）。** EN 3/3・KO 3/3、6 runすべてiteration 1で完走（再検証各2回一致、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション2.5–4.2分・output 15.2–20.9K・API呼び出し16–24回で、同じネイティブハーネスのOpus 5.5（4.0–8.4分・22–41回）・Fable 5.1・Sonnet 5（11.2–16.8分・82–140回）の分布より下にあり、6 runすべてRead/Write/EditなしでBashだけでファイルを作成した。前世代Sonnet 5との差は大きいが、測定日・Claude Codeバージョン・ハーネスのポート注入（この実験から空きポートを`PORT`で注入）が同時に異なるため、モデル単独の効果とは断定しない。
 
 ## 実験ライフサイクル
 

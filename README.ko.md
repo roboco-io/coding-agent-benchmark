@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-030 (2026-09-24)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-031 (2026-09-29)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -57,6 +57,7 @@
 | [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-21: Claude Code 네이티브 하네스에서 Sonnet 5(`claude-sonnet-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-029](experiments/029-pi-openweight/report.md) pi coding agent × kimi-k3·qwen3.8-max·deepseek-flash 랄프 루프 완주 검증 (EN 각 n=3) | M-22: pi coding agent(`pi -p` v0.87.1)를 제공자 OpenAI 호환 엔드포인트에 직결해 `kimi-k3`·`qwen3.8-max`·`deepseek-flash`(thinking pi 기본값)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3) | M-23: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-opus-5-5`(Anthropic API 키 직결)·`openai-codex/gpt-6-sol`(ChatGPT OAuth)을 돌리면(thinking pi 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제). | **검증** |
+| [EXP-031](experiments/031-sonnet55-ralph/report.md) Claude Code × Sonnet 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-24: Claude Code 네이티브 하네스에서 Sonnet 5.5(`claude-sonnet-5-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -142,6 +143,9 @@ EN 3/3·KO 3/3 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154
 **EXP-030 — pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3)** (검증)  
 두 조건 모두 3/3 완주, 6 run 전부 iteration 1 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). 세션 시간은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분이며, 각 모델의 네이티브 에이전트 기준선(EXP-026 Opus 5.5 4.0–8.4분, EXP-027 gpt-6-sol 4.8–5.2분)과 범위가 겹친다. 관측값이며 우열 확정이 아니다. → [보고서](experiments/030-pi-frontier/report.md)
 
+**EXP-031 — Claude Code × Sonnet 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3)** (검증)  
+EN 3/3·KO 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 2.5–4.2분·output 15.2–20.9K·API 호출 16–24로 같은 Claude Code 네이티브 하네스의 Opus 5.5·Fable 5.1·Sonnet 5 관측 범위보다 짧고 적다(output은 Opus 5.5 하단과 겹침). 시점·CLI 버전 교락이 있는 관측값이며 우열 확정이 아니다. → [보고서](experiments/031-sonnet55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (2026-09-21 정정 반영)
@@ -152,11 +156,12 @@ EN 3/3·KO 3/3 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154
 - n=3 성공·다른 시점의 시간 차이로 일반 순위나 모델·하네스의 인과 효과를 확정하지 않는다. 구독 실행의 비용 미측정은 무료를 뜻하지 않는다.
 
 9. **DeepSeek V4.1-Flash는 직결 표준을 무조정으로 통과하며 전 조건 최속 대역·최저 비용 프로파일을 보였다 (EXP-025).** env 3요소 치환만으로 Flash·V4-Pro 모두 EN·KO 각 3/3, 총 12/12 iter 1 완주(응답 model 필드 전수 유지). Flash EN 4.6–6.0분·run당 환산 약 $0.1(캐시 히트 입력 $0.006/M)로 Codex×sol(5.3–10.0분)보다 아래 대역이고, Pro는 12–16분·약 $0.5로 output이 1.5배. 시점·하네스 교락으로 속도·비용 우위는 확정하지 않으며, 직결 재사용성 사례(4사째)와 프로파일 기록으로 남긴다.
-10. **Opus 5.5는 네이티브 하네스를 모델 ID 교체만으로 통과하며 네이티브 Claude 조건 중 최단·최저 산출 프로파일을 보였다 (EXP-026).** EN·KO 각 3/3, 총 6/6 iter 1 완주(재검증 각 2회 일치). 6 run 중 5개가 4.0–4.2분·output 약 20K로 Fable 5.1(6.2–7.8분·28.7–35.8K)과 Opus 5(8.9–17.6분·39–49K) 분포 아래에 있고, KO에서도 같은 대역을 유지했다. 8항의 해석(산출량 확대는 Opus 5 고유 특성)과 부합한다. 단 시점·CLI 버전이 다른 기준선과의 병치이며 n=3 관측이므로 속도 우위는 동시기 교차 재측정 전까지 확정하지 않는다.
+10. **Opus 5.5는 네이티브 하네스를 모델 ID 교체만으로 통과하며 네이티브 Claude 조건 중 최단·최저 산출 프로파일을 보였다 (EXP-026).** EN·KO 각 3/3, 총 6/6 iter 1 완주(재검증 각 2회 일치). 6 run 중 5개가 4.0–4.2분·output 약 20K로 Fable 5.1(6.2–7.8분·28.7–35.8K)과 Opus 5(8.9–17.6분·39–49K) 분포 아래에 있고, KO에서도 같은 대역을 유지했다. 8항의 해석(산출량 확대는 Opus 5 고유 특성)과 부합한다. 단 시점·CLI 버전이 다른 기준선과의 병치이며 n=3 관측이므로 속도 우위는 동시기 교차 재측정 전까지 확정하지 않는다. (EXP-031에서 Sonnet 5.5가 이 최단·최저 기준을 다시 갱신했다 — 15번 참조.)
 11. **GPT-6 계열 3개 모델(astra·sol·luna) 모두 Codex 하네스에서 모델 ID 치환만으로 완주했다 (EXP-021·027).** sol·luna 각 3/3 iter 1 완주(응답 model 필드 전수 일치). sol은 3 run 모두 4.8–5.2분·output 약 11K로 산포가 작았고, luna는 5.4–10.0분·output 13.4–21.5K로 "fast" 포지셔닝과 달리 이 과제에서 sol보다 짧은 run이 없었다. astra(EXP-021, 7분대)와는 시점·CLI 버전이 달라 모델 차이로 단정하지 않는다. EXP-027은 신규 모델 벤치마크 절차를 묶은 `ralph-model-benchmark` 스킬의 첫 적용이다.
 12. **Sonnet 5도 네이티브 하네스에서 EN·KO 모두 완주했지만, 같은 하네스의 상위 모델보다 느리고 출력이 많았다 (EXP-028).** EN 3/3·KO 3/3 완주(응답 model 필드 전수 `claude-sonnet-5`). 5 run은 iteration 1에 끝났고, en-1은 에이전트가 스캐폴딩·테스트 준비·구현을 3개 iteration으로 나눠 iteration 3에 완주했다(반려 없음). 세션 11.2–16.8분·output 57.6–73.7K로 Opus 5.5(EXP-026, 4.0–8.4분·18.6–28.2K)·Fable 5.1(EXP-023)의 관측 범위보다 위다. 측정일·Claude Code 버전이 달라 모델 단독 차이로 단정하지 않는다.
 13. **제3의 하네스 pi도 변환 계층 없이 오픈웨이트 계열 3개 모델로 완주했다 (EXP-029).** pi coding agent를 각 제공자의 OpenAI 호환 엔드포인트에 직결해 kimi-k3·qwen3.8-max·deepseek-flash 각 EN 3/3, 총 9/9 완주했다(응답 model 필드 전수 일치, 하네스 트러블슈팅 0건). 8 run은 iteration 1에 끝났고, qwen-en-1은 채점 포트를 외부 프로세스가 점유해 iteration 5로 기록됐다(iteration 1 코드도 재채점 통과). 세션은 flash 1.9–4.1분(D-3 재실행 반영), kimi 9.5–9.9분, qwen 15.6–29.0분이다. 같은 모델의 이전 Claude Code 직결 run(EXP-013·014·025)과는 하네스와 API 형식(Anthropic 호환 대 OpenAI 호환)이 함께 달라 차이를 pi의 효과로 분리하지 않는다. 이로써 랄프 루프 벤치마크는 Claude Code·Codex·pi 세 하네스에서 같은 절차로 재현된다.
 14. **pi는 제조사 기준 모델에서도 완주했다 (EXP-030).** pi로 Opus 5.5(Anthropic API 키 직결)와 gpt-6-sol(ChatGPT OAuth)을 돌려 각 EN 3/3, 6 run 모두 iteration 1에 완주했다. 세션은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분으로 네이티브 에이전트 기준선(EXP-026 Claude Code 4.0–8.4분, EXP-027 Codex 4.8–5.2분)과 범위가 겹쳤고, output은 pi 쪽이 낮았다(Opus 5.5 16.6–19.8K 대 18.6–28.2K, gpt-6-sol 7.0–8.6K 대 10.4–11.0K). 에이전트와 API 경로(시스템 프롬프트·도구·thinking 전달 방식·캐시 TTL)가 함께 달라 이 차이는 조합 전체의 차이이며 pi의 효과로 단정하지 않는다.
+15. **Sonnet 5.5는 네이티브 하네스에서 지금까지의 Claude 조건 중 가장 짧은 경로로 완주했다 (EXP-031).** EN 3/3·KO 3/3, 6 run 모두 iteration 1 완주(재검증 각 2회 일치, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 2.5–4.2분·output 15.2–20.9K·API 호출 16–24회로 같은 네이티브 하네스의 Opus 5.5(4.0–8.4분·22–41회)·Fable 5.1·Sonnet 5(11.2–16.8분·82–140회) 분포 아래에 있고, 6 run 모두 Read/Write/Edit 없이 Bash만으로 파일을 작성했다. 직전 세대 Sonnet 5와의 차이가 크지만 측정 날짜·Claude Code 버전·하네스 포트 주입(이번 실험부터 빈 포트를 `PORT`로 주입)이 함께 달라 모델 단독 효과로 단정하지 않는다.
 
 ## 실험 라이프사이클
 

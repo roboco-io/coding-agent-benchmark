@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-030（2026-09-24）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-031（2026-09-29）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -57,6 +57,7 @@
 | [EXP-028](experiments/028-sonnet5-ralph/report.md) Claude Code × Sonnet 5 原生 Ralph 循环完成验证（EN·KO 各 n=3） | M-21: 在 Claude Code 原生框架中，Sonnet 5（`claude-sonnet-5`，默认 thinking）能以 EN·KO 正本 Ralph 循环提示在上限 10 iteration·4 小时内无人干预完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3）。 | **验证** |
 | [EXP-029](experiments/029-pi-openweight/report.md) pi coding agent × kimi-k3·qwen3.8-max·deepseek-flash Ralph 循环完成验证（EN 各 n=3） | M-22: 将 pi coding agent（`pi -p` v0.87.1）直连各提供方的 OpenAI 兼容端点运行 `kimi-k3`·`qwen3.8-max`·`deepseek-flash`（thinking 为 pi 默认值），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN 各 n=3，按完成率判定，不含计费）。 | **验证** |
 | [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol Ralph 循环完成验证（EN 各 n=3） | M-23: 用 pi coding agent（`pi -p` v0.87.1）以 pi 默认 thinking 运行 `anthropic/claude-opus-5-5`（Anthropic API 密钥直连）和 `openai-codex/gpt-6-sol`（ChatGPT OAuth），两者都能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN 各 n=3，按完成率判定，不含计费）。 | **验证** |
+| [EXP-031](experiments/031-sonnet55-ralph/report.md) Claude Code × Sonnet 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3） | M-24: 在 Claude Code 原生框架中，Sonnet 5.5（`claude-sonnet-5-5`，thinking 默认值）能用 EN·KO 标准 Ralph 循环提示，在上限 10 iteration·4 小时内无人干预地完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，按完成率判定，不含计费）。 | **验证** |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -142,6 +143,9 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-030 — pi coding agent × Opus 5.5·gpt-6-sol Ralph 循环完成验证（EN 各 n=3）** (验证)  
 **两个条件均 3/3 完成，6 个 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部一致）。会话时长：Opus 5.5 为 3.1–4.9 分钟，gpt-6-sol 为 4.2–5.6 分钟，与原生代理基线（EXP-026 Opus 5.5 4.0–8.4 分钟，EXP-027 gpt-6-sol 4.8–5.2 分钟）范围重叠。为观测值，并非确定的排名。 → [报告](experiments/030-pi-frontier/report.md)
 
+**EXP-031 — Claude Code × Sonnet 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3）** (验证)  
+**EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次、仅使用 Bash，比同一原生框架的 Opus 5.5·Fable 5.1·Sonnet 5 更短更少。首次由框架注入空闲 `PORT`。观测值受日期与 CLI 版本混杂，并非确定的排名。 → [报告](experiments/031-sonnet55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -152,11 +156,12 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 - 3次成功或不同时期的耗时不足以确定通用排名或因果效果。订阅成本未测量不意味着免费。
 
 9. **DeepSeek V4.1-Flash 无需调整即通过直连标准，并显示出全部条件中最快一档·最低成本的特征（EXP-025）。** 仅替换 3 个 env 值，Flash·V4-Pro 在 EN·KO 各 3/3，共 12/12 在 iter 1 完成（响应 model 字段全部保持）。Flash EN 4.6–6.0 分钟·每 run 折算约 $0.1（缓存命中输入 $0.006/M），低于 Codex×sol（5.3–10.0 分钟）一档；Pro 12–16 分钟·约 $0.5，output 为 1.5 倍。因时点·框架混淆，不确定速度·成本优势；作为直连可复用案例（第 4 家）和特征记录保留。
-10. **Opus 5.5 仅替换模型 ID 即通过原生框架，并显示出原生 Claude 条件中最短·最低输出的特征（EXP-026）。** EN·KO 各 3/3，共 6/6 在 iter 1 完成（各 2 次复验一致）。6 个 run 中 5 个为 4.0–4.2 分钟·output 约 20K，低于 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）和 Opus 5（8.9–17.6 分钟·39–49K）的分布，KO 下也保持同一档。这与第 8 条的解释（输出量扩大是 Opus 5 特有特征）一致。但这是与时点·CLI 版本不同的基准并置，且为 n=3 观测，在同期交叉重测之前不确定速度优势。
+10. **Opus 5.5 仅替换模型 ID 即通过原生框架，并显示出原生 Claude 条件中最短·最低输出的特征（EXP-026）。** EN·KO 各 3/3，共 6/6 在 iter 1 完成（各 2 次复验一致）。6 个 run 中 5 个为 4.0–4.2 分钟·output 约 20K，低于 Fable 5.1（6.2–7.8 分钟·28.7–35.8K）和 Opus 5（8.9–17.6 分钟·39–49K）的分布，KO 下也保持同一档。这与第 8 条的解释（输出量扩大是 Opus 5 特有特征）一致。但这是与时点·CLI 版本不同的基准并置，且为 n=3 观测，在同期交叉重测之前不确定速度优势。 （EXP-031 中 Sonnet 5.5 再次刷新了这一最短·最低基准 —— 见第 15 条。）
 11. **GPT-6 系列 3 个模型（astra·sol·luna）在 Codex 框架中仅替换模型 ID 即全部完成（EXP-021·027）。** sol·luna 各 3/3 在 iter 1 完成（响应 model 字段全部一致）。sol 3 个 run 均为 4.8–5.2 分钟·output 约 11K，离散度小；luna 为 5.4–10.0 分钟·output 13.4–21.5K，与其 "fast" 定位不同，在此任务中没有比 sol 更短的 run。与 astra（EXP-021，7 分钟左右）的差异受时点·CLI 版本混杂影响，不归因于模型。EXP-027 是封装新模型基准流程的 `ralph-model-benchmark` 技能的首次应用。
 12. **Sonnet 5 在原生框架中 EN·KO 也都完成了，但比同一框架中的上位模型更慢、输出更多（EXP-028）。** EN 3/3·KO 3/3 完成（所有消息的响应 model 字段均为 `claude-sonnet-5`）。5 个 run 在 iteration 1 完成；en-1 由代理把脚手架、测试准备和实现拆成 3 个 iteration，在 iteration 3 完成（无 rejected）。会话 11.2–16.8 分钟·output 57.6–73.7K，高于 Opus 5.5（EXP-026，4.0–8.4 分钟·18.6–28.2K）与 Fable 5.1（EXP-023）的观测范围。测量日期与 Claude Code 版本不同，不归因于模型本身。
 13. **第三种框架 pi 也在无转换层的情况下用 3 个开放权重系模型完成（EXP-029）。** 将 pi coding agent 直连各提供方的 OpenAI 兼容端点，kimi-k3·qwen3.8-max·deepseek-flash 各 EN 3/3，共 9/9 完成（响应 model 字段全部一致，框架故障排查 0 次）。8 个 run 在 iteration 1 完成；qwen-en-1 因评分端口被外部进程占用而记录为 iteration 5（其 iteration 1 代码复评也通过）。会话时长：flash 1.9–4.1 分钟（已反映 D-3 重跑），kimi 9.5–9.9 分钟，qwen 15.6–29.0 分钟。与同一模型此前的 Claude Code 直连 run（EXP-013·014·025）相比，框架与 API 格式（Anthropic 兼容 vs OpenAI 兼容）同时不同，因此不把差异归因于 pi。至此 Ralph 循环基准可在 Claude Code·Codex·pi 三种框架上按同一流程复现。
 14. **pi 在厂商的基准模型上也完成了任务（EXP-030）。** 用 pi 运行 Opus 5.5（Anthropic API 密钥直连）和 gpt-6-sol（ChatGPT OAuth），各 EN 3/3，6 个 run 全部在 iteration 1 完成。会话时长 Opus 5.5 为 3.1–4.9 分钟、gpt-6-sol 为 4.2–5.6 分钟，与原生代理基线（EXP-026 Claude Code 4.0–8.4 分钟，EXP-027 Codex 4.8–5.2 分钟）范围重叠；output 则 pi 一侧更低（Opus 5.5 16.6–19.8K 对 18.6–28.2K，gpt-6-sol 7.0–8.6K 对 10.4–11.0K）。代理与 API 路径（系统提示、工具、thinking 传递方式、缓存 TTL）同时不同，因此这些差异是整个组合的差异，不归因于 pi。
+15. **Sonnet 5.5 在原生框架中以迄今所有 Claude 条件中最短的路径完成（EXP-031）。** EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次，低于同一原生框架的 Opus 5.5（4.0–8.4 分钟·22–41 次）、Fable 5.1 和 Sonnet 5（11.2–16.8 分钟·82–140 次）的分布，且 6 个 run 均未使用 Read/Write/Edit，仅用 Bash 编写文件。与上一代 Sonnet 5 差距很大，但测量日期、Claude Code 版本和框架端口注入（自本实验起以 `PORT` 注入空闲端口）同时不同，因此不归因于模型本身。
 
 ## 实验生命周期
 

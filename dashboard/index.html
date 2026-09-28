@@ -133,6 +133,50 @@ table.mx tbody tr.dim td{opacity:.42;}
 .done small{display:block; font-size:.64rem; color:var(--muted); letter-spacing:.02em; font-family:"IBM Plex Mono",monospace;}
 
 .cell{display:flex; flex-direction:column; gap:5px; min-width:150px;}
+/* ── matrix accordion ─────────────────── */
+table.mx tbody tr.row{cursor:pointer;}
+table.mx tbody tr.row.open{background:var(--sunk);}
+table.mx tbody tr.row.open td{border-bottom-color:transparent;}
+.xp{font:inherit; background:none; border:none; padding:0; margin:0; color:inherit; cursor:pointer; display:inline-flex; align-items:center; gap:7px; text-align:left;}
+.xp .chev{display:inline-block; width:0; height:0; border-style:solid; border-width:4px 0 4px 6px; border-color:transparent transparent transparent var(--muted); transition:transform .15s; flex:none;}
+.xp[aria-expanded="true"] .chev{transform:rotate(90deg);}
+.xp:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+table.mx tbody tr.dt > td{padding:0 0 18px; background:var(--sunk); border-bottom:1px solid var(--line);}
+table.mx tbody tr.dt:hover{background:none;}
+.dtwrap{position:sticky; left:0; padding:4px 16px 0; display:flex; flex-direction:column; gap:14px; cursor:auto;}
+.xb{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:12px 14px;}
+.xb-h{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; margin-bottom:8px;}
+.xb-h b{font-family:"IBM Plex Mono",monospace; font-size:.8rem;}
+.xb-h .nmx{font-size:.84rem; color:var(--ink-2);}
+.xb-h .dtd{font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--muted);}
+.xb-h a{font-size:.74rem; color:var(--focus); margin-left:auto;}
+.vd{font-size:.68rem; font-weight:600; padding:1px 7px; border-radius:2px; background:color-mix(in srgb,var(--direct) 16%,transparent); color:var(--direct); white-space:nowrap;}
+.xb details{border:none; border-top:1px solid var(--hair); border-radius:0; background:none; margin:0;}
+.xb details:first-of-type{border-top:none;}
+.xb details + details{margin-top:0;}
+.xb summary{cursor:pointer; padding:7px 0; font-size:.8rem; font-weight:600; color:var(--ink-2); letter-spacing:0; list-style:none; display:flex; gap:8px; align-items:baseline;}
+.xb summary::-webkit-details-marker{display:none;}
+.xb summary::before{content:"+"; font-family:"IBM Plex Mono",monospace; color:var(--faint); font-weight:400;}
+.xb details[open] > summary::before{content:"–";}
+.xb summary:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+.xc{padding:0 0 10px 15px; font-size:.8rem; line-height:1.55; color:var(--ink-2);}
+.xc p{margin:0 0 6px;}
+.xc ul{margin:0; padding-left:18px;}
+.xc li{margin:2px 0;}
+.xc code{font-family:"IBM Plex Mono",monospace; font-size:.74rem; background:var(--sunk); padding:0 3px; border-radius:2px;}
+.xc .lbl{font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-right:6px;}
+.xt{overflow-x:auto;}
+.xt table{border-collapse:collapse; font-family:"IBM Plex Mono",monospace; font-size:.72rem; min-width:100%;}
+table.mx .xt th, table.mx .xt td{padding:4px 14px 4px 0; vertical-align:baseline; opacity:1; text-align:right; white-space:nowrap; border-bottom:1px solid var(--hair);}
+table.mx .xt th{color:var(--muted); font-weight:500; font-size:.66rem;}
+table.mx .xt th:first-child, table.mx .xt td:first-child{text-align:left;}
+table.mx .xt tbody tr:hover{background:none;}
+.xnote{font-size:.68rem; color:var(--muted); margin:6px 0 0;}
+dl.kv{display:grid; grid-template-columns:max-content 1fr; gap:3px 14px; margin:0;}
+dl.kv dt{color:var(--muted); font-size:.74rem;}
+dl.kv dd{margin:0;}
+@media (max-width:640px){ dl.kv{grid-template-columns:1fr;} dl.kv dd{margin-bottom:5px;} .xb-h a{margin-left:0;} }
+
 .bar{position:relative; height:13px; background:var(--track); border-radius:1px;}
 .bar .rng{position:absolute; top:0; height:13px; border-radius:1px; min-width:3px;}
 .bar .rng.out{background:transparent!important; border:1.5px solid currentColor;}
@@ -315,6 +359,7 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
 
 </div>
 
+<script src="details.js"></script>
 <script>
 /* ───────────────────────── data (language-neutral) ───────────────────────── */
 const M = [
@@ -436,7 +481,8 @@ en: {
   metaLink:"View on GitHub ↗",
   flag:"<b>Solar Open 2 and Solar Pro 4 were measured on preview APIs, not the full service.</b> These were apply-to-use betas with no caching, slow round-trips and shutdowns without notice, so their time and token counts reflect the preview service as much as the model. Don't read them as production performance.",
   mxTitle:"Performance matrix",
-  mxSub:"One row per model × agent combination; the “How to read” list below explains each column. Time, output and cost vary by orders of magnitude, so they use a <b>log scale</b> (ticks under each header). Click a header to sort.",
+  mxSub:"One row per model × agent combination; the “How to read” list below explains each column. Time, output and cost vary by orders of magnitude, so they use a <b>log scale</b> (ticks under each header). Click a header to sort. Click a model row to expand its experiment details.",
+  dtOpen:"Show experiment details", secVerdict:"Verdict & hypothesis", secRuns:"Runs", secTokens:"Token breakdown", secCond:"Conditions", secDev:"Deviations & confounders", secBeh:"Agent behaviour", lbHypo:"Hypothesis", report:"Report ↗", noRecord:"Not recorded in the report.", xRun:"Run", xLang:"Prompt", xIter:"Iter", xTime:"Session (min)", xCommits:"Commits", xOut:"Output", xCost:"Cost (USD)", xIn:"Uncached in", xCR:"Cache read", xCW:"Cache write", xReq:"Requests", xRunsNote:"Iterations and commits are taken from the report; — means not recorded. Cost is an estimate at public API prices, not an invoice.", xTokNote:"Token proxy counted per unique message/response ID. Not billing data.",
   segEn:"EN prompt", segKo:"KO prompt",
   hintEn:"English canonical prompt — all 15 models (5 of them also on the pi harness)", hintKo:"Korean canonical prompt (all deliverables in Korean) — 9 models tested",
   lgNative:"Claude Code native", lgDirect:"Claude Code direct (ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -496,7 +542,8 @@ ko: {
   metaLink:"GitHub에서 보기 ↗",
   flag:"<b>Solar Open 2와 Solar Pro 4는 정식 서비스가 아닌 프리뷰 API로 측정했습니다.</b> 신청해야 쓸 수 있는 베타 서비스로, 캐시를 지원하지 않고 응답이 느렸으며 예고 없이 종료되기도 했습니다. 그래서 두 모델의 시간과 토큰 수에는 모델 성능과 프리뷰 서비스의 한계가 함께 반영돼 있습니다. 정식 서비스 성능으로 읽지 마세요.",
   mxTitle:"성능 매트릭스",
-  mxSub:"한 행이 한 모델×에이전트 조합이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 눈금</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다.",
+  mxSub:"한 행이 한 모델×에이전트 조합이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 눈금</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다. 모델 행을 누르면 실험 상세가 펼쳐집니다.",
+  dtOpen:"실험 상세 보기", secVerdict:"판정·가설", secRuns:"run별 결과", secTokens:"토큰 내역", secCond:"실험 조건", secDev:"편차·교란 요인", secBeh:"에이전트 행동 특징", lbHypo:"가설", report:"보고서 ↗", noRecord:"보고서에 기록 없음.", xRun:"run", xLang:"프롬프트", xIter:"iter", xTime:"세션(분)", xCommits:"커밋", xOut:"output", xCost:"비용(USD)", xIn:"비캐시 입력", xCR:"캐시 읽기", xCW:"캐시 쓰기", xReq:"요청 수", xRunsNote:"iteration·커밋은 보고서 기준이며 —는 기록 없음입니다. 비용은 공개 API 단가 환산 추정치이며 청구액이 아닙니다.", xTokNote:"고유 message/response ID 기준으로 센 토큰 대리지표입니다. 청구 데이터가 아닙니다.",
   segEn:"EN 정본", segKo:"KO 정본",
   hintEn:"영문 프롬프트 정본 — 15 모델 전부(그중 5 모델은 pi 하네스로도 실행)", hintKo:"한국어 번역 정본(전 산출물 한국어 지시) — 9 모델만 실험됨",
   lgNative:"Claude Code 네이티브", lgDirect:"Claude Code 직결(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -556,7 +603,8 @@ ja: {
   metaLink:"GitHubで見る ↗",
   flag:"<b>Solar Open 2とSolar Pro 4は正式サービスではなくプレビューAPIで計測しました。</b>申請制のベータサービスで、キャッシュに対応せず、応答が遅く、予告なく終了することもありました。そのため2モデルの時間とトークン数には、モデルの性能とプレビューサービスの制約の両方が反映されています。正式サービスの性能として読まないでください。",
   mxTitle:"性能マトリクス",
-  mxSub:"1行が1つのモデル×エージェントの組み合わせで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数目盛</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。",
+  mxSub:"1行が1つのモデル×エージェントの組み合わせで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数目盛</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。 モデルの行をクリックすると実験の詳細が開きます。",
+  dtOpen:"実験の詳細を表示", secVerdict:"判定・仮説", secRuns:"runごとの結果", secTokens:"トークン内訳", secCond:"実験条件", secDev:"逸脱・交絡要因", secBeh:"エージェントの行動特徴", lbHypo:"仮説", report:"レポート ↗", noRecord:"レポートに記録なし。", xRun:"run", xLang:"プロンプト", xIter:"iter", xTime:"セッション(分)", xCommits:"コミット", xOut:"output", xCost:"コスト(USD)", xIn:"非キャッシュ入力", xCR:"キャッシュ読み取り", xCW:"キャッシュ書き込み", xReq:"リクエスト数", xRunsNote:"iteration・コミットはレポート基準で、—は記録なしです。コストは公開API単価による換算推定で、請求額ではありません。", xTokNote:"固有のmessage/response IDで数えたトークン代理指標です。請求データではありません。",
   segEn:"EN正本", segKo:"KO正本",
   hintEn:"英語プロンプト正本——15モデル全て（うち5モデルはpiハーネスでも実行）", hintKo:"韓国語翻訳正本（全成果物を韓国語で指示）——9モデルのみ実験",
   lgNative:"Claude Code ネイティブ", lgDirect:"Claude Code 直結(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -616,7 +664,8 @@ zh: {
   metaLink:"在 GitHub 上查看 ↗",
   flag:"<b>Solar Open 2 和 Solar Pro 4 是在预览 API 而非正式服务上测得的。</b>这是需要申请的测试服务，不支持缓存、响应慢，还可能无预告关闭。因此这两个模型的时间和 token 数同时反映了模型性能与预览服务的限制，请不要当作正式服务的性能。",
   mxTitle:"性能矩阵",
-  mxSub:"每行一个模型×代理组合，各列的含义见下方“阅读方法”。时间、output 和成本在模型之间相差可达数十倍，因此使用<b>对数刻度</b>（见列标题下方的刻度）。点击列标题即可按该列排序。",
+  mxSub:"每行一个模型×代理组合，各列的含义见下方“阅读方法”。时间、output 和成本在模型之间相差可达数十倍，因此使用<b>对数刻度</b>（见列标题下方的刻度）。点击列标题即可按该列排序。 点击模型行可展开实验详情。",
+  dtOpen:"查看实验详情", secVerdict:"判定·假设", secRuns:"各 run 结果", secTokens:"token 明细", secCond:"实验条件", secDev:"偏差·混杂因素", secBeh:"代理行为特征", lbHypo:"假设", report:"报告 ↗", noRecord:"报告中无记录。", xRun:"run", xLang:"提示", xIter:"iter", xTime:"会话(分钟)", xCommits:"提交", xOut:"output", xCost:"成本(USD)", xIn:"非缓存输入", xCR:"缓存读取", xCW:"缓存写入", xReq:"请求数", xRunsNote:"iteration 与提交数取自报告，— 表示无记录。成本为按公开 API 单价换算的估算，并非账单。", xTokNote:"按唯一 message/response ID 统计的 token 代理指标，并非计费数据。",
   segEn:"EN 标准版", segKo:"KO 标准版",
   hintEn:"英文标准提示词——全部 15 个模型（其中 5 个也用 pi 框架运行）", hintKo:"韩文翻译标准版（要求全部产出为韩文）——仅 9 个模型测试",
   lgNative:"Claude Code 原生", lgDirect:"Claude Code 直连(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -711,6 +760,50 @@ function applyStatic() {
   document.getElementById("langhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
 }
 
+/* ───────────────────────── matrix accordion (data: details.js) ───────────────────────── */
+const openRows = new Set();
+const esc = v => String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const md = v => esc(v).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>");
+const REPO = "https://github.com/roboco-io/coding-agent-benchmark/blob/main/";
+const DT = () => window.DETAILS || {};
+function expsFor(m) { return (DT()[m.name] || []).filter(e => e.runs.some(r => r.lang === plang)); }
+const nf = v => v == null ? "—" : Number(v).toLocaleString("en-US");
+const kf = v => v == null ? "—" : v >= 1e6 ? (v / 1e6).toFixed(2) + "M" : v >= 1e3 ? (v / 1e3).toFixed(1) + "K" : String(v);
+
+function sec(title, body, open) {
+  return `<details${open ? " open" : ""}><summary>${title}</summary><div class="xc">${body}</div></details>`;
+}
+function listOr(items) {
+  return items && items.length ? `<ul>${items.map(x => `<li>${md(x)}</li>`).join("")}</ul>` : `<p>${t("noRecord")}</p>`;
+}
+function expBlock(e) {
+  const tx = e.text[lang] || e.text.en, runs = e.runs.filter(r => r.lang === plang);
+  const head = `<div class="xb-h"><b>${esc(e.exp)}</b><span class="vd">${esc(tx.verdict)}</span>`
+    + `<span class="nmx">${md(tx.name)}</span>${e.date ? `<span class="dtd">${esc(e.date)}</span>` : ""}`
+    + `<a href="${REPO}${esc(e.report)}" target="_blank" rel="noopener">${t("report")}</a></div>`;
+  const s1 = `<p>${md(tx.summary)}</p><p><span class="lbl">${t("lbHypo")} ${esc(e.hcode)}</span>${md(tx.hypothesis)}</p>`;
+  const s2 = `<div class="xt"><table><thead><tr><th>${t("xRun")}</th><th>${t("xIter")}</th><th>${t("xTime")}</th><th>${t("xCommits")}</th><th>${t("xOut")}</th><th>${t("xCost")}</th></tr></thead><tbody>`
+    + runs.map(r => `<tr><td>${esc(r.run)}</td><td>${r.iter == null ? "—" : esc(r.iter)}</td><td>${r.time == null ? "—" : f1(r.time)}</td>`
+      + `<td>${r.commits == null ? "—" : esc(r.commits)}</td><td>${kf(r.output)}</td><td>${r.usd == null ? "—" : "$" + r.usd.toFixed(2)}</td></tr>`).join("")
+    + `</tbody></table></div><p class="xnote">${t("xRunsNote")}</p>`;
+  const s3 = `<div class="xt"><table><thead><tr><th>${t("xRun")}</th><th>${t("xIn")}</th><th>${t("xCR")}</th><th>${t("xCW")}</th><th>${t("xOut")}</th><th>${t("xReq")}</th></tr></thead><tbody>`
+    + runs.map(r => `<tr><td>${esc(r.run)}</td><td>${kf(r.input)}</td><td>${kf(r.cacheRead)}</td><td>${kf(r.cacheWrite)}</td><td>${nf(r.output)}</td><td>${nf(r.requests)}</td></tr>`).join("")
+    + `</tbody></table></div><p class="xnote">${t("xTokNote")}</p>`;
+  const cond = (e.conditions[lang] || e.conditions.en || []);
+  const s4 = cond.length ? `<dl class="kv">${cond.map(([k, v]) => `<dt>${md(k)}</dt><dd>${md(v)}</dd>`).join("")}</dl>` : `<p>${t("noRecord")}</p>`;
+  return `<div class="xb">${head}`
+    + sec(t("secVerdict"), s1, true) + sec(t("secRuns"), s2, true) + sec(t("secTokens"), s3, false)
+    + sec(t("secCond"), s4, false) + sec(t("secDev"), listOr(e.deviations[lang] || e.deviations.en), false)
+    + sec(t("secBeh"), listOr(e.behavior[lang] || e.behavior.en), false) + `</div>`;
+}
+function detailRow(m) {
+  return `<tr class="dt"><td colspan="7"><div class="dtwrap">${expsFor(m).map(expBlock).join("")}</div></td></tr>`;
+}
+function fitDetails() {
+  const sc = document.querySelector(".scroller");
+  if (sc) document.querySelectorAll(".dtwrap").forEach(el => { el.style.width = sc.clientWidth + "px"; });
+}
+
 /* ───────────────────────── matrix ───────────────────────── */
 const U_MIN = 0.03, U_MAX = 20, T_MIN = 1.5, T_MAX = 260, O_MIN = 10, O_MAX = 260, S_MAX = 4, C_MAX = 8;
 const lg = (v, lo, hi) => Math.max(0, Math.min(100, (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) * 100));
@@ -772,8 +865,10 @@ function render() {
 
   const body = [...present, ...absent].map(({ m, s }) => {
     const color = `var(--${m.stack})`;
-    const nameCell = `<td><div class="mdl"><span class="nm"><span class="swatch" style="background:${color}"></span>${m.base || m.name}`
-      + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + `</span>`
+    const hasDt = !!(s && expsFor(m).length), isOpen = hasDt && openRows.has(m.name);
+    const nmTag = hasDt ? `<button type="button" class="xp nm" aria-expanded="${isOpen}" title="${t("dtOpen")}"><span class="chev" aria-hidden="true"></span>` : `<span class="nm">`;
+    const nameCell = `<td><div class="mdl">${nmTag}<span class="swatch" style="background:${color}"></span>${m.base || m.name}`
+      + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + (hasDt ? `</button>` : `</span>`)
       + `<span class="st">${s ? s.exp : ""}${s && m[plang].iter !== "iterAll1" ? " · " + s.iter : ""}</span></div></td>`
       + `<td><div class="agt"><span class="an">${agentName(m)}</span><span class="ac">${connLabel(m)}</span></div></td>`;
     if (!s) return `<tr class="dim">${nameCell}<td colspan="5"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
@@ -782,7 +877,7 @@ function render() {
       : `<span class="figs"><em>${f1(s.spread)}×</em> <small>${t("span").replace("{x}", f1(s.tHi - s.tLo))}</small></span>`;
     const spreadBar = s.n === 1 ? `<div class="bar"></div>` : linBar(Math.min(s.spread, S_MAX) - 1, S_MAX - 1, color);
 
-    return `<tr>${nameCell}`
+    return `<tr${hasDt ? ` class="row${isOpen ? " open" : ""}" data-key="${esc(m.name)}"` : ""}>${nameCell}`
       + `<td><div class="cell">${rangeBar(s.tLo, s.tHi, s.tMed, s.n, T_MIN, T_MAX, color, false)}`
       + `<span class="figs"><em>${f1(s.tMed)}${min}</em>${s.n > 1 ? ` <small>${f1(s.tLo)}–${f1(s.tHi)}</small>` : ` <small>${t("n1")}</small>`}</span></div></td>`
       + `<td><div class="cell">${spreadBar}${spreadTxt}</div></td>`
@@ -794,10 +889,11 @@ function render() {
           ? `<td><div class="cell">${rangeBar(lo(s.usd), hi(s.usd), med(s.usd), s.usd.length, U_MIN, U_MAX, color, false)}`
             + `<span class="figs"><em>$${usd(med(s.usd))}</em>${s.usd.length > 1 ? ` <small>${usd(lo(s.usd))}–${usd(hi(s.usd))}</small>` : ""}</span></div></td>`
           : `<td><span class="na">${t("costNa")}</span></td>`)
-      + `</tr>`;
+      + `</tr>` + (isOpen ? detailRow(m) : "");
   }).join("");
 
   document.getElementById("mxbody").innerHTML = body;
+  fitDetails();
   document.querySelectorAll("table.mx th").forEach(th => {
     const b = th.querySelector("button");
     if (!b) return;
@@ -858,6 +954,14 @@ function renderNotes() {
 }
 
 /* ───────────────────────── events ───────────────────────── */
+document.getElementById("mxbody").addEventListener("click", ev => {
+  const tr = ev.target.closest("tr.row");
+  if (!tr || ev.target.closest("tr.dt")) return;
+  const k = tr.dataset.key;
+  if (openRows.has(k)) openRows.delete(k); else openRows.add(k);
+  render();
+});
+window.addEventListener("resize", fitDetails);
 document.querySelectorAll("table.mx th button").forEach(b => {
   b.addEventListener("click", () => {
     const k = b.dataset.sort;

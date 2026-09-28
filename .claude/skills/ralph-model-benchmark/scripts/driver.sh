@@ -15,6 +15,15 @@ PROMPT="$BASE/PROMPT-$LANG_.md"
 REPO="$BASE/app-$RUN"; MET="$BASE/metrics-$RUN.csv"; LOG="$BASE/ralph-run-$RUN.log"
 [ -f "$BASE/done-$RUN" ] && exit 0
 
+# 빈 포트 선택: 3000번대 고정 포트가 외부 프로세스(VS Code Live Preview 등)와 충돌하지 않도록 (EXP-029 D-1, EXP-031)
+free_port() {
+  local p
+  for _ in $(seq 1 50); do
+    p=$(( 40000 + RANDOM % 10000 ))
+    lsof -nP -iTCP:"$p" -sTCP:LISTEN >/dev/null 2>&1 || { echo "$p"; return; }
+  done
+}
+
 invoke_agent() {
   case "$HARNESS" in
     codex)
@@ -50,7 +59,9 @@ cd "$REPO" || exit 1
 DONE_ITER=$(grep -c '^[0-9]' "$MET" 2>/dev/null | head -1)
 DONE_ITER=${DONE_ITER:-0}
 START=$(date +%s)
-echo "=== RUN $RUN ($HARNESS $MODEL, $(basename "$PROMPT")) start: $(date '+%F %T') ===" >> "$BASE/driver.log"
+# 에이전트 세션이 띄우는 서버도 빈 포트를 쓰도록 run 단위로 PORT 주입 (PROMPT는 불변)
+export PORT="$(free_port)"
+echo "=== RUN $RUN ($HARNESS $MODEL, $(basename "$PROMPT"), PORT=$PORT) start: $(date '+%F %T') ===" >> "$BASE/driver.log"
 for i in $(seq $((DONE_ITER + 1)) "$MAX_ITER"); do
   if [ $(( $(date +%s) - START )) -gt "$MAX_SEC" ]; then
     echo "=== [$RUN] wall-clock cap ${MAX_SEC}s reached before iteration $i: $(date '+%F %T') ===" >> "$LOG"

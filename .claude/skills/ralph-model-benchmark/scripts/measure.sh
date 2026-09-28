@@ -33,6 +33,15 @@ cleanup() {
   pkill -9 -f "$REPO/node_modules" 2>/dev/null
 }
 
+# 빈 포트 선택: 3000번대 고정 포트가 외부 프로세스(VS Code Live Preview 등)와 충돌하지 않도록 (EXP-029 D-1, EXP-031)
+free_port() {
+  local p
+  for _ in $(seq 1 50); do
+    p=$(( 40000 + RANDOM % 10000 ))
+    lsof -nP -iTCP:"$p" -sTCP:LISTEN >/dev/null 2>&1 || { echo "$p"; return; }
+  done
+}
+
 # 리포 소속 프로세스가 LISTEN 중인 첫 포트 반환
 find_port() {
   lsof -nP -iTCP -sTCP:LISTEN 2>/dev/null | tail -n +2 | while read -r _ pid _ _ _ _ _ _ name _; do
@@ -45,7 +54,8 @@ find_port() {
 cleanup
 [ -d "$REPO" ] && [ -f "$REPO/package.json" ] || { echo "0,0"; exit 0; }
 # 서브셸 stdout을 분리해야 호출 측 $(measure.sh)가 서버 수명 동안 파이프에 묶이지 않는다
-( cd "$REPO" && exec npm run dev > "$BASE/server-iter.log" 2>&1 < /dev/null ) > /dev/null 2>&1 &
+SPORT="$(free_port)"
+( cd "$REPO" && PORT="$SPORT" exec npm run dev > "$BASE/server-iter.log" 2>&1 < /dev/null ) > /dev/null 2>&1 &
 SRV=$!
 PORT=""
 for _ in $(seq 1 30); do

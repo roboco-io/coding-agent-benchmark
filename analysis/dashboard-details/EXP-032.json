@@ -1,0 +1,28 @@
+{
+  "exp": "EXP-032",
+  "date": "2026-09-29",
+  "report": "experiments/032-pi-sonnet55/report.md",
+  "runs": {
+    "sonnet55-en-1": {"iter": 1, "commits": 3},
+    "sonnet55-en-2": {"iter": 1, "commits": 1},
+    "sonnet55-en-3": {"iter": 1, "commits": 2}
+  },
+  "conditions": {
+    "ko": [["에이전트", "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"], ["연결", "Anthropic API(Messages) 직결, API 키 과금 (청구액 미측정)"], ["모델 ID", "anthropic/claude-sonnet-5-5 — pi 내장 목록에 없어 내장 claude-sonnet-5 정의를 복사한 사용자 정의 항목(models.json)"], ["thinking", "pi 기본값 (medium 기록)"], ["격리", "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, PI_OFFLINE=1"], ["상한", "30 iteration · run당 4시간"], ["프롬프트", "정본 EN, n=3, 순차 실행"], ["포트", "하네스가 빈 포트를 PORT로 주입"]],
+    "en": [["Agent", "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"], ["Connection", "Anthropic API (Messages), direct, billed to an API key (invoice not measured)"], ["Model ID", "anthropic/claude-sonnet-5-5 — not in pi's built-in list, so a custom entry (models.json) copied from the built-in claude-sonnet-5 definition"], ["Thinking", "pi default (recorded as medium)"], ["Isolation", "dedicated PI_CODING_AGENT_DIR, parent AGENTS.md/CLAUDE.md, skills and extensions hidden, PI_OFFLINE=1"], ["Cap", "30 iterations · 4 h per run"], ["Prompt", "canonical EN, n=3, sequential"], ["Port", "harness injects a free port as PORT"]],
+    "ja": [["エージェント", "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"], ["接続", "Anthropic API（Messages）直結、APIキー課金（請求額は未測定）"], ["モデルID", "anthropic/claude-sonnet-5-5 — pi内蔵リストにないため内蔵claude-sonnet-5定義を複製したユーザー定義項目（models.json）"], ["thinking", "piデフォルト（mediumと記録）"], ["隔離", "専用PI_CODING_AGENT_DIR、上位AGENTS.md/CLAUDE.md・スキル・拡張は非露出、PI_OFFLINE=1"], ["上限", "30 iteration・runあたり4時間"], ["プロンプト", "正本EN、n=3、順次実行"], ["ポート", "ハーネスが空きポートをPORTで注入"]],
+    "zh": [["代理", "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"], ["连接", "Anthropic API（Messages）直连，按 API 密钥计费（未测账单）"], ["模型 ID", "anthropic/claude-sonnet-5-5 — pi 内置列表中没有，因此使用复制内置 claude-sonnet-5 定义的自定义条目（models.json）"], ["thinking", "pi 默认值（记录为 medium）"], ["隔离", "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md·技能·扩展，PI_OFFLINE=1"], ["上限", "30 iteration · 每 run 4 小时"], ["提示", "标准 EN，n=3，顺序执行"], ["端口", "框架以 PORT 注入空闲端口"]]
+  },
+  "deviations": {
+    "ko": ["게이트 반려·재실행·보류 없음.", "모델 메타데이터(compat·thinkingLevelMap·단가)는 Sonnet 5 것이다. pi가 Sonnet 5.5를 공식 지원하면 설정이 달라질 수 있다.", "3 run 모두 주입된 PORT 대신 APP_PORT/API_PORT(기본 8000)를 썼다. 채점기가 포트를 자동 탐지해 판정 영향 없음.", "Claude Code × Sonnet 5.5(EXP-031)와는 에이전트·thinking 전달·캐시 TTL(5분 vs 1시간)이 함께 달라 차이를 pi 단독 효과로 보지 않는다."],
+    "en": ["No gate rejections, reruns or holds.", "Model metadata (compat, thinkingLevelMap, prices) is Sonnet 5's. Settings may change once pi officially supports Sonnet 5.5.", "All 3 runs used APP_PORT/API_PORT (default 8000) instead of the injected PORT. The grader auto-detects the port, so the verdict is unaffected.", "Compared with Claude Code × Sonnet 5.5 (EXP-031), the agent, thinking settings and cache TTL (5 min vs 1 h) differ together, so the gap is not attributed to pi alone."],
+    "ja": ["ゲート却下・再実行・保留なし。", "モデルのメタデータ（compat・thinkingLevelMap・単価）はSonnet 5のもの。piがSonnet 5.5を公式サポートすると設定が変わる可能性がある。", "3 runすべてが注入されたPORTの代わりにAPP_PORT/API_PORT（デフォルト8000）を使った。採点器がポートを自動検出するため判定への影響なし。", "Claude Code × Sonnet 5.5（EXP-031）とはエージェント・thinkingの渡し方・キャッシュTTL（5分 vs 1時間）が同時に異なるため、差をpi単独の効果とは見なさない。"],
+    "zh": ["无门控驳回、重跑或保留。", "模型元数据（compat·thinkingLevelMap·单价）沿用 Sonnet 5。pi 正式支持 Sonnet 5.5 后设置可能改变。", "3 个 run 都使用 APP_PORT/API_PORT（默认 8000）而非注入的 PORT。评分器自动检测端口，不影响判定。", "与 Claude Code × Sonnet 5.5（EXP-031）相比，代理、thinking 传递方式和缓存 TTL（5 分钟 vs 1 小时）同时不同，因此不将差异归因于 pi 本身。"]
+  },
+  "behavior": {
+    "ko": ["3 run 모두 Fastify + Prisma를 선택했다.", "도구 호출은 거의 bash뿐이었다(en-1 bash 22·write 1, en-2 bash 13, en-3 bash 18).", "요청 13–23회로 짧은 경로: 과제 파악 → 대량 작성 → 실행 검증 → 완료 선언."],
+    "en": ["All 3 runs chose Fastify + Prisma.", "Tool calls were almost all bash (en-1 bash 22 · write 1, en-2 bash 13, en-3 bash 18).", "A short path of 13–23 requests: read the task → write in bulk → verify by running → declare done."],
+    "ja": ["3 runすべてがFastify + Prismaを選択した。", "ツール呼び出しはほぼbashのみだった（en-1 bash 22・write 1、en-2 bash 13、en-3 bash 18）。", "リクエスト13–23回の短い経路：課題把握 → 一括作成 → 実行して検証 → 完了宣言。"],
+    "zh": ["3 个 run 都选择了 Fastify + Prisma。", "工具调用几乎全是 bash（en-1 bash 22·write 1，en-2 bash 13，en-3 bash 18）。", "请求 13–23 次的短路径：理解任务 → 一次性大量编写 → 运行验证 → 宣告完成。"]
+  }
+}

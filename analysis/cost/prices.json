@@ -128,5 +128,14 @@
     "output": 10,
     "src": "https://platform.claude.com/docs/en/about-claude/pricing",
     "caveat": "2026-09-24 확인. 출시 시 2026-08-31까지 도입가로 공지된 $2/$10이 표준가로 유지됨($3/$15 인상 취소)"
+  },
+  "Sonnet 5.5": {
+    "input": 2,
+    "cache_read": 0.2,
+    "cache_write_5m": 2.5,
+    "cache_write_1h": 4,
+    "output": 10,
+    "src": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "caveat": "2026-09-29 확인(claude-api 스킬 모델 표, 2026-09-25 캐시본): input $2·output $10·cache read $0.20, Sonnet 5와 동일가. 캐시 쓰기 5m/1h는 표에 명시되지 않아 표준 배수(입력의 1.25배/2배)로 산정 — 공식 가격 페이지 직접 대조는 미실시"
   }
 }

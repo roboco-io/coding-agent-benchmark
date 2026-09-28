@@ -589,6 +589,26 @@
         "verdict": "验证",
         "summary": "**两个条件均 3/3 完成，6 个 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部一致）。会话时长：Opus 5.5 为 3.1–4.9 分钟，gpt-6-sol 为 4.2–5.6 分钟，与原生代理基线（EXP-026 Opus 5.5 4.0–8.4 分钟，EXP-027 gpt-6-sol 4.8–5.2 分钟）范围重叠。为观测值，并非确定的排名。"
       }
+    },
+    "EXP-031": {
+      "en": {
+        "name": "Claude Code × Sonnet 5.5 native Ralph loop completion check (EN · KO n=3 each)",
+        "hypothesis": "On the Claude Code native harness, Sonnet 5.5 (`claude-sonnet-5-5`, default thinking) can finish the RealWorld backend (Hurl 13/13 · 154/154) with the canonical EN and KO Ralph-loop prompts, intervention-free, within a 10-iteration · 4-hour cap (EN · KO n=3 each; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3 · KO 3/3, all six runs at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, no intervention, response model field `claude-sonnet-5-5` on every message). Sessions 2.5–4.2 min, output 15.2–20.9K, 16–24 API calls, Bash only — shorter and fewer than Opus 5.5 · Fable 5.1 · Sonnet 5 on the same native harness. First run with harness-injected free `PORT`. Observed values confounded by date and CLI version, not a confirmed ranking."
+      },
+      "ja": {
+        "name": "Claude Code × Sonnet 5.5 ネイティブ Ralphループ完走検証（EN・KO各n=3）",
+        "hypothesis": "Claude Codeネイティブハーネスで Sonnet 5.5（`claude-sonnet-5-5`、thinkingデフォルト）は、EN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3・KO 3/3、6 runすべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション2.5–4.2分、output 15.2–20.9K、API呼び出し16–24回、Bashのみ使用で、同じネイティブハーネスのOpus 5.5・Fable 5.1・Sonnet 5より短く少ない。ハーネスが空きポートを`PORT`で注入した最初の実験。日付・CLIバージョンが交絡する観測値であり順位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × Sonnet 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3）",
+        "hypothesis": "在 Claude Code 原生框架中，Sonnet 5.5（`claude-sonnet-5-5`，thinking 默认值）能用 EN·KO 标准 Ralph 循环提示，在上限 10 iteration·4 小时内无人干预地完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次、仅使用 Bash，比同一原生框架的 Opus 5.5·Fable 5.1·Sonnet 5 更短更少。首次由框架注入空闲 `PORT`。观测值受日期与 CLI 版本混杂，并非确定的排名。"
+      }
     }
   }
 }

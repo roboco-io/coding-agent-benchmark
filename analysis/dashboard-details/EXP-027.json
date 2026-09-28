@@ -1,0 +1,205 @@
+{
+ "exp": "EXP-027",
+ "date": "2026-09-24",
+ "report": "experiments/027-gpt6-sol-luna-codex/report.md",
+ "runs": {
+  "sol-en-1": {
+   "iter": 1,
+   "commits": 3
+  },
+  "sol-en-2": {
+   "iter": 1,
+   "commits": 3
+  },
+  "sol-en-3": {
+   "iter": 1,
+   "commits": 3
+  },
+  "luna-en-1": {
+   "iter": 1,
+   "commits": 8
+  },
+  "luna-en-2": {
+   "iter": 1,
+   "commits": 5
+  },
+  "luna-en-3": {
+   "iter": 1,
+   "commits": 4
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Codex CLI 0.155.1 (`codex exec`, iteration마다 새 세션)"
+   ],
+   [
+    "연결",
+    "ChatGPT 플랜 OAuth, Responses API"
+   ],
+   [
+    "모델 ID",
+    "gpt-6-sol, gpt-6-luna"
+   ],
+   [
+    "추론 설정",
+    "effort medium"
+   ],
+   [
+    "격리",
+    "격리 (전용 CODEX_HOME, 빈 config.toml, AGENTS.md·스킬·MCP 없음)"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간, 사람 개입 금지"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, 모델별 n=3, sol·luna 교차 순차 실행"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Codex CLI 0.155.1 (`codex exec`, new session per iteration)"
+   ],
+   [
+    "Connection",
+    "ChatGPT plan OAuth, Responses API"
+   ],
+   [
+    "Model ID",
+    "gpt-6-sol, gpt-6-luna"
+   ],
+   [
+    "Reasoning",
+    "effort medium"
+   ],
+   [
+    "Isolation",
+    "isolated (dedicated CODEX_HOME, empty config.toml, no AGENTS.md, skills or MCP)"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3 per model, sol and luna interleaved sequentially"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Codex CLI 0.155.1（`codex exec`、iterationごとに新規セッション）"
+   ],
+   [
+    "接続",
+    "ChatGPTプランOAuth、Responses API"
+   ],
+   [
+    "モデルID",
+    "gpt-6-sol、gpt-6-luna"
+   ],
+   [
+    "推論設定",
+    "effort medium"
+   ],
+   [
+    "隔離",
+    "隔離（専用CODEX_HOME、空のconfig.toml、AGENTS.md・スキル・MCPなし）"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間、人の介入禁止"
+   ],
+   [
+    "プロンプト",
+    "正本EN、モデルごとにn=3、sol・luna交互に順次実行"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Codex CLI 0.155.1（`codex exec`，每个 iteration 新会话）"
+   ],
+   [
+    "连接",
+    "ChatGPT 套餐 OAuth，Responses API"
+   ],
+   [
+    "模型 ID",
+    "gpt-6-sol、gpt-6-luna"
+   ],
+   [
+    "推理设置",
+    "effort medium"
+   ],
+   [
+    "隔离",
+    "已隔离（专用 CODEX_HOME，空 config.toml，无 AGENTS.md·技能·MCP）"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时，禁止人工干预"
+   ],
+   [
+    "提示",
+    "标准 EN，每个模型 n=3，sol 与 luna 交替顺序执行"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "D-1: sol-en-2 채점 후 measure.sh가 서버 watcher 프로세스 트리를 정리하지 못해 driver가 약 10.8분 대기했다. Hurl 자체는 이미 13파일·154요청 성공으로 끝난 상태였다.",
+   "사람이 잔존 프로세스만 수동 종료했고(채점 인프라 한정 개입) 에이전트와 산출물에는 개입하지 않았다. luna-en-2부터 프로세스 트리를 종료하는 수정본 measure.sh를 적용했고 채점 로직은 바뀌지 않았다.",
+   "sol-en-2의 세션 시간은 행 시간을 제외하고 로그의 iteration start/end로 산정했다. 판정에는 영향이 없다.",
+   "사용자가 요청한 gpt-6-earth는 존재하지 않는 ID여서(Codex 400 거부) 대상에서 제외했다."
+  ],
+  "en": [
+   "D-1: after grading sol-en-2, measure.sh failed to clean up the server watcher process tree and the driver waited about 10.8 minutes. Hurl itself had already finished with 13 files and 154 requests passing.",
+   "A human killed only the leftover processes (intervention limited to grading infrastructure); the agent and its output were not touched. From luna-en-2 a fixed measure.sh that kills the process tree was used; the grading logic did not change.",
+   "The session time of sol-en-2 excludes the hang and is taken from the log's iteration start/end. The verdict is unaffected.",
+   "gpt-6-earth, which the user asked for, is not a real ID (Codex returned 400), so it was excluded."
+  ],
+  "ja": [
+   "D-1: sol-en-2の採点後、measure.shがサーバwatcherのプロセスツリーを片付けられず、driverが約10.8分待機した。Hurl自体は13ファイル・154リクエスト成功で既に完了していた。",
+   "人が残存プロセスだけを手動終了した（採点インフラに限定した介入）。エージェントと成果物には介入していない。luna-en-2からプロセスツリーを終了する修正版measure.shを適用し、採点ロジックは変えていない。",
+   "sol-en-2のセッション時間は待機時間を除き、ログのiteration start/endで算出した。判定への影響はない。",
+   "ユーザーが要求したgpt-6-earthは存在しないID（Codexが400で拒否）のため対象から除外した。"
+  ],
+  "zh": [
+   "D-1：sol-en-2 评分后 measure.sh 未能清理服务器 watcher 进程树，driver 等待约 10.8 分钟。Hurl 本身已完成，13 个文件·154 个请求全部通过。",
+   "人工仅终止了残留进程（干预仅限评分基础设施），未触碰代理与产物。自 luna-en-2 起使用能终止进程树的修正版 measure.sh，评分逻辑未变。",
+   "sol-en-2 的会话时间排除了挂起时间，按日志的 iteration start/end 计算。不影响判定。",
+   "用户要求的 gpt-6-earth 是不存在的 ID（Codex 返回 400），因此被排除。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "gpt-6-sol: 3 run 모두 iteration 1에 완주했고 세션 시간 4분 45초-5분 12초, 커밋 3회로 산포가 작았다.",
+   "gpt-6-luna: 3 run 모두 iteration 1에 완주했다. luna-en-1은 약 10분·커밋 8회·input 누계 4.0M으로 가장 길었고 luna-en-2·3은 sol과 가까운 범위였다.",
+   "6 run 모두 첫 iteration에서 합격해 루프의 복구 기여는 관측되지 않았다.",
+   "rollout의 model 필드는 6 run 모두 요청 모델과 일치했고 fallback은 없었다."
+  ],
+  "en": [
+   "gpt-6-sol: all 3 runs finished at iteration 1, with session times of 4 min 45 s to 5 min 12 s and 3 commits each, a narrow spread.",
+   "gpt-6-luna: all 3 runs finished at iteration 1. luna-en-1 was the longest (about 10 minutes, 8 commits, 4.0M cumulative input); luna-en-2 and 3 were close to sol.",
+   "All 6 runs passed at the first iteration, so no recovery contribution from the loop was observed.",
+   "The rollout model field matched the requested model in all 6 runs, with no fallback."
+  ],
+  "ja": [
+   "gpt-6-sol: 3 runともiteration 1で完走し、セッション時間は4分45秒-5分12秒、コミット3回とばらつきが小さかった。",
+   "gpt-6-luna: 3 runともiteration 1で完走した。luna-en-1は約10分・コミット8回・input累計4.0Mで最長、luna-en-2・3はsolに近い範囲だった。",
+   "6 runすべてが最初のiterationで合格したため、ループの復旧寄与は観測されなかった。",
+   "rolloutのmodelフィールドは6 runすべてで要求モデルと一致し、fallbackはなかった。"
+  ],
+  "zh": [
+   "gpt-6-sol：3 个 run 均在 iteration 1 完成，会话时间 4 分 45 秒-5 分 12 秒，提交均为 3 次，离散度小。",
+   "gpt-6-luna：3 个 run 均在 iteration 1 完成。luna-en-1 最长（约 10 分钟、8 次提交、input 累计 4.0M），luna-en-2·3 与 sol 接近。",
+   "6 个 run 均在第一个 iteration 通过，未观察到循环的恢复贡献。",
+   "6 个 run 的 rollout model 字段均与请求模型一致，无 fallback。"
+  ]
+ }
+}

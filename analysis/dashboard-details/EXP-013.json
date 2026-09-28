@@ -1,0 +1,26 @@
+{
+  "exp": "EXP-013",
+  "date": "2026-08-03",
+  "report": "experiments/013-qwen38max-direct/report.md",
+  "runs": {
+    "qwen-1": {"iter": 1, "commits": 4}
+  },
+  "conditions": {
+    "ko": [["에이전트", "Claude Code (`claude -p`), 버전은 보고서에 기록 없음"], ["연결", "DashScope Anthropic 호환 엔드포인트 직결 (`ANTHROPIC_BASE_URL=https://dashscope-intl.aliyuncs.com/apps/anthropic`, ccr 없음)"], ["모델 ID", "qwen3.8-max (haiku 대체 모델도 동일 지정)"], ["thinking", "기본값 무지정 (엔드포인트 기본 동작, 기본 활성)"], ["격리", "전용 `CLAUDE_CONFIG_DIR` (온보딩 우회 1줄 config만)"], ["상한", "30 iteration"], ["프롬프트", "EXP-010 정본 byte-identical, n=1"]],
+    "en": [["Agent", "Claude Code (`claude -p`), version not recorded in the report"], ["Connection", "Direct to DashScope's Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL=https://dashscope-intl.aliyuncs.com/apps/anthropic`, no ccr)"], ["Model ID", "qwen3.8-max (haiku substitute model set to the same)"], ["Thinking", "default, unspecified (endpoint default behaviour, active by default)"], ["Isolation", "dedicated `CLAUDE_CONFIG_DIR` (one-line onboarding-bypass config only)"], ["Cap", "30 iterations"], ["Prompt", "EXP-010 canonical, byte-identical, n=1"]],
+    "ja": [["エージェント", "Claude Code（`claude -p`）、バージョンは報告書に記録なし"], ["接続", "DashScopeのAnthropic互換エンドポイントに直結（`ANTHROPIC_BASE_URL=https://dashscope-intl.aliyuncs.com/apps/anthropic`、ccrなし）"], ["モデルID", "qwen3.8-max（haiku代替モデルも同一指定）"], ["thinking", "デフォルト・無指定（エンドポイントの既定動作、既定で有効）"], ["隔離", "専用`CLAUDE_CONFIG_DIR`（オンボーディング回避の1行configのみ）"], ["上限", "30 iteration"], ["プロンプト", "EXP-010正本をbyte-identicalで使用、n=1"]],
+    "zh": [["代理", "Claude Code（`claude -p`），报告中未记录版本"], ["连接", "直连 DashScope 的 Anthropic 兼容端点（`ANTHROPIC_BASE_URL=https://dashscope-intl.aliyuncs.com/apps/anthropic`，无 ccr）"], ["模型 ID", "qwen3.8-max（haiku 替代模型也设为同一模型）"], ["thinking", "默认值，未指定（端点默认行为，默认启用）"], ["隔离", "专用 `CLAUDE_CONFIG_DIR`（仅 1 行跳过引导的 config）"], ["上限", "30 iteration"], ["提示", "EXP-010 标准提示，byte-identical，n=1"]]
+  },
+  "deviations": {
+    "ko": ["기록된 편차 없음. 게이트 기각 0회, 허위 신고 0회, 개입 0회, 하네스 인프라 복구 0건, 직결 스택 트러블슈팅 0건.", "출시 당일(2026-08-03) 모델이라 서빙 품질이 안정화 이후와 다를 수 있다.", "EXP-012(ccr 경유 gpt-5.6-sol)와 모델이 달라 직결 대 ccr 효과와 모델 효과가 교락한다."],
+    "en": ["No recorded deviations: 0 gate rejections, 0 false claims, 0 interventions, 0 harness recoveries, 0 troubleshooting steps on the direct stack.", "The model was released that day (2026-08-03), so serving quality may differ once stabilised.", "The model differs from EXP-012 (gpt-5.6-sol via ccr), so the direct-versus-ccr effect is confounded with the model effect."],
+    "ja": ["記録された逸脱なし。ゲート却下0回、虚偽申告0回、介入0回、ハーネス復旧0件、直結スタックのトラブルシューティング0件。", "リリース当日（2026-08-03）のモデルであり、安定後とサービング品質が異なる可能性がある。", "EXP-012（ccr経由gpt-5.6-sol）とモデルが異なるため、直結対ccrの効果とモデル効果が交絡する。"],
+    "zh": ["无记录的偏差：门控驳回 0 次、虚假申报 0 次、干预 0 次、框架恢复 0 次、直连栈排障 0 次。", "该模型于当天（2026-08-03）发布，稳定后的服务质量可能不同。", "模型与 EXP-012（经 ccr 的 gpt-5.6-sol）不同，直连与 ccr 的效应同模型效应混杂。"]
+  },
+  "behavior": {
+    "ko": ["TypeScript + Fastify + Prisma + SQLite를 선택했다.", "커밋 4회(공식 hurl vendoring, 스캐폴드, 전체 구현, 완료 마킹). 공식 스위트를 스스로 vendoring해 자체 검증한 뒤 `.ralph-done`을 신고했다.", "assistant 39 messages, 15분 5초, output 34.6K. cache_read 2.13M으로 직결 경유에서도 context caching이 적중했다."],
+    "en": ["Chose TypeScript + Fastify + Prisma + SQLite.", "4 commits (official hurl vendoring, scaffold, full implementation, completion marking). It vendored the official suite itself, self-verified, then claimed `.ralph-done`.", "39 assistant messages, 15 min 5 s, output 34.6K. cache_read of 2.13M shows context caching hit even over the direct connection."],
+    "ja": ["TypeScript + Fastify + Prisma + SQLiteを選択した。", "コミット4回（公式hurlのvendoring、スキャフォールド、全体実装、完了マーキング）。公式スイートを自らvendoringして自己検証した後に`.ralph-done`を申告した。", "assistant 39 messages、15分5秒、output 34.6K。cache_read 2.13Mで、直結経由でもcontext cachingがヒットした。"],
+    "zh": ["选择了 TypeScript + Fastify + Prisma + SQLite。", "提交 4 次（官方 hurl vendoring、脚手架、完整实现、完成标记）。自行 vendoring 官方套件并自我验证后申报 `.ralph-done`。", "assistant 39 条消息，15 分 5 秒，output 34.6K。cache_read 为 2.13M，表明直连下上下文缓存同样命中。"]
+  }
+}

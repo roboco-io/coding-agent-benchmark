@@ -1,0 +1,257 @@
+{
+ "exp": "EXP-025",
+ "date": "2026-09-21",
+ "report": "experiments/025-deepseek-direct/report.md",
+ "runs": {
+  "flash-en-1": {
+   "iter": 1,
+   "commits": 5
+  },
+  "flash-en-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "flash-en-3": {
+   "iter": 1,
+   "commits": 3
+  },
+  "flash-ko-1": {
+   "iter": 1,
+   "commits": 6
+  },
+  "flash-ko-2": {
+   "iter": 1,
+   "commits": 7
+  },
+  "flash-ko-3": {
+   "iter": 1,
+   "commits": 4
+  },
+  "pro-en-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "pro-en-2": {
+   "iter": 1,
+   "commits": 3
+  },
+  "pro-en-3": {
+   "iter": 1,
+   "commits": 5
+  },
+  "pro-ko-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "pro-ko-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "pro-ko-3": {
+   "iter": 1,
+   "commits": 4
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Claude Code 2.1.273 (`claude -p --dangerously-skip-permissions`)"
+   ],
+   [
+    "연결",
+    "DeepSeek Anthropic 호환 엔드포인트 직결 (`https://api.deepseek.com/anthropic`, Bearer)"
+   ],
+   [
+    "모델 ID",
+    "Flash: `deepseek-flash` (DeepSeek-V4.1-Flash) · Pro: `deepseek-v4-pro` (DeepSeek-V4-Pro-0813)"
+   ],
+   [
+    "thinking",
+    "기본 ON (effort 기본 high)"
+   ],
+   [
+    "격리",
+    "전용 CLAUDE_CONFIG_DIR·`env -u ANTHROPIC_API_KEY` (글로벌 CLAUDE.md·스킬·MCP 노출 없음)"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간"
+   ],
+   [
+    "프롬프트",
+    "EN 정본·KO 정본, 모델별 각 n=3, flash-en → pro-en → flash-ko → pro-ko 교차 순차"
+   ],
+   [
+    "환경 변수",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`. DeepSeek 공식 권장 설정(`[1m]` 접미사·effort max·auto-compact 창)은 적용하지 않음"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Claude Code 2.1.273 (`claude -p --dangerously-skip-permissions`)"
+   ],
+   [
+    "Connection",
+    "Direct to DeepSeek's Anthropic-compatible endpoint (`https://api.deepseek.com/anthropic`, Bearer)"
+   ],
+   [
+    "Model ID",
+    "Flash: `deepseek-flash` (DeepSeek-V4.1-Flash) · Pro: `deepseek-v4-pro` (DeepSeek-V4-Pro-0813)"
+   ],
+   [
+    "Thinking",
+    "on by default (default effort high)"
+   ],
+   [
+    "Isolation",
+    "dedicated CLAUDE_CONFIG_DIR, `env -u ANTHROPIC_API_KEY` (no global CLAUDE.md, skills or MCP exposed)"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run"
+   ],
+   [
+    "Prompt",
+    "canonical EN and KO, n=3 per model, interleaved flash-en → pro-en → flash-ko → pro-ko"
+   ],
+   [
+    "Env var",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`. DeepSeek's officially recommended settings (`[1m]` suffix, effort max, auto-compact window) were not applied"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Claude Code 2.1.273（`claude -p --dangerously-skip-permissions`）"
+   ],
+   [
+    "接続",
+    "DeepSeekのAnthropic互換エンドポイントに直結（`https://api.deepseek.com/anthropic`、Bearer）"
+   ],
+   [
+    "モデルID",
+    "Flash: `deepseek-flash`（DeepSeek-V4.1-Flash）・Pro: `deepseek-v4-pro`（DeepSeek-V4-Pro-0813）"
+   ],
+   [
+    "thinking",
+    "デフォルトON（effortデフォルトhigh）"
+   ],
+   [
+    "隔離",
+    "専用CLAUDE_CONFIG_DIR・`env -u ANTHROPIC_API_KEY`（グローバルCLAUDE.md・スキル・MCPの露出なし）"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間"
+   ],
+   [
+    "プロンプト",
+    "正本EN・KO、モデルごとにn=3、flash-en → pro-en → flash-ko → pro-koの交互順次"
+   ],
+   [
+    "環境変数",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`。DeepSeek公式推奨設定（`[1m]`接尾辞・effort max・auto-compactウィンドウ）は適用していない"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Claude Code 2.1.273（`claude -p --dangerously-skip-permissions`）"
+   ],
+   [
+    "连接",
+    "直连 DeepSeek 的 Anthropic 兼容端点（`https://api.deepseek.com/anthropic`，Bearer）"
+   ],
+   [
+    "模型 ID",
+    "Flash：`deepseek-flash`（DeepSeek-V4.1-Flash）· Pro：`deepseek-v4-pro`（DeepSeek-V4-Pro-0813）"
+   ],
+   [
+    "thinking",
+    "默认开启（默认 effort 为 high）"
+   ],
+   [
+    "隔离",
+    "专用 CLAUDE_CONFIG_DIR·`env -u ANTHROPIC_API_KEY`（未暴露全局 CLAUDE.md·技能·MCP）"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时"
+   ],
+   [
+    "提示",
+    "标准 EN·KO，每个模型各 n=3，按 flash-en → pro-en → flash-ko → pro-ko 交替顺序执行"
+   ],
+   [
+    "环境变量",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`。未应用 DeepSeek 官方推荐设置（`[1m]` 后缀·effort max·auto-compact 窗口）"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류·제공자 5xx·429·스톨 없음. 12 run 전부 iteration 1 완주.",
+   "DeepSeek 공식 Claude Code 권장 설정(`[1m]` 접미사, effort max, auto-compact 창)을 기존 직결 하네스와의 동등성을 위해 적용하지 않았다(이탈로 기록).",
+   "Pro는 08-13 빌드, Flash는 09-10 빌드로 같은 제공자 안에서도 세대가 다르다. 기존 직결 3사(2026-08, CLI 구버전)와는 시점·CLI 버전이 달라 병치는 방향성만 의미가 있다.",
+   "비용은 공개 단가(2026-09-21 피크) 환산 추정이며 DeepSeek가 cache_creation을 계상하지 않아 캐시 쓰기 요금을 0으로 가정했다(과소 추정 가능). 실제 청구액은 미측정.",
+   "응답 model 필드는 flash 1,054건·pro 660건 전수가 요청 ID와 일치해 fallback·라우팅 변경은 없었다."
+  ],
+  "en": [
+   "No gate rejections, reruns, holds, provider 5xx/429 or stalls. All 12 runs completed in iteration 1.",
+   "DeepSeek's officially recommended Claude Code settings (`[1m]` suffix, effort max, auto-compact window) were not applied, to keep parity with the existing direct-connection harness (recorded as a deviation).",
+   "Pro is the 08-13 build and Flash the 09-10 build, so the generations differ even within one provider. Timing and CLI version differ from the earlier three direct-connection providers (2026-08, older CLI), so the comparison is directional only.",
+   "Cost is an estimate from public prices (2026-09-21 peak); DeepSeek does not report cache_creation, so cache-write cost was assumed to be 0 (possible underestimate). Actual billing was not measured.",
+   "The response model field matched the requested ID in all 1,054 Flash and 660 Pro messages, so no fallback or routing change occurred."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留・プロバイダの5xx/429・スタールなし。12 runすべてがiteration 1で完走。",
+   "DeepSeek公式のClaude Code推奨設定（`[1m]`接尾辞、effort max、auto-compactウィンドウ）は、既存の直結ハーネスとの同等性のため適用しなかった（逸脱として記録）。",
+   "Proは08-13ビルド、Flashは09-10ビルドで、同一プロバイダ内でも世代が異なる。既存の直結3社（2026-08、CLI旧版）とは時点・CLIバージョンが異なるため、併記は方向性のみ意味を持つ。",
+   "コストは公開単価（2026-09-21ピーク）による換算推定で、DeepSeekがcache_creationを計上しないためキャッシュ書き込み料金は0と仮定した（過小推定の可能性）。実際の請求額は未測定。",
+   "応答modelフィールドはFlash 1,054件・Pro 660件の全件が要求IDと一致し、fallbackやルーティング変更はなかった。"
+  ],
+  "zh": [
+   "无门控驳回、重跑、保留、提供方 5xx/429 或停滞。12 个 run 全部在 iteration 1 完成。",
+   "为与现有直连框架保持一致，未应用 DeepSeek 官方推荐的 Claude Code 设置（`[1m]` 后缀、effort max、auto-compact 窗口）（记为偏离）。",
+   "Pro 为 08-13 版本，Flash 为 09-10 版本，同一提供方内代际也不同。与此前三家直连（2026-08，旧版 CLI）的时点和 CLI 版本不同，并列比较仅具方向性意义。",
+   "成本是按公开单价（2026-09-21 高峰）折算的估计值；DeepSeek 不计 cache_creation，缓存写入费用按 0 假设（可能低估）。实际账单未测量。",
+   "响应 model 字段在 Flash 的 1,054 条、Pro 的 660 条中全部与请求 ID 一致，没有 fallback 或路由变更。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "Flash: EN 3 run 합계 Read 29·Write 70·Edit 37로 Read/Write/Edit를 고루 사용했다.",
+   "Pro: Bash와 Write 위주로 Read 8·Edit 8회에 그쳤다.",
+   "두 모델 모두 thinking 블록이 모든 assistant 메시지에 있었고 서브에이전트 호출은 없었다.",
+   "Flash: 세션 4.2-8.4분(EN 4.6-6.0분), output 38.9-58.9K, 커밋 3-7회, run당 환산 약 $0.1.",
+   "Pro: 세션 12.1-15.8분, output 59.6-69.6K, 커밋 3-5회, run당 환산 약 $0.5.",
+   "KO 조건에서는 Flash·Pro 모두 커밋 메시지·README가 전부 한국어였다(flash-ko-3·pro-ko-3는 `feat:/docs:/test:` 접두어에 한국어 본문)."
+  ],
+  "en": [
+   "Flash: across the 3 EN runs it used Read 29, Write 70 and Edit 37, a balanced use of Read/Write/Edit.",
+   "Pro: mostly Bash and Write, with only 8 Read and 8 Edit calls.",
+   "In both models every assistant message carried a thinking block, and no subagents were called.",
+   "Flash: sessions 4.2-8.4 min (EN 4.6-6.0 min), output 38.9-58.9K, 3-7 commits, converted cost about $0.1 per run.",
+   "Pro: sessions 12.1-15.8 min, output 59.6-69.6K, 3-5 commits, converted cost about $0.5 per run.",
+   "In the KO condition both Flash and Pro wrote commit messages and README entirely in Korean (flash-ko-3 and pro-ko-3 used `feat:/docs:/test:` prefixes with Korean bodies)."
+  ],
+  "ja": [
+   "Flash: EN 3 run合計でRead 29・Write 70・Edit 37と、Read/Write/Editをバランスよく使った。",
+   "Pro: BashとWrite中心で、ReadとEditは各8回にとどまった。",
+   "両モデルともすべてのassistantメッセージにthinkingブロックがあり、サブエージェント呼び出しはなかった。",
+   "Flash: セッション4.2-8.4分（EN 4.6-6.0分）、output 38.9-58.9K、コミット3-7回、runあたり換算約$0.1。",
+   "Pro: セッション12.1-15.8分、output 59.6-69.6K、コミット3-5回、runあたり換算約$0.5。",
+   "KO条件ではFlash・Proともコミットメッセージ・READMEがすべて韓国語だった（flash-ko-3・pro-ko-3は`feat:/docs:/test:`接頭辞に韓国語本文）。"
+  ],
+  "zh": [
+   "Flash：EN 的 3 个 run 合计 Read 29·Write 70·Edit 37，均衡使用 Read/Write/Edit。",
+   "Pro：以 Bash 和 Write 为主，Read 和 Edit 各仅 8 次。",
+   "两个模型的每条 assistant 消息都带有 thinking 块，且没有调用子代理。",
+   "Flash：会话 4.2-8.4 分钟（EN 4.6-6.0 分钟），output 38.9-58.9K，提交 3-7 次，每 run 折算约 $0.1。",
+   "Pro：会话 12.1-15.8 分钟，output 59.6-69.6K，提交 3-5 次，每 run 折算约 $0.5。",
+   "KO 条件下 Flash 和 Pro 的提交信息与 README 全部为韩语（flash-ko-3 和 pro-ko-3 使用 `feat:/docs:/test:` 前缀加韩语正文）。"
+  ]
+ }
+}

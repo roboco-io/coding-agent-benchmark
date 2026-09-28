@@ -1,0 +1,28 @@
+{
+  "exp": "EXP-031",
+  "date": "2026-09-29",
+  "report": "experiments/031-sonnet55-ralph/report.md",
+  "runs": {
+    "en-1": {"iter": 1, "commits": 2}, "ko-1": {"iter": 1, "commits": 4},
+    "en-2": {"iter": 1, "commits": 2}, "ko-2": {"iter": 1, "commits": 2},
+    "en-3": {"iter": 1, "commits": 3}, "ko-3": {"iter": 1, "commits": 3}
+  },
+  "conditions": {
+    "ko": [["에이전트", "Claude Code 2.1.284 (`claude -p --dangerously-skip-permissions`)"], ["연결", "Anthropic 네이티브, 구독 OAuth"], ["모델 ID", "claude-sonnet-5-5"], ["thinking", "기본값"], ["격리", "비격리 (사용자 글로벌 CLAUDE.md·스킬·MCP 노출)"], ["상한", "10 iteration · run당 4시간"], ["프롬프트", "정본 EN·KO, 각 n=3, EN/KO 교차 순차 실행"], ["포트", "하네스가 빈 포트(40000–49999)를 PORT로 주입 (이 실험부터)"]],
+    "en": [["Agent", "Claude Code 2.1.284 (`claude -p --dangerously-skip-permissions`)"], ["Connection", "Anthropic native, subscription OAuth"], ["Model ID", "claude-sonnet-5-5"], ["Thinking", "default"], ["Isolation", "not isolated (user's global CLAUDE.md, skills and MCP exposed)"], ["Cap", "10 iterations · 4 h per run"], ["Prompt", "canonical EN and KO, n=3 each, EN/KO interleaved sequentially"], ["Port", "harness injects a free port (40000–49999) as PORT (from this experiment)"]],
+    "ja": [["エージェント", "Claude Code 2.1.284（`claude -p --dangerously-skip-permissions`）"], ["接続", "Anthropicネイティブ、サブスクリプションOAuth"], ["モデルID", "claude-sonnet-5-5"], ["thinking", "デフォルト"], ["隔離", "非隔離（ユーザーのグローバルCLAUDE.md・スキル・MCPが露出）"], ["上限", "10 iteration・runあたり4時間"], ["プロンプト", "正本EN・KO、各n=3、EN/KO交互に順次実行"], ["ポート", "ハーネスが空きポート（40000–49999）をPORTで注入（この実験から）"]],
+    "zh": [["代理", "Claude Code 2.1.284（`claude -p --dangerously-skip-permissions`）"], ["连接", "Anthropic 原生，订阅 OAuth"], ["模型 ID", "claude-sonnet-5-5"], ["thinking", "默认值"], ["隔离", "未隔离（暴露用户全局 CLAUDE.md·技能·MCP）"], ["上限", "10 iteration · 每 run 4 小时"], ["提示", "标准 EN·KO，各 n=3，EN/KO 交替顺序执行"], ["端口", "框架以 PORT 注入空闲端口（40000–49999）（自本实验起）"]]
+  },
+  "deviations": {
+    "ko": ["게이트 반려·재실행·보류 없음.", "EN 3 run의 에이전트는 주입된 PORT를 API_PORT로 바꿔 무시하고 8000을 썼다. 채점기가 리포 소속 포트를 자동 탐지하므로 판정 영향 없음.", "측정 날짜·CLI 버전·포트 주입이 이전 네이티브 실험과 달라 시간·토큰 비교에 교락이 있다."],
+    "en": ["No gate rejections, reruns or holds.", "In the 3 EN runs the agent renamed the injected PORT to API_PORT and used 8000 instead. The grader auto-detects the repo's port, so the verdict is unaffected.", "Date, CLI version and port injection differ from earlier native experiments, so time and token comparisons are confounded."],
+    "ja": ["ゲート却下・再実行・保留なし。", "EN 3 runのエージェントは注入されたPORTをAPI_PORTに変えて無視し、8000を使った。採点器がリポ所属のポートを自動検出するため判定への影響なし。", "測定日・CLIバージョン・ポート注入が以前のネイティブ実験と異なるため、時間・トークンの比較には交絡がある。"],
+    "zh": ["无门控驳回、重跑或保留。", "EN 的 3 个 run 中代理把注入的 PORT 改名为 API_PORT 而忽略它，改用 8000。评分器会自动检测仓库所属端口，因此不影响判定。", "测量日期、CLI 版本和端口注入与此前的原生实验不同，时间与 token 的比较存在混杂。"]
+  },
+  "behavior": {
+    "ko": ["6 run 모두 Read/Write/Edit 없이 Bash(heredoc·python 치환)만으로 파일을 작성·수정했다.", "6 run 모두 Fastify + Prisma + SQLite를 선택했다.", "공식 리포 clone → Hurl 요약 → 한 번에 대량 작성 → 실행 검증 → 완료 선언의 짧은 경로(API 호출 16–24회).", "서브에이전트·MCP·Skill 호출 0건."],
+    "en": ["All 6 runs wrote and edited files with Bash alone (heredocs, python substitutions), without Read/Write/Edit.", "All 6 runs chose Fastify + Prisma + SQLite.", "Short path: clone the official repo → summarise the Hurl files → write in bulk → verify by running → declare done (16–24 API calls).", "Zero subagent, MCP or Skill calls."],
+    "ja": ["6 runすべてがRead/Write/EditなしでBash（heredoc・pythonによる置換）だけでファイルを作成・修正した。", "6 runすべてがFastify + Prisma + SQLiteを選択した。", "公式リポをclone → Hurlを要約 → 一度に大量に作成 → 実行して検証 → 完了宣言という短い経路（API呼び出し16–24回）。", "サブエージェント・MCP・Skillの呼び出しは0件。"],
+    "zh": ["6 个 run 都未使用 Read/Write/Edit，仅用 Bash（heredoc·python 替换）编写和修改文件。", "6 个 run 都选择了 Fastify + Prisma + SQLite。", "路径很短：克隆官方仓库 → 概括 Hurl 文件 → 一次性大量编写 → 运行验证 → 宣告完成（API 调用 16–24 次）。", "子代理·MCP·Skill 调用为 0。"]
+  }
+}

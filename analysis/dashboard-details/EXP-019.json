@@ -1,0 +1,253 @@
+{
+  "exp": "EXP-019",
+  "date": "2026-08-06",
+  "report": "experiments/019-ko-native-codex/report.md",
+  "runs": {
+    "48ko-1": {
+      "iter": 1,
+      "commits": 1
+    },
+    "48ko-2": {
+      "iter": 1,
+      "commits": 1
+    },
+    "48ko-3": {
+      "iter": 1,
+      "commits": 1
+    },
+    "5ko-1": {
+      "iter": 1,
+      "commits": 3
+    },
+    "5ko-2": {
+      "iter": 1,
+      "commits": 5
+    },
+    "5ko-3": {
+      "iter": 1,
+      "commits": 5
+    },
+    "solko-1": {
+      "iter": 1,
+      "commits": 4
+    },
+    "solko-2": {
+      "iter": 1,
+      "commits": 6
+    },
+    "solko-3": {
+      "iter": 1,
+      "commits": 1
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "Opus 4.8·Opus 5: Claude Code (`claude -p --dangerously-skip-permissions`) / gpt-5.6-sol: Codex CLI (`codex exec`)"
+      ],
+      [
+        "연결",
+        "Claude Code는 Anthropic 네이티브, Codex는 Codex CLI"
+      ],
+      [
+        "모델 ID",
+        "claude-opus-4-8, claude-opus-5, gpt-5.6-sol"
+      ],
+      [
+        "thinking",
+        "gpt-5.6-sol은 effort medium, Opus는 보고서에 명시 없음"
+      ],
+      [
+        "격리",
+        "Opus는 비격리(기본 $HOME/.claude, OAuth 키체인 제약), Codex는 전용 CODEX_HOME"
+      ],
+      [
+        "상한",
+        "Opus 10 iteration, Codex 30 iteration"
+      ],
+      [
+        "프롬프트",
+        "EXP-017 한국어 정본 byte-identical (md5 `fa75275f...`), 각 n=3"
+      ],
+      [
+        "실행",
+        "순차·교차 9 run (48ko, 5ko, solko 반복)"
+      ],
+      [
+        "게이트",
+        "measure v4"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "Opus 4.8 and Opus 5: Claude Code (`claude -p --dangerously-skip-permissions`) / gpt-5.6-sol: Codex CLI (`codex exec`)"
+      ],
+      [
+        "Connection",
+        "Claude Code Anthropic native; Codex via Codex CLI"
+      ],
+      [
+        "Model ID",
+        "claude-opus-4-8, claude-opus-5, gpt-5.6-sol"
+      ],
+      [
+        "Thinking",
+        "gpt-5.6-sol effort medium; not stated in the report for Opus"
+      ],
+      [
+        "Isolation",
+        "Opus not isolated (default $HOME/.claude, OAuth keychain constraint); Codex uses a dedicated CODEX_HOME"
+      ],
+      [
+        "Cap",
+        "Opus 10 iterations, Codex 30 iterations"
+      ],
+      [
+        "Prompt",
+        "EXP-017 Korean canonical, byte-identical (md5 `fa75275f...`), n=3 each"
+      ],
+      [
+        "Execution",
+        "sequential, interleaved 9 runs (48ko, 5ko, solko repeated)"
+      ],
+      [
+        "Gate",
+        "measure v4"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "Opus 4.8・Opus 5：Claude Code（`claude -p --dangerously-skip-permissions`）/ gpt-5.6-sol：Codex CLI（`codex exec`）"
+      ],
+      [
+        "接続",
+        "Claude CodeはAnthropicネイティブ、CodexはCodex CLI"
+      ],
+      [
+        "モデルID",
+        "claude-opus-4-8, claude-opus-5, gpt-5.6-sol"
+      ],
+      [
+        "thinking",
+        "gpt-5.6-solはeffort medium、Opusは報告書に明記なし"
+      ],
+      [
+        "隔離",
+        "Opusは非隔離（デフォルト$HOME/.claude、OAuthキーチェーン制約）、Codexは専用CODEX_HOME"
+      ],
+      [
+        "上限",
+        "Opus 10 iteration、Codex 30 iteration"
+      ],
+      [
+        "プロンプト",
+        "EXP-017韓国語正本 byte-identical（md5 `fa75275f...`）、各n=3"
+      ],
+      [
+        "実行",
+        "順次・交互9 run（48ko, 5ko, solkoを反復）"
+      ],
+      [
+        "ゲート",
+        "measure v4"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "Opus 4.8·Opus 5：Claude Code（`claude -p --dangerously-skip-permissions`）/ gpt-5.6-sol：Codex CLI（`codex exec`）"
+      ],
+      [
+        "连接",
+        "Claude Code 为 Anthropic 原生，Codex 为 Codex CLI"
+      ],
+      [
+        "模型 ID",
+        "claude-opus-4-8, claude-opus-5, gpt-5.6-sol"
+      ],
+      [
+        "thinking",
+        "gpt-5.6-sol 为 effort medium，Opus 报告中未注明"
+      ],
+      [
+        "隔离",
+        "Opus 未隔离（默认 $HOME/.claude，OAuth 钥匙串限制），Codex 使用专用 CODEX_HOME"
+      ],
+      [
+        "上限",
+        "Opus 10 iteration，Codex 30 iteration"
+      ],
+      [
+        "提示",
+        "EXP-017 韩语标准 byte-identical（md5 `fa75275f...`），各 n=3"
+      ],
+      [
+        "执行",
+        "顺序·交替 9 个 run（48ko、5ko、solko 重复）"
+      ],
+      [
+        "门控",
+        "measure v4"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 오검·허위 신고·개입은 0건이고 9 run 모두 measure v4 2회 재검증이 13/13·154/154로 일치했다.",
+      "Opus 4.8·Opus 5: 비격리(기본 $HOME/.claude, OAuth 제약)로 실행해 사용자 글로벌 설정이 노출됐다. EXP-009/010 EN 기준선과 같은 조건이라 EN/KO 비교는 정합하나, 격리 조건(직결·Codex)과의 교차 비교에는 명시가 필요하다.",
+      "gpt-5.6-sol: Phase 0 한국어 스모크의 1차 시도가 외부 중단되어 재시도로 성공했다. 스모크 세션은 본 계측에서 제외했다.",
+      "EN 기준선과 시점이 Opus 12일·Codex 2-3일 차이 나 시간 차이의 원인은 분해할 수 없다. Opus는 세션 jsonl, Codex는 rollout 누계라 output을 조건 간 직접 비교할 수 없다."
+    ],
+    "en": [
+      "There were 0 false gate rejections, false claims or interventions, and re-verification with measure v4 twice matched 13/13 and 154/154 for all 9 runs.",
+      "Opus 4.8 and Opus 5: run not isolated (default $HOME/.claude, OAuth constraint), so the user's global settings were exposed. The condition matches the EXP-009/010 EN baselines so the EN/KO comparison is consistent, but cross-comparison with isolated conditions (direct stacks, Codex) needs that stated.",
+      "gpt-5.6-sol: the first attempt of the Phase 0 Korean smoke test was interrupted externally and succeeded on retry. The smoke session was excluded from measurement.",
+      "The EN baselines are 12 days (Opus) and 2-3 days (Codex) apart, so the cause of time differences cannot be decomposed. Opus is measured by session jsonl and Codex by rollout totals, so output must not be compared directly across conditions."
+    ],
+    "ja": [
+      "ゲート誤検出・虚偽申告・介入は0件で、9 runすべてでmeasure v4による2回の再検証が13/13・154/154で一致した。",
+      "Opus 4.8・Opus 5：非隔離（デフォルト$HOME/.claude、OAuth制約）で実行したため、ユーザーのグローバル設定が露出した。EXP-009/010のEN基準線と同条件なのでEN/KO比較は整合するが、隔離条件（直結・Codex）との交差比較には明記が必要。",
+      "gpt-5.6-sol：Phase 0の韓国語スモークの1回目が外部要因で中断され、再試行で成功した。スモークセッションは本計測から除外した。",
+      "EN基準線とは時点がOpus 12日・Codex 2-3日異なり、時間差の原因は分解できない。Opusはセッションjsonl、Codexはrollout累計のため、条件間のoutput直接比較は不可。"
+    ],
+    "zh": [
+      "误判、虚假申报、干预均为 0 次，9 个 run 用 measure v4 两次复验均与 13/13·154/154 一致。",
+      "Opus 4.8·Opus 5：未隔离运行（默认 $HOME/.claude，OAuth 限制），用户全局设置被暴露。该条件与 EXP-009/010 的 EN 基线相同，因此 EN/KO 比较是一致的，但与隔离条件（直连·Codex）交叉比较时需注明。",
+      "gpt-5.6-sol：Phase 0 韩语冒烟测试的第一次尝试被外部中断，重试成功。冒烟会话已从正式计量中排除。",
+      "与 EN 基线的时点相差 Opus 12 天、Codex 2-3 天，无法分解时间差异的原因。Opus 按会话 jsonl、Codex 按 rollout 累计计量，不能跨条件直接比较 output。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "9 run 전부 커밋 메시지와 README를 한국어로 작성했고, 영어권 모델인 gpt-5.6-sol도 예외 없이 한국어를 준수했다. 언어 이탈은 0건이다.",
+      "Opus 4.8: 3 run 모두 커밋 1개로 몰아서 커밋했다(7.1-8.5분, output 26.5-31.7K).",
+      "Opus 5: 커밋 3-5개로 잘게 나눴고 output이 39.1-48.7K로 가장 컸다(9.9-11.2분). 5ko-3은 커밋 접두어까지 한국어(`완료:`·`문서:`·`기능:`)였다.",
+      "gpt-5.6-sol: 커밋 1-6개, 6.9-8.7분, output 13.7-17.3K(rollout 누계)였다.",
+      "세 조건 모두 시간·커밋·output이 EN 분포와 겹치거나 그 안쪽이라, 보고서는 세대별 프로파일이 언어와 무관하게 유지된다고 해석했다."
+    ],
+    "en": [
+      "All 9 runs wrote commit messages and README in Korean; gpt-5.6-sol, an English-language-centered model, also complied without exception. There were 0 language deviations.",
+      "Opus 4.8: all 3 runs bundled everything into a single commit (7.1-8.5 min, output 26.5-31.7K).",
+      "Opus 5: split work into 3-5 commits and had the largest output at 39.1-48.7K (9.9-11.2 min). 5ko-3 used Korean even for commit prefixes (`완료:`, `문서:`, `기능:`).",
+      "gpt-5.6-sol: 1-6 commits, 6.9-8.7 min, output 13.7-17.3K (rollout totals).",
+      "In all three conditions time, commits and output overlap or fall within the EN distribution, so the report interprets the per-generation profiles as holding regardless of language."
+    ],
+    "ja": [
+      "9 runすべてがコミットメッセージとREADMEを韓国語で作成し、英語圏モデルのgpt-5.6-solも例外なく韓国語を遵守した。言語逸脱は0件。",
+      "Opus 4.8：3 runすべてがコミット1つにまとめた（7.1-8.5分、output 26.5-31.7K）。",
+      "Opus 5：コミットを3-5個に細かく分け、outputが39.1-48.7Kと最大だった（9.9-11.2分）。5ko-3はコミットのプレフィックスまで韓国語（`완료:`・`문서:`・`기능:`）だった。",
+      "gpt-5.6-sol：コミット1-6個、6.9-8.7分、output 13.7-17.3K（rollout累計）。",
+      "3条件とも時間・コミット・outputがENの分布と重なるか内側にあるため、報告書は世代別プロファイルが言語と無関係に維持されると解釈した。"
+    ],
+    "zh": [
+      "9 个 run 的提交信息和 README 均使用韩语，以英语为主的 gpt-5.6-sol 也无例外地遵守，语言偏离为 0。",
+      "Opus 4.8：3 个 run 均把全部内容合并为 1 个提交（7.1-8.5 分钟，output 26.5-31.7K）。",
+      "Opus 5：拆成 3-5 个提交，output 最大，为 39.1-48.7K（9.9-11.2 分钟）。5ko-3 连提交前缀也用韩语（`완료:`·`문서:`·`기능:`）。",
+      "gpt-5.6-sol：1-6 个提交，6.9-8.7 分钟，output 13.7-17.3K（rollout 累计）。",
+      "三个条件的时间、提交、output 均与 EN 分布重叠或位于其内，因此报告解释为各代特征不受语言影响。"
+    ]
+  }
+}

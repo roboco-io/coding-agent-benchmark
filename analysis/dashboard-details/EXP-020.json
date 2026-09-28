@@ -1,0 +1,209 @@
+{
+ "exp": "EXP-020",
+ "date": "2026-08-19",
+ "report": "experiments/020-solar-pro4-direct/report.md",
+ "runs": {
+  "pro4-1": {
+   "iter": 12,
+   "commits": 4
+  },
+  "pro4-2": {
+   "iter": 2,
+   "commits": 1
+  },
+  "pro4-3": {
+   "iter": 1,
+   "commits": 1
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Claude Code (`claude -p`, 직결)"
+   ],
+   [
+    "연결",
+    "Upstage Anthropic 호환 엔드포인트 직결 (`https://api.upstage.ai`, Bearer)"
+   ],
+   [
+    "모델 ID",
+    "solar-pro4 (응답 모델 `solar-pro4-260806`)"
+   ],
+   [
+    "thinking",
+    "기본값"
+   ],
+   [
+    "격리",
+    "전용 CLAUDE_CONFIG_DIR·빈 git repo·`env -u ANTHROPIC_API_KEY`"
+   ],
+   [
+    "상한",
+    "30 iteration"
+   ],
+   [
+    "프롬프트",
+    "EN 정본, n=3 순차"
+   ],
+   [
+    "환경 변수",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` 추가 (미인식 모델 200k 창 강제 해제, Phase 0 사전 등록)"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Claude Code (`claude -p`, direct)"
+   ],
+   [
+    "Connection",
+    "Direct to Upstage's Anthropic-compatible endpoint (`https://api.upstage.ai`, Bearer)"
+   ],
+   [
+    "Model ID",
+    "solar-pro4 (response model `solar-pro4-260806`)"
+   ],
+   [
+    "Thinking",
+    "default"
+   ],
+   [
+    "Isolation",
+    "dedicated CLAUDE_CONFIG_DIR, empty git repo, `env -u ANTHROPIC_API_KEY`"
+   ],
+   [
+    "Cap",
+    "30 iterations"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3 sequential"
+   ],
+   [
+    "Env var",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` added (lifts the 200k-window enforcement for unrecognised models; pre-registered in Phase 0)"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Claude Code（`claude -p`、直結）"
+   ],
+   [
+    "接続",
+    "UpstageのAnthropic互換エンドポイントに直結（`https://api.upstage.ai`、Bearer）"
+   ],
+   [
+    "モデルID",
+    "solar-pro4（応答モデル `solar-pro4-260806`）"
+   ],
+   [
+    "thinking",
+    "デフォルト"
+   ],
+   [
+    "隔離",
+    "専用CLAUDE_CONFIG_DIR・空のgit repo・`env -u ANTHROPIC_API_KEY`"
+   ],
+   [
+    "上限",
+    "30 iteration"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3を順次実行"
+   ],
+   [
+    "環境変数",
+    "`CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` を追加（未認識モデルの200kウィンドウ強制を解除、Phase 0で事前登録）"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Claude Code（`claude -p`，直连）"
+   ],
+   [
+    "连接",
+    "直连 Upstage 的 Anthropic 兼容端点（`https://api.upstage.ai`，Bearer）"
+   ],
+   [
+    "模型 ID",
+    "solar-pro4（响应模型 `solar-pro4-260806`）"
+   ],
+   [
+    "thinking",
+    "默认值"
+   ],
+   [
+    "隔离",
+    "专用 CLAUDE_CONFIG_DIR·空 git repo·`env -u ANTHROPIC_API_KEY`"
+   ],
+   [
+    "上限",
+    "30 iteration"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3 顺序执行"
+   ],
+   [
+    "环境变量",
+    "新增 `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`（解除对未识别模型的 200k 窗口强制，Phase 0 预先登记）"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "pro4-1: 무관한 npm 패키지 `@hurl/cli`의 asdf shim이 진짜 Hurl 8.0.1을 PATH에서 가려, iter 3-11의 `.ralph-done` 신고 9건이 전부 `hurl 0,0`으로 부당 기각되었다(하네스 귀책). iter 12 진행 중 measure.sh에 `/opt/homebrew/bin/hurl` 절대 경로를 고정했고 모델 환경은 건드리지 않았다.",
+   "pro4-1의 유효 완주는 소급 재채점으로 iter 3(4:18:23)에 확정했다. 표의 완주 iteration 12는 실제 게이트 통과 시점이며, 오검 구간(iter 4-12)의 추가 커밋은 유효 산출물에 포함되지 않는다. 이는 루프가 iter 3에서 멈췄을 반사실이 아니다.",
+   "Phase 0에서 신버전 Claude Code의 미인식 모델 200k 창 강제를 확인하고, 동형성을 위해 env 1개를 추가해 재기동했다. 부분 산출물은 폐기했다.",
+   "전 run에서 cache_read/cache_creation이 0이다(엔드포인트가 prompt caching 미지원). 결과는 2026-08-19 시점 기록이며 제공자 종속이다."
+  ],
+  "en": [
+   "pro4-1: an unrelated npm package `@hurl/cli` created an asdf shim that hid the real Hurl 8.0.1 on PATH, so all 9 `.ralph-done` claims at iter 3-11 were wrongly rejected as `hurl 0,0` (harness fault). During iter 12 measure.sh was pinned to the absolute path `/opt/homebrew/bin/hurl`; the model's environment was left untouched.",
+   "The valid completion of pro4-1 was fixed at iter 3 (4:18:23) by retroactive re-grading. The iteration 12 in the table is when the gate actually passed; extra commits from the mis-rejected span (iter 4-12) are not part of the valid deliverable. This is not a counterfactual of the loop stopping at iter 3.",
+   "In Phase 0 the newer Claude Code was found to enforce a 200k window for unrecognised models; one env var was added for parity and the run was restarted. Partial output was discarded.",
+   "cache_read and cache_creation are 0 in every run (the endpoint does not support prompt caching). Results are a snapshot of 2026-08-19 and depend on the provider."
+  ],
+  "ja": [
+   "pro4-1: 無関係なnpmパッケージ `@hurl/cli` のasdf shimが本物のHurl 8.0.1をPATHから隠し、iter 3-11の `.ralph-done` 申告9件がすべて `hurl 0,0` として不当に却下された（ハーネス側の責任）。iter 12の実行中にmeasure.shへ `/opt/homebrew/bin/hurl` の絶対パスを固定し、モデル環境には触れていない。",
+   "pro4-1の有効完走は遡及再採点でiter 3（4:18:23）と確定した。表の完走iteration 12は実際にゲートを通過した時点で、誤検知区間（iter 4-12）の追加コミットは有効成果物に含まれない。ループがiter 3で止まった反事実ではない。",
+   "Phase 0で新バージョンのClaude Codeが未認識モデルに200kウィンドウを強制することを確認し、同形性のためenvを1つ追加して再起動した。部分成果物は破棄した。",
+   "全runでcache_read/cache_creationが0（エンドポイントがprompt cachingに未対応）。結果は2026-08-19時点の記録で、プロバイダに依存する。"
+  ],
+  "zh": [
+   "pro4-1: 无关的 npm 包 `@hurl/cli` 的 asdf shim 在 PATH 中遮住了真正的 Hurl 8.0.1，iter 3-11 的 9 次 `.ralph-done` 申报全部因 `hurl 0,0` 被错误驳回（框架方责任）。iter 12 进行中在 measure.sh 中固定了 `/opt/homebrew/bin/hurl` 绝对路径，未触碰模型环境。",
+   "pro4-1 的有效完成经追溯重评分确定为 iter 3（4:18:23）。表中的完成 iteration 12 是门控实际通过的时点，误判区间（iter 4-12）的额外提交不计入有效产物。这不是循环在 iter 3 停止的反事实。",
+   "Phase 0 中发现新版 Claude Code 对未识别模型强制 200k 窗口，为保持同构新增了 1 个环境变量并重新启动，丢弃了部分产物。",
+   "所有 run 的 cache_read/cache_creation 均为 0（端点不支持 prompt caching）。结果是 2026-08-19 时点的记录，取决于提供方。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 모두 tool call 형식 이탈·API 오류 0건이었다.",
+   "pro4-1 커밋 이력에는 uid 충돌·unique constraint 같은 실제 버그를 스스로 수정한 흔적이 있다.",
+   "pro4-1 세션 로그 분해: 평균 왕복 37초, 60초 초과 왕복 138회(합 190분), thinking이 산문 출력의 88%, 실효 출력 8.4 tok/s.",
+   "신고 iteration이 3(유효) → 2 → 1로 감소했으나 n=3이라 우연일 수 있다."
+  ],
+  "en": [
+   "No tool-call format deviations or API errors in any of the 3 runs.",
+   "The pro4-1 commit history shows the agent fixing real bugs itself, such as uid collisions and unique-constraint errors.",
+   "pro4-1 session-log breakdown: mean round trip 37 s, 138 round trips over 60 s (190 min in total), thinking is 88% of prose output, effective output 8.4 tok/s.",
+   "The completion iteration fell from 3 (valid) to 2 to 1, but with n=3 this may be chance."
+  ],
+  "ja": [
+   "3 runすべてでtool call形式の逸脱・APIエラーは0件。",
+   "pro4-1のコミット履歴には、uid衝突やunique constraintなど実際のバグを自力で修正した跡がある。",
+   "pro4-1のセッションログ分解: 平均往復37秒、60秒超の往復138回（合計190分）、thinkingが散文出力の88%、実効出力8.4 tok/s。",
+   "申告iterationは3（有効）→ 2 → 1と減少したが、n=3のため偶然の可能性がある。"
+  ],
+  "zh": [
+   "3 个 run 均无 tool call 格式偏离和 API 错误。",
+   "pro4-1 的提交历史显示代理自行修复了 uid 冲突、unique constraint 等真实缺陷。",
+   "pro4-1 会话日志分解：平均往返 37 秒，超过 60 秒的往返 138 次（合计 190 分钟），thinking 占散文输出的 88%，有效输出 8.4 tok/s。",
+   "申报 iteration 由 3（有效）降至 2 再降至 1，但 n=3，可能只是偶然。"
+  ]
+ }
+}

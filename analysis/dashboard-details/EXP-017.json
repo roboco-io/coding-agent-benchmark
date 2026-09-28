@@ -1,0 +1,237 @@
+{
+  "exp": "EXP-017",
+  "date": "2026-08-04",
+  "report": "experiments/017-ko-condition/report.md",
+  "runs": {
+    "qwen-ko-1": {
+      "iter": 1,
+      "commits": 8
+    },
+    "qwen-ko-2": {
+      "iter": 1,
+      "commits": 4
+    },
+    "qwen-ko-3": {
+      "iter": 1,
+      "commits": 5
+    },
+    "kimi-ko-1": {
+      "iter": 1,
+      "commits": 4
+    },
+    "kimi-ko-2": {
+      "iter": 1,
+      "commits": 5
+    },
+    "kimi-ko-3": {
+      "iter": 1,
+      "commits": 3
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "Claude Code (`claude -p`)"
+      ],
+      [
+        "연결",
+        "qwen3.8-max: DashScope 직결 (`dashscope-intl.aliyuncs.com/apps/anthropic`) / kimi-k3: Moonshot 직결 (`api.moonshot.ai/anthropic`)"
+      ],
+      [
+        "모델 ID",
+        "qwen3.8-max, kimi-k3 (SMALL_FAST·HAIKU도 동일 지정)"
+      ],
+      [
+        "thinking",
+        "기본값"
+      ],
+      [
+        "격리",
+        "전용 CLAUDE_CONFIG_DIR, 독립 빈 git 리포"
+      ],
+      [
+        "상한",
+        "30 iteration"
+      ],
+      [
+        "프롬프트",
+        "`PROMPT-ko.md` (EXP-010 EN 정본의 한국어 번역, 산출물 전체를 한국어로 지시), 각 n=3"
+      ],
+      [
+        "실행",
+        "순차·교차 (qwen-ko-1, kimi-ko-1, ..., kimi-ko-3)"
+      ],
+      [
+        "게이트",
+        "measure v4"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "Claude Code (`claude -p`)"
+      ],
+      [
+        "Connection",
+        "qwen3.8-max: DashScope direct (`dashscope-intl.aliyuncs.com/apps/anthropic`) / kimi-k3: Moonshot direct (`api.moonshot.ai/anthropic`)"
+      ],
+      [
+        "Model ID",
+        "qwen3.8-max, kimi-k3 (SMALL_FAST and HAIKU set to the same)"
+      ],
+      [
+        "Thinking",
+        "default"
+      ],
+      [
+        "Isolation",
+        "dedicated CLAUDE_CONFIG_DIR, independent empty git repo"
+      ],
+      [
+        "Cap",
+        "30 iterations"
+      ],
+      [
+        "Prompt",
+        "`PROMPT-ko.md` (Korean translation of the EXP-010 EN canonical, instructing all deliverables in Korean), n=3 each"
+      ],
+      [
+        "Execution",
+        "sequential, interleaved (qwen-ko-1, kimi-ko-1, ..., kimi-ko-3)"
+      ],
+      [
+        "Gate",
+        "measure v4"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "Claude Code（`claude -p`）"
+      ],
+      [
+        "接続",
+        "qwen3.8-max：DashScope直結（`dashscope-intl.aliyuncs.com/apps/anthropic`）/ kimi-k3：Moonshot直結（`api.moonshot.ai/anthropic`）"
+      ],
+      [
+        "モデルID",
+        "qwen3.8-max, kimi-k3（SMALL_FAST・HAIKUも同一指定）"
+      ],
+      [
+        "thinking",
+        "デフォルト"
+      ],
+      [
+        "隔離",
+        "専用CLAUDE_CONFIG_DIR、独立した空のgitリポ"
+      ],
+      [
+        "上限",
+        "30 iteration"
+      ],
+      [
+        "プロンプト",
+        "`PROMPT-ko.md`（EXP-010 EN正本の韓国語翻訳、成果物すべてを韓国語で指示）、各n=3"
+      ],
+      [
+        "実行",
+        "順次・交互（qwen-ko-1, kimi-ko-1, ..., kimi-ko-3）"
+      ],
+      [
+        "ゲート",
+        "measure v4"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "Claude Code（`claude -p`）"
+      ],
+      [
+        "连接",
+        "qwen3.8-max：DashScope 直连（`dashscope-intl.aliyuncs.com/apps/anthropic`）/ kimi-k3：Moonshot 直连（`api.moonshot.ai/anthropic`）"
+      ],
+      [
+        "模型 ID",
+        "qwen3.8-max, kimi-k3（SMALL_FAST·HAIKU 也指定为同一模型）"
+      ],
+      [
+        "thinking",
+        "默认值"
+      ],
+      [
+        "隔离",
+        "专用 CLAUDE_CONFIG_DIR，独立空 git 仓库"
+      ],
+      [
+        "上限",
+        "30 iteration"
+      ],
+      [
+        "提示",
+        "`PROMPT-ko.md`（EXP-010 EN 标准的韩语翻译，要求所有产物使用韩语），各 n=3"
+      ],
+      [
+        "执行",
+        "顺序·交替（qwen-ko-1, kimi-ko-1, ..., kimi-ko-3）"
+      ],
+      [
+        "门控",
+        "measure v4"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 오검·허위 신고·개입은 0건이고 6 run 모두 measure v4 2회 재검증이 13/13·154/154로 일치했다.",
+      "Phase 0에서 포트 8000을 무관 프로세스(타 프로젝트)가 점유 중이었으나, measure v4가 리포 소속을 판정하므로 오탐·오살 불가로 판단해 종료하지 않고 기록만 남겼다.",
+      "kimi-ko-2는 커밋 메시지의 관례 접두어(`feat:`·`docs:`)만 영문이고 본문은 한국어였다. 보고서는 이를 언어 준수로 판정했다.",
+      "EN 조건(EXP-013/014/016)과 시점이 1일 차이 나 시간 차이의 원인을 언어와 서빙으로 분해할 수 없다. ko 프롬프트는 번역본이라 번역 자체가 미세 변인일 수 있다."
+    ],
+    "en": [
+      "There were 0 false gate rejections, false claims or interventions, and re-verification with measure v4 twice matched 13/13 and 154/154 for all 6 runs.",
+      "During Phase 0 an unrelated process (another project) held port 8000; since measure v4 checks repo ownership it could not cause a false match or kill, so it was left running and only recorded.",
+      "kimi-ko-2 used English only for the conventional commit prefixes (`feat:`, `docs:`); the bodies were Korean. The report judged this as language-compliant.",
+      "The EN conditions (EXP-013/014/016) are 1 day apart, so time differences cannot be split between language and serving. The ko prompt is a translation, so the translation itself may be a minor variable."
+    ],
+    "ja": [
+      "ゲート誤検出・虚偽申告・介入は0件で、6 runすべてでmeasure v4による2回の再検証が13/13・154/154で一致した。",
+      "Phase 0でポート8000を無関係なプロセス（別プロジェクト）が占有していたが、measure v4がリポ所属を判定するため誤検出・誤終了は起こり得ないと判断し、終了せず記録のみ残した。",
+      "kimi-ko-2はコミットメッセージの慣例プレフィックス（`feat:`・`docs:`）だけ英語で、本文は韓国語だった。報告書は言語準拠と判定した。",
+      "EN条件（EXP-013/014/016）とは時点が1日異なり、時間差を言語と提供側に切り分けられない。koプロンプトは翻訳版のため、翻訳自体が微小な変数の可能性がある。"
+    ],
+    "zh": [
+      "误判、虚假申报、干预均为 0 次，6 个 run 用 measure v4 两次复验均与 13/13·154/154 一致。",
+      "Phase 0 时端口 8000 被无关进程（其他项目）占用，但 measure v4 会判定仓库归属，不可能误判或误杀，因此未终止，仅作记录。",
+      "kimi-ko-2 仅提交信息的惯例前缀（`feat:`·`docs:`）为英文，正文为韩语。报告判定为符合语言要求。",
+      "与 EN 条件（EXP-013/014/016）相差 1 天，无法把时间差异分解为语言与服务端因素。ko 提示是翻译版，翻译本身可能是细微变量。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "6 run 모두 커밋 메시지와 README를 한국어로 작성했고 영어 산출로의 이탈은 0건이다.",
+      "qwen3.8-max: ko 22.3-23.5분으로 EN(14.6-15.6분)과 분포가 겹치지 않았다(중앙값 +48%). 다만 n=3·시점 상이라 언어 효과로 단정하지 않는다.",
+      "kimi-k3: ko 10.6-15.9분으로 EN 변동 범위(7.6-21.3분) 안이다.",
+      "output은 qwen ko 32.8-45.8K, kimi ko 17.2-24.0K로 각각 EN 분포와 겹친다."
+    ],
+    "en": [
+      "All 6 runs wrote commit messages and README in Korean, with 0 deviations into English output.",
+      "qwen3.8-max: ko took 22.3-23.5 min, non-overlapping with EN (14.6-15.6 min; median +48%). With n=3 and different timing, it is not attributed to language.",
+      "kimi-k3: ko took 10.6-15.9 min, within the EN range (7.6-21.3 min).",
+      "Output was 32.8-45.8K for qwen ko and 17.2-24.0K for kimi ko, each overlapping the EN distribution."
+    ],
+    "ja": [
+      "6 runすべてがコミットメッセージとREADMEを韓国語で作成し、英語産出への逸脱は0件。",
+      "qwen3.8-max：koは22.3-23.5分でEN（14.6-15.6分）と分布が重ならなかった（中央値+48%）。ただしn=3・時点が異なるため言語効果とは断定しない。",
+      "kimi-k3：koは10.6-15.9分で、ENの変動範囲（7.6-21.3分）内。",
+      "outputはqwen koが32.8-45.8K、kimi koが17.2-24.0Kで、それぞれENの分布と重なる。"
+    ],
+    "zh": [
+      "6 个 run 的提交信息和 README 均使用韩语，偏离为英文产出的情况为 0。",
+      "qwen3.8-max：ko 耗时 22.3-23.5 分钟，与 EN（14.6-15.6 分钟）分布不重叠（中位数 +48%）。但 n=3 且时点不同，不归因于语言。",
+      "kimi-k3：ko 耗时 10.6-15.9 分钟，在 EN 波动范围（7.6-21.3 分钟）内。",
+      "output 为 qwen ko 32.8-45.8K、kimi ko 17.2-24.0K，均与 EN 分布重叠。"
+    ]
+  }
+}

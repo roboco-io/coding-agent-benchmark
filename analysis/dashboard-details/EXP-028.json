@@ -1,0 +1,213 @@
+{
+ "exp": "EXP-028",
+ "date": "2026-09-24",
+ "report": "experiments/028-sonnet5-ralph/report.md",
+ "runs": {
+  "en-1": {
+   "iter": 3,
+   "commits": 5
+  },
+  "ko-1": {
+   "iter": 1,
+   "commits": 5
+  },
+  "en-2": {
+   "iter": 1,
+   "commits": 2
+  },
+  "ko-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "en-3": {
+   "iter": 1,
+   "commits": 4
+  },
+  "ko-3": {
+   "iter": 1,
+   "commits": 3
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Claude Code 2.1.281 (`claude -p --dangerously-skip-permissions`)"
+   ],
+   [
+    "연결",
+    "Anthropic 네이티브, 구독 인증"
+   ],
+   [
+    "모델 ID",
+    "claude-sonnet-5"
+   ],
+   [
+    "thinking",
+    "기본값"
+   ],
+   [
+    "격리",
+    "비격리 (사용자 글로벌 CLAUDE.md·플러그인 스킬·MCP 노출)"
+   ],
+   [
+    "상한",
+    "10 iteration · run당 4시간, 개입 금지"
+   ],
+   [
+    "프롬프트",
+    "정본 EN·KO, 각 n=3, EN/KO 교차 순차 실행"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Claude Code 2.1.281 (`claude -p --dangerously-skip-permissions`)"
+   ],
+   [
+    "Connection",
+    "Anthropic native, subscription auth"
+   ],
+   [
+    "Model ID",
+    "claude-sonnet-5"
+   ],
+   [
+    "Thinking",
+    "default"
+   ],
+   [
+    "Isolation",
+    "not isolated (user's global CLAUDE.md, plugin skills and MCP exposed)"
+   ],
+   [
+    "Cap",
+    "10 iterations · 4 h per run, no intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN and KO, n=3 each, EN/KO interleaved sequentially"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Claude Code 2.1.281（`claude -p --dangerously-skip-permissions`）"
+   ],
+   [
+    "接続",
+    "Anthropicネイティブ、サブスクリプション認証"
+   ],
+   [
+    "モデルID",
+    "claude-sonnet-5"
+   ],
+   [
+    "thinking",
+    "デフォルト"
+   ],
+   [
+    "隔離",
+    "非隔離（ユーザーのグローバルCLAUDE.md・プラグインスキル・MCPが露出）"
+   ],
+   [
+    "上限",
+    "10 iteration・runあたり4時間、介入禁止"
+   ],
+   [
+    "プロンプト",
+    "正本EN・KO、各n=3、EN/KO交互に順次実行"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Claude Code 2.1.281（`claude -p --dangerously-skip-permissions`）"
+   ],
+   [
+    "连接",
+    "Anthropic 原生，订阅认证"
+   ],
+   [
+    "模型 ID",
+    "claude-sonnet-5"
+   ],
+   [
+    "thinking",
+    "默认值"
+   ],
+   [
+    "隔离",
+    "未隔离（暴露用户全局 CLAUDE.md·插件技能·MCP）"
+   ],
+   [
+    "上限",
+    "10 iteration · 每 run 4 小时，禁止干预"
+   ],
+   [
+    "提示",
+    "标准 EN·KO，各 n=3，EN/KO 交替顺序执行"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음. en-1은 에이전트가 작업을 3개 iteration으로 스스로 나눠 iteration 3에 완주했다(iteration 1·2는 완료 선언 없이 종료, 채점 0/13).",
+   "호스트의 3000 포트를 VS Code helper가 점유해 en-1이 기본 포트를 4000으로 바꿨다. measure v4가 리포 소속 포트를 자동 탐지하므로 채점에는 영향이 없다.",
+   "비격리 실행이라 글로벌 CLAUDE.md의 한국어 응답 규칙 때문에 EN 프롬프트 run의 최종 요약도 대부분 한국어였다. 코드와 커밋 메시지는 영어였다.",
+   "Anthropic 모델 목록 API는 키 미설정으로 조회하지 못했고, 모델 ID는 스모크 응답과 세션 model 필드로 확인했다.",
+   "날짜·Claude Code 버전이 Opus 5.5(EXP-026)·Fable 5.1(EXP-023)과 달라 시간·토큰 비교는 모델 단독 차이로 단정할 수 없다."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds. In en-1 the agent split the work into 3 iterations itself and finished at iteration 3 (iterations 1 and 2 ended without a completion declaration, graded 0/13).",
+   "A VS Code helper occupied host port 3000, so en-1 changed its default port to 4000. Measure v4 auto-detects the repo's port, so grading was unaffected.",
+   "Because the run was not isolated, the global CLAUDE.md rule to answer in Korean made the final summaries of most EN-prompt runs Korean. Code and commit messages were English.",
+   "The Anthropic model-list API could not be queried (no key set); the model ID was confirmed from the smoke response and the session model field.",
+   "Date and Claude Code version differ from Opus 5.5 (EXP-026) and Fable 5.1 (EXP-023), so time and token comparisons cannot be attributed to the model alone."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。en-1はエージェントが作業を3つのiterationに自ら分割し、iteration 3で完走した（iteration 1・2は完了宣言なしで終了、採点0/13）。",
+   "ホストの3000番ポートをVS Code helperが占有していたため、en-1は既定ポートを4000に変えた。measure v4がリポ所属のポートを自動検出するため採点への影響はない。",
+   "非隔離実行のため、グローバルCLAUDE.mdの「韓国語で応答」ルールにより、ENプロンプトrunの最終要約も大半が韓国語だった。コードとコミットメッセージは英語だった。",
+   "Anthropicのモデル一覧APIはキー未設定で照会できず、モデルIDはスモーク応答とセッションのmodelフィールドで確認した。",
+   "日付・Claude CodeバージョンがOpus 5.5（EXP-026）・Fable 5.1（EXP-023）と異なるため、時間・トークンの比較をモデル単独の差とは断定できない。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。en-1 中代理自行把工作拆成 3 个 iteration，在 iteration 3 完成（iteration 1·2 未宣告完成即结束，评分 0/13）。",
+   "主机 3000 端口被 VS Code helper 占用，en-1 把默认端口改为 4000。measure v4 会自动检测仓库所属端口，因此不影响评分。",
+   "由于未隔离，全局 CLAUDE.md 的“用韩语回答”规则使大多数 EN 提示 run 的最终总结也是韩语。代码与提交信息为英语。",
+   "因未设置密钥无法查询 Anthropic 模型列表 API，模型 ID 由冒烟响应与会话 model 字段确认。",
+   "日期与 Claude Code 版本和 Opus 5.5（EXP-026）·Fable 5.1（EXP-023）不同，时间与 token 的比较不能归因于模型本身。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "실제 호출은 Bash·Read·Write·Edit와 Agent뿐이었고 MCP·Skill 호출은 0건이었다.",
+   "Agent 호출은 en-2(general-purpose 1회)와 ko-3(Explore 1회)에서만 있었고 둘 다 Hurl 테스트 요약용이었다. 서브에이전트는 Read만 사용했다.",
+   "5 run은 iteration 1에 완주했고 en-1만 iteration 3에 완주했다. en-1의 iteration 1은 스캐폴딩, iteration 2는 Hurl 테스트 vendoring과 실행 스크립트만 만들고 종료했다.",
+   "세션 11.2-16.8분, output 57.6-73.7K, 메인 API 호출 82-140회로 Opus 5.5·Fable 5.1의 관측 범위보다 위쪽이었다. EN과 KO 사이에 일관된 방향의 차이는 보이지 않았다(n=3).",
+   "6 run 모두 auto memory가 비어 있어 run 간 기억 전달은 없었다."
+  ],
+  "en": [
+   "Actual calls were only Bash, Read, Write, Edit and Agent; MCP and Skill calls were 0.",
+   "Agent was called only in en-2 (general-purpose, once) and ko-3 (Explore, once), both to summarise the Hurl tests. The subagents used only Read.",
+   "5 runs finished at iteration 1 and only en-1 at iteration 3. In en-1, iteration 1 only scaffolded and iteration 2 only vendored the Hurl tests and made a run script before ending.",
+   "Session times of 11.2-16.8 minutes, output of 57.6-73.7K and 82-140 main API calls sat above the observed ranges of Opus 5.5 and Fable 5.1. No consistent EN vs KO difference was seen (n=3).",
+   "Auto memory was empty in all 6 runs, so no memory carried across runs."
+  ],
+  "ja": [
+   "実際の呼び出しはBash・Read・Write・Edit・Agentのみで、MCP・Skill呼び出しは0件だった。",
+   "Agent呼び出しはen-2（general-purpose 1回）とko-3（Explore 1回）だけで、どちらもHurlテストの要約用だった。サブエージェントはReadのみ使用した。",
+   "5 runはiteration 1で完走し、en-1だけがiteration 3で完走した。en-1のiteration 1はスキャフォールドのみ、iteration 2はHurlテストのvendoringと実行スクリプトのみ作成して終了した。",
+   "セッション11.2-16.8分、output 57.6-73.7K、メインAPI呼び出し82-140回で、Opus 5.5・Fable 5.1の観測範囲より上だった。ENとKOの間に一貫した方向の差は見られなかった（n=3）。",
+   "6 runすべてでauto memoryが空で、run間の記憶引き継ぎはなかった。"
+  ],
+  "zh": [
+   "实际调用仅有 Bash·Read·Write·Edit 和 Agent，MCP·Skill 调用为 0。",
+   "Agent 仅在 en-2（general-purpose 1 次）和 ko-3（Explore 1 次）中调用，均用于概括 Hurl 测试。子代理只用了 Read。",
+   "5 个 run 在 iteration 1 完成，仅 en-1 在 iteration 3 完成。en-1 的 iteration 1 只搭了脚手架，iteration 2 只 vendoring 了 Hurl 测试并做了运行脚本即结束。",
+   "会话 11.2-16.8 分钟、output 57.6-73.7K、主 API 调用 82-140 次，均高于 Opus 5.5 与 Fable 5.1 的观测范围。EN 与 KO 之间未见一致方向的差异（n=3）。",
+   "6 个 run 的 auto memory 均为空，run 之间没有记忆传递。"
+  ]
+ }
+}

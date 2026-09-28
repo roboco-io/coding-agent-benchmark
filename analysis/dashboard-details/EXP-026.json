@@ -1,0 +1,213 @@
+{
+ "exp": "EXP-026",
+ "date": "2026-09-23",
+ "report": "experiments/026-opus55-ralph/report.md",
+ "runs": {
+  "en-1": {
+   "iter": 1,
+   "commits": 5
+  },
+  "en-2": {
+   "iter": 1,
+   "commits": 6
+  },
+  "en-3": {
+   "iter": 1,
+   "commits": 4
+  },
+  "ko-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "ko-2": {
+   "iter": 1,
+   "commits": 1
+  },
+  "ko-3": {
+   "iter": 1,
+   "commits": 4
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Claude Code 2.1.280 (`claude -p --model claude-opus-5-5 --dangerously-skip-permissions`)"
+   ],
+   [
+    "연결",
+    "Anthropic 네이티브, 구독 OAuth"
+   ],
+   [
+    "모델 ID",
+    "claude-opus-5-5"
+   ],
+   [
+    "thinking",
+    "기본값"
+   ],
+   [
+    "격리",
+    "비격리 (기본 `$HOME/.claude`, 글로벌 CLAUDE.md·MCP·언어 설정 노출)"
+   ],
+   [
+    "상한",
+    "10 iteration · run당 4시간"
+   ],
+   [
+    "프롬프트",
+    "EN 정본·KO 정본 각 n=3, en-1 → ko-1 → en-2 → ko-2 → en-3 → ko-3 교차 순차"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Claude Code 2.1.280 (`claude -p --model claude-opus-5-5 --dangerously-skip-permissions`)"
+   ],
+   [
+    "Connection",
+    "Anthropic native, subscription OAuth"
+   ],
+   [
+    "Model ID",
+    "claude-opus-5-5"
+   ],
+   [
+    "Thinking",
+    "default"
+   ],
+   [
+    "Isolation",
+    "not isolated (default `$HOME/.claude`; global CLAUDE.md, MCP and language settings exposed)"
+   ],
+   [
+    "Cap",
+    "10 iterations · 4 h per run"
+   ],
+   [
+    "Prompt",
+    "canonical EN and KO, n=3 each, interleaved en-1 → ko-1 → en-2 → ko-2 → en-3 → ko-3"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Claude Code 2.1.280（`claude -p --model claude-opus-5-5 --dangerously-skip-permissions`）"
+   ],
+   [
+    "接続",
+    "Anthropicネイティブ、サブスクリプションOAuth"
+   ],
+   [
+    "モデルID",
+    "claude-opus-5-5"
+   ],
+   [
+    "thinking",
+    "デフォルト"
+   ],
+   [
+    "隔離",
+    "非隔離（デフォルトの`$HOME/.claude`、グローバルCLAUDE.md・MCP・言語設定が露出）"
+   ],
+   [
+    "上限",
+    "10 iteration・runあたり4時間"
+   ],
+   [
+    "プロンプト",
+    "正本EN・KO各n=3、en-1 → ko-1 → en-2 → ko-2 → en-3 → ko-3の交互順次"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Claude Code 2.1.280（`claude -p --model claude-opus-5-5 --dangerously-skip-permissions`）"
+   ],
+   [
+    "连接",
+    "Anthropic 原生，订阅 OAuth"
+   ],
+   [
+    "模型 ID",
+    "claude-opus-5-5"
+   ],
+   [
+    "thinking",
+    "默认值"
+   ],
+   [
+    "隔离",
+    "未隔离（默认 `$HOME/.claude`，暴露全局 CLAUDE.md·MCP·语言设置）"
+   ],
+   [
+    "上限",
+    "10 iteration · 每 run 4 小时"
+   ],
+   [
+    "提示",
+    "标准 EN·KO 各 n=3，按 en-1 → ko-1 → en-2 → ko-2 → en-3 → ko-3 交替顺序执行"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음. 5xx·레이트 리밋·게이트 오검 0건이며 응답 model 필드는 전수 `claude-opus-5-5`.",
+   "비격리라 글로벌 MCP(claude.ai Claude Docs, context7)·Skill·Agent 도구가 노출됐으나 실제 MCP·Skill·서브에이전트 호출은 0건이다.",
+   "en-1(8분 21초)의 추가 시간은 에이전트가 만든 e2e 스크립트의 포트 충돌 디버깅 구간에서 발생했다고 로그로 확인했으나, 유일한 원인인지는 분리 검증하지 않았다.",
+   "Opus 5·Fable 5.1 기준선과 실행 시점·CLI 버전이 다르다(동시기 재측정 없음). 시간은 30분 창 한 번의 관측이며 서버 측 추론 설정은 관측할 수 없다.",
+   "구독 OAuth 실행이라 토큰은 대리지표로만 보고하며 청구 비용이 아니다."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds. Zero 5xx, rate limits or false gate rejections; the response model field was `claude-opus-5-5` throughout.",
+   "Not isolated, so the global MCP (claude.ai Claude Docs, context7), Skill and Agent tools were exposed, but actual MCP, Skill and subagent calls were zero.",
+   "The extra time in en-1 (8 min 21 s) was traced in the logs to debugging a port collision in the agent's own e2e script; whether this was the sole cause was not verified in isolation.",
+   "Baselines Opus 5 and Fable 5.1 differ in date and CLI version (no same-period re-measurement). Timing is a single observation in a 30-minute window, and server-side reasoning settings cannot be observed.",
+   "Runs used subscription OAuth, so tokens are a proxy metric only and not billed cost."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。5xx・レート制限・ゲート誤検知は0件で、応答modelフィールドは全件`claude-opus-5-5`。",
+   "非隔離のためグローバルMCP（claude.ai Claude Docs、context7）・Skill・Agentツールが露出したが、実際のMCP・Skill・サブエージェント呼び出しは0件。",
+   "en-1（8分21秒）の追加時間は、エージェントが作ったe2eスクリプトのポート衝突のデバッグ区間で発生したとログで確認したが、唯一の原因かは分離検証していない。",
+   "Opus 5・Fable 5.1基準線とは実行時点・CLIバージョンが異なる（同時期の再測定なし）。時間は30分の窓での一度の観測で、サーバー側の推論設定は観測できない。",
+   "サブスクリプションOAuthでの実行のため、トークンは代理指標としてのみ報告し、請求コストではない。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。5xx、速率限制、门控误判均为 0，响应 model 字段全部为 `claude-opus-5-5`。",
+   "因未隔离，全局 MCP（claude.ai Claude Docs、context7）、Skill 和 Agent 工具被暴露，但实际的 MCP、Skill、子代理调用为 0。",
+   "en-1（8 分 21 秒）多出的时间经日志确认发生在调试代理自建 e2e 脚本的端口冲突上，但未单独验证这是否为唯一原因。",
+   "与 Opus 5、Fable 5.1 基线的执行时点和 CLI 版本不同（无同期重测）。时间是 30 分钟窗口内的一次观测，服务端推理设置不可观测。",
+   "订阅 OAuth 运行，token 仅作为代理指标报告，不是计费成本。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "6 run 모두 실제 호출은 Bash(21-40회)뿐이었고 en-3에서만 Write 1회가 더 있었다.",
+   "5/6 run이 세션 4.0-4.2분·output 약 20K였고 en-1만 8.4분·28.2K였다. API 호출은 22-41회.",
+   "커밋은 EN 5·6·4회, KO 4·1·4회로 run마다 편차가 컸다(ko-2는 1회).",
+   "KO 3 run의 커밋 메시지·README는 전부 한국어였다. EN run의 최종 메시지는 글로벌 설정의 한국어 응답 지침이 노출돼 있었는데도 영어였다.",
+   "세션은 run당 1개, 서브에이전트 세션은 0개였다."
+  ],
+  "en": [
+   "In all 6 runs the only actual calls were Bash (21-40) plus a single extra Write in en-3.",
+   "5 of 6 runs took 4.0-4.2 min with output around 20K; only en-1 took 8.4 min and 28.2K. API calls were 22-41.",
+   "Commits were 5, 6, 4 for EN and 4, 1, 4 for KO, a wide spread by run (ko-2 had 1).",
+   "Commit messages and README in the 3 KO runs were entirely in Korean. The final messages of the EN runs were in English even though the global Korean-response instruction was exposed.",
+   "One session per run and zero subagent sessions."
+  ],
+  "ja": [
+   "6 runすべてで実際の呼び出しはBash（21-40回）のみで、en-3でのみWriteが1回加わった。",
+   "6 runのうち5 runがセッション4.0-4.2分・output約20Kで、en-1のみ8.4分・28.2Kだった。API呼び出しは22-41回。",
+   "コミットはEN 5・6・4回、KO 4・1・4回とrunごとの差が大きかった（ko-2は1回）。",
+   "KO 3 runのコミットメッセージ・READMEはすべて韓国語だった。EN runの最終メッセージは、グローバル設定の韓国語応答指示が露出していたにもかかわらず英語だった。",
+   "セッションはrunあたり1つ、サブエージェントセッションは0。"
+  ],
+  "zh": [
+   "6 个 run 的实际调用只有 Bash（21-40 次），仅 en-3 多了 1 次 Write。",
+   "6 个 run 中 5 个会话为 4.0-4.2 分钟、output 约 20K，只有 en-1 为 8.4 分钟、28.2K。API 调用 22-41 次。",
+   "提交数 EN 为 5、6、4 次，KO 为 4、1、4 次，各 run 差异较大（ko-2 仅 1 次）。",
+   "KO 的 3 个 run 提交信息与 README 全部为韩语。EN run 的最终消息虽然暴露了全局韩语响应指示，仍为英语。",
+   "每个 run 1 个会话，子代理会话为 0。"
+  ]
+ }
+}

@@ -1,0 +1,26 @@
+{
+  "exp": "EXP-014",
+  "date": "2026-08-04",
+  "report": "experiments/014-kimi-k3-direct/report.md",
+  "runs": {
+    "kimi-1": {"iter": 1, "commits": 4}
+  },
+  "conditions": {
+    "ko": [["에이전트", "Claude Code (`claude -p`), 버전은 보고서에 기록 없음"], ["연결", "Moonshot Anthropic 호환 엔드포인트 직결 (`ANTHROPIC_BASE_URL=https://api.moonshot.ai/anthropic`, ccr 없음)"], ["모델 ID", "kimi-k3 (SMALL_FAST·haiku 대체 모델도 동일 지정)"], ["thinking", "기본값 무지정 (kimi-k3는 끄기 불가·기본 ON)"], ["격리", "전용 `CLAUDE_CONFIG_DIR` (온보딩 우회 1줄 config만), 잔존 `ANTHROPIC_API_KEY`는 env -u로 제거"], ["상한", "30 iteration"], ["프롬프트", "EXP-010 정본 byte-identical, n=1"]],
+    "en": [["Agent", "Claude Code (`claude -p`), version not recorded in the report"], ["Connection", "Direct to Moonshot's Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL=https://api.moonshot.ai/anthropic`, no ccr)"], ["Model ID", "kimi-k3 (SMALL_FAST and haiku substitute models set to the same)"], ["Thinking", "default, unspecified (kimi-k3 cannot disable it; on by default)"], ["Isolation", "dedicated `CLAUDE_CONFIG_DIR` (one-line onboarding-bypass config only); stray `ANTHROPIC_API_KEY` removed with env -u"], ["Cap", "30 iterations"], ["Prompt", "EXP-010 canonical, byte-identical, n=1"]],
+    "ja": [["エージェント", "Claude Code（`claude -p`）、バージョンは報告書に記録なし"], ["接続", "MoonshotのAnthropic互換エンドポイントに直結（`ANTHROPIC_BASE_URL=https://api.moonshot.ai/anthropic`、ccrなし）"], ["モデルID", "kimi-k3（SMALL_FAST・haiku代替モデルも同一指定）"], ["thinking", "デフォルト・無指定（kimi-k3は無効化不可・既定でON）"], ["隔離", "専用`CLAUDE_CONFIG_DIR`（オンボーディング回避の1行configのみ）、残存`ANTHROPIC_API_KEY`はenv -uで除去"], ["上限", "30 iteration"], ["プロンプト", "EXP-010正本をbyte-identicalで使用、n=1"]],
+    "zh": [["代理", "Claude Code（`claude -p`），报告中未记录版本"], ["连接", "直连 Moonshot 的 Anthropic 兼容端点（`ANTHROPIC_BASE_URL=https://api.moonshot.ai/anthropic`，无 ccr）"], ["模型 ID", "kimi-k3（SMALL_FAST 与 haiku 替代模型也设为同一模型）"], ["thinking", "默认值，未指定（kimi-k3 无法关闭，默认开启）"], ["隔离", "专用 `CLAUDE_CONFIG_DIR`（仅 1 行跳过引导的 config），残留的 `ANTHROPIC_API_KEY` 用 env -u 移除"], ["上限", "30 iteration"], ["提示", "EXP-010 标准提示，byte-identical，n=1"]]
+  },
+  "deviations": {
+    "ko": ["기록된 편차 없음. 게이트 기각 0회, 허위 신고 0회, 개입 0회, 하네스 인프라 복구 0건, 직결 스택 트러블슈팅 0건.", "설계 리스크였던 Moonshot Tier 0 rate limit은 전 구간 발현하지 않았다.", "Moonshot은 cache_create가 0인데 cache_read가 적중한다. 보고서는 캐시 계상 방식의 차이로 보이며 기록만 남긴다고 했고, 제공자 간 usage 필드 비교 가능성이 다르다.", "출시 3주차 모델이라 서빙 품질 변동 가능성이 있다."],
+    "en": ["No recorded deviations: 0 gate rejections, 0 false claims, 0 interventions, 0 harness recoveries, 0 troubleshooting steps on the direct stack.", "The Moonshot Tier 0 rate limit, a design-time risk, never occurred.", "Moonshot shows cache_create of 0 while cache_read still hits. The report says this appears to be a difference in cache accounting and only records it; usage fields are therefore not equally comparable across providers.", "The model was in its third week after release, so serving quality may vary."],
+    "ja": ["記録された逸脱なし。ゲート却下0回、虚偽申告0回、介入0回、ハーネス復旧0件、直結スタックのトラブルシューティング0件。", "設計上のリスクだったMoonshot Tier 0のrate limitは全区間で発現しなかった。", "Moonshotはcache_createが0なのにcache_readがヒットする。報告書はキャッシュ計上方式の違いとみられるとして記録のみ残しており、プロバイダ間でusageフィールドの比較可能性が異なる。", "リリース3週目のモデルのため、サービング品質が変動する可能性がある。"],
+    "zh": ["无记录的偏差：门控驳回 0 次、虚假申报 0 次、干预 0 次、框架恢复 0 次、直连栈排障 0 次。", "设计阶段的风险 Moonshot Tier 0 rate limit 在全程均未出现。", "Moonshot 的 cache_create 为 0，而 cache_read 仍然命中。报告认为这似乎是缓存计费方式的差异，仅作记录；因此各提供方的 usage 字段可比性不同。", "该模型处于发布后第三周，服务质量可能有波动。"]
+  },
+  "behavior": {
+    "ko": ["Fastify + Prisma + SQLite를 선택했다(EXP-013 qwen3.8-max와 동일 스택).", "커밋 4회(구현, hurl vendoring·정렬, README, 완료 마킹). 첫 세션에서 구현, 공식 hurl vendoring, 자체 검증, `.ralph-done`까지 완결했다.", "assistant 50 messages, 21분 18초, output 31.3K."],
+    "en": ["Chose Fastify + Prisma + SQLite (the same stack as qwen3.8-max in EXP-013).", "4 commits (implementation, hurl vendoring and alignment, README, completion marking). In the first session it completed implementation, official hurl vendoring, self-verification and `.ralph-done`.", "50 assistant messages, 21 min 18 s, output 31.3K."],
+    "ja": ["Fastify + Prisma + SQLiteを選択した（EXP-013 qwen3.8-maxと同一スタック）。", "コミット4回（実装、hurl vendoring・整合、README、完了マーキング）。最初のセッションで実装、公式hurlのvendoring、自己検証、`.ralph-done`まで完結した。", "assistant 50 messages、21分18秒、output 31.3K。"],
+    "zh": ["选择了 Fastify + Prisma + SQLite（与 EXP-013 的 qwen3.8-max 相同栈）。", "提交 4 次（实现、hurl vendoring 与对齐、README、完成标记）。在首个会话中完成实现、官方 hurl vendoring、自我验证和 `.ralph-done`。", "assistant 50 条消息，21 分 18 秒，output 31.3K。"]
+  }
+}

@@ -4,3 +4,8 @@ if git diff --cached --name-only | grep -q '^experiments/.*/report\.md$'; then
   python3 scripts/update_readme_results.py || exit 1
   git add README.md README.*.md
 fi
+# 보고서·i18n·비용·상세 원자료가 바뀌면 대시보드 아코디언 데이터(dashboard/details.js)를 재생성한다.
+if git diff --cached --name-only | grep -qE '^(experiments/.*/report\.md|scripts/readme_i18n\.json|analysis/cost/cost_all_runs\.csv|analysis/dashboard-details/.*\.json)$'; then
+  python3 scripts/build_dashboard_details.py || exit 1
+  git add dashboard/details.js
+fi

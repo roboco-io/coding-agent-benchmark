@@ -1,0 +1,193 @@
+{
+ "exp": "EXP-021",
+ "date": "2026-09-10",
+ "report": "experiments/021-gpt6-astra-codex/report.md",
+ "runs": {
+  "astra-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "astra-2": {
+   "iter": 1,
+   "commits": 3
+  },
+  "astra-3": {
+   "iter": 1,
+   "commits": 3
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Codex CLI 0.153.4 (`codex exec`, `--sandbox danger-full-access`)"
+   ],
+   [
+    "연결",
+    "OpenAI 직접 (ChatGPT 플랜 OAuth, API 종량 아님). Anthropic 호환 엔드포인트가 없어 Codex 경로만 가능"
+   ],
+   [
+    "모델 ID",
+    "gpt-6-astra"
+   ],
+   [
+    "effort",
+    "medium 고정"
+   ],
+   [
+    "격리",
+    "전용 CODEX_HOME (auth.json + config.toml만 신규 구성)"
+   ],
+   [
+    "상한",
+    "30 iteration"
+   ],
+   [
+    "프롬프트",
+    "EN 정본, n=3 순차"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Codex CLI 0.153.4 (`codex exec`, `--sandbox danger-full-access`)"
+   ],
+   [
+    "Connection",
+    "OpenAI direct (ChatGPT plan OAuth, not pay-per-use API). No Anthropic-compatible endpoint exists, so Codex is the only path"
+   ],
+   [
+    "Model ID",
+    "gpt-6-astra"
+   ],
+   [
+    "Effort",
+    "fixed at medium"
+   ],
+   [
+    "Isolation",
+    "dedicated CODEX_HOME (only auth.json and config.toml newly created)"
+   ],
+   [
+    "Cap",
+    "30 iterations"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3 sequential"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Codex CLI 0.153.4（`codex exec`、`--sandbox danger-full-access`）"
+   ],
+   [
+    "接続",
+    "OpenAI直接（ChatGPTプランOAuth、API従量ではない）。Anthropic互換エンドポイントがないためCodex経路のみ"
+   ],
+   [
+    "モデルID",
+    "gpt-6-astra"
+   ],
+   [
+    "effort",
+    "medium固定"
+   ],
+   [
+    "隔離",
+    "専用CODEX_HOME（auth.jsonとconfig.tomlのみ新規構成）"
+   ],
+   [
+    "上限",
+    "30 iteration"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3を順次実行"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Codex CLI 0.153.4（`codex exec`，`--sandbox danger-full-access`）"
+   ],
+   [
+    "连接",
+    "OpenAI 直连（ChatGPT 套餐 OAuth，非按量 API）。没有 Anthropic 兼容端点，只能走 Codex 路径"
+   ],
+   [
+    "模型 ID",
+    "gpt-6-astra"
+   ],
+   [
+    "effort",
+    "固定为 medium"
+   ],
+   [
+    "隔离",
+    "专用 CODEX_HOME（仅新建 auth.json 和 config.toml）"
+   ],
+   [
+    "上限",
+    "30 iteration"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3 顺序执行"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음. 채점기 hurl은 절대 경로 고정으로 오검 0건.",
+   "Phase 0에서 EXP-011 codex-home의 auth.json(2026-08-03 사본)이 ChatGPT OAuth 만료로 401이어서 최신 `$HOME/.codex/auth.json`으로 교체한 뒤 스모크를 통과했다.",
+   "ChatGPT 플랜 OAuth 실행이라 설계서의 달러 추정(run당 약 $3)은 참고치이며, 서빙 경로가 API 종량과 다를 가능성은 계측상 구분할 수 없다.",
+   "effort는 medium만 검증했다. 5단계 중 다른 단계는 미실험."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds. The grader's hurl was pinned to an absolute path, with zero false rejections.",
+   "In Phase 0 the auth.json copied from EXP-011's codex-home (2026-08-03) returned 401 because the ChatGPT OAuth token had expired; the smoke test passed after replacing it with the latest `$HOME/.codex/auth.json`.",
+   "Runs used ChatGPT-plan OAuth, so the dollar estimate in the design (about $3 per run) is only indicative, and a serving path different from pay-per-use API cannot be ruled out from the measurements.",
+   "Only effort medium was tested; the other levels of the five are untested."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。採点器のhurlは絶対パス固定で誤検知0件。",
+   "Phase 0でEXP-011のcodex-homeのauth.json（2026-08-03コピー）がChatGPT OAuth期限切れで401となり、最新の`$HOME/.codex/auth.json`に差し替えてスモークを通過した。",
+   "ChatGPTプランOAuthでの実行のため、設計書のドル推定（runあたり約$3）は参考値であり、API従量と異なる提供経路の可能性は計測上区別できない。",
+   "effortはmediumのみ検証。5段階の他の段階は未実験。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。评分器的 hurl 固定为绝对路径，误判为 0。",
+   "Phase 0 中，EXP-011 codex-home 的 auth.json（2026-08-03 副本）因 ChatGPT OAuth 过期返回 401，换成最新的 `$HOME/.codex/auth.json` 后冒烟通过。",
+   "运行使用 ChatGPT 套餐 OAuth，因此设计书中的美元估算（每 run 约 $3）仅供参考，且无法从测量中区分其服务路径是否与按量 API 不同。",
+   "仅验证了 effort medium，五档中的其他档位未实验。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 모두 codex 세션 1개로 iteration 1에서 끝났고 codex exec 시간은 7분 5초-7분 36초, 커밋은 3-4회였다.",
+   "캐시 히트율은 88-93%로 gpt-5.6-sol(93%)과 동급이며, 총 토큰 782K-938K로 sol-1(1.21M)보다 작았다.",
+   "커밋 메시지·README는 전부 영어였다(EN 정본 조건과 일치).",
+   "사전 조사의 '1.9x 빠른 태스크 완료' 수치는 이 하네스에서 재현되지 않았다. 단일 시점·모델 교락으로 속도 서사는 판단 유보."
+  ],
+  "en": [
+   "All 3 runs finished in iteration 1 with a single Codex session each; codex exec time was 7 min 5 s to 7 min 36 s with 3-4 commits.",
+   "Cache hit rate was 88-93%, on par with gpt-5.6-sol (93%), and total tokens (782K-938K) were lower than sol-1 (1.21M).",
+   "Commit messages and README were all in English (matching the EN canonical prompt).",
+   "The '1.9x faster task completion' figure from the pre-study was not reproduced in this harness; the speed narrative is withheld because of a single time point and model confounding."
+  ],
+  "ja": [
+   "3 runすべてがcodexセッション1つでiteration 1に完了し、codex exec時間は7分5秒-7分36秒、コミットは3-4回だった。",
+   "キャッシュヒット率は88-93%でgpt-5.6-sol（93%）と同等、総トークン782K-938Kはsol-1（1.21M）より小さかった。",
+   "コミットメッセージ・READMEはすべて英語（EN正本条件と一致）。",
+   "事前調査の「1.9x高速なタスク完了」は本ハーネスでは再現されなかった。単一時点・モデル交絡のため速度の物語は判断保留。"
+  ],
+  "zh": [
+   "3 个 run 都在 iteration 1 用 1 个 codex 会话完成，codex exec 耗时 7 分 5 秒至 7 分 36 秒，提交 3-4 次。",
+   "缓存命中率为 88-93%，与 gpt-5.6-sol（93%）相当，总 token（782K-938K）低于 sol-1（1.21M）。",
+   "提交信息和 README 全部为英文（与 EN 标准提示一致）。",
+   "预研中的“任务完成快 1.9 倍”在该框架中未复现；因单一时点和模型混杂，对速度结论保留判断。"
+  ]
+ }
+}

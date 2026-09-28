@@ -1,0 +1,181 @@
+{
+  "exp": "EXP-015",
+  "date": "2026-08-04",
+  "report": "experiments/015-solar-open2-direct/report.md",
+  "runs": {
+    "solar-1": {
+      "iter": 2,
+      "commits": 2
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "Claude Code (`claude -p`)"
+      ],
+      [
+        "연결",
+        "Upstage Anthropic 호환 엔드포인트 직결 (`ANTHROPIC_BASE_URL=https://api.upstage.ai`, Bearer 인증)"
+      ],
+      [
+        "모델 ID",
+        "solar-open2"
+      ],
+      [
+        "thinking",
+        "기본값 무지정"
+      ],
+      [
+        "격리",
+        "전용 CLAUDE_CONFIG_DIR + hasCompletedOnboarding 우회, 독립 빈 git 리포"
+      ],
+      [
+        "상한",
+        "30 iteration"
+      ],
+      [
+        "프롬프트",
+        "EXP-010 정본(EN) byte-identical, n=1"
+      ],
+      [
+        "게이트",
+        "measure v4 (포트 탐지 수정판, 사후 재채점 적용)"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "Claude Code (`claude -p`)"
+      ],
+      [
+        "Connection",
+        "Direct to Upstage's Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL=https://api.upstage.ai`, Bearer auth)"
+      ],
+      [
+        "Model ID",
+        "solar-open2"
+      ],
+      [
+        "Thinking",
+        "default, unspecified"
+      ],
+      [
+        "Isolation",
+        "dedicated CLAUDE_CONFIG_DIR + hasCompletedOnboarding bypass, independent empty git repo"
+      ],
+      [
+        "Cap",
+        "30 iterations"
+      ],
+      [
+        "Prompt",
+        "EXP-010 canonical (EN), byte-identical, n=1"
+      ],
+      [
+        "Gate",
+        "measure v4 (port-detection fix, applied in post-hoc rescoring)"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "Claude Code（`claude -p`）"
+      ],
+      [
+        "接続",
+        "UpstageのAnthropic互換エンドポイントに直結（`ANTHROPIC_BASE_URL=https://api.upstage.ai`、Bearer認証）"
+      ],
+      [
+        "モデルID",
+        "solar-open2"
+      ],
+      [
+        "thinking",
+        "デフォルト（未指定）"
+      ],
+      [
+        "隔離",
+        "専用CLAUDE_CONFIG_DIR + hasCompletedOnboardingバイパス、独立した空のgitリポ"
+      ],
+      [
+        "上限",
+        "30 iteration"
+      ],
+      [
+        "プロンプト",
+        "EXP-010正本（EN）byte-identical、n=1"
+      ],
+      [
+        "ゲート",
+        "measure v4（ポート検出修正版、事後再採点で適用）"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "Claude Code（`claude -p`）"
+      ],
+      [
+        "连接",
+        "直连 Upstage 的 Anthropic 兼容端点（`ANTHROPIC_BASE_URL=https://api.upstage.ai`，Bearer 认证）"
+      ],
+      [
+        "模型 ID",
+        "solar-open2"
+      ],
+      [
+        "thinking",
+        "默认值，未指定"
+      ],
+      [
+        "隔离",
+        "专用 CLAUDE_CONFIG_DIR + hasCompletedOnboarding 绕过，独立空 git 仓库"
+      ],
+      [
+        "上限",
+        "30 iteration"
+      ],
+      [
+        "提示",
+        "EXP-010 标准（EN）byte-identical，n=1"
+      ],
+      [
+        "门控",
+        "measure v4（端口检测修复版，事后重新评分时应用）"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 오검 1건: measure v3가 앱 서버(`npx tsx src/server.ts`)의 리포 소속을 판정하지 못해 iteration 2의 정당한 완주를 기각했다. measure v4(프로세스 CWD 판정 추가)로 iteration 2 산출물을 재채점해 13/13·154/154가 2회 일치했고, 판정은 iter 2 완주다.",
+      "기각 후 iteration 3 진입 1분 뒤 원인 분석을 위해 사용자가 중단했다. 완주 시점 이후이므로 완주 판정에는 영향이 없다.",
+      "iteration 1 말미에 모델이 tool call을 tool_use 블록이 아닌 텍스트로 출력한 뒤 종료했다. Upstage 변환 문제인지 모델 이탈인지는 분해하지 못했다(원인 미분해).",
+      "Upstage 경로는 usage에 cache 필드를 계상하지 않아(0/0) input 전량이 비캐시로 잡힌다. 타 실험과 usage를 직접 비교할 수 없다."
+    ],
+    "en": [
+      "One false gate rejection: measure v3 could not tell that the app server (`npx tsx src/server.ts`) belonged to the repo and rejected a legitimate completion at iteration 2. Rescoring the iteration 2 output with measure v4 (adds process-CWD check) matched 13/13 and 154/154 twice; the verdict is completion at iter 2.",
+      "About one minute after entering iteration 3 following the rejection, the user stopped the run to analyse the cause. This is after completion, so the verdict is unaffected.",
+      "At the end of iteration 1 the model emitted tool calls as text rather than tool_use blocks and then exited. Whether the cause is Upstage's translation or the model deviating was not separated (cause undetermined).",
+      "The Upstage path does not report cache fields in usage (0/0), so all input is counted as non-cached. Usage cannot be compared directly with other experiments."
+    ],
+    "ja": [
+      "ゲート誤検出1件：measure v3がアプリサーバー（`npx tsx src/server.ts`）のリポ所属を判定できず、iteration 2の正当な完走を却下した。measure v4（プロセスCWD判定を追加）でiteration 2の成果物を再採点し、13/13・154/154が2回一致した。判定はiter 2完走。",
+      "却下後、iteration 3に入って1分で、原因分析のためユーザーが中断した。完走時点より後なので完走判定への影響はない。",
+      "iteration 1の終盤にモデルがtool callをtool_useブロックではなくテキストで出力して終了した。Upstage側の変換の問題かモデルの逸脱かは切り分けていない（原因未分解）。",
+      "Upstage経路はusageにcacheフィールドを計上しない（0/0）ため、inputが全量非キャッシュ扱いになる。他の実験とusageを直接比較できない。"
+    ],
+    "zh": [
+      "1 次门控误判：measure v3 无法判定应用服务器（`npx tsx src/server.ts`）是否属于该仓库，驳回了 iteration 2 的正当完成。用 measure v4（新增进程 CWD 判定）重新评分 iteration 2 产物，13/13·154/154 两次一致；判定为 iter 2 完成。",
+      "驳回后进入 iteration 3 一分钟，用户为分析原因而中断。此时已在完成时点之后，不影响完成判定。",
+      "iteration 1 末尾模型把 tool call 以文本而非 tool_use 块输出后退出。原因是 Upstage 转换还是模型偏离，未能区分（原因未分解）。",
+      "Upstage 路径在 usage 中不计 cache 字段（0/0），input 全部按非缓存计入。不能与其他实验直接比较 usage。"
+    ]
+  },
+  "behavior": {
+    "ko": [],
+    "en": [],
+    "ja": [],
+    "zh": []
+  }
+}

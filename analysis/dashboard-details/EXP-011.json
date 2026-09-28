@@ -1,0 +1,26 @@
+{
+  "exp": "EXP-011",
+  "date": "2026-08-03",
+  "report": "experiments/011-codex-gpt56-sol/report.md",
+  "runs": {
+    "sol-1": {"iter": 1, "commits": 3}
+  },
+  "conditions": {
+    "ko": [["에이전트", "Codex CLI 0.144.0 (`codex exec --model gpt-5.6-sol --sandbox danger-full-access`)"], ["연결", "OpenAI (Codex 하네스)"], ["모델 ID", "gpt-5.6-sol"], ["reasoning effort", "medium (세션 메타로 실측, 개인 config의 low는 미사용)"], ["격리", "전용 `CODEX_HOME` (auth.json + 2줄 config.toml만)"], ["상한", "30 iteration"], ["프롬프트", "EXP-010 영문 정본 byte-identical (도구 중립화 변형 불필요), n=1"]],
+    "en": [["Agent", "Codex CLI 0.144.0 (`codex exec --model gpt-5.6-sol --sandbox danger-full-access`)"], ["Connection", "OpenAI (Codex harness)"], ["Model ID", "gpt-5.6-sol"], ["Reasoning effort", "medium (verified from session metadata; the personal config's low was not used)"], ["Isolation", "dedicated `CODEX_HOME` (auth.json + a 2-line config.toml only)"], ["Cap", "30 iterations"], ["Prompt", "EXP-010 English canonical, byte-identical (no tool-neutral variant was needed), n=1"]],
+    "ja": [["エージェント", "Codex CLI 0.144.0（`codex exec --model gpt-5.6-sol --sandbox danger-full-access`）"], ["接続", "OpenAI（Codexハーネス）"], ["モデルID", "gpt-5.6-sol"], ["reasoning effort", "medium（セッションメタで実測、個人configのlowは未使用）"], ["隔離", "専用`CODEX_HOME`（auth.json + 2行のconfig.tomlのみ）"], ["上限", "30 iteration"], ["プロンプト", "EXP-010英語正本をbyte-identicalで使用（ツール中立化の変形は不要）、n=1"]],
+    "zh": [["代理", "Codex CLI 0.144.0（`codex exec --model gpt-5.6-sol --sandbox danger-full-access`）"], ["连接", "OpenAI（Codex 框架）"], ["模型 ID", "gpt-5.6-sol"], ["reasoning effort", "medium（由会话元数据实测，未使用个人 config 中的 low）"], ["隔离", "专用 `CODEX_HOME`（仅 auth.json + 2 行 config.toml）"], ["上限", "30 iteration"], ["提示", "EXP-010 英文标准提示，byte-identical（无需工具中立化变体），n=1"]]
+  },
+  "deviations": {
+    "ko": ["기록된 편차 없음. 게이트 기각 0회, 허위 신고 0회, 개입 0회.", "Codex 하네스이며 계측이 rollout 세션 누계 방식(ccusage와 다름)이라 Claude 계열 토큰 수치와의 직접 비교는 참고치다."],
+    "en": ["No recorded deviations. 0 gate rejections, 0 false claims, 0 interventions.", "This is the Codex harness and usage is measured as cumulative rollout session totals (unlike ccusage), so token figures compared directly with Claude-family runs are reference values only."],
+    "ja": ["記録された逸脱なし。ゲート却下0回、虚偽申告0回、介入0回。", "Codexハーネスであり、計測がrolloutセッション累計方式（ccusageとは異なる）のため、Claude系のトークン数値との直接比較は参考値。"],
+    "zh": ["无记录的偏差。门控驳回 0 次、虚假申报 0 次、干预 0 次。", "此为 Codex 框架，且计量为 rollout 会话累计方式（与 ccusage 不同），因此与 Claude 系列 token 数值的直接比较仅供参考。"]
+  },
+  "behavior": {
+    "ko": ["첫 `codex exec` 호출 한 번에서 구현, 공식 hurl vendoring, 자체 검증, `.ralph-done` 생성까지 완결했다(5분 46초, 세션 1개).", "산출 구조는 압축형으로 `src/app.ts` 436줄 단일 파일 + `server.ts` 12줄 + Prisma 스키마 60줄이며, 공식 hurl 13파일은 `api/hurl`로 vendored했다.", "커밋 3회(구현, 포트 정렬, 완료 마킹)."],
+    "en": ["Within the first `codex exec` call it completed implementation, vendoring of the official hurl files, self-verification and `.ralph-done` creation (5 min 46 s, 1 session).", "The output is compact: a single 436-line `src/app.ts`, a 12-line `server.ts` and a 60-line Prisma schema; the 13 official hurl files were vendored into `api/hurl`.", "3 commits (implementation, port alignment, completion marking)."],
+    "ja": ["最初の`codex exec`呼び出し1回で、実装・公式hurlのvendoring・自己検証・`.ralph-done`生成まで完結した（5分46秒、セッション1個）。", "成果物は圧縮型で、`src/app.ts` 436行の単一ファイル + `server.ts` 12行 + Prismaスキーマ60行、公式hurl 13ファイルは`api/hurl`にvendoredした。", "コミット3回（実装、ポート整合、完了マーキング）。"],
+    "zh": ["在首次 `codex exec` 调用中即完成实现、官方 hurl vendoring、自我验证和 `.ralph-done` 生成（5 分 46 秒，1 个会话）。", "产出结构紧凑：单文件 `src/app.ts` 436 行 + `server.ts` 12 行 + Prisma schema 60 行；13 个官方 hurl 文件被 vendored 到 `api/hurl`。", "提交 3 次（实现、端口对齐、完成标记）。"]
+  }
+}

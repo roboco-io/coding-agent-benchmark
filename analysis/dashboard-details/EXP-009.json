@@ -1,0 +1,28 @@
+{
+  "exp": "EXP-009",
+  "date": "2026-07-27",
+  "report": "experiments/009-opus5-ralph-en/report.md",
+  "runs": {
+    "opus5-1": {"iter": 1, "commits": 6},
+    "opus5-2": {"iter": 1, "commits": 6},
+    "opus5-3": {"iter": 1, "commits": 7}
+  },
+  "conditions": {
+    "ko": [["모델", "claude-opus-5 (`claude --model claude-opus-5`, 나머지 슬롯 기본값)"], ["연결", "Anthropic 네이티브"], ["격리", "비격리 (기본 `$HOME/.claude`). 격리 CLAUDE_CONFIG_DIR는 OAuth 키체인 제약으로 불가 확인, EXP-002 기준선도 동일한 비격리 환경"], ["상한", "10 iteration, `.ralph-done` 외부 검증 게이트(Hurl 13/13 미달 시 기각)"], ["프롬프트", "EXP-002 en 프롬프트 byte-identical (1,230 bytes), n=3"], ["채점", "매 iteration 하네스 Hurl 채점, 포트 자동 탐지"]],
+    "en": [["Model", "claude-opus-5 (`claude --model claude-opus-5`, other slots at defaults)"], ["Connection", "Anthropic native"], ["Isolation", "not isolated (default `$HOME/.claude`). Isolated CLAUDE_CONFIG_DIR was confirmed impossible because of the OAuth keychain; the EXP-002 baseline was also non-isolated"], ["Cap", "10 iterations, external `.ralph-done` gate (rejected below Hurl 13/13)"], ["Prompt", "EXP-002 en prompt, byte-identical (1,230 bytes), n=3"], ["Grading", "harness Hurl grading every iteration, port auto-detected"]],
+    "ja": [["モデル", "claude-opus-5（`claude --model claude-opus-5`、他のスロットはデフォルト）"], ["接続", "Anthropicネイティブ"], ["隔離", "非隔離（デフォルトの`$HOME/.claude`）。隔離CLAUDE_CONFIG_DIRはOAuthキーチェーンの制約で不可と確認、EXP-002基準線も同じ非隔離環境"], ["上限", "10 iteration、`.ralph-done`外部検証ゲート（Hurl 13/13未満は却下）"], ["プロンプト", "EXP-002 enプロンプトをbyte-identicalで使用（1,230 bytes）、n=3"], ["採点", "毎iterationでハーネスがHurl採点、ポート自動検出"]],
+    "zh": [["模型", "claude-opus-5（`claude --model claude-opus-5`，其余槽位为默认值）"], ["连接", "Anthropic 原生"], ["隔离", "未隔离（默认 `$HOME/.claude`）。已确认因 OAuth 钥匙串限制无法使用隔离 CLAUDE_CONFIG_DIR，EXP-002 基线也是同样的未隔离环境"], ["上限", "10 iteration，`.ralph-done` 外部验证门控（未达 Hurl 13/13 则驳回）"], ["提示", "EXP-002 en 提示，byte-identical（1,230 bytes），n=3"], ["评分", "每个 iteration 由框架进行 Hurl 评分，端口自动检测"]]
+  },
+  "deviations": {
+    "ko": ["게이트 반려·재실행·보류 없음. 3 run 모두 첫 `.ralph-done` 신고가 실제 완주였다.", "비격리 환경이라 EXP-008(격리)과의 환경 차이가 있고, 비교 대상 Opus 4.x 기준선은 n=2에 2026-07-24 실행이라 서빙 시점 차이가 있다."],
+    "en": ["No gate rejections, reruns or holds. In all 3 runs the first `.ralph-done` claim was the real completion.", "The environment is non-isolated, differing from EXP-008 (isolated), and the Opus 4.x baseline is n=2 run on 2026-07-24, so serving time differs."],
+    "ja": ["ゲート却下・再実行・保留なし。3 runとも最初の`.ralph-done`申告が実際の完走だった。", "非隔離環境のためEXP-008（隔離）との環境差があり、比較対象のOpus 4.x基準線はn=2で2026-07-24実行のため、サービング時点が異なる。"],
+    "zh": ["无门控驳回、重跑或保留。3 个 run 的首次 `.ralph-done` 申报即为真实完成。", "环境为未隔离，与 EXP-008（隔离）存在环境差异；对比的 Opus 4.x 基线为 n=2 且于 2026-07-24 运行，服务时点不同。"]
+  },
+  "behavior": {
+    "ko": ["3 run 모두 시키지 않은 README 문서화와 완료 기준 재검증 커밋을 수행했고, 커밋은 6–7개(4.x 기준선은 2–3개)였다.", "run-3은 Read 0회·hurl 14회의 테스트 주도, run-1은 Read 15회의 재독 주도로 전략이 달랐지만 모두 iteration 1 완주.", "output은 42.6–48.4K로 4.x(25.3–31.7K) 대비 약 62% 증가했고, 호출당 지연(8.3–12.4초)은 4.x와 겹쳤다.", "허락-대기·허위 신고·thinking 발동 0."],
+    "en": ["All 3 runs added an unrequested README and a completion-criteria re-verification commit, leaving 6–7 commits (the 4.x baseline left 2–3).", "run-3 was test-driven (0 Reads, 14 hurl runs) and run-1 re-read heavily (15 Reads); strategies differed but all finished at iteration 1.", "Output was 42.6–48.4K, about 62% above 4.x (25.3–31.7K), while per-call latency (8.3–12.4 s) overlapped with 4.x.", "Zero permission-waiting, false claims or thinking activations."],
+    "ja": ["3 runとも依頼されていないREADME作成と完了基準の再検証コミットを行い、コミットは6–7個（4.x基準線は2–3個）だった。", "run-3はRead 0回・hurl 14回のテスト駆動、run-1はRead 15回の再読駆動と戦略は異なったが、いずれもiteration 1で完走。", "outputは42.6–48.4Kで4.x（25.3–31.7K）より約62%増、呼び出しあたり遅延（8.3–12.4秒）は4.xと重なった。", "許可待ち・虚偽申告・thinking発動は0。"],
+    "zh": ["3 个 run 都执行了未被要求的 README 文档化和完成标准复验提交，提交数为 6–7 个（4.x 基线为 2–3 个）。", "run-3 为测试驱动（Read 0 次、hurl 14 次），run-1 为反复重读（Read 15 次），策略不同但都在 iteration 1 完成。", "output 为 42.6–48.4K，比 4.x（25.3–31.7K）增加约 62%，单次调用延迟（8.3–12.4 秒）与 4.x 重叠。", "等待许可、虚假申报、thinking 触发均为 0。"]
+  }
+}

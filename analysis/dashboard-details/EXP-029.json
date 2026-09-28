@@ -1,0 +1,229 @@
+{
+  "exp": "EXP-029",
+  "date": "2026-09-24",
+  "report": "experiments/029-pi-openweight/report.md",
+  "runs": {
+    "kimi-en-1": {
+      "iter": 1,
+      "commits": 3
+    },
+    "kimi-en-2": {
+      "iter": 1,
+      "commits": 3
+    },
+    "kimi-en-3": {
+      "iter": 1,
+      "commits": 4
+    },
+    "qwen-en-2": {
+      "iter": 1,
+      "commits": 4
+    },
+    "qwen-en-3": {
+      "iter": 1,
+      "commits": 5
+    },
+    "flash-en-1r": {
+      "iter": 1,
+      "commits": 4
+    },
+    "flash-en-2": {
+      "iter": 1,
+      "commits": 2
+    },
+    "flash-en-3": {
+      "iter": 1,
+      "commits": 3
+    },
+    "qwen-en-1": {
+      "iter": 5,
+      "commits": 12
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "pi coding agent 0.87.1 (`pi -p`, iteration마다 새 프로세스)"
+      ],
+      [
+        "연결",
+        "제공자 OpenAI 호환 엔드포인트 직결 (변환 계층 없음)"
+      ],
+      [
+        "모델 ID",
+        "moonshotai/kimi-k3 (Moonshot), dashscope/qwen3.8-max (DashScope intl, 사용자 정의 provider), deepseek/deepseek-flash (DeepSeek)"
+      ],
+      [
+        "thinking",
+        "pi 기본값 (관측: kimi high, qwen medium, flash high)"
+      ],
+      [
+        "격리",
+        "격리 (전용 PI_CODING_AGENT_DIR, 세션 분리, `-nc -ns -ne -np -na`, PI_OFFLINE=1)"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 4시간, 사람 개입 금지"
+      ],
+      [
+        "프롬프트",
+        "정본 EN, 모델별 n=3, 조건 교차 순차 실행"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "pi coding agent 0.87.1 (`pi -p`, new process per iteration)"
+      ],
+      [
+        "Connection",
+        "Provider OpenAI-compatible endpoint, direct (no translation layer)"
+      ],
+      [
+        "Model ID",
+        "moonshotai/kimi-k3 (Moonshot), dashscope/qwen3.8-max (DashScope intl, custom provider), deepseek/deepseek-flash (DeepSeek)"
+      ],
+      [
+        "Thinking",
+        "pi default (observed: kimi high, qwen medium, flash high)"
+      ],
+      [
+        "Isolation",
+        "isolated (dedicated PI_CODING_AGENT_DIR, separate sessions, `-nc -ns -ne -np -na`, PI_OFFLINE=1)"
+      ],
+      [
+        "Cap",
+        "30 iterations · 4 h per run, no human intervention"
+      ],
+      [
+        "Prompt",
+        "canonical EN, n=3 per model, conditions interleaved sequentially"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "pi coding agent 0.87.1（`pi -p`、iterationごとに新規プロセス）"
+      ],
+      [
+        "接続",
+        "提供者のOpenAI互換エンドポイントに直結（変換レイヤーなし）"
+      ],
+      [
+        "モデルID",
+        "moonshotai/kimi-k3（Moonshot）、dashscope/qwen3.8-max（DashScope intl、ユーザー定義provider）、deepseek/deepseek-flash（DeepSeek）"
+      ],
+      [
+        "thinking",
+        "piデフォルト（観測: kimi high、qwen medium、flash high）"
+      ],
+      [
+        "隔離",
+        "隔離（専用PI_CODING_AGENT_DIR、セッション分離、`-nc -ns -ne -np -na`、PI_OFFLINE=1）"
+      ],
+      [
+        "上限",
+        "30 iteration・runあたり4時間、人の介入禁止"
+      ],
+      [
+        "プロンプト",
+        "正本EN、モデルごとにn=3、条件交互に順次実行"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "pi coding agent 0.87.1（`pi -p`，每个 iteration 新进程）"
+      ],
+      [
+        "连接",
+        "直连提供方 OpenAI 兼容端点（无转换层）"
+      ],
+      [
+        "模型 ID",
+        "moonshotai/kimi-k3（Moonshot）、dashscope/qwen3.8-max（DashScope intl，自定义 provider）、deepseek/deepseek-flash（DeepSeek）"
+      ],
+      [
+        "thinking",
+        "pi 默认值（观测：kimi high、qwen medium、flash high）"
+      ],
+      [
+        "隔离",
+        "已隔离（专用 PI_CODING_AGENT_DIR，会话分离，`-nc -ns -ne -np -na`，PI_OFFLINE=1）"
+      ],
+      [
+        "上限",
+        "30 iteration · 每 run 4 小时，禁止人工干预"
+      ],
+      [
+        "提示",
+        "标准 EN，每个模型 n=3，条件交替顺序执行"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "Qwen: D-1 — qwen-en-1의 iteration 1-4는 VS Code Live Preview가 127.0.0.1:3000을 점유해 채점 요청이 앱이 아닌 그 서비스로 간 것으로 추정되는 거짓 음성(0/13)이었다. 에이전트가 포트를 3002로 바꾼 iteration 5에 통과했다(추정이며 당시 lsof 스냅샷은 없음).",
+      "Qwen: iteration 1 종료 커밋 c53937d를 포트 비점유 상태에서 재채점하니 2회 모두 13/154였다. qwen-en-1의 iteration 5·29.0분은 교란이 포함된 값이고, 교란이 없었다면 iteration 1(약 20분) 완주였을 것으로 추정한다(재실행으로 확인하지 않음).",
+      "Qwen: D-2 — qwen-en-3에서 스트림 1건이 terminated로 끊겼으나 같은 세션이 이어져 iteration 1에 완주했다.",
+      "Flash: D-3 — 원 flash-en-1(7.7분)은 VS Code helper가 3000·3001을 점유해 자체 테스트가 두 번 대기 시간 초과했다. 사용자 결정으로 같은 설정의 flash-en-1r(4.1분)로 대체했고 집계에는 1r을 쓴다. 대체 run은 약 2.5시간 뒤에 실행돼 시점이 다르다.",
+      "커밋 수는 보고서에 없어, 2026-09-29에 보관된 앱 리포(`$HOME/ralph-exp029/app-<run>`)의 git 커밋 수를 셌다(기존 대시보드 값과 일치).",
+      "Qwen: qwen3.8-max는 API 전용 모델일 수 있어 엄밀한 오픈웨이트가 아닐 가능성이 있다(미확인)."
+    ],
+    "en": [
+      "Qwen: D-1 — iterations 1-4 of qwen-en-1 were false negatives (0/13), presumably because VS Code Live Preview held 127.0.0.1:3000 and grading requests went to that service rather than the app. It passed at iteration 5, after the agent moved the port to 3002 (presumption; no lsof snapshot was taken at the time).",
+      "Qwen: re-grading the iteration 1 end commit c53937d with the port free gave 13/154 twice. The iteration 5 and 29.0 minutes of qwen-en-1 include the disturbance; without it the run is presumed to have finished at iteration 1 (about 20 minutes), not confirmed by a rerun.",
+      "Qwen: D-2 — in qwen-en-3 one stream was cut off as terminated, but the same session continued and finished at iteration 1.",
+      "Flash: D-3 — the original flash-en-1 (7.7 min) had its own tests time out twice because a VS Code helper held ports 3000 and 3001. By user decision it was replaced with flash-en-1r (4.1 min) using the same settings, and aggregation uses 1r. The replacement ran about 2.5 hours later, so its timing differs.",
+      "The report does not state commit counts; they were counted from the archived app repos (`$HOME/ralph-exp029/app-<run>`) on 2026-09-29 and match the existing dashboard values.",
+      "Qwen: qwen3.8-max may be an API-only model and thus not strictly open-weight (unconfirmed)."
+    ],
+    "ja": [
+      "Qwen: D-1 — qwen-en-1のiteration 1-4は、VS Code Live Previewが127.0.0.1:3000を占有し採点リクエストがアプリではなくそのサービスへ行ったと推定される偽陰性（0/13）だった。エージェントがポートを3002に変えたiteration 5で合格した（推定。当時のlsofスナップショットはない）。",
+      "Qwen: iteration 1終了コミットc53937dをポート非占有状態で再採点すると2回とも13/154だった。qwen-en-1のiteration 5・29.0分は攪乱を含む値で、攪乱がなければiteration 1（約20分）で完走したと推定する（再実行では未確認）。",
+      "Qwen: D-2 — qwen-en-3でストリーム1件がterminatedで切れたが、同じセッションが続きiteration 1で完走した。",
+      "Flash: D-3 — 元のflash-en-1（7.7分）はVS Code helperが3000・3001を占有し、自己テストが2回タイムアウトした。ユーザー判断で同一設定のflash-en-1r（4.1分）に置き換え、集計には1rを使う。置換runは約2.5時間後に実行されたため時点が異なる。",
+      "コミット数は報告書に記載がないため、2026-09-29に保管済みのアプリリポ（`$HOME/ralph-exp029/app-<run>`）のgitコミット数を数えた（既存のダッシュボード値と一致）。",
+      "Qwen: qwen3.8-max はAPI専用モデルの可能性があり、厳密なオープンウェイトではないかもしれない（未確認）。"
+    ],
+    "zh": [
+      "Qwen：D-1 — qwen-en-1 的 iteration 1-4 是假阴性（0/13），推测是 VS Code Live Preview 占用了 127.0.0.1:3000，评分请求被发到该服务而非应用。代理把端口改为 3002 的 iteration 5 通过（推测；当时没有 lsof 快照）。",
+      "Qwen：在端口空闲状态下重新评分 iteration 1 结束提交 c53937d，两次均为 13/154。qwen-en-1 的 iteration 5 与 29.0 分钟含干扰；若无干扰，推测会在 iteration 1（约 20 分钟）完成（未经重跑确认）。",
+      "Qwen：D-2 — qwen-en-3 中有 1 次流以 terminated 中断，但同一会话继续并在 iteration 1 完成。",
+      "Flash：D-3 — 原 flash-en-1（7.7 分钟）因 VS Code helper 占用 3000·3001，自测两次超时。经用户决定以相同设置的 flash-en-1r（4.1 分钟）替换，汇总使用 1r。替换 run 晚约 2.5 小时执行，时点不同。",
+      "报告未记录提交数；于 2026-09-29 统计了归档应用仓库（`$HOME/ralph-exp029/app-<run>`）的 git 提交数，与现有仪表板数值一致。",
+      "Qwen：qwen3.8-max 可能是仅 API 的模型，未必严格属于开放权重（未确认）。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "Kimi: 3 run 모두 iteration 1 완주, 세션 9.5-9.9분·output 17.4-18.7K로 시간·output 편차가 가장 작았다.",
+      "Qwen: qwen-en-2·3은 iteration 1 완주(15.6분·18.7분), 응답 수 136/42/41회로 qwen-en-1이 가장 많았다. 시간이 긴 이유는 요청별 지연을 계측하지 않아 확인하지 못했다(가설).",
+      "Flash: 3 run 모두 iteration 1 완주, 세션 1.9-4.1분으로 이 리포 관측 중 최단 완주 세션(1.9분)을 포함한다.",
+      "Kimi 등 에이전트가 PATH의 hurl이 npm @hurl/cli임을 스스로 발견해 자기 스크립트에서 Homebrew Hurl을 찾도록 우회했다. 판정은 하네스 절대 경로 채점기로 했으므로 영향이 없다.",
+      "pi는 변환 계층 없이 세 모델 모두에서 도구 호출을 문제없이 수행했고 하네스 트러블슈팅은 0건이었다."
+    ],
+    "en": [
+      "Kimi: all 3 runs finished at iteration 1, with 9.5-9.9 minutes and 17.4-18.7K output, the smallest spread in time and output.",
+      "Qwen: qwen-en-2 and 3 finished at iteration 1 (15.6 and 18.7 minutes); response counts were 136, 42 and 41 for en-1, 2 and 3 (en-1 the most). The reason for the long times was not confirmed because per-request latency was not measured (hypothesis).",
+      "Flash: all 3 runs finished at iteration 1 in 1.9-4.1 minutes, including the shortest completed session (1.9 min) observed in this repo.",
+      "Agents such as kimi found by themselves that PATH's hurl is npm @hurl/cli and worked around it in their own scripts to find Homebrew Hurl. The verdict used the harness's absolute-path grader, so it was unaffected.",
+      "pi performed tool calls on all three models without a translation layer, with zero harness troubleshooting."
+    ],
+    "ja": [
+      "Kimi: 3 runともiteration 1で完走、セッション9.5-9.9分・output 17.4-18.7Kで、時間・outputのばらつきが最小だった。",
+      "Qwen: qwen-en-2・3はiteration 1で完走（15.6分・18.7分）、応答数はen-1・2・3で136/42/41回とen-1が最多だった。時間が長い理由はリクエストごとの遅延を計測しておらず確認できていない（仮説）。",
+      "Flash: 3 runともiteration 1で完走、セッション1.9-4.1分で、このリポの観測で最短の完走セッション（1.9分）を含む。",
+      "kimiなどのエージェントがPATHのhurlがnpm @hurl/cliであることを自力で発見し、自分のスクリプトでHomebrew Hurlを探すよう回避した。判定はハーネスの絶対パス採点器で行ったため影響はない。",
+      "piは変換レイヤーなしで3モデルすべてでツール呼び出しを問題なく実行し、ハーネスのトラブルシューティングは0件だった。"
+    ],
+    "zh": [
+      "Kimi：3 个 run 均在 iteration 1 完成，会话 9.5-9.9 分钟、output 17.4-18.7K，时间与 output 的离散度最小。",
+      "Qwen：qwen-en-2·3 在 iteration 1 完成（15.6 分与 18.7 分），en-1·2·3 的响应数为 136/42/41 次（en-1 最多）。耗时长的原因未测量每请求延迟，无法确认（假设）。",
+      "Flash：3 个 run 均在 iteration 1 完成，会话 1.9-4.1 分钟，其中包含本仓库观测到的最短完成会话（1.9 分钟）。",
+      "kimi 等代理自行发现 PATH 中的 hurl 是 npm @hurl/cli，并在自己的脚本中绕过去寻找 Homebrew Hurl。判定使用框架的绝对路径评分器，因此不受影响。",
+      "pi 在无转换层的情况下对三个模型都顺利完成了工具调用，框架故障排查为 0 次。"
+    ]
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "exp": "EXP-016",
+  "date": "2026-08-04",
+  "report": "experiments/016-n3-replication/report.md",
+  "runs": {
+    "sol-2": {
+      "iter": 2,
+      "commits": 4
+    },
+    "sol-3": {
+      "iter": 1,
+      "commits": 4
+    },
+    "qwen-2": {
+      "iter": 1,
+      "commits": 6
+    },
+    "qwen-3": {
+      "iter": 1,
+      "commits": 6
+    },
+    "kimi-2": {
+      "iter": 1,
+      "commits": 2
+    },
+    "kimi-3": {
+      "iter": 1,
+      "commits": 1
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "대상",
+        "EXP-011(Codex×gpt-5.6-sol)·EXP-013(qwen3.8-max 직결)·EXP-014(kimi-k3 직결)의 run 2·3 추가 (각 n=3)"
+      ],
+      [
+        "에이전트",
+        "gpt-5.6-sol: Codex CLI (effort medium) / qwen·kimi: Claude Code"
+      ],
+      [
+        "연결",
+        "qwen3.8-max: DashScope 직결 / kimi-k3: Moonshot 직결 / gpt-5.6-sol: Codex CLI"
+      ],
+      [
+        "모델 ID",
+        "gpt-5.6-sol, qwen3.8-max, kimi-k3"
+      ],
+      [
+        "thinking",
+        "qwen·kimi는 기본값, gpt-5.6-sol은 effort medium"
+      ],
+      [
+        "격리",
+        "원 실험과 동일 (전용 설정 디렉터리, 독립 리포)"
+      ],
+      [
+        "상한",
+        "30 iteration"
+      ],
+      [
+        "프롬프트",
+        "EXP-010 정본(EN) byte-identical"
+      ],
+      [
+        "실행",
+        "순차·교차 (sol-2, qwen-2, kimi-2, sol-3, qwen-3, kimi-3)"
+      ],
+      [
+        "게이트",
+        "measure v4 (EXP-015 오검 부검 결과를 run 시작 전에 사전 등록)"
+      ]
+    ],
+    "en": [
+      [
+        "Scope",
+        "Adds runs 2 and 3 to EXP-011 (Codex×gpt-5.6-sol), EXP-013 (qwen3.8-max direct) and EXP-014 (kimi-k3 direct), n=3 each"
+      ],
+      [
+        "Agent",
+        "gpt-5.6-sol: Codex CLI (effort medium) / qwen, kimi: Claude Code"
+      ],
+      [
+        "Connection",
+        "qwen3.8-max: DashScope direct / kimi-k3: Moonshot direct / gpt-5.6-sol: Codex CLI"
+      ],
+      [
+        "Model ID",
+        "gpt-5.6-sol, qwen3.8-max, kimi-k3"
+      ],
+      [
+        "Thinking",
+        "qwen and kimi default; gpt-5.6-sol effort medium"
+      ],
+      [
+        "Isolation",
+        "same as the original experiments (dedicated config directories, independent repos)"
+      ],
+      [
+        "Cap",
+        "30 iterations"
+      ],
+      [
+        "Prompt",
+        "EXP-010 canonical (EN), byte-identical"
+      ],
+      [
+        "Execution",
+        "sequential, interleaved (sol-2, qwen-2, kimi-2, sol-3, qwen-3, kimi-3)"
+      ],
+      [
+        "Gate",
+        "measure v4 (EXP-015 false-rejection fix, pre-registered before the runs)"
+      ]
+    ],
+    "ja": [
+      [
+        "対象",
+        "EXP-011（Codex×gpt-5.6-sol）・EXP-013（qwen3.8-max直結）・EXP-014（kimi-k3直結）にrun 2・3を追加（各n=3）"
+      ],
+      [
+        "エージェント",
+        "gpt-5.6-sol：Codex CLI（effort medium）/ qwen・kimi：Claude Code"
+      ],
+      [
+        "接続",
+        "qwen3.8-max：DashScope直結 / kimi-k3：Moonshot直結 / gpt-5.6-sol：Codex CLI"
+      ],
+      [
+        "モデルID",
+        "gpt-5.6-sol, qwen3.8-max, kimi-k3"
+      ],
+      [
+        "thinking",
+        "qwen・kimiはデフォルト、gpt-5.6-solはeffort medium"
+      ],
+      [
+        "隔離",
+        "元の実験と同一（専用設定ディレクトリ、独立リポ）"
+      ],
+      [
+        "上限",
+        "30 iteration"
+      ],
+      [
+        "プロンプト",
+        "EXP-010正本（EN）byte-identical"
+      ],
+      [
+        "実行",
+        "順次・交互（sol-2, qwen-2, kimi-2, sol-3, qwen-3, kimi-3）"
+      ],
+      [
+        "ゲート",
+        "measure v4（EXP-015の誤検出修正をrun開始前に事前登録）"
+      ]
+    ],
+    "zh": [
+      [
+        "对象",
+        "为 EXP-011（Codex×gpt-5.6-sol）·EXP-013（qwen3.8-max 直连）·EXP-014（kimi-k3 直连）追加 run 2·3（各 n=3）"
+      ],
+      [
+        "代理",
+        "gpt-5.6-sol：Codex CLI（effort medium）/ qwen·kimi：Claude Code"
+      ],
+      [
+        "连接",
+        "qwen3.8-max：DashScope 直连 / kimi-k3：Moonshot 直连 / gpt-5.6-sol：Codex CLI"
+      ],
+      [
+        "模型 ID",
+        "gpt-5.6-sol, qwen3.8-max, kimi-k3"
+      ],
+      [
+        "thinking",
+        "qwen·kimi 默认值，gpt-5.6-sol 为 effort medium"
+      ],
+      [
+        "隔离",
+        "与原实验相同（专用配置目录，独立仓库）"
+      ],
+      [
+        "上限",
+        "30 iteration"
+      ],
+      [
+        "提示",
+        "EXP-010 标准（EN）byte-identical"
+      ],
+      [
+        "执行",
+        "顺序·交替（sol-2, qwen-2, kimi-2, sol-3, qwen-3, kimi-3）"
+      ],
+      [
+        "门控",
+        "measure v4（EXP-015 误判修复，在 run 开始前预先登记）"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 반려·오검·허위 신고·하네스 개입은 0건이다. 6 run 모두 measure v4 2회 재검증이 13/13·154/154로 일치했다.",
+      "gpt-5.6-sol: sol-2는 iteration 1에서 게이트가 2/62로 미통과해 iteration 2에서 완주했다(랄프 루프가 정상 흡수). 이 조건의 나머지 run은 iter 1 완주다.",
+      "원 run(sol-1·qwen-1·kimi-1)과 시점이 1-8일 차이 나 서빙 변동이 시간·output 변동에 섞였을 수 있다. 원인 분해는 불가하다.",
+      "Codex는 rollout 누계, 직결은 세션 jsonl로 계측 방식이 달라 조건 간 output 직접 비교는 금지된다."
+    ],
+    "en": [
+      "There were 0 gate rejections, false rejections, false claims or harness interventions. Re-verification with measure v4 twice matched 13/13 and 154/154 for all 6 runs.",
+      "gpt-5.6-sol: sol-2 did not pass the gate at iteration 1 (2/62) and completed at iteration 2 (the Ralph loop absorbed it normally). The other runs of this condition completed at iter 1.",
+      "The original runs (sol-1, qwen-1, kimi-1) are 1-8 days apart in time, so serving variation may be mixed into time and output variation. It cannot be decomposed.",
+      "Codex is measured by rollout totals and the direct stacks by session jsonl, so output must not be compared directly across conditions."
+    ],
+    "ja": [
+      "ゲート却下・誤検出・虚偽申告・ハーネス介入は0件。6 runすべてでmeasure v4による2回の再検証が13/13・154/154で一致した。",
+      "gpt-5.6-sol：sol-2はiteration 1でゲートが2/62で未通過となり、iteration 2で完走した（ラルフループが正常に吸収）。この条件の他のrunはiter 1完走。",
+      "元のrun（sol-1・qwen-1・kimi-1）とは時点が1-8日異なり、提供側の変動が時間・outputの変動に混ざっている可能性がある。原因の分解は不可。",
+      "Codexはrollout累計、直結はセッションjsonlと計測方式が異なるため、条件間のoutput直接比較は禁止。"
+    ],
+    "zh": [
+      "门控驳回、误判、虚假申报、框架干预均为 0 次。6 个 run 用 measure v4 两次复验均与 13/13·154/154 一致。",
+      "gpt-5.6-sol：sol-2 在 iteration 1 门控为 2/62 未通过，于 iteration 2 完成（Ralph 循环正常吸收）。该条件的其余 run 均在 iter 1 完成。",
+      "与原 run（sol-1·qwen-1·kimi-1）时点相差 1-8 天，服务端波动可能混入时间和 output 的波动，无法分解原因。",
+      "Codex 按 rollout 累计、直连按会话 jsonl 计量，计量方式不同，禁止跨条件直接比较 output。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "kimi-k3: 원 run 21분에서 7-8분대로 줄었고 커밋은 4에서 1-2로, output은 31K에서 14K로 절반 이하가 되어 궤적 프로파일 자체가 달라졌다.",
+      "qwen3.8-max: 커밋 6·6(원 run 4), output 37-41K로 원 run과 비슷한 분포다.",
+      "gpt-5.6-sol: sol-2가 iter 2·10분 00초·output 21.8K로 가장 길었고, sol-3은 5분 17초·12.2K였다.",
+      "보고서는 n=3으로도 효율 순위 서사는 불가하며 완주율만 안정된 지표라고 결론지었다."
+    ],
+    "en": [
+      "kimi-k3: dropped from 21 min in the original run to 7-8 min, commits from 4 to 1-2 and output from 31K to 14K (less than half), so the trajectory profile itself changed.",
+      "qwen3.8-max: 6 and 6 commits (original run 4) and output 37-41K, a distribution similar to the original run.",
+      "gpt-5.6-sol: sol-2 was the longest at iter 2, 10 min 00 s and 21.8K output; sol-3 took 5 min 17 s and 12.2K.",
+      "The report concludes that even with n=3 no efficiency-ranking narrative is possible; only the completion rate is a stable metric."
+    ],
+    "ja": [
+      "kimi-k3：元のrunの21分から7-8分台に短縮し、コミットは4から1-2、outputは31Kから14Kと半分以下になり、軌跡プロファイル自体が変わった。",
+      "qwen3.8-max：コミット6・6（元のrunは4）、output 37-41Kで、元のrunと近い分布。",
+      "gpt-5.6-sol：sol-2がiter 2・10分00秒・output 21.8Kで最長、sol-3は5分17秒・12.2Kだった。",
+      "報告書は、n=3でも効率順位の物語は不可で、完走率のみが安定した指標だと結論づけた。"
+    ],
+    "zh": [
+      "kimi-k3：从原 run 的 21 分钟缩短到 7-8 分钟，提交从 4 降到 1-2，output 从 31K 降到 14K（不到一半），轨迹特征本身发生了变化。",
+      "qwen3.8-max：提交 6 和 6（原 run 为 4），output 37-41K，分布与原 run 相近。",
+      "gpt-5.6-sol：sol-2 在 iter 2、10 分 00 秒、output 21.8K 最长，sol-3 为 5 分 17 秒、12.2K。",
+      "报告结论是：即使 n=3 也无法形成效率排名叙事，只有完成率是稳定指标。"
+    ]
+  }
+}

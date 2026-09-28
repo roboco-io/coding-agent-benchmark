@@ -1,0 +1,193 @@
+{
+ "exp": "EXP-023",
+ "date": "2026-09-16",
+ "report": "experiments/023-fable51-ralph/report.md",
+ "runs": {
+  "fable-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "fable-2": {
+   "iter": 1,
+   "commits": 3
+  },
+  "fable-3": {
+   "iter": 1,
+   "commits": 2
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Claude Code 2.1.273 (`claude -p --dangerously-skip-permissions`)"
+   ],
+   [
+    "연결",
+    "Anthropic 네이티브, 구독 OAuth"
+   ],
+   [
+    "모델 ID",
+    "claude-fable-5-1"
+   ],
+   [
+    "thinking",
+    "기본값"
+   ],
+   [
+    "격리",
+    "비격리 (기본 `$HOME/.claude`, 글로벌 CLAUDE.md·MCP·언어 설정 노출)"
+   ],
+   [
+    "상한",
+    "10 iteration"
+   ],
+   [
+    "프롬프트",
+    "EN 정본, n=3 순차"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Claude Code 2.1.273 (`claude -p --dangerously-skip-permissions`)"
+   ],
+   [
+    "Connection",
+    "Anthropic native, subscription OAuth"
+   ],
+   [
+    "Model ID",
+    "claude-fable-5-1"
+   ],
+   [
+    "Thinking",
+    "default"
+   ],
+   [
+    "Isolation",
+    "not isolated (default `$HOME/.claude`; global CLAUDE.md, MCP and language settings exposed)"
+   ],
+   [
+    "Cap",
+    "10 iterations"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3 sequential"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Claude Code 2.1.273（`claude -p --dangerously-skip-permissions`）"
+   ],
+   [
+    "接続",
+    "Anthropicネイティブ、サブスクリプションOAuth"
+   ],
+   [
+    "モデルID",
+    "claude-fable-5-1"
+   ],
+   [
+    "thinking",
+    "デフォルト"
+   ],
+   [
+    "隔離",
+    "非隔離（デフォルトの`$HOME/.claude`、グローバルCLAUDE.md・MCP・言語設定が露出）"
+   ],
+   [
+    "上限",
+    "10 iteration"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3を順次実行"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Claude Code 2.1.273（`claude -p --dangerously-skip-permissions`）"
+   ],
+   [
+    "连接",
+    "Anthropic 原生，订阅 OAuth"
+   ],
+   [
+    "模型 ID",
+    "claude-fable-5-1"
+   ],
+   [
+    "thinking",
+    "默认值"
+   ],
+   [
+    "隔离",
+    "未隔离（默认 `$HOME/.claude`，暴露全局 CLAUDE.md·MCP·语言设置）"
+   ],
+   [
+    "上限",
+    "10 iteration"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3 顺序执行"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음. 채점기 hurl은 절대 경로 고정으로 오검 0건.",
+   "비격리 조건이라 글로벌 MCP(context7)와 언어 설정이 노출됐다. 2/3 run이 context7을 1-3회 호출했고 3 run 모두 최종 요약 메시지가 한국어였다(산출물 언어에는 영향 없음).",
+   "Opus 5 기준선과 약 7주의 시점 차·CLI 버전 차가 있고 당시 글로벌 설정 내용이 달랐을 수 있어 속도·산출량 차이의 원인은 분해할 수 없다.",
+   "구독 플랜 실행이라 달러 산출은 없다."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds. The grader's hurl was pinned to an absolute path, with zero false rejections.",
+   "Not isolated, so the global MCP (context7) and language setting were exposed. 2 of 3 runs called context7 1-3 times, and the final summary message was in Korean in all 3 runs (deliverable language unaffected).",
+   "There is a gap of about 7 weeks and a CLI version difference from the Opus 5 baseline, and the global settings may have differed then, so the cause of speed and output differences cannot be separated.",
+   "Runs used a subscription plan, so no dollar figure was computed."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。採点器のhurlは絶対パス固定で誤検知0件。",
+   "非隔離のためグローバルMCP（context7）と言語設定が露出した。3 runのうち2 runがcontext7を1-3回呼び出し、3 runすべてで最終要約メッセージが韓国語だった（成果物の言語には影響なし）。",
+   "Opus 5基準線とは約7週間の時点差・CLIバージョン差があり、当時のグローバル設定が異なる可能性もあるため、速度・出力量の差の原因は分解できない。",
+   "サブスクリプションプランでの実行のためドル算出はない。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。评分器的 hurl 固定为绝对路径，误判为 0。",
+   "因未隔离，全局 MCP（context7）和语言设置被暴露。3 个 run 中 2 个调用了 context7 1-3 次，3 个 run 的最终总结消息均为韩语（不影响产物语言）。",
+   "与 Opus 5 基线存在约 7 周的时间差和 CLI 版本差，且当时的全局设置可能不同，因此无法拆分速度和输出量差异的原因。",
+   "使用订阅套餐运行，未计算美元金额。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 합계 Bash 71회에 Write 2회뿐이고 Read/Edit는 0회였다. 파일 작성·확인을 대부분 heredoc·cat으로 처리했다.",
+   "도구 호출: fable-1은 Bash 21·context7 3·ToolSearch 1, fable-2는 Bash 29·Write 2·context7 2, fable-3은 Bash 21뿐이다.",
+   "API 호출 22-34회, 커밋 2-4회. run마다 커밋 분할이 달라(4, 3, 2) 스타일 판단은 유보.",
+   "Bash 우선이 모델 고유 성향인지 비격리 환경 지침의 영향인지는 격리 조건에서 재확인이 필요하다."
+  ],
+  "en": [
+   "Across the 3 runs there were 71 Bash calls, only 2 Write calls and 0 Read/Edit; files were mostly written and checked with heredocs and cat.",
+   "Tool calls: fable-1 Bash 21, context7 3, ToolSearch 1; fable-2 Bash 29, Write 2, context7 2; fable-3 Bash 21 only.",
+   "22-34 API calls and 2-4 commits. Commit splitting differed by run (4, 3, 2), so no judgement on style is made.",
+   "Whether the Bash-first tendency is model-specific or an effect of guidance exposed in the non-isolated setup needs a re-check under isolation."
+  ],
+  "ja": [
+   "3 run合計でBash 71回に対しWriteは2回のみ、Read/Editは0回。ファイルの作成・確認はほぼheredocとcatで行った。",
+   "ツール呼び出し: fable-1はBash 21・context7 3・ToolSearch 1、fable-2はBash 29・Write 2・context7 2、fable-3はBash 21のみ。",
+   "API呼び出し22-34回、コミット2-4回。runごとにコミット分割が異なる（4、3、2）ためスタイルの判断は保留。",
+   "Bash優先がモデル固有の傾向か非隔離環境の指示の影響かは、隔離条件での再確認が必要。"
+  ],
+  "zh": [
+   "3 个 run 合计 Bash 71 次，Write 仅 2 次，Read/Edit 为 0；文件的编写和确认主要靠 heredoc 与 cat。",
+   "工具调用：fable-1 为 Bash 21·context7 3·ToolSearch 1，fable-2 为 Bash 29·Write 2·context7 2，fable-3 仅 Bash 21。",
+   "API 调用 22-34 次，提交 2-4 次。各 run 的提交拆分不同（4、3、2），因此不对风格下判断。",
+   "Bash 优先是模型自身倾向还是未隔离环境中暴露的指示所致，需要在隔离条件下重新确认。"
+  ]
+ }
+}

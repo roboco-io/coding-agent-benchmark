@@ -1,0 +1,213 @@
+{
+ "exp": "EXP-030",
+ "date": "2026-09-24",
+ "report": "experiments/030-pi-frontier/report.md",
+ "runs": {
+  "opus-en-1": {
+   "iter": 1,
+   "commits": 3
+  },
+  "opus-en-2": {
+   "iter": 1,
+   "commits": 2
+  },
+  "opus-en-3": {
+   "iter": 1,
+   "commits": 4
+  },
+  "sol-en-1": {
+   "iter": 1,
+   "commits": 2
+  },
+  "sol-en-2": {
+   "iter": 1,
+   "commits": 2
+  },
+  "sol-en-3": {
+   "iter": 1,
+   "commits": 2
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "pi coding agent 0.87.1 (`pi -p`, iteration마다 새 프로세스)"
+   ],
+   [
+    "연결",
+    "Opus: Anthropic API(Messages) 직결, API 키 / sol: ChatGPT 구독 OAuth(Codex 백엔드)"
+   ],
+   [
+    "모델 ID",
+    "anthropic/claude-opus-5-5, openai-codex/gpt-6-sol"
+   ],
+   [
+    "thinking",
+    "pi 기본값 (관측: 두 모델 모두 medium)"
+   ],
+   [
+    "격리",
+    "격리 (전용 PI_CODING_AGENT_DIR, `-nc -ns -ne -np -na`, PI_OFFLINE=1)"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간, 사람 개입 금지"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, 모델별 n=3, 교차 순차 실행"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "pi coding agent 0.87.1 (`pi -p`, new process per iteration)"
+   ],
+   [
+    "Connection",
+    "Opus: Anthropic API (Messages) direct, API key / sol: ChatGPT subscription OAuth (Codex backend)"
+   ],
+   [
+    "Model ID",
+    "anthropic/claude-opus-5-5, openai-codex/gpt-6-sol"
+   ],
+   [
+    "Thinking",
+    "pi default (observed: medium for both models)"
+   ],
+   [
+    "Isolation",
+    "isolated (dedicated PI_CODING_AGENT_DIR, `-nc -ns -ne -np -na`, PI_OFFLINE=1)"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3 per model, interleaved sequentially"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "pi coding agent 0.87.1（`pi -p`、iterationごとに新規プロセス）"
+   ],
+   [
+    "接続",
+    "Opus: Anthropic API（Messages）直結、APIキー / sol: ChatGPTサブスクリプションOAuth（Codexバックエンド）"
+   ],
+   [
+    "モデルID",
+    "anthropic/claude-opus-5-5、openai-codex/gpt-6-sol"
+   ],
+   [
+    "thinking",
+    "piデフォルト（観測: 両モデルともmedium）"
+   ],
+   [
+    "隔離",
+    "隔離（専用PI_CODING_AGENT_DIR、`-nc -ns -ne -np -na`、PI_OFFLINE=1）"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間、人の介入禁止"
+   ],
+   [
+    "プロンプト",
+    "正本EN、モデルごとにn=3、交互に順次実行"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "pi coding agent 0.87.1（`pi -p`，每个 iteration 新进程）"
+   ],
+   [
+    "连接",
+    "Opus：直连 Anthropic API（Messages），API 密钥 / sol：ChatGPT 订阅 OAuth（Codex 后端）"
+   ],
+   [
+    "模型 ID",
+    "anthropic/claude-opus-5-5、openai-codex/gpt-6-sol"
+   ],
+   [
+    "thinking",
+    "pi 默认值（观测：两个模型均为 medium）"
+   ],
+   [
+    "隔离",
+    "已隔离（专用 PI_CODING_AGENT_DIR，`-nc -ns -ne -np -na`，PI_OFFLINE=1）"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时，禁止人工干预"
+   ],
+   [
+    "提示",
+    "标准 EN，每个模型 n=3，交替顺序执行"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "기록된 편차 없음. 게이트 반려·재실행·보류·스트림 오류가 없었고, 재검증 중 measure.sh가 서버를 정리하며 낸 Killed: 9 메시지는 정상 정리 절차다.",
+   "Sol: ChatGPT 구독 OAuth로 실행해 run별 실제 지출이 없고 대시보드의 환산 비용은 API 단가 추정치다. 구독 한도 소진량은 계측하지 않았다.",
+   "Opus: Anthropic API 키로 과금됐으나 실제 청구액은 확인하지 않았다.",
+   "격리 디렉터리에 복사한 auth.json에 deepseek API 키 항목도 들어 있었으나 이번 조건에서는 쓰이지 않았다.",
+   "네이티브 기준선(EXP-026·027)과는 에이전트·API 경로·시점이 함께 달라 차이를 조합 전체의 차이로만 읽는다."
+  ],
+  "en": [
+   "No deviations recorded. There were no gate rejections, reruns, holds or stream errors; the Killed: 9 message printed by measure.sh while cleaning up the server during re-verification is the normal cleanup procedure.",
+   "Sol: run via ChatGPT subscription OAuth, so there was no per-run actual spend and the dashboard cost is an API-price estimate. Subscription quota consumption was not measured.",
+   "Opus: billed through an Anthropic API key, but the actual invoice was not checked.",
+   "The auth.json copied into the isolated directory also held a deepseek API key entry, which was not used in this condition.",
+   "Versus the native baselines (EXP-026, 027), agent, API path and timing all differ, so differences are read only as differences of the whole combination."
+  ],
+  "ja": [
+   "記録された逸脱なし。ゲート却下・再実行・保留・ストリームエラーはなく、再検証中にmeasure.shがサーバを片付ける際に出たKilled: 9メッセージは正常な後片付け手順である。",
+   "Sol: ChatGPTサブスクリプションOAuthで実行したためrunごとの実支出はなく、ダッシュボードの換算コストはAPI単価の推定値である。サブスクリプション枠の消費量は計測していない。",
+   "Opus: Anthropic APIキーで課金されたが、実際の請求額は確認していない。",
+   "隔離ディレクトリにコピーしたauth.jsonにはdeepseek APIキーの項目も含まれていたが、この条件では使われていない。",
+   "ネイティブ基準線（EXP-026・027）とはエージェント・API経路・時点が共に異なるため、差は組み合わせ全体の差としてのみ読む。"
+  ],
+  "zh": [
+   "无记录的偏差。没有门控驳回、重跑、保留或流错误；重新验证时 measure.sh 清理服务器输出的 Killed: 9 消息属于正常清理流程。",
+   "Sol：通过 ChatGPT 订阅 OAuth 运行，因此每个 run 没有实际支出，仪表盘的换算成本是按 API 价格的估算值。订阅额度消耗未测量。",
+   "Opus：通过 Anthropic API 密钥计费，但未核对实际账单。",
+   "复制到隔离目录的 auth.json 中还含有 deepseek API 密钥条目，本条件未使用。",
+   "与原生基准线（EXP-026·027）相比，代理、API 路径和时点都不同，因此差异只能作为整体组合的差异来解读。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "Opus 5.5: pi의 도구 넷 중 bash만 썼다(run당 17-27회, 파일 작성도 셸 heredoc). 3 run 모두 iteration 1 완주, 세션 3.1-4.9분, 커밋 2-4회.",
+   "gpt-6-sol: bash 17-23회에 write·edit·read를 함께 썼다. 3 run 모두 iteration 1 완주, 세션 4.2-5.6분, 커밋 2회.",
+   "두 조건 모두 세션 안에서 PATH의 hurl이 npm @hurl/cli라는 점을 다뤘다. 판정은 하네스 절대 경로 채점기로 했으므로 영향이 없다.",
+   "pi 조합의 output이 네이티브 기준선 범위의 아래쪽에 있었다(opus 16.6-19.8K vs EXP-026 18.6-28.2K, sol 7.0-8.6K vs EXP-027 10.4-11.0K). pi의 짧은 시스템 프롬프트·작은 도구 집합 때문일 수 있다는 것은 검증하지 않은 가설이다.",
+   "Opus 환산 비용이 낮게 나온 데는 캐시 쓰기 TTL 차이(pi 5분 vs EXP-026 1시간)가 일부 기여한다."
+  ],
+  "en": [
+   "Opus 5.5: used only bash among pi's four tools (17-27 calls per run, files written by shell heredoc). All 3 runs finished at iteration 1, with sessions of 3.1-4.9 minutes and 2-4 commits.",
+   "gpt-6-sol: used write, edit and read along with 17-23 bash calls. All 3 runs finished at iteration 1, with sessions of 4.2-5.6 minutes and 2 commits each.",
+   "In both conditions the session dealt with PATH's hurl being npm @hurl/cli. The verdict used the harness's absolute-path grader, so it was unaffected.",
+   "Output of the pi combinations sat at the lower end of the native baseline ranges (opus 16.6-19.8K vs EXP-026 18.6-28.2K, sol 7.0-8.6K vs EXP-027 10.4-11.0K). That pi's short system prompt and small tool set may explain this is an unverified hypothesis.",
+   "The lower Opus converted cost is partly due to the cache-write TTL difference (pi 5 minutes vs EXP-026 1 hour)."
+  ],
+  "ja": [
+   "Opus 5.5: piの4つのツールのうちbashのみ使用した（runあたり17-27回、ファイル作成もシェルheredoc）。3 runともiteration 1で完走、セッション3.1-4.9分、コミット2-4回。",
+   "gpt-6-sol: bash 17-23回に加えwrite・edit・readも使った。3 runともiteration 1で完走、セッション4.2-5.6分、コミット各2回。",
+   "両条件ともセッション内でPATHのhurlがnpm @hurl/cliであることを扱った。判定はハーネスの絶対パス採点器で行ったため影響はない。",
+   "piの組み合わせのoutputはネイティブ基準線の範囲の下側にあった（opus 16.6-19.8K vs EXP-026 18.6-28.2K、sol 7.0-8.6K vs EXP-027 10.4-11.0K）。piの短いシステムプロンプト・小さなツールセットが理由かもしれないが、未検証の仮説である。",
+   "Opusの換算コストが低く出たのは、キャッシュ書き込みTTLの違い（pi 5分 vs EXP-026 1時間）が一部寄与している。"
+  ],
+  "zh": [
+   "Opus 5.5：在 pi 的四个工具中只用了 bash（每 run 17-27 次，写文件也用 shell heredoc）。3 个 run 均在 iteration 1 完成，会话 3.1-4.9 分钟，提交 2-4 次。",
+   "gpt-6-sol：在 17-23 次 bash 之外还使用了 write·edit·read。3 个 run 均在 iteration 1 完成，会话 4.2-5.6 分钟，各提交 2 次。",
+   "两个条件的会话中都处理了 PATH 中的 hurl 是 npm @hurl/cli 这一点。判定使用框架的绝对路径评分器，因此不受影响。",
+   "pi 组合的 output 处于原生基准线范围的下侧（opus 16.6-19.8K 对 EXP-026 18.6-28.2K，sol 7.0-8.6K 对 EXP-027 10.4-11.0K）。这可能是 pi 系统提示较短、工具集较小所致，但属于未验证的假设。",
+   "Opus 换算成本偏低部分源于缓存写入 TTL 的差异（pi 5 分钟对 EXP-026 的 1 小时）。"
+  ]
+ }
+}

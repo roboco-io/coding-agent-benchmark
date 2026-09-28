@@ -609,6 +609,26 @@
         "verdict": "验证",
         "summary": "**EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次、仅使用 Bash，比同一原生框架的 Opus 5.5·Fable 5.1·Sonnet 5 更短更少。首次由框架注入空闲 `PORT`。观测值受日期与 CLI 版本混杂，并非确定的排名。"
       }
+    },
+    "EXP-032": {
+      "en": {
+        "name": "pi coding agent × Sonnet 5.5 Ralph loop completion check (EN n=3)",
+        "hypothesis": "With the pi coding agent (`pi -p` v0.87.1) running `anthropic/claude-sonnet-5-5` (Anthropic API key, direct; pi default thinking; a custom model entry copied from pi's built-in `claude-sonnet-5` definition), it can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3, all at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, no intervention, response model field `claude-sonnet-5-5` on every message). Sessions 1.8–3.2 min, output 10.9–14.7K and 13–23 requests — shorter and fewer than same-day Claude Code × Sonnet 5.5 (EXP-031 EN 2.9–4.2 min, 15.2–20.0K) and pi × Opus 5.5 (EXP-030 3.1–4.9 min). The agent and API path differ together, so this is a difference of the whole combination, not a confirmed ranking."
+      },
+      "ja": {
+        "name": "pi coding agent × Sonnet 5.5 Ralphループ完走検証（EN n=3）",
+        "hypothesis": "pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-sonnet-5-5`（Anthropic APIキー直結、thinkingはpiデフォルト、pi内蔵の`claude-sonnet-5`定義を複製したユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション1.8–3.2分、output 10.9–14.7K、リクエスト13–23回で、同日のClaude Code × Sonnet 5.5（EXP-031 EN 2.9–4.2分・15.2–20.0K）やpi × Opus 5.5（EXP-030 3.1–4.9分）より短く少ない。エージェントとAPI経路が同時に異なるため組み合わせ全体の差であり、順位の確定ではない。"
+      },
+      "zh-CN": {
+        "name": "pi coding agent × Sonnet 5.5 Ralph 循环完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent（`pi -p` v0.87.1）运行 `anthropic/claude-sonnet-5-5`（Anthropic API 密钥直连，thinking 为 pi 默认值，复制 pi 内置 `claude-sonnet-5` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟、output 10.9–14.7K、请求 13–23 次，比同日的 Claude Code × Sonnet 5.5（EXP-031 EN 2.9–4.2 分钟·15.2–20.0K）和 pi × Opus 5.5（EXP-030 3.1–4.9 分钟）更短更少。代理与 API 路径同时不同，因此是整个组合的差异，并非确定的排名。"
+      }
     }
   }
 }

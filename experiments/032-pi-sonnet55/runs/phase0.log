@@ -1,0 +1,6 @@
+WARN 3000번대 포트 외부 LISTEN — 하네스가 빈 포트(PORT)를 주입하므로 PORT를 무시하는 앱만 영향 (EXP-031):
+DeepSRT 127.0.0.1:3003
+Code\x20H 127.0.0.1:3000
+Code\x20H 127.0.0.1:3001
+=== anthropic/claude-sonnet-5-5 (pi) 2026-09-29 07:48:11 ===
+SMOKE-OK

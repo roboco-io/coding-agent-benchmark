@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+sonnet55-en-1,1,23,0,0,0,48,14742,444150,31876,1328,46666
+sonnet55-en-2,1,13,0,0,0,28,10880,244215,37201,801,48109
+sonnet55-en-3,1,18,0,0,0,38,12223,389927,37919,584,50180

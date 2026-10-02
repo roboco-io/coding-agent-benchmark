@@ -629,6 +629,46 @@
         "verdict": "验证",
         "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟、output 10.9–14.7K、请求 13–23 次，比同日的 Claude Code × Sonnet 5.5（EXP-031 EN 2.9–4.2 分钟·15.2–20.0K）和 pi × Opus 5.5（EXP-030 3.1–4.9 分钟）更短更少。代理与 API 路径同时不同，因此是整个组合的差异，并非确定的排名。"
       }
+    },
+    "EXP-033": {
+      "en": {
+        "name": "Codex CLI × gpt-6.1-sol Ralph loop completion check (EN n=3)",
+        "hypothesis": "In the Codex CLI (`codex exec` 0.160.0) harness, `gpt-6.1-sol` (effort medium) can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3, all at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, response model field `gpt-6.1-sol` on all 15 records). Sessions 6.2–9.8 min and output 10.0–16.2K — longer than gpt-6-sol on the same harness (EXP-027, 4.8–5.2 min). Codex had no local metadata for the model (fallback) and the CLI version and date differ, so this is not a confirmed model ranking."
+      },
+      "ja": {
+        "name": "Codex CLI × gpt-6.1-sol Ralphループ完走検証（EN n=3）",
+        "hypothesis": "Codex CLI（`codex exec` 0.160.0）ハーネスで`gpt-6.1-sol`（effort medium）は、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド15件すべて`gpt-6.1-sol`）。セッション6.2–9.8分・output 10.0–16.2Kで、同じハーネスのgpt-6-sol（EXP-027、4.8–5.2分）より長い。Codexにこのモデルのローカルメタデータがなく（fallback）、CLIバージョンと日付も異なるため、モデルの優劣は確定しない。"
+      },
+      "zh-CN": {
+        "name": "Codex CLI × gpt-6.1-sol Ralph 循环完成验证（EN n=3）",
+        "hypothesis": "在 Codex CLI（`codex exec` 0.160.0）框架中，`gpt-6.1-sol`（effort medium）能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，15 条响应 model 字段全部为 `gpt-6.1-sol`）。会话 6.2–9.8 分钟、output 10.0–16.2K，比同一框架的 gpt-6-sol（EXP-027，4.8–5.2 分钟）更长。Codex 没有该模型的本地元数据（fallback），且 CLI 版本与日期不同，因此不能确定模型优劣。"
+      }
+    },
+    "EXP-034": {
+      "en": {
+        "name": "pi coding agent × gpt-6.1-sol Ralph loop completion check (EN n=3)",
+        "hypothesis": "With the pi coding agent (`pi -p` 0.87.1) running `openai-codex/gpt-6.1-sol` (ChatGPT OAuth, pi default thinking, a custom model entry copied from pi's built-in `gpt-6-sol` definition), it can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3, all at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, response model field `gpt-6.1-sol` on all 96 records, thinking `medium`). Sessions 8.3–9.2 min and output 12.5–13.3K — longer than pi × gpt-6-sol (EXP-030, 4.2–5.6 min). Both harnesses moved the same way on the same day, but the date and custom model entry differ, so this is not a confirmed model ranking."
+      },
+      "ja": {
+        "name": "pi coding agent × gpt-6.1-sol Ralphループ完走検証（EN n=3）",
+        "hypothesis": "pi coding agent（`pi -p` 0.87.1）で`openai-codex/gpt-6.1-sol`（ChatGPT OAuth、thinkingはpiデフォルト、pi内蔵の`gpt-6-sol`定義を複製したユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド96件すべて`gpt-6.1-sol`、thinking `medium`）。セッション8.3–9.2分・output 12.5–13.3Kで、pi × gpt-6-sol（EXP-030、4.2–5.6分）より長い。同日に両ハーネスで同じ傾向だが、日付とユーザー定義モデル項目が異なるため、モデルの優劣は確定しない。"
+      },
+      "zh-CN": {
+        "name": "pi coding agent × gpt-6.1-sol Ralph 循环完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent（`pi -p` 0.87.1）运行 `openai-codex/gpt-6.1-sol`（ChatGPT OAuth，thinking 为 pi 默认值，复制 pi 内置 `gpt-6-sol` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，96 条响应 model 字段全部为 `gpt-6.1-sol`，thinking `medium`）。会话 8.3–9.2 分钟、output 12.5–13.3K，比 pi × gpt-6-sol（EXP-030，4.2–5.6 分钟）更长。同日两个框架方向一致，但日期与自定义模型条目不同，因此不能确定模型优劣。"
+      }
     }
   }
 }

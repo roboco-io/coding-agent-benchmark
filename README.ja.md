@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-032（2026-09-29）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-034（2026-10-03）
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
@@ -59,6 +59,8 @@
 | [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5・gpt-6-sol Ralphループ完走検証（EN各n=3） | M-23: pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-opus-5-5`（Anthropic APIキー直結）と`openai-codex/gpt-6-sol`（ChatGPT OAuth）をpiデフォルトのthinkingで動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN各n=3、完走率で判定・課金は対象外）。 | **検証** |
 | [EXP-031](experiments/031-sonnet55-ralph/report.md) Claude Code × Sonnet 5.5 ネイティブ Ralphループ完走検証（EN・KO各n=3） | M-24: Claude Codeネイティブハーネスで Sonnet 5.5（`claude-sonnet-5-5`、thinkingデフォルト）は、EN・KO正本のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限10 iteration・4時間以内に無介入で完走できる（EN・KO各n=3、完走率で判定・課金は対象外）。 | **検証** |
 | [EXP-032](experiments/032-pi-sonnet55/report.md) pi coding agent × Sonnet 5.5 Ralphループ完走検証（EN n=3） | M-25: pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-sonnet-5-5`（Anthropic APIキー直結、thinkingはpiデフォルト、pi内蔵の`claude-sonnet-5`定義を複製したユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** |
+| [EXP-033](experiments/033-gpt61-sol-codex/report.md) Codex CLI × gpt-6.1-sol Ralphループ完走検証（EN n=3） | M-26: Codex CLI（`codex exec` 0.160.0）ハーネスで`gpt-6.1-sol`（effort medium）は、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** |
+| [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol Ralphループ完走検証（EN n=3） | M-27: pi coding agent（`pi -p` 0.87.1）で`openai-codex/gpt-6.1-sol`（ChatGPT OAuth、thinkingはpiデフォルト、pi内蔵の`gpt-6-sol`定義を複製したユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -149,6 +151,12 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 
 **EXP-032 — pi coding agent × Sonnet 5.5 Ralphループ完走検証（EN n=3）** (検証)  
 **EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、介入0、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション1.8–3.2分、output 10.9–14.7K、リクエスト13–23回で、同日のClaude Code × Sonnet 5.5（EXP-031 EN 2.9–4.2分・15.2–20.0K）やpi × Opus 5.5（EXP-030 3.1–4.9分）より短く少ない。エージェントとAPI経路が同時に異なるため組み合わせ全体の差であり、順位の確定ではない。 → [レポート](experiments/032-pi-sonnet55/report.md)
+
+**EXP-033 — Codex CLI × gpt-6.1-sol Ralphループ完走検証（EN n=3）** (検証)  
+**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド15件すべて`gpt-6.1-sol`）。セッション6.2–9.8分・output 10.0–16.2Kで、同じハーネスのgpt-6-sol（EXP-027、4.8–5.2分）より長い。Codexにこのモデルのローカルメタデータがなく（fallback）、CLIバージョンと日付も異なるため、モデルの優劣は確定しない。 → [レポート](experiments/033-gpt61-sol-codex/report.md)
+
+**EXP-034 — pi coding agent × gpt-6.1-sol Ralphループ完走検証（EN n=3）** (検証)  
+**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド96件すべて`gpt-6.1-sol`、thinking `medium`）。セッション8.3–9.2分・output 12.5–13.3Kで、pi × gpt-6-sol（EXP-030、4.2–5.6分）より長い。同日に両ハーネスで同じ傾向だが、日付とユーザー定義モデル項目が異なるため、モデルの優劣は確定しない。 → [レポート](experiments/034-pi-gpt61-sol/report.md)
 
 <!-- RESULTS:END -->
 

@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+sol61-en-1,1,33,0,0,0,68352,13263,767232,0,946,81615
+sol61-en-2,1,34,0,0,0,45568,13251,768128,0,1005,58819
+sol61-en-3,1,29,0,0,0,62190,12463,523776,0,746,74653

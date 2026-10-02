@@ -1,0 +1,24 @@
+WARN 3000번대 포트 외부 LISTEN — 하네스가 빈 포트(PORT)를 주입하므로 PORT를 무시하는 앱만 영향 (EXP-031):
+DeepSRT 127.0.0.1:3003
+Code\x20H 127.0.0.1:3000
+Code\x20H 127.0.0.1:3001
+=== gpt-6.1-sol (codex) 2026-10-03 07:49:44 ===
+Reading additional input from stdin...
+OpenAI Codex v0.160.0
+--------
+workdir: /Users/dohyunjung/ralph-exp033/smoke-tmp
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a0fecf-2943-7403-8a19-579982c4f17f
+--------
+user
+Output exactly the string SMOKE-OK and nothing else.
+codex
+SMOKE-OK
+tokens used
+2,234
+SMOKE-OK

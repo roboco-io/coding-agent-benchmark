@@ -1,0 +1,4 @@
+run,sessions,missing,input_tokens,cached_input_tokens,output_tokens,reasoning_output_tokens,total_tokens
+sol61-en-1,1,0,1230179,1136512,16179,1198,1246358
+sol61-en-2,1,0,920508,852992,14330,1465,934838
+sol61-en-3,1,0,811134,763776,10048,1049,821182

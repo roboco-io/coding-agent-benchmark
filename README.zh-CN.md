@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-032（2026-09-29）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-034（2026-10-03）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -59,6 +59,8 @@
 | [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol Ralph 循环完成验证（EN 各 n=3） | M-23: 用 pi coding agent（`pi -p` v0.87.1）以 pi 默认 thinking 运行 `anthropic/claude-opus-5-5`（Anthropic API 密钥直连）和 `openai-codex/gpt-6-sol`（ChatGPT OAuth），两者都能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN 各 n=3，按完成率判定，不含计费）。 | **验证** |
 | [EXP-031](experiments/031-sonnet55-ralph/report.md) Claude Code × Sonnet 5.5 原生 Ralph 循环完成验证（EN·KO 各 n=3） | M-24: 在 Claude Code 原生框架中，Sonnet 5.5（`claude-sonnet-5-5`，thinking 默认值）能用 EN·KO 标准 Ralph 循环提示，在上限 10 iteration·4 小时内无人干预地完成 RealWorld 后端（Hurl 13/13·154/154）（EN·KO 各 n=3，按完成率判定，不含计费）。 | **验证** |
 | [EXP-032](experiments/032-pi-sonnet55/report.md) pi coding agent × Sonnet 5.5 Ralph 循环完成验证（EN n=3） | M-25: 用 pi coding agent（`pi -p` v0.87.1）运行 `anthropic/claude-sonnet-5-5`（Anthropic API 密钥直连，thinking 为 pi 默认值，复制 pi 内置 `claude-sonnet-5` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** |
+| [EXP-033](experiments/033-gpt61-sol-codex/report.md) Codex CLI × gpt-6.1-sol Ralph 循环完成验证（EN n=3） | M-26: 在 Codex CLI（`codex exec` 0.160.0）框架中，`gpt-6.1-sol`（effort medium）能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** |
+| [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol Ralph 循环完成验证（EN n=3） | M-27: 用 pi coding agent（`pi -p` 0.87.1）运行 `openai-codex/gpt-6.1-sol`（ChatGPT OAuth，thinking 为 pi 默认值，复制 pi 内置 `gpt-6-sol` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -149,6 +151,12 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 
 **EXP-032 — pi coding agent × Sonnet 5.5 Ralph 循环完成验证（EN n=3）** (验证)  
 **EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，零干预，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟、output 10.9–14.7K、请求 13–23 次，比同日的 Claude Code × Sonnet 5.5（EXP-031 EN 2.9–4.2 分钟·15.2–20.0K）和 pi × Opus 5.5（EXP-030 3.1–4.9 分钟）更短更少。代理与 API 路径同时不同，因此是整个组合的差异，并非确定的排名。 → [报告](experiments/032-pi-sonnet55/report.md)
+
+**EXP-033 — Codex CLI × gpt-6.1-sol Ralph 循环完成验证（EN n=3）** (验证)  
+**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，15 条响应 model 字段全部为 `gpt-6.1-sol`）。会话 6.2–9.8 分钟、output 10.0–16.2K，比同一框架的 gpt-6-sol（EXP-027，4.8–5.2 分钟）更长。Codex 没有该模型的本地元数据（fallback），且 CLI 版本与日期不同，因此不能确定模型优劣。 → [报告](experiments/033-gpt61-sol-codex/report.md)
+
+**EXP-034 — pi coding agent × gpt-6.1-sol Ralph 循环完成验证（EN n=3）** (验证)  
+**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，96 条响应 model 字段全部为 `gpt-6.1-sol`，thinking `medium`）。会话 8.3–9.2 分钟、output 12.5–13.3K，比 pi × gpt-6-sol（EXP-030，4.2–5.6 分钟）更长。同日两个框架方向一致，但日期与自定义模型条目不同，因此不能确定模型优劣。 → [报告](experiments/034-pi-gpt61-sol/report.md)
 
 <!-- RESULTS:END -->
 

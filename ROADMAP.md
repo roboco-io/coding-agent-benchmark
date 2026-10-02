@@ -55,5 +55,7 @@
 - [x] EXP-030: pi coding agent × Opus 5.5(Anthropic API 키)·gpt-6-sol(ChatGPT OAuth) 완주 검증 (M-23, EN 각 n=3) — 검증(6/6 iter 1 완주, 세션 opus 3.1–4.9분·sol 4.2–5.6분, output opus 16.6–19.8K·sol 7.0–8.6K. 네이티브 기준선 EXP-026·EXP-027과는 에이전트·API 경로 교락), [보고서](experiments/030-pi-frontier/report.md)
 - [x] EXP-031: Claude Code × Sonnet 5.5 네이티브 완주 검증 (M-24, EN·KO 각 n=3, 하네스 빈 포트 `PORT` 주입 첫 적용) — 검증(6/6 iter 1 완주, 세션 2.5–4.2분·output 15.2–20.9K·API 호출 16–24, Bash만 사용), [보고서](experiments/031-sonnet55-ralph/report.md)
 - [x] EXP-032: pi coding agent × Sonnet 5.5(Anthropic API 키, 사용자 정의 모델 항목) 완주 검증 (M-25, EN n=3) — 검증(3/3 iter 1 완주, 세션 1.8–3.2분·output 10.9–14.7K, 리포 최단 세션 1분 49초), [보고서](experiments/032-pi-sonnet55/report.md)
+- [x] EXP-033: Codex CLI × gpt-6.1-sol 완주 검증 (M-26, EN n=3) — 검증(3/3 iter 1 완주, 세션 6.2–9.8분·output 10.0–16.2K, Codex 로컬 메타데이터 없음(fallback)), [보고서](experiments/033-gpt61-sol-codex/report.md)
+- [x] EXP-034: pi coding agent × gpt-6.1-sol(ChatGPT OAuth, 사용자 정의 모델 항목) 완주 검증 (M-27, EN n=3) — 검증(3/3 iter 1 완주, 세션 8.3–9.2분·output 12.5–13.3K), [보고서](experiments/034-pi-gpt61-sol/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

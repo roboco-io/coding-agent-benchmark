@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-032 (2026-09-29)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-034 (2026-10-03)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -59,6 +59,8 @@
 | [EXP-030](experiments/030-pi-frontier/report.md) pi coding agent × Opus 5.5·gpt-6-sol 랄프 루프 완주 검증 (EN 각 n=3) | M-23: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-opus-5-5`(Anthropic API 키 직결)·`openai-codex/gpt-6-sol`(ChatGPT OAuth)을 돌리면(thinking pi 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-031](experiments/031-sonnet55-ralph/report.md) Claude Code × Sonnet 5.5 네이티브 랄프 루프 완주 검증 (EN·KO 각 n=3) | M-24: Claude Code 네이티브 하네스에서 Sonnet 5.5(`claude-sonnet-5-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제). | **검증** |
 | [EXP-032](experiments/032-pi-sonnet55/report.md) pi coding agent × Sonnet 5.5 완주 검증 (EN n=3) | M-25: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-sonnet-5-5`(Anthropic API 키 직결, thinking pi 기본값, 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** |
+| [EXP-033](experiments/033-gpt61-sol-codex/report.md) Codex CLI × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3) | M-26: Codex CLI(`codex exec` 0.160.0) 하네스에서 `gpt-6.1-sol`(effort medium)은 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** |
+| [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3) | M-27: pi coding agent(`pi -p` 0.87.1)로 `openai-codex/gpt-6.1-sol`(ChatGPT OAuth, thinking pi 기본값, 사용자 정의 모델 항목)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -149,6 +151,12 @@ EN 3/3·KO 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 
 
 **EXP-032 — pi coding agent × Sonnet 5.5 완주 검증 (EN n=3)** (검증)  
 EN 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 1.8–3.2분·output 10.9–14.7K·요청 13–23회로, 같은 날 네이티브 Claude Code × Sonnet 5.5(EXP-031 EN 2.9–4.2분·15.2–20.0K)와 pi × Opus 5.5(EXP-030 3.1–4.9분)보다 짧고 적은 관측값이다. 에이전트·API 경로가 함께 다른 조합 차이이며 우열 확정이 아니다. → [보고서](experiments/032-pi-sonnet55/report.md)
+
+**EXP-033 — Codex CLI × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3)** (검증)  
+3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 15건 전부 `gpt-6.1-sol`). 세션 6–10분으로 EXP-027 gpt-6-sol(약 5분)보다 길었으나 CLI 버전·시점 교락이 있다. → [보고서](experiments/033-gpt61-sol-codex/report.md)
+
+**EXP-034 — pi coding agent × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3)** (검증)  
+3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 model 필드 96건 전부 `gpt-6.1-sol`, thinking 전 run `medium`). 세션 8.3–9.2분으로 EXP-030 pi × gpt-6-sol(4.2–5.6분)보다 길었으나 시점·모델 항목 교락이 있다. → [보고서](experiments/034-pi-gpt61-sol/report.md)
 
 <!-- RESULTS:END -->
 

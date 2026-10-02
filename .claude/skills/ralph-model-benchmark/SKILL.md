@@ -24,14 +24,15 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 ## 절차
 
 1. **사전 조사**: 모델 ID를 추측하지 않는다. 제공자 모델 목록(예: `GET /v1/models`, `~/.codex/models_cache.json`)에서 정확한 ID·추론 설정·컨텍스트를 확인한다. 사용자가 말한 이름이 목록에 없으면 멈추고 `AskUserQuestion`으로 확인한다.
-2. **설계 문서**: 다음 번호로 `experiments/NNN-<slug>/README.md`를 `templates/experiment-readme.md`로 작성한다. 질문 유형(완주 가능성 등), 조건, 반복 수, 상한, 판정 기준(예: 검증 3/3 / 부분 검증 1–2/3 / run 단위 보류)을 **실행 전에** 고정하고 `hypotheses/catalog.md`에 가설을 등록한다.
-3. **하네스 생성**: `scripts/bench.env.example`을 복사해 채운 뒤 `bash .claude/skills/ralph-model-benchmark/scripts/setup.sh <bench.env>`.
-4. **Phase 0**: `bash ~/ralph-expNNN/smoke.sh` — 조건 전부 PASS여야 기동. 결과와 CLI·hurl 버전, 노출된 지침·스킬·MCP(`claude-native`는 비격리)를 `runs/phase0.md`에 기록.
-5. **기동**: `nohup caffeinate -is bash ~/ralph-expNNN/run-all.sh >/dev/null 2>&1 &`. 순차 실행이며 다른 실험과 동시 실행 금지. 진행은 `orchestrator.log`·`metrics-*.csv`로 확인하고 개입하지 않는다.
-6. **독립 재검증**: 완주 run마다 `bash ~/ralph-expNNN/measure.sh ~/ralph-expNNN/app-<run>`을 2회 실행해 `13,154`를 확인하고 `recheck.csv`로 남긴다.
-7. **usage 집계**: `codex` → `python3 ~/ralph-expNNN/usage_codex.py ~/ralph-expNNN <run>...`; Claude 계열 → `python3 scripts/aggregate_tokens.py --json <dir>` (message.id dedup; `<dir>`는 claude-direct면 `sessions-<run>/*/`, claude-native면 `sessions-<run>/`); `pi` → `python3 ~/ralph-expNNN/usage_pi.py ~/ralph-expNNN <run>...` (responseId dedup, 실행 시 `-nc -ns -ne -np -na`로 상위 AGENTS.md/CLAUDE.md·스킬 비노출). 결과는 **토큰 대리지표**이며 청구 비용이 아니다.
-8. **보관**: `bench.env`, 스크립트, `metrics-*.csv`, usage CSV, `orchestrator.log`, `phase0.md`, `recheck.csv`, 로그(`gzip`)를 `experiments/NNN-*/runs/`로 복사한다.
-9. **보고·동기화**: `templates/report.md`로 `report.md` 작성 후 CLAUDE.md "실험 종료 시 필수 절차" 1–5(i18n·README 재생성·catalog·ROADMAP·대시보드)를 그대로 수행한다.
+2. **언어 조건**: 사용자가 따로 지시하지 않으면 **영문(EN) PROMPT만** 실행한다(`LANGS="en"`, 2026-10-03 사용자 지시). 한국어(KO)는 사용자가 명시적으로 요청한 경우에만 추가한다.
+3. **설계 문서**: 다음 번호로 `experiments/NNN-<slug>/README.md`를 `templates/experiment-readme.md`로 작성한다. 질문 유형(완주 가능성 등), 조건, 반복 수, 상한, 판정 기준(예: 검증 3/3 / 부분 검증 1–2/3 / run 단위 보류)을 **실행 전에** 고정하고 `hypotheses/catalog.md`에 가설을 등록한다.
+4. **하네스 생성**: `scripts/bench.env.example`을 복사해 채운 뒤 `bash .claude/skills/ralph-model-benchmark/scripts/setup.sh <bench.env>`.
+5. **Phase 0**: `bash ~/ralph-expNNN/smoke.sh` — 조건 전부 PASS여야 기동. 결과와 CLI·hurl 버전, 노출된 지침·스킬·MCP(`claude-native`는 비격리)를 `runs/phase0.md`에 기록.
+6. **기동**: `nohup caffeinate -is bash ~/ralph-expNNN/run-all.sh >/dev/null 2>&1 &`. 순차 실행이며 다른 실험과 동시 실행 금지. 진행은 `orchestrator.log`·`metrics-*.csv`로 확인하고 개입하지 않는다.
+7. **독립 재검증**: 완주 run마다 `bash ~/ralph-expNNN/measure.sh ~/ralph-expNNN/app-<run>`을 2회 실행해 `13,154`를 확인하고 `recheck.csv`로 남긴다.
+8. **usage 집계**: `codex` → `python3 ~/ralph-expNNN/usage_codex.py ~/ralph-expNNN <run>...`; Claude 계열 → `python3 scripts/aggregate_tokens.py --json <dir>` (message.id dedup; `<dir>`는 claude-direct면 `sessions-<run>/*/`, claude-native면 `sessions-<run>/`); `pi` → `python3 ~/ralph-expNNN/usage_pi.py ~/ralph-expNNN <run>...` (responseId dedup, 실행 시 `-nc -ns -ne -np -na`로 상위 AGENTS.md/CLAUDE.md·스킬 비노출). 결과는 **토큰 대리지표**이며 청구 비용이 아니다.
+9. **보관**: `bench.env`, 스크립트, `metrics-*.csv`, usage CSV, `orchestrator.log`, `phase0.md`, `recheck.csv`, 로그(`gzip`)를 `experiments/NNN-*/runs/`로 복사한다.
+10. **보고·동기화**: `templates/report.md`로 `report.md` 작성 후 CLAUDE.md "실험 종료 시 필수 절차" 1–5(i18n·README 재생성·catalog·ROADMAP·대시보드)를 그대로 수행한다.
 
 ## metrics CSV
 

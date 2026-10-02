@@ -1,0 +1,213 @@
+{
+ "exp": "EXP-033",
+ "date": "2026-10-03",
+ "report": "experiments/033-gpt61-sol-codex/report.md",
+ "runs": {
+  "sol61-en-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "sol61-en-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "sol61-en-3": {
+   "iter": 1,
+   "commits": 4
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Codex CLI 0.160.0 (`codex exec`, iteration마다 새 세션)"
+   ],
+   [
+    "연결",
+    "ChatGPT 플랜 OAuth, 청구 없음"
+   ],
+   [
+    "모델 ID",
+    "gpt-6.1-sol"
+   ],
+   [
+    "추론",
+    "effort medium"
+   ],
+   [
+    "격리",
+    "전용 CODEX_HOME, 빈 config.toml, AGENTS.md·스킬·MCP·플러그인 훅 비노출"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간, 무개입"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, n=3, 순차 실행"
+   ],
+   [
+    "포트",
+    "하네스가 run별 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Codex CLI 0.160.0 (`codex exec`, new session per iteration)"
+   ],
+   [
+    "Connection",
+    "ChatGPT plan OAuth, nothing billed"
+   ],
+   [
+    "Model ID",
+    "gpt-6.1-sol"
+   ],
+   [
+    "Reasoning",
+    "effort medium"
+   ],
+   [
+    "Isolation",
+    "dedicated CODEX_HOME, empty config.toml, no AGENTS.md, skills, MCP or plugin hooks"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3, sequential"
+   ],
+   [
+    "Port",
+    "harness injects a free port per run as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Codex CLI 0.160.0（`codex exec`、iterationごとに新セッション）"
+   ],
+   [
+    "接続",
+    "ChatGPTプランOAuth、課金なし"
+   ],
+   [
+    "モデルID",
+    "gpt-6.1-sol"
+   ],
+   [
+    "推論",
+    "effort medium"
+   ],
+   [
+    "隔離",
+    "専用CODEX_HOME、空のconfig.toml、AGENTS.md・スキル・MCP・プラグインフックは非露出"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間、無介入"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3、順次実行"
+   ],
+   [
+    "ポート",
+    "ハーネスがrunごとに空きポートをPORTで注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Codex CLI 0.160.0（`codex exec`，每个 iteration 新会话）"
+   ],
+   [
+    "连接",
+    "ChatGPT 套餐 OAuth，无计费"
+   ],
+   [
+    "模型 ID",
+    "gpt-6.1-sol"
+   ],
+   [
+    "推理",
+    "effort medium"
+   ],
+   [
+    "隔离",
+    "专用 CODEX_HOME，空 config.toml，不暴露 AGENTS.md、技能、MCP 和插件钩子"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时，无人干预"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3，顺序执行"
+   ],
+   [
+    "端口",
+    "框架为每个 run 以 PORT 注入空闲端口"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음.",
+   "Codex 0.160.0 로컬 모델 캐시에 gpt-6.1-sol이 없어 클라이언트가 fallback 메타데이터로 동작했다. 컨텍스트 압축 시점 등이 공식 지원 이후와 다를 수 있다.",
+   "VS Code가 3000·3001을 점유했으나 하네스가 빈 포트를 PORT로 주입했고 3 run 모두 첫 채점에서 13/13이어서 거짓 음성은 없었다.",
+   "gpt-6-sol(EXP-027, CLI 0.155.1, 2026-09-24)과는 날짜·CLI 버전·모델 메타데이터가 함께 달라 시간 차이를 모델 차이로 단정하지 않는다.",
+   "공개 API 단가를 확인하지 못해 환산 비용을 계산하지 않았다."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds.",
+   "Codex 0.160.0 had no local entry for gpt-6.1-sol, so the client ran on fallback metadata. Timing of context compaction and similar behavior may differ once it is officially supported.",
+   "VS Code held ports 3000 and 3001, but the harness injected a free port as PORT and all 3 runs scored 13/13 on the first grading, so no false negatives occurred.",
+   "Compared with gpt-6-sol (EXP-027, CLI 0.155.1, 2026-09-24), date, CLI version and model metadata all differ, so the time difference is not attributed to the model.",
+   "The public API price could not be confirmed, so no estimated cost was computed."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。",
+   "Codex 0.160.0のローカルモデルキャッシュにgpt-6.1-solがなく、クライアントはfallbackメタデータで動作した。コンテキスト圧縮のタイミングなどが公式サポート後と異なる可能性がある。",
+   "VS Codeが3000・3001を占有していたが、ハーネスが空きポートをPORTで注入し、3 runとも最初の採点で13/13だったため偽陰性は発生しなかった。",
+   "gpt-6-sol（EXP-027、CLI 0.155.1、2026-09-24）とは日付・CLIバージョン・モデルメタデータが同時に異なるため、時間差をモデル差とは断定しない。",
+   "公開API単価を確認できなかったため、換算コストは計算していない。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。",
+   "Codex 0.160.0 本地模型缓存中没有 gpt-6.1-sol，客户端按 fallback 元数据运行。上下文压缩时机等可能与官方支持后不同。",
+   "VS Code 占用了 3000 和 3001，但框架以 PORT 注入空闲端口，3 个 run 首次评分均为 13/13，没有出现假阴性。",
+   "与 gpt-6-sol（EXP-027，CLI 0.155.1，2026-09-24）相比，日期、CLI 版本和模型元数据同时不同，因此不将耗时差异归因于模型。",
+   "未能确认公开 API 单价，因此未计算折算成本。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 모두 iteration 1에서 합격했고 커밋은 각 4개였다.",
+   "세션 6분 13초–9분 48초, output 10.0–16.2K, 캐시 히트 92–94%.",
+   "rollout 응답 모델 필드 15건이 전부 gpt-6.1-sol이었다.",
+   "3 run 모두 첫 iteration에서 합격해 루프의 복구 기여는 관측되지 않았다."
+  ],
+  "en": [
+   "All 3 runs passed at iteration 1 with 4 commits each.",
+   "Sessions 6 min 13 s to 9 min 48 s, output 10.0–16.2K, cache hit 92–94%.",
+   "The rollout model field was gpt-6.1-sol on all 15 records.",
+   "All 3 runs passed at the first iteration, so no recovery contribution from the loop was observed."
+  ],
+  "ja": [
+   "3 runすべてiteration 1で合格し、コミットは各4。",
+   "セッション6分13秒–9分48秒、output 10.0–16.2K、キャッシュヒット92–94%。",
+   "rollout応答modelフィールド15件すべてがgpt-6.1-solだった。",
+   "3 runとも最初のiterationで合格したため、ループの復旧寄与は観測されなかった。"
+  ],
+  "zh": [
+   "3 个 run 均在 iteration 1 通过，各提交 4 次。",
+   "会话 6 分 13 秒–9 分 48 秒，output 10.0–16.2K，缓存命中 92–94%。",
+   "rollout 响应 model 字段 15 条全部为 gpt-6.1-sol。",
+   "3 个 run 均在第一个 iteration 通过，未观察到循环的恢复贡献。"
+  ]
+ }
+}

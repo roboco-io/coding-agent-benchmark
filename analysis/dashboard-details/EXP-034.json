@@ -1,0 +1,213 @@
+{
+ "exp": "EXP-034",
+ "date": "2026-10-03",
+ "report": "experiments/034-pi-gpt61-sol/report.md",
+ "runs": {
+  "sol61-en-1": {
+   "iter": 1,
+   "commits": 3
+  },
+  "sol61-en-2": {
+   "iter": 1,
+   "commits": 5
+  },
+  "sol61-en-3": {
+   "iter": 1,
+   "commits": 4
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, iteration마다 새 프로세스)"
+   ],
+   [
+    "연결",
+    "ChatGPT 구독 OAuth(Codex 백엔드), 청구 없음"
+   ],
+   [
+    "모델 ID",
+    "openai-codex/gpt-6.1-sol — pi 내장 목록에 없어 내장 gpt-6-sol 정의를 복사한 사용자 정의 항목(contextWindow 272K 등)"
+   ],
+   [
+    "thinking",
+    "pi 기본값 (medium 기록)"
+   ],
+   [
+    "격리",
+    "전용 PI_CODING_AGENT_DIR(auth.json·models.json만), 상위 지침·스킬·확장 비노출, PI_OFFLINE=1"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간, 무개입"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, n=3, 순차 실행"
+   ],
+   [
+    "포트",
+    "하네스가 run별 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, new process per iteration)"
+   ],
+   [
+    "Connection",
+    "ChatGPT subscription OAuth (Codex backend), nothing billed"
+   ],
+   [
+    "Model ID",
+    "openai-codex/gpt-6.1-sol — not in pi's built-in list, so a custom entry copied from the built-in gpt-6-sol definition (contextWindow 272K etc.)"
+   ],
+   [
+    "Thinking",
+    "pi default (recorded as medium)"
+   ],
+   [
+    "Isolation",
+    "dedicated PI_CODING_AGENT_DIR (auth.json and models.json only), parent instructions, skills and extensions hidden, PI_OFFLINE=1"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3, sequential"
+   ],
+   [
+    "Port",
+    "harness injects a free port per run as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`、iterationごとに新プロセス）"
+   ],
+   [
+    "接続",
+    "ChatGPTサブスクリプションOAuth（Codexバックエンド）、課金なし"
+   ],
+   [
+    "モデルID",
+    "openai-codex/gpt-6.1-sol — pi内蔵リストにないため内蔵gpt-6-sol定義を複製したユーザー定義項目（contextWindow 272Kなど）"
+   ],
+   [
+    "thinking",
+    "piデフォルト（mediumと記録）"
+   ],
+   [
+    "隔離",
+    "専用PI_CODING_AGENT_DIR（auth.jsonとmodels.jsonのみ）、上位の指示・スキル・拡張は非露出、PI_OFFLINE=1"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間、無介入"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3、順次実行"
+   ],
+   [
+    "ポート",
+    "ハーネスがrunごとに空きポートをPORTで注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`，每个 iteration 新进程）"
+   ],
+   [
+    "连接",
+    "ChatGPT 订阅 OAuth（Codex 后端），无计费"
+   ],
+   [
+    "模型 ID",
+    "openai-codex/gpt-6.1-sol — pi 内置列表中没有，因此使用复制内置 gpt-6-sol 定义的自定义条目（contextWindow 272K 等）"
+   ],
+   [
+    "thinking",
+    "pi 默认值（记录为 medium）"
+   ],
+   [
+    "隔离",
+    "专用 PI_CODING_AGENT_DIR（仅 auth.json 和 models.json），不暴露上层指示、技能、扩展，PI_OFFLINE=1"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时，无人干预"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3，顺序执行"
+   ],
+   [
+    "端口",
+    "框架为每个 run 以 PORT 注入空闲端口"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음.",
+   "모델 항목이 gpt-6-sol 정의의 복사본이라 contextWindow 등이 실제 gpt-6.1-sol의 한도와 다를 수 있다. pi가 공식 지원하면 설정이 달라질 수 있다.",
+   "VS Code가 3000·3001을 점유했으나 하네스가 빈 포트를 PORT로 주입했고 3 run 모두 첫 채점에서 13/13이어서 거짓 음성은 없었다.",
+   "pi × gpt-6-sol(EXP-030, 2026-09-24)과는 날짜와 사용자 정의 모델 항목이 함께 달라 시간 차이를 모델 차이로 단정하지 않는다.",
+   "공개 API 단가를 확인하지 못해 환산 비용을 계산하지 않았다. 모델 항목 단가를 0으로 두어 pi 기록 cost도 쓰지 않는다."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds.",
+   "The model entry is a copy of the gpt-6-sol definition, so contextWindow and similar limits may differ from the real gpt-6.1-sol. Settings may change once pi officially supports it.",
+   "VS Code held ports 3000 and 3001, but the harness injected a free port as PORT and all 3 runs scored 13/13 on the first grading, so no false negatives occurred.",
+   "Compared with pi × gpt-6-sol (EXP-030, 2026-09-24), date and the custom model entry both differ, so the time difference is not attributed to the model.",
+   "The public API price could not be confirmed, so no estimated cost was computed; the model entry's price is set to 0, so pi's recorded cost is not used either."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。",
+   "モデル項目はgpt-6-sol定義の複製であるため、contextWindowなどが実際のgpt-6.1-solの上限と異なる可能性がある。piが公式サポートすると設定が変わる可能性がある。",
+   "VS Codeが3000・3001を占有していたが、ハーネスが空きポートをPORTで注入し、3 runとも最初の採点で13/13だったため偽陰性は発生しなかった。",
+   "pi × gpt-6-sol（EXP-030、2026-09-24）とは日付とユーザー定義モデル項目が同時に異なるため、時間差をモデル差とは断定しない。",
+   "公開API単価を確認できなかったため換算コストは計算していない。モデル項目の単価を0にしたため、piの記録costも使わない。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。",
+   "模型条目是 gpt-6-sol 定义的副本，contextWindow 等可能与真实的 gpt-6.1-sol 限制不同。pi 正式支持后设置可能改变。",
+   "VS Code 占用了 3000 和 3001，但框架以 PORT 注入空闲端口，3 个 run 首次评分均为 13/13，没有出现假阴性。",
+   "与 pi × gpt-6-sol（EXP-030，2026-09-24）相比，日期和自定义模型条目同时不同，因此不将耗时差异归因于模型。",
+   "未能确认公开 API 单价，因此未计算折算成本；模型条目单价设为 0，因此也不使用 pi 记录的 cost。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 모두 iteration 1에서 합격했고 커밋은 3·5·4개였다.",
+   "응답 29–34회, 세션 8.3–9.2분, output 12.5–13.3K.",
+   "응답 model 필드 96건이 전부 gpt-6.1-sol이었고 thinking은 전 run medium이었다.",
+   "3 run 모두 첫 iteration에서 합격해 루프의 복구 기여는 관측되지 않았다."
+  ],
+  "en": [
+   "All 3 runs passed at iteration 1 with 3, 5 and 4 commits.",
+   "29–34 responses per run, sessions 8.3–9.2 min, output 12.5–13.3K.",
+   "The response model field was gpt-6.1-sol on all 96 records, and thinking was medium in every run.",
+   "All 3 runs passed at the first iteration, so no recovery contribution from the loop was observed."
+  ],
+  "ja": [
+   "3 runすべてiteration 1で合格し、コミットは3・5・4。",
+   "応答29–34回、セッション8.3–9.2分、output 12.5–13.3K。",
+   "応答modelフィールド96件すべてがgpt-6.1-solで、thinkingは全runでmediumだった。",
+   "3 runとも最初のiterationで合格したため、ループの復旧寄与は観測されなかった。"
+  ],
+  "zh": [
+   "3 个 run 均在 iteration 1 通过，提交 3、5、4 次。",
+   "每 run 响应 29–34 次，会话 8.3–9.2 分钟，output 12.5–13.3K。",
+   "响应 model 字段 96 条全部为 gpt-6.1-sol，所有 run 的 thinking 均为 medium。",
+   "3 个 run 均在第一个 iteration 通过，未观察到循环的恢复贡献。"
+  ]
+ }
+}

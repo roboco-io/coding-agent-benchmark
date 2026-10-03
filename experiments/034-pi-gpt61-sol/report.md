@@ -34,7 +34,7 @@
 ## usage·집계 검증
 
 - 원자료: run별 `sessions-<run>/` jsonl 1개. `usage_pi.py`(responseId dedup) 결과 중복·누락 0. cacheWrite는 openai-codex provider가 기록하지 않아 0이다(EXP-030과 동일).
-- 비용: ChatGPT 구독 OAuth라 청구 없음. 모델 항목 단가를 0으로 두었으므로 pi 기록 `cost`는 쓰지 않는다. 공개 API 단가는 미확인.
+- 비용: ChatGPT 구독 OAuth라 청구 없음. 모델 항목 단가를 0으로 두었으므로 pi 기록 `cost`는 쓰지 않는다. 2026-10-03에 확인한 공개 API 단가($2 / 캐시 $0.10 / $10 per 1M)로 환산하면 run당 $0.30-0.35다(`analysis/cost/`, 청구액 아님).
 
 ## 한계와 교란 변수
 

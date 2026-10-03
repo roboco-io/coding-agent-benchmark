@@ -4,7 +4,7 @@
 
 ## 이 수치가 뜻하는 것
 
-각 run이 사용한 토큰을 네 항목(비캐시 입력·캐시 읽기·캐시 쓰기·출력)으로 나누고, 항목마다 2026-09-23(gpt-6-sol·gpt-6-luna는 2026-09-24, Sonnet 5.5는 2026-09-29)에 확인한 공개 API 단가를 곱해 더한 값이다. **실제로 지출한 금액이 아니다.** 네이티브 Claude run은 구독(OAuth), pi × Opus 5.5(EXP-030)·pi × Sonnet 5.5(EXP-032)는 Anthropic API 키(실제 과금, 청구액 미확인), gpt-5.6-sol·gpt-6-astra·gpt-6-sol·gpt-6-luna(pi × gpt-6-sol 포함)는 ChatGPT 플랜 OAuth로 실행했고, Solar 두 모델은 무료·프로모션 프리뷰 기간에 실행했다. 따라서 이 값은 "같은 사용량을 지금 공개 API 단가로 과금하면 얼마인가"에 대한 추정이다. 실험 품질 규칙([docs/experiment-quality-rules.md](../../docs/experiment-quality-rules.md) 4절)에 따라 구독 지출과 API 단가 환산을 구분하고, 단가 출처와 확인 시점을 남긴다.
+각 run이 사용한 토큰을 네 항목(비캐시 입력·캐시 읽기·캐시 쓰기·출력)으로 나누고, 항목마다 2026-09-23(gpt-6-sol·gpt-6-luna는 2026-09-24, Sonnet 5.5는 2026-09-29, gpt-6.1-sol은 2026-10-03)에 확인한 공개 API 단가를 곱해 더한 값이다. **실제로 지출한 금액이 아니다.** 네이티브 Claude run은 구독(OAuth), pi × Opus 5.5(EXP-030)·pi × Sonnet 5.5(EXP-032)는 Anthropic API 키(실제 과금, 청구액 미확인), gpt-5.6-sol·gpt-6-astra·gpt-6-sol·gpt-6-luna·gpt-6.1-sol(pi × gpt-6-sol·pi × gpt-6.1-sol 포함)는 ChatGPT 플랜 OAuth로 실행했고, Solar 두 모델은 무료·프로모션 프리뷰 기간에 실행했다. 따라서 이 값은 "같은 사용량을 지금 공개 API 단가로 과금하면 얼마인가"에 대한 추정이다. 실험 품질 규칙([docs/experiment-quality-rules.md](../../docs/experiment-quality-rules.md) 4절)에 따라 구독 지출과 API 단가 환산을 구분하고, 단가 출처와 확인 시점을 남긴다.
 
 ## 결과 (run당 추정 비용 중앙값, USD)
 
@@ -16,6 +16,8 @@
 | DeepSeek V4-Pro | 0.52 | 0.48 | 피크 단가(상한) |
 | pi × gpt-6-sol | 0.27 | — | 단문맥 단가, pi 하네스(구독 OAuth, 실제 지출 없음) |
 | pi × Sonnet 5.5 | 0.30 | — | pi 하네스, 캐시 쓰기 5분 TTL, 캐시 쓰기 단가는 미확인 가정(아래) |
+| pi × gpt-6.1-sol | 0.30 | — | 단문맥 단가(캐시 입력 $0.10), pi 하네스(구독 OAuth, 실제 지출 없음) |
+| gpt-6.1-sol | 0.36 | — | 단문맥 단가(캐시 입력 $0.10) |
 | gpt-6-sol | 0.43 | — | 단문맥 단가 |
 | pi × kimi-k3 | 0.65 | — | pi 하네스, 캐시 쓰기는 입력 단가 |
 | Sonnet 5.5 | 0.68 | 0.70 | Sonnet 5와 같은 단가($2/$10), 캐시 쓰기 단가는 미확인 가정(아래) |

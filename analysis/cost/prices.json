@@ -137,5 +137,15 @@
     "output": 10,
     "src": "https://platform.claude.com/docs/en/about-claude/pricing",
     "caveat": "2026-09-29 확인(claude-api 스킬 모델 표, 2026-09-25 캐시본): input $2·output $10·cache read $0.20, Sonnet 5와 동일가. 캐시 쓰기 5m/1h는 표에 명시되지 않아 표준 배수(입력의 1.25배/2배)로 산정 — 공식 가격 페이지 직접 대조는 미실시"
+  },
+  "gpt-6.1-sol": {
+    "input": 2,
+    "cache_read": 0.1,
+    "cache_write_5m": 2.5,
+    "cache_write_1h": null,
+    "output": 10,
+    "src": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "accessed": "2026-10-03",
+    "caveat": "Standard 단문맥(입력 272K 이하) 단가. 272K 초과 요청은 입력·캐시 2배, 출력 1.5배 (이번 run은 해당 없음)"
   }
 }

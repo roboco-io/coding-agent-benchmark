@@ -38,7 +38,7 @@
 ## usage·집계 검증
 
 - 원자료: run별 `sessions-<run>/` rollout 1개. 누락 0. 집계는 `usage_codex.py`(EXP-027과 같은 스크립트).
-- 비용: ChatGPT 플랜 OAuth라 청구 비용 없음. gpt-6.1-sol의 공개 API 단가는 이 실험 시점에 확인하지 못해 환산하지 않았다.
+- 비용: ChatGPT 플랜 OAuth라 청구 비용 없음. 2026-10-03에 확인한 공개 API 단가(1M 토큰당 입력 $2, 캐시 입력 $0.10, 출력 $10, Standard 272K 이하, [모델 페이지](https://developers.openai.com/api/docs/models/gpt-6.1-sol))로 환산하면 run당 $0.27-0.46이다(`analysis/cost/`). 실제 청구액이 아니다.
 - 재현 자료: `runs/`의 `bench.env`, 스크립트 사본, `phase0.md`/`phase0.log`, `metrics-*.csv`, `recheck.csv`, `usage.csv`, 로그(gz), `sessions.tar.gz`.
 
 ## 한계와 교란 변수

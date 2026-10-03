@@ -2,6 +2,7 @@
 
 - 실험일: 2026-10-03 (07:50–08:15 KST, 순차 3 run)
 - 가설: [M-26](../../hypotheses/catalog.md) — Codex CLI(`codex exec` 0.160.0) 하네스에서 `gpt-6.1-sol`(effort medium)은 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3).
+- 클라이언트: Codex CLI 0.160.0
 - **판정: 검증** — 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 15건 전부 `gpt-6.1-sol`). 세션 6–10분으로 EXP-027 gpt-6-sol(약 5분)보다 길었으나 CLI 버전·시점 교락이 있다.
 
 ## 사전 기준 대조
@@ -50,3 +51,7 @@
 
 - 결론: gpt-6.1-sol은 Codex CLI effort medium 하네스에서 이 과제를 iteration 1에 완주했다(n=3).
 - 후속: Codex가 공식 메타데이터를 포함한 뒤 gpt-6-sol과의 동시기 교차 재측정.
+
+## 후속 분석 (2026-10-03)
+
+- [gpt-6.1-sol 세션 시간 증가 원인 분석](../../analysis/gpt61-sol-slowdown/README.md): Codex·pi 세션 기록을 모델 대기와 도구 실행으로 나눈 결과, 도구 실행 시간과 모델 호출 수는 gpt-6-sol과 비슷했고 모델 호출당 대기 시간이 약 2배였다. 같은 시각에 번갈아 보낸 단일 요청 비교에서도 gpt-6.1-sol이 약 1.4배 느렸다(초당 output 약 20% 감소). 같은 pi 0.87.1에서도 차이가 나서 클라이언트 버전은 주원인이 아니다.

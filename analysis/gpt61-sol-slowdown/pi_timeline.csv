@@ -1,0 +1,7 @@
+session,wall_s,model_s,tool_s,model_calls,output_tokens,s_per_call,out_tok_per_model_s,tool_calls,max_tool_s
+exp030-sol-en-1,251,215,36,32,6961,6.7,32.4,33,15
+exp030-sol-en-2,330,293,36,35,7599,8.4,25.9,36,9
+exp030-sol-en-3,258,222,37,31,8587,7.1,38.8,34,15
+exp034-sol61-en-1,516,473,43,33,13263,14.3,28.0,43,13
+exp034-sol61-en-2,547,488,59,34,13251,14.3,27.2,53,15
+exp034-sol61-en-3,495,442,53,29,12463,15.2,28.2,49,12

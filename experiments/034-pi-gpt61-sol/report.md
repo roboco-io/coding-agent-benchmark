@@ -2,6 +2,7 @@
 
 - 실험일: 2026-10-03 (08:15–08:42 KST, 순차 3 run, EXP-033 종료 직후)
 - 가설: [M-27](../../hypotheses/catalog.md) — pi coding agent(`pi -p` 0.87.1)로 `openai-codex/gpt-6.1-sol`(ChatGPT OAuth, thinking pi 기본값, 사용자 정의 모델 항목)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3).
+- 클라이언트: pi 0.87.1
 - **판정: 검증** — 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 model 필드 96건 전부 `gpt-6.1-sol`, thinking 전 run `medium`). 세션 8.3–9.2분으로 EXP-030 pi × gpt-6-sol(4.2–5.6분)보다 길었으나 시점·모델 항목 교락이 있다.
 
 ## 사전 기준 대조
@@ -45,3 +46,7 @@
 
 - 결론: gpt-6.1-sol은 pi 하네스에서도 이 과제를 iteration 1에 완주했다(n=3). Codex(EXP-033)와 합쳐 두 하네스 6/6 완주.
 - 후속: pi 내장 지원 이후 gpt-6-sol·gpt-6.1-sol 동시기 교차 재측정.
+
+## 후속 분석 (2026-10-03)
+
+- [gpt-6.1-sol 세션 시간 증가 원인 분석](../../analysis/gpt61-sol-slowdown/README.md): Codex·pi 세션 기록을 모델 대기와 도구 실행으로 나눈 결과, 도구 실행 시간과 모델 호출 수는 gpt-6-sol과 비슷했고 모델 호출당 대기 시간이 약 2배였다. 같은 시각에 번갈아 보낸 단일 요청 비교에서도 gpt-6.1-sol이 약 1.4배 느렸다(초당 output 약 20% 감소). 같은 pi 0.87.1에서도 차이가 나서 클라이언트 버전은 주원인이 아니다.

@@ -1,0 +1,7 @@
+order,model,wall_s,output_tokens,reasoning_tokens,output_per_s
+1,gpt-6-sol,38.4,1407,236,36.6
+2,gpt-6.1-sol,53.7,1623,271,30.2
+3,gpt-6-sol,32.1,1183,161,36.8
+4,gpt-6.1-sol,45.7,1386,170,30.3
+5,gpt-6-sol,37.6,1413,338,37.6
+6,gpt-6.1-sol,53.4,1527,190,28.6

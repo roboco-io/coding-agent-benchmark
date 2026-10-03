@@ -2,6 +2,7 @@
  "exp": "EXP-021",
  "date": "2026-09-10",
  "report": "experiments/021-gpt6-astra-codex/report.md",
+ "client": "Codex CLI 0.153.4",
  "runs": {
   "astra-1": {
    "iter": 1,

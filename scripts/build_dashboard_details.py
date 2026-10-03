@@ -2,7 +2,7 @@
 """대시보드 성능 매트릭스 아코디언용 실험 상세 데이터(dashboard/details.js)를 생성한다.
 
 입력:
-  - experiments/*/report.md 헤더(한국어 가설·판정·요약) + scripts/readme_i18n.json(영·일·중)
+  - experiments/*/report.md 헤더(한국어 가설·클라이언트·판정·요약) + scripts/readme_i18n.json(영·일·중)
   - analysis/cost/cost_all_runs.csv (run별 토큰·비용)
   - analysis/dashboard-details/EXP-NNN.json (조건·편차·행동·run별 iteration/커밋, 4개 언어)
 출력: dashboard/details.js — window.DETAILS = { "<매트릭스 모델명>": [ {실험}, ... ] }
@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from update_readme_results import parse_report  # noqa: E402
 
+CLIENT_LANG = {"ko": None, "en": "en", "ja": "ja", "zh": "zh-CN"}
 LANGS = {"ko": None, "en": "en", "ja": "ja", "zh": "zh-CN"}  # 대시보드 키 → i18n 키
 DETAIL_DIR = ROOT / "analysis/dashboard-details"
 
@@ -62,6 +63,15 @@ def main() -> int:
                 errors.append(f"{exp}: i18n {ik} 누락")
                 src = rep
             text[k] = {f: src[f] for f in ("name", "hypothesis", "verdict", "summary")}
+        if det.get("client") != rep["client"]:
+            errors.append(f"{exp}: client 불일치 json={det.get('client')!r} report={rep['client']!r}")
+        terms_all = json.loads((ROOT / "scripts/readme_i18n.json").read_text(encoding="utf-8"))["labels"]
+        client = {}
+        for k, ik in CLIENT_LANG.items():
+            c = rep["client"]
+            for ko_term, tr in ((terms_all.get(ik) or {}).get("client_terms", {})).items():
+                c = c.replace(ko_term, tr)
+            client[k] = c
         for sec in ("conditions", "deviations", "behavior"):
             lens = {k: len(det.get(sec, {}).get(k, [])) for k in LANGS}
             if len(set(lens.values())) != 1:
@@ -81,7 +91,7 @@ def main() -> int:
             })
         out.setdefault(name, []).append({
             "exp": exp, "date": det.get("date"), "report": det.get("report") or rep["path"],
-            "hcode": rep["hcode"], "text": text, "runs": runs,
+            "hcode": rep["hcode"], "client": client, "text": text, "runs": runs,
             "conditions": det.get("conditions", {}), "deviations": det.get("deviations", {}),
             "behavior": det.get("behavior", {}),
         })

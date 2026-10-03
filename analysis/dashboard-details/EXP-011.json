@@ -2,6 +2,7 @@
   "exp": "EXP-011",
   "date": "2026-08-03",
   "report": "experiments/011-codex-gpt56-sol/report.md",
+  "client": "Codex CLI 0.144.0",
   "runs": {
     "sol-1": {"iter": 1, "commits": 3}
   },

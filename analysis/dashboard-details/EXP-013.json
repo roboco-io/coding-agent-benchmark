@@ -2,6 +2,7 @@
   "exp": "EXP-013",
   "date": "2026-08-03",
   "report": "experiments/013-qwen38max-direct/report.md",
+  "client": "Claude Code 2.1.220",
   "runs": {
     "qwen-1": {"iter": 1, "commits": 4}
   },

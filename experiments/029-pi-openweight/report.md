@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-24 (13:55–15:42 KST, 단일 오케스트레이터 순차 9 run, 조건 교차 순서; flash-en-1은 포트 교란(D-3)으로 16:59–17:03에 flash-en-1r로 재실행해 대체)
 - 가설: [M-22](../../hypotheses/catalog.md) — pi coding agent(`pi -p` v0.87.1)를 제공자 OpenAI 호환 엔드포인트에 직결해 `kimi-k3`·`qwen3.8-max`·`deepseek-flash`(thinking pi 기본값)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제).
+- 클라이언트: pi 0.87.1
 - **판정: 검증** — 세 조건 모두 3/3 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). 8 run은 iteration 1에 완주했고, qwen-en-1은 채점 포트가 외부 프로세스와 충돌해 iteration 5에 완주로 기록됐다(iteration 1 코드도 재채점에서 통과). 세션 시간은 flash 1.9–4.1분(포트 교란 run 대체 후, D-3), kimi 9.5–9.9분, qwen 15.6–29.0분이다. 관측값이며 우열 확정이 아니다.
 
 > 이 실험은 `ralph-model-benchmark` 스킬에 `pi` 하네스를 추가해 처음 적용한 실험이다. Claude Code·Codex가 아닌 제3의 에이전트 하네스를 이 과제에 처음 넣었다.

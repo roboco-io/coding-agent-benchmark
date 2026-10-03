@@ -2,6 +2,7 @@
  "exp": "EXP-027",
  "date": "2026-09-24",
  "report": "experiments/027-gpt6-sol-luna-codex/report.md",
+ "client": "Codex CLI 0.155.1 (sol-1, sol-2, luna-1), 0.156.1 (sol-3, luna-2, luna-3)",
  "runs": {
   "sol-en-1": {
    "iter": 1,

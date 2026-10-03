@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-24 (08:47–09:36 KST, 순차 6 run, sol·luna 교차)
 - 가설: [M-20](../../hypotheses/catalog.md) — Codex CLI(`codex exec`) 하네스에서 gpt-6-sol·gpt-6-luna(effort medium)는 각각 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (각 n=3).
+- 클라이언트: Codex CLI 0.155.1 (sol-1, sol-2, luna-1), 0.156.1 (sol-3, luna-2, luna-3)
 - **판정: 검증** — sol 3/3·luna 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 전수 일치). 채점 인프라 결함 1건(D-1)은 에이전트 개입 없이 처리했고 판정에 영향 없음.
 
 ## 사전 기준 대조

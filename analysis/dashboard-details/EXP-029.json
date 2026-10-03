@@ -2,6 +2,7 @@
   "exp": "EXP-029",
   "date": "2026-09-24",
   "report": "experiments/029-pi-openweight/report.md",
+  "client": "pi 0.87.1",
   "runs": {
     "kimi-en-1": {
       "iter": 1,

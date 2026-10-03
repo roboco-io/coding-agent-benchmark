@@ -2,6 +2,7 @@
 
 - 실험일: 2026-08-05 (solar-2 기동 11:59 KST, 9 iteration 만에 중단)
 - 가설: [M-13](../../hypotheses/catalog.md) — EXP-015의 solar-open2 직결 무개입 완주는 재현된다: 추가 2 run(총 n=3) 전부 30 iteration 안에 게이트(measure v4)+재검증 완주할 수 있다.
+- 클라이언트: Claude Code 2.1.222
 - **판정: 보류** — 모델 외적 장애(사전 등록 기준): 실험 개시 시점에 Upstage가 Anthropic 호환 엔드포인트(`/v1/messages`)와 solar-open2 hosted API를 회수해 run 자체가 불가능. 가설은 기각이 아니라 **검증 불가**.
 
 ## 경과

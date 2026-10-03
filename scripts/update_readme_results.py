@@ -4,6 +4,7 @@
 각 report.md의 구조화된 헤더를 파싱한다:
   # EXP-NNN 결과 보고: <제목>
   - 가설: [코드](...) — <가설 문장>
+  - 클라이언트: <에이전트 클라이언트·버전>   (선택. 없으면 '미기록'으로 표시)
   - **판정: <판정>** — <핵심 요약>
 
 대상 파일과 언어:
@@ -30,8 +31,9 @@ FILES = {
 }
 KO_LABELS = {
     "note": "이 블록은 scripts/update_readme_results.py가 experiments/*/report.md에서 자동 생성한다. 직접 수정 금지.",
-    "headers": ["실험", "가설", "판정"],
+    "headers": ["실험", "가설", "판정", "클라이언트"],
     "report": "보고서",
+    "client_terms": {},
 }
 FIELDS = ("name", "hypothesis", "verdict", "summary")
 
@@ -44,7 +46,9 @@ def parse_report(path: Path) -> dict | None:
     if not (title and verdict):
         print(f"경고: 헤더 파싱 실패, 건너뜀: {path}", file=sys.stderr)
         return None
+    client = re.search(r"^- 클라이언트:\s*(.+)$", text, re.M)
     return {
+        "client": client.group(1).strip() if client else "미기록",
         "id": title.group(1),
         "name": title.group(2).strip(),
         "hcode": hypo.group(1) if hypo else "?",
@@ -69,17 +73,23 @@ def localize(report: dict, lang: str, i18n: dict, missing: list[str]) -> dict:
     return out
 
 
+def localize_client(client: str, labels: dict) -> str:
+    for ko, tr in labels.get("client_terms", {}).items():
+        client = client.replace(ko, tr)
+    return client
+
+
 def build_section(reports: list[dict], labels: dict) -> str:
     h = labels["headers"]
     lines = [
         BEGIN,
         f"<!-- {labels['note']} -->",
         "",
-        f"| {h[0]} | {h[1]} | {h[2]} |",
-        "|------|------|------|",
+        f"| {h[0]} | {h[1]} | {h[2]} | {h[3]} |",
+        "|------|------|------|------|",
     ]
     for r in reports:
-        lines.append(f"| [{r['id']}]({r['path']}) {r['name']} | {r['hcode']}: {r['hypothesis']} | **{r['verdict']}** |")
+        lines.append(f"| [{r['id']}]({r['path']}) {r['name']} | {r['hcode']}: {r['hypothesis']} | **{r['verdict']}** | {localize_client(r['client'], labels)} |")
     lines.append("")
     for r in reports:
         lines.append(f"**{r['id']} — {r['name']}** ({r['verdict']})  ")

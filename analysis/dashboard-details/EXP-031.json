@@ -2,6 +2,7 @@
   "exp": "EXP-031",
   "date": "2026-09-29",
   "report": "experiments/031-sonnet55-ralph/report.md",
+  "client": "Claude Code 2.1.284",
   "runs": {
     "en-1": {"iter": 1, "commits": 2}, "ko-1": {"iter": 1, "commits": 4},
     "en-2": {"iter": 1, "commits": 2}, "ko-2": {"iter": 1, "commits": 2},

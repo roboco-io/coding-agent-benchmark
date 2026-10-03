@@ -2,6 +2,7 @@
 
 - 실험일: 2026-08-03 (07:42–07:48 KST)
 - 가설: [M-07](../../hypotheses/catalog.md) — Codex CLI(`codex exec`) 하네스에서 gpt-5.6-sol(effort medium)은 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다.
+- 클라이언트: Codex CLI 0.144.0
 - **판정: 검증** — **iteration 1에서 완주** (게이트 13/13·154/154 + 독립 재검증 2회 일치, codex exec 5분 46초·세션 1개·커밋 3회, 무개입).
 
 ## 결과

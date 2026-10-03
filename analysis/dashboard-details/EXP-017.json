@@ -2,6 +2,7 @@
   "exp": "EXP-017",
   "date": "2026-08-04",
   "report": "experiments/017-ko-condition/report.md",
+  "client": "Claude Code 2.1.221",
   "runs": {
     "qwen-ko-1": {
       "iter": 1,

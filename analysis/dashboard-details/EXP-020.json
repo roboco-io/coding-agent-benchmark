@@ -2,6 +2,7 @@
  "exp": "EXP-020",
  "date": "2026-08-19",
  "report": "experiments/020-solar-pro4-direct/report.md",
+ "client": "Claude Code 2.1.235",
  "runs": {
   "pro4-1": {
    "iter": 12,

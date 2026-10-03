@@ -4,6 +4,7 @@
 
 - 실험일: 2026-07-26 – 2026-07-27
 - 가설: [M-02](../../hypotheses/catalog.md) — Claude Code의 백엔드를 Solar Open 2로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다.
+- 클라이언트: Claude Code 2.1.220 (claude-code-router 1.0.73: open2-1 only)
 - **판정: 보류** — 0/2 완주이나 완전 프로토콜 run은 1회뿐(open2-1은 1 iter 만에 허위 완료 신고로 자체 종료): open2-2는 15 iteration을 소진하고도 독립 검증 3/13 파일(94/154 요청)에 그쳤지만, solar-pro3에서 부재했던 자율 TDD 루프를 확립하고 단조 수렴해 "행동 계층" 병목이 자율성에서 수렴 속도로 이동했다.
 
 ## 실행 요약

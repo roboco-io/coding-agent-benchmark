@@ -2,6 +2,7 @@
  "exp": "EXP-025",
  "date": "2026-09-21",
  "report": "experiments/025-deepseek-direct/report.md",
+ "client": "Claude Code 2.1.278",
  "runs": {
   "flash-en-1": {
    "iter": 1,

@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-29 (06:51–07:11 KST, 단일 오케스트레이터 순차 6 run, EN/KO 교차 순서)
 - 가설: [M-24](../../hypotheses/catalog.md) — Claude Code 네이티브 하네스에서 Sonnet 5.5(`claude-sonnet-5-5`, thinking 기본값)는 EN·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4h 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제).
+- 클라이언트: Claude Code 2.1.284
 - **판정: 검증** — EN 3/3·KO 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 2.5–4.2분·output 15.2–20.9K·API 호출 16–24로 같은 Claude Code 네이티브 하네스의 Opus 5.5·Fable 5.1·Sonnet 5 관측 범위보다 짧고 적다(output은 Opus 5.5 하단과 겹침). 시점·CLI 버전 교락이 있는 관측값이며 우열 확정이 아니다.
 
 > `ralph-model-benchmark` 스킬 `claude-native` 하네스 적용. 이번 실험부터 하네스가 빈 포트를 `PORT` 환경변수로 주입한다(설계 문서에 실행 전 기록).

@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-29 (07:48–07:56 KST, 순차 3 run)
 - 가설: [M-25](../../hypotheses/catalog.md) — pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-sonnet-5-5`(Anthropic API 키 직결, thinking pi 기본값, 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제).
+- 클라이언트: pi 0.87.1
 - **판정: 검증** — EN 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 1.8–3.2분·output 10.9–14.7K·요청 13–23회로, 같은 날 네이티브 Claude Code × Sonnet 5.5(EXP-031 EN 2.9–4.2분·15.2–20.0K)와 pi × Opus 5.5(EXP-030 3.1–4.9분)보다 짧고 적은 관측값이다. 에이전트·API 경로가 함께 다른 조합 차이이며 우열 확정이 아니다.
 
 > `ralph-model-benchmark` 스킬 `pi` 하네스, EXP-030과 같은 절차. pi 내장 목록에 이 모델이 없어 사용자 정의 모델 항목을 썼다(설계 문서에 사전 등록).

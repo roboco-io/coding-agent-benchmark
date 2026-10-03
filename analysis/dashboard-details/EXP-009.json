@@ -2,6 +2,7 @@
   "exp": "EXP-009",
   "date": "2026-07-27",
   "report": "experiments/009-opus5-ralph-en/report.md",
+  "client": "Claude Code 2.1.220",
   "runs": {
     "opus5-1": {"iter": 1, "commits": 6},
     "opus5-2": {"iter": 1, "commits": 6},

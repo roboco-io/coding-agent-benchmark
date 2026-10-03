@@ -2,6 +2,7 @@
  "exp": "EXP-034",
  "date": "2026-10-03",
  "report": "experiments/034-pi-gpt61-sol/report.md",
+ "client": "pi 0.87.1",
  "runs": {
   "sol61-en-1": {
    "iter": 1,

@@ -2,6 +2,7 @@
   "exp": "EXP-016",
   "date": "2026-08-04",
   "report": "experiments/016-n3-replication/report.md",
+  "client": "Claude Code 2.1.220 (kimi, qwen), Codex CLI 0.144.0 (sol)",
   "runs": {
     "sol-2": {
       "iter": 2,

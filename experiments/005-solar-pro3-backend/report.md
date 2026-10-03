@@ -2,6 +2,7 @@
 
 - 실험일: 2026-07-26
 - 가설: [M-01](../../hypotheses/catalog.md) — Claude Code의 백엔드를 Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다.
+- 클라이언트: Claude Code 2.1.220 + claude-code-router 1.0.73
 - **판정: 보류** — solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조기 중단): 연동 스택은 검증됐으나 headless 자율 루프에서 허락-대기·컨텍스트 초과 실패 모드가 반복되어 완주 궤도에 오르지 못함.
 
 ## 실행 요약

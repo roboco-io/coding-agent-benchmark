@@ -2,6 +2,7 @@
 
 - 실험일: 2026-08-04 (00:06–00:27 KST)
 - 가설: [M-10](../../hypotheses/catalog.md) — Claude Code를 Moonshot Anthropic 호환 엔드포인트로 kimi-k3에 직결하면(thinking 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다.
+- 클라이언트: Claude Code 2.1.220
 - **판정: 검증** — **iteration 1에서 완주** (게이트 13/13·154/154 + 독립 재검증 2회 일치, 21분 18초·커밋 4회·개입 0, 직결 스택 트러블슈팅 0건).
 
 ## 결과

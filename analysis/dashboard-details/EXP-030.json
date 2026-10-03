@@ -2,6 +2,7 @@
  "exp": "EXP-030",
  "date": "2026-09-24",
  "report": "experiments/030-pi-frontier/report.md",
+ "client": "pi 0.87.1",
  "runs": {
   "opus-en-1": {
    "iter": 1,

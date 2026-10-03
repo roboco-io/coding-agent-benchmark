@@ -14,7 +14,7 @@
 
 실험이 끝나 `experiments/*/report.md`를 작성·수정했다면 반드시:
 
-1. report.md 헤더에 파싱 가능한 두 줄을 유지한다: `- 가설: [코드](...) — <문장>`, `- **판정: <판정>** — <핵심 요약 한 문장>`
+1. report.md 헤더에 파싱 가능한 세 줄을 유지한다: `- 가설: [코드](...) — <문장>`, `- 클라이언트: <에이전트 클라이언트·버전, 예: Codex CLI 0.160.0>`, `- **판정: <판정>** — <핵심 요약 한 문장>`. 클라이언트 줄은 실험 간 시간 비교가 클라이언트 버전 차이를 포함하므로 필수이며, run별로 버전이 다르면 run을 병기하고 세션 jsonl의 `version`·`cli_version`과 대조한다. 기록이 없으면 추정하지 말고 `미기록`으로 쓴다. 과거 실험의 수집 결과는 [analysis/client-versions.md](analysis/client-versions.md)
 2. `scripts/readme_i18n.json`에 새 실험의 영·일·중 번역(name·hypothesis·verdict·summary)을 추가한 뒤 `python3 scripts/update_readme_results.py` 실행 → 4개 README(README.ko.md 원문 / README.md 영어 / README.ja.md / README.zh-CN.md)의 실험 결과 섹션이 재생성된다. 번역 누락 시 한국어 원문이 들어가고 경고가 출력되므로 반드시 채운다 (pre-commit 훅도 동일 작업을 수행하지만, 훅 미설정 환경에 대비해 직접 실행 후 커밋).
 3. README의 `### 종합 인사이트` 절은 자동 생성 대상이 아니다 — 새 실험이 기존 결론을 바꾸면 이 절을 4개 README 모두에서 직접 갱신한다(README.ko.md를 먼저 쓰고 en/ja/zh-CN에 번역 반영).
 4. `hypotheses/catalog.md` 상태와 `ROADMAP.md` 체크박스를 갱신한다.

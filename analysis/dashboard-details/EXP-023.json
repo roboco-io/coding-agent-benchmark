@@ -2,6 +2,7 @@
  "exp": "EXP-023",
  "date": "2026-09-16",
  "report": "experiments/023-fable51-ralph/report.md",
+ "client": "Claude Code 2.1.273",
  "runs": {
   "fable-1": {
    "iter": 1,

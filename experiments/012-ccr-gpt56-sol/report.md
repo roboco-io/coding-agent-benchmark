@@ -2,6 +2,7 @@
 
 - 실험일: 2026-08-03 (08:53–09:52 KST)
 - 가설: [M-08](../../hypotheses/catalog.md) — Claude Code 백엔드를 ccr로 gpt-5.6-sol에 연결하면(reasoning effort medium) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다.
+- 클라이언트: Claude Code 2.1.220 + claude-code-router 1.0.73
 - **판정: 검증** — **iteration 11/30에서 완주** (게이트 13/13·154/154 + 독립 재검증 2회 일치, 총 58분·커밋 11회). 단 iteration 2에서 스트림 스톨 1건에 하네스 수준 개입(프로세스 종료로 iteration 경계 복구, 모델 산출물 불개입)이 있었다 — 아래 프로토콜 이슈 참조.
 
 ## 결과

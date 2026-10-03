@@ -2,6 +2,7 @@
   "exp": "EXP-019",
   "date": "2026-08-06",
   "report": "experiments/019-ko-native-codex/report.md",
+  "client": "Codex CLI 0.144.0 (solko), Claude Code 미기록 (Opus runs)",
   "runs": {
     "48ko-1": {
       "iter": 1,

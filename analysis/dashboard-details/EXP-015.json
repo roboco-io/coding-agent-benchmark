@@ -2,6 +2,7 @@
   "exp": "EXP-015",
   "date": "2026-08-04",
   "report": "experiments/015-solar-open2-direct/report.md",
+  "client": "Claude Code 2.1.220",
   "runs": {
     "solar-1": {
       "iter": 2,

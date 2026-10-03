@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-23 (07:05–07:35 KST, 단일 오케스트레이터 순차 6 run, EN/KO 교차 순서)
 - 가설: [M-19](../../hypotheses/catalog.md) — Claude Code 네이티브 하네스에서 Opus 5.5(`claude-opus-5-5`, thinking 기본값)는 EN 정본·KO 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 10 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 각 n=3, 완주율 판정·과금 배제).
+- 클라이언트: Claude Code 2.1.280
 - **판정: 검증** — **6/6 run 전부 iteration 1 완주** (EN 3/3·KO 3/3, 게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 `claude-opus-5-5`). 세션 4.0–8.4분(6 run 중 5개가 4.0–4.2분)·output 18.6–28.2K로 네이티브 Claude 조건 중 최단·최저 대역이며, Opus 5(8.9–17.6분·39–49K)와 Fable 5.1(6.2–7.8분·28.7–35.8K) 분포 아래에 놓인다. 관측값이며 우위 확정이 아니다.
 
 > 보고서 형식은 새 보고서 템플릿(작성 시점 main 미커밋 `templates/report.md`)을 따른다.

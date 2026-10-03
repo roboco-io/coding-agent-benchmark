@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-10 (07:38–08:00 KST, 순차 3 run)
 - 가설: [M-15](../../hypotheses/catalog.md) — Codex CLI(`codex exec`) 하네스에서 gpt-6-astra(effort medium)는 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다 (n=3, 완주율 판정·과금 배제).
+- 클라이언트: Codex CLI 0.153.4
 - **판정: 검증** — **3/3 run 전부 iteration 1 완주** (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 세션 7분대·커밋 3–4회).
 
 ## 결과

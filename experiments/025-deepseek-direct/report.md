@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-21 (19:59–21:58 KST, 단일 오케스트레이터 순차 12 run, 교차 순서)
 - 가설: [M-18](../../hypotheses/catalog.md) — Claude Code를 DeepSeek Anthropic 호환 엔드포인트로 `deepseek-flash`(DeepSeek-V4.1-Flash)·`deepseek-v4-pro`(DeepSeek-V4-Pro-0813)에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4시간 안에 무개입 완주할 수 있다 (EN·KO 정본 각 n=3, 완주율 판정·과금 배제).
+- 클라이언트: Claude Code 2.1.278
 - **판정: 검증** — **12/12 run 전부 iteration 1 완주** (4조건 각 3/3, 게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). Flash는 EN 4.6–6.0분으로 전 조건 최속·run당 환산 약 $0.1, Pro는 12–16분·약 $0.5. 관측 범위의 사실이며 일반적 성공률·효율 우위의 확정이 아니다.
 
 > 보고서 형식은 새 보고서 템플릿(작성 시점 main 미커밋 `templates/report.md`)을 따른다.

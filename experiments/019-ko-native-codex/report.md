@@ -2,6 +2,7 @@
 
 - 실험일: 2026-08-06 (09:56–11:17 KST, 순차·교차 9 run)
 - 가설: [L-03](../../hypotheses/catalog.md) — 네이티브 Opus 4.8·Opus 5(Claude Code)와 gpt-5.6-sol(Codex CLI)은 한국어 정본 프롬프트(전 산출물 한국어 지시 포함) 조건에서도 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 iteration 안에 무개입 완주할 수 있다.
+- 클라이언트: Codex CLI 0.144.0 (solko), Claude Code 미기록 (Opus runs)
 - **판정: 검증** — **9/9 run 전부 iteration 1 완주** (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0). 언어 준수도 전수 성립: 9 run 모두 커밋 메시지·README 한국어 (영어권 모델 gpt-5.6-sol 포함).
 
 ## 결과 (교차 실행 순서대로)

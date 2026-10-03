@@ -2,6 +2,7 @@
 
 - 실험일: 2026-09-24 (17:47–18:14 KST, 단일 오케스트레이터 순차 6 run, 조건 교차 순서)
 - 가설: [M-23](../../hypotheses/catalog.md) — pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-opus-5-5`(Anthropic API 키 직결)·`openai-codex/gpt-6-sol`(ChatGPT OAuth)을 돌리면(thinking pi 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter·4h 안에 완주할 수 있다 (EN 각 n=3, 완주율 판정·과금 배제).
+- 클라이언트: pi 0.87.1
 - **판정: 검증** — 두 조건 모두 3/3 완주, 6 run 전부 iteration 1 (게이트 pass + 독립 재검증 각 2회 13/13·154/154 일치, 개입 0, 응답 model 필드 전수 일치). 세션 시간은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분이며, 각 모델의 네이티브 에이전트 기준선(EXP-026 Opus 5.5 4.0–8.4분, EXP-027 gpt-6-sol 4.8–5.2분)과 범위가 겹친다. 관측값이며 우열 확정이 아니다.
 
 > EXP-029(오픈웨이트 계열)에 이어 pi 하네스를 두 번째로 적용한 실험이다. 이번에는 제조사 네이티브 에이전트(Claude Code·Codex)의 기준 모델을 pi로 돌렸다.

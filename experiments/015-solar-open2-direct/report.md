@@ -2,6 +2,7 @@
 
 - 실험일: 2026-08-04 (06:16–07:14 KST 본 실행, 07:16 사용자 중단, 07:2x 오검 판별·재채점)
 - 가설: [M-11](../../hypotheses/catalog.md) — Claude Code를 Upstage Anthropic 호환 엔드포인트로 solar-open2에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다.
+- 클라이언트: Claude Code 2.1.220
 - **판정: 검증** — **iteration 2에서 완주** (산출물 직접 재채점 2회 모두 13/13·154/154 일치, 58분 15초·커밋 2회. 각주: 게이트 오검 1건 — measure v3 포트 탐지 결함으로 정당 완주를 기각, EXP-010 48-1 선례 적용).
 
 ## 결과

@@ -724,6 +724,26 @@
         "verdict": "验证",
         "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，333 条响应全部为 `gemini-3.8-flash`，thinking `high`）。会话 13.1–15.6 分钟。run 3 因代理读取了框架文件和之前 run 的日志而被标注（D-2）。"
       }
+    },
+    "EXP-037": {
+      "en": {
+        "name": "Claude Code × Haiku 5.5 native Ralph loop completion check (EN n=3)",
+        "hypothesis": "In the Claude Code native harness, Haiku 5.5 (`claude-haiku-5-5`, default thinking) can finish the RealWorld backend (Hurl 13/13 · 154/154) with the canonical EN Ralph loop, intervention-free, within a 30-iteration · 4-hour cap (EN n=3; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3 completed** (runs 2 and 3 at iteration 1; run 1 at iteration 2 after iteration 1 stopped on its own after scaffolding). Gate pass plus two independent re-checks each at 13/13 · 154/154, every response `claude-haiku-5-5`. Sessions 5.1–7.9 min, output 49.0–57.6K, estimated $0.06–0.16 per run at list prices, the lowest of the Claude conditions. Run 1 called the exposed context7 MCP."
+      },
+      "ja": {
+        "name": "Claude Code × Haiku 5.5 ネイティブ Ralphループ完走検証（EN n=3）",
+        "hypothesis": "Claude Codeネイティブハーネスで Haiku 5.5（`claude-haiku-5-5`、thinking既定値）は、EN正本Ralphループで RealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に無介入で完走できる（EN n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3完走**（run 2・3はiteration 1、run 1はiteration 1がスキャフォールド後に自ら終了したためiteration 2）。ゲートpass + 独立再検証各2回13/13・154/154一致、応答はすべて`claude-haiku-5-5`。セッション5.1–7.9分、output 49.0–57.6K、公開単価換算でrun当たり$0.06–0.16とClaude系条件で最低。run 1は露出していたcontext7 MCPを呼び出した。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × Haiku 5.5 原生 Ralph 循环完成验证（EN n=3）",
+        "hypothesis": "在 Claude Code 原生框架中，Haiku 5.5（`claude-haiku-5-5`，thinking 默认值）能用 EN 标准 Ralph 循环在上限 30 iteration·4 小时内无人干预地完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3 完成**（run 2、3 在 iteration 1；run 1 的 iteration 1 在搭建脚手架后自行结束，于 iteration 2 完成）。门控通过 + 各 2 次独立复验 13/13·154/154 一致，所有响应均为 `claude-haiku-5-5`。会话 5.1–7.9 分钟，output 49.0–57.6K，按公开单价折算每 run $0.06–0.16，为 Claude 系列条件中最低。run 1 调用了暴露的 context7 MCP。"
+      }
     }
   }
 }

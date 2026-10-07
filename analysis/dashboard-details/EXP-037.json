@@ -1,0 +1,29 @@
+{
+  "exp": "EXP-037",
+  "date": "2026-10-08",
+  "report": "experiments/037-haiku55-ralph/report.md",
+  "client": "Claude Code 2.1.293",
+  "runs": {
+    "en-1": {"iter": 2, "commits": 7},
+    "en-2": {"iter": 1, "commits": 11},
+    "en-3": {"iter": 1, "commits": 5}
+  },
+  "conditions": {
+    "ko": [["에이전트", "Claude Code 2.1.293 (`claude -p --dangerously-skip-permissions`)"], ["연결", "Anthropic 네이티브, 구독 OAuth"], ["모델 ID", "claude-haiku-5-5"], ["thinking", "기본값"], ["격리", "비격리 (사용자 글로벌 CLAUDE.md·스킬·MCP 노출, EXP-023/026/028/031과 동일)"], ["상한", "30 iteration · run당 4시간, 무개입"], ["프롬프트", "정본 EN, n=3, 순차 실행"], ["포트", "하네스가 run별 빈 포트를 PORT로 주입"]],
+    "en": [["Agent", "Claude Code 2.1.293 (`claude -p --dangerously-skip-permissions`)"], ["Connection", "Anthropic native, subscription OAuth"], ["Model ID", "claude-haiku-5-5"], ["Thinking", "default"], ["Isolation", "not isolated (user's global CLAUDE.md, skills and MCP exposed, as in EXP-023/026/028/031)"], ["Cap", "30 iterations · 4 h per run, no intervention"], ["Prompt", "canonical EN, n=3, sequential"], ["Port", "harness injects a free port per run as PORT"]],
+    "ja": [["エージェント", "Claude Code 2.1.293（`claude -p --dangerously-skip-permissions`）"], ["接続", "Anthropicネイティブ、サブスクリプションOAuth"], ["モデルID", "claude-haiku-5-5"], ["thinking", "デフォルト"], ["隔離", "非隔離（ユーザーのグローバルCLAUDE.md・スキル・MCPが露出、EXP-023/026/028/031と同じ）"], ["上限", "30 iteration・runあたり4時間、無介入"], ["プロンプト", "正本EN、n=3、順次実行"], ["ポート", "ハーネスがrunごとの空きポートをPORTで注入"]],
+    "zh": [["代理", "Claude Code 2.1.293（`claude -p --dangerously-skip-permissions`）"], ["连接", "Anthropic 原生，订阅 OAuth"], ["模型 ID", "claude-haiku-5-5"], ["thinking", "默认值"], ["隔离", "未隔离（暴露用户全局 CLAUDE.md·技能·MCP，与 EXP-023/026/028/031 相同）"], ["上限", "30 iteration · 每 run 4 小时，无人工干预"], ["提示", "标准 EN，n=3，顺序执行"], ["端口", "框架为每个 run 以 PORT 注入空闲端口"]]
+  },
+  "deviations": {
+    "ko": ["게이트 반려·재실행·보류 없음. 5xx·레이트 리밋·게이트 오검 0건.", "run 1의 iteration 1은 스캐폴딩만 커밋하고 완료 선언 없이 스스로 종료했다. 랄프 루프 규칙대로 iteration 2가 새 세션으로 이어받아 완주했다.", "run 1은 비격리로 노출된 context7 MCP를 2회 호출해 Prisma 문서를 조회했다. 네이티브 Claude 조건에서 MCP 호출이 기록된 첫 사례이며 격리 조건과 비교할 때 교란 요인이다.", "run 3은 주입된 PORT를 API_PORT로 바꿔 무시했다. 채점기가 리포 소속 포트를 자동 탐지하므로 판정 영향 없음.", "측정 날짜·CLI 버전(2.1.293)이 다른 네이티브 실험과 달라 시간·토큰 비교에 교락이 있다."],
+    "en": ["No gate rejections, reruns or holds. Zero 5xx errors, rate limits or grader misdetections.", "In run 1, iteration 1 committed only the scaffolding and stopped on its own without declaring completion. Following the Ralph loop rule, iteration 2 continued in a new session and finished.", "Run 1 called the context7 MCP, exposed because the run was not isolated, twice to look up Prisma documentation. This is the first recorded MCP call in a native Claude condition and a confounder when comparing with isolated conditions.", "Run 3 renamed the injected PORT to API_PORT and ignored it. The grader auto-detects the repo's port, so the verdict is unaffected.", "Date and CLI version (2.1.293) differ from the other native experiments, so time and token comparisons are confounded."],
+    "ja": ["ゲート却下・再実行・保留なし。5xx・レート制限・ゲート誤検出は0件。", "run 1のiteration 1はスキャフォールドだけをコミットし、完了宣言なしに自ら終了した。Ralphループの規則どおりiteration 2が新しいセッションで引き継いで完走した。", "run 1は非隔離のため露出していたcontext7 MCPを2回呼び出してPrismaのドキュメントを調べた。ネイティブClaude条件でMCP呼び出しが記録された最初の事例で、隔離条件と比べる際の交絡要因である。", "run 3は注入されたPORTをAPI_PORTに変えて無視した。採点器がリポ所属のポートを自動検出するため判定への影響なし。", "測定日・CLIバージョン（2.1.293）が他のネイティブ実験と異なるため、時間・トークンの比較には交絡がある。"],
+    "zh": ["无门控驳回、重跑或保留。5xx、速率限制、门控误检均为 0。", "run 1 的 iteration 1 只提交了脚手架，未宣告完成便自行结束。按 Ralph 循环规则，iteration 2 以新会话接手并完成。", "run 1 调用了因未隔离而暴露的 context7 MCP 2 次，查询 Prisma 文档。这是原生 Claude 条件中首次记录到 MCP 调用，与隔离条件比较时是混杂因素。", "run 3 把注入的 PORT 改名为 API_PORT 而忽略它。评分器会自动检测仓库所属端口，因此不影响判定。", "测量日期和 CLI 版本（2.1.293）与其他原生实验不同，时间与 token 的比较存在混杂。"]
+  },
+  "behavior": {
+    "ko": ["3 run 모두 Fastify + Prisma + SQLite를 선택했다.", "run 2는 Bash만, run 1·3은 Bash 외에 Write·Edit를 썼다.", "run당 API 호출 38–59회, output 49.0–57.6K로 Sonnet 5.5(EXP-031)보다 2–3배 많았다.", "캐시 쓰기는 3 run 모두 5분 TTL이었다(다른 네이티브 Claude run은 1시간). 원인은 확인하지 않았다.", "서브에이전트·Skill 호출 0건. 응답 model 필드는 전수 claude-haiku-5-5."],
+    "en": ["All 3 runs chose Fastify + Prisma + SQLite.", "Run 2 used only Bash; runs 1 and 3 also used Write and Edit.", "38–59 API calls and 49.0–57.6K output per run, 2–3× more than Sonnet 5.5 (EXP-031).", "All 3 runs wrote cache with a 5-minute TTL (other native Claude runs used 1 hour). The cause was not checked.", "Zero subagent or Skill calls. Every response's model field was claude-haiku-5-5."],
+    "ja": ["3 runすべてがFastify + Prisma + SQLiteを選択した。", "run 2はBashのみ、run 1・3はBashに加えてWrite・Editを使った。", "runあたりAPI呼び出し38–59回、output 49.0–57.6Kで、Sonnet 5.5（EXP-031）より2–3倍多かった。", "キャッシュ書き込みは3 runとも5分TTLだった（他のネイティブClaude runは1時間）。原因は確認していない。", "サブエージェント・Skillの呼び出しは0件。応答のmodelフィールドはすべてclaude-haiku-5-5。"],
+    "zh": ["3 个 run 都选择了 Fastify + Prisma + SQLite。", "run 2 只用 Bash，run 1·3 在 Bash 之外还用了 Write·Edit。", "每 run API 调用 38–59 次、output 49.0–57.6K，是 Sonnet 5.5（EXP-031）的 2–3 倍。", "3 个 run 的缓存写入全部为 5 分钟 TTL（其他原生 Claude run 为 1 小时）。原因未确认。", "子代理·Skill 调用为 0。响应的 model 字段全部为 claude-haiku-5-5。"]
+  }
+}

@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+haiku55-en-1,1,46,0,0,0,94,54120,2324352,105699,19458,159913
+haiku55-en-2,1,43,0,0,0,88,55444,2191292,90541,25435,146073
+haiku55-en-3,1,38,0,0,0,78,49981,1747938,79462,20589,129521

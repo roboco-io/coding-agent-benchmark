@@ -60,6 +60,8 @@
 - [x] EXP-035: Antigravity CLI(agy 1.3.1) × gemini-3.8-flash(effort high, Gemini API 키) 완주 검증 (M-28, EN n=3) — 검증(3/3 완주, run 3은 하네스 채점기에 의한 강제 종료로 iter 2, 세션 15.5–22.4분), [보고서](experiments/035-agy-gemini38-flash/report.md)
 - [x] EXP-036: pi coding agent × gemini-3.8-flash(thinking high, Gemini API 키) 완주 검증 (M-29, EN n=3) — 검증(3/3 iter 1 완주, 세션 13.1–15.6분), [보고서](experiments/036-pi-gemini38-flash/report.md)
 - [x] EXP-037: Claude Code × Haiku 5.5 네이티브 완주 검증 (M-30, EN n=3) — 검증(3/3 완주, run 1만 iter 2, 세션 5.1–7.9분, 환산 $0.06–0.16), [보고서](experiments/037-haiku55-ralph/report.md)
+- [x] EXP-038: pi coding agent × Haiku 5.5 완주 검증 (M-31, EN n=3) — 검증(3/3 iter 1 완주, 세션 5.4–5.9분, 환산 $0.05–0.09), [보고서](experiments/038-pi-haiku55/report.md)
+- [ ] 에이전트 실행 격리(별도 사용자·컨테이너) — 에이전트가 `ps`/`pgrep`으로 같은 머신의 다른 프로세스 비밀값을 읽은 사례(EXP-038 D-1)
 - [ ] 하네스 디렉터리와 run 디렉터리 분리 — 에이전트가 채점기·이전 run 기록에 접근한 사례(EXP-035 D-1, EXP-036 D-2, EXP-029 3개 세션) 재발 방지
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

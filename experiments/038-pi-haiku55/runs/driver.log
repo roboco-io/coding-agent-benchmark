@@ -1,0 +1,6 @@
+=== RUN haiku55-en-1 (pi anthropic/claude-haiku-5-5, PROMPT-en.md, PORT=45415) start: 2026-10-08 08:27:12 ===
+=== RUN haiku55-en-1 finished: 2026-10-08 08:32:45 | 1,2026-10-08 08:32:45,0,13,154,1,pass ===
+=== RUN haiku55-en-2 (pi anthropic/claude-haiku-5-5, PROMPT-en.md, PORT=41537) start: 2026-10-08 08:32:45 ===
+=== RUN haiku55-en-2 finished: 2026-10-08 08:38:48 | 1,2026-10-08 08:38:48,0,13,154,1,pass ===
+=== RUN haiku55-en-3 (pi anthropic/claude-haiku-5-5, PROMPT-en.md, PORT=40476) start: 2026-10-08 08:38:48 ===
+=== RUN haiku55-en-3 finished: 2026-10-08 08:44:44 | 1,2026-10-08 08:44:44,0,13,154,1,pass ===

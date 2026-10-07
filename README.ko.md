@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-037 (2026-10-08)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-038 (2026-10-08)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -64,6 +64,7 @@
 | [EXP-035](experiments/035-agy-gemini38-flash/report.md) Antigravity CLI × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3) | M-28: Antigravity CLI(`agy -p`)로 `gemini-3.8-flash`(effort high, Gemini API 키)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | Antigravity CLI (agy) 1.3.1 |
 | [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3) | M-29: pi coding agent(`pi -p` 0.87.1)로 `google/gemini-3.8-flash`(thinking high, Gemini API 키)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 | [EXP-037](experiments/037-haiku55-ralph/report.md) Claude Code × Haiku 5.5 네이티브 랄프 루프 완주 검증 (EN n=3) | M-30: Claude Code 네이티브 하네스에서 Haiku 5.5(`claude-haiku-5-5`, thinking 기본값)는 EN 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 무개입 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | Claude Code 2.1.293 |
+| [EXP-038](experiments/038-pi-haiku55/report.md) pi coding agent × Haiku 5.5 완주 검증 (EN n=3) | M-31: pi coding agent(`pi -p` 0.87.1)로 `anthropic/claude-haiku-5-5`(Anthropic API 키 직결, thinking pi 기본값, 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -170,6 +171,9 @@ EN 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/
 **EXP-037 — Claude Code × Haiku 5.5 네이티브 랄프 루프 완주 검증 (EN n=3)** (검증)  
 EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 2). 게이트 pass와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었으며, 응답 model 필드는 전수 `claude-haiku-5-5`였다. 세션 5.1–7.9분·output 49.0–57.6K·API 호출 38–59회이고, 공개 단가 환산은 run당 $0.06–0.16으로 Claude 계열 조건 중 가장 낮다. 시점·CLI 버전 교락이 있는 관측값이며 우열 확정이 아니다. → [보고서](experiments/037-haiku55-ralph/report.md)
 
+**EXP-038 — pi coding agent × Haiku 5.5 완주 검증 (EN n=3)** (검증)  
+EN 3/3 전부 iteration 1 완주. 게이트 pass와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었으며, 응답 model 필드는 전수 `claude-haiku-5-5`, thinking은 pi 기본값 `medium`이었다. 세션 5.4–5.9분·output 50.0–55.4K·API 호출 38–46회, 공개 단가 환산 run당 $0.05–0.09. run 1은 에이전트의 프로세스 조회로 다른 프로세스의 비밀값이 세션 기록에 남았다(D-1, 판정 무관). → [보고서](experiments/038-pi-haiku55/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (2026-09-21 정정 반영)
@@ -189,6 +193,7 @@ EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 2). 게이트 pass와 
 16. **pi × Sonnet 5.5는 이 리포에서 가장 짧은 완주 세션을 기록했다 (EXP-032).** pi로 Sonnet 5.5(Anthropic API 키 직결)를 돌려 EN 3/3, 전부 iteration 1에 완주했다(재검증 각 2회 일치, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 1.8–3.2분(최단 1분 49초)·output 10.9–14.7K로 같은 날 네이티브 Claude Code × Sonnet 5.5(EN 2.9–4.2분·15.2–20.0K)보다 짧고 적었다. pi 0.87.1 내장 목록에 이 모델이 없어 내장 Sonnet 5 정의를 복사한 사용자 정의 항목으로 호출했고, 에이전트·thinking 전달·캐시 TTL도 함께 달라 이 차이를 pi 단독 효과로 단정하지 않는다.
 17. **Gemini(gemini-3.8-flash)도 Antigravity CLI와 pi 두 하네스에서 완주했지만, 다른 Flash급 모델보다 세션이 길었다 (EXP-035·036).** Gemini API 키로 Antigravity CLI(agy 1.3.1, effort high)와 pi(thinking high)를 각 EN 3/3, 총 6/6 완주했다. agy는 run 1·2가 iteration 1에, run 3은 에이전트가 직접 실행한 하네스 채점기가 agy 프로세스를 종료시켜 iteration 2에 완주했다. 세션은 agy 15.5–22.4분, pi 13.1–15.6분이고, run당 모델 응답이 100–192회로 pi × deepseek-flash(EXP-029, 25–40회·1.9–4.1분)보다 훨씬 많았다. 두 실험에서 run 디렉터리가 하네스 디렉터리 안에 있어 에이전트가 채점기·이전 run 기록에 접근할 수 있다는 구조 문제가 드러났고(EXP-029 세션 3개에서도 확인), 후속으로 분리가 필요하다.
 18. **Haiku 5.5는 네이티브 하네스에서 완주했고, 공개 단가 환산 비용이 Claude 계열 조건 중 가장 낮았다 (EXP-037).** EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 1이 스캐폴딩 후 완료 선언 없이 끝나 iteration 2). 재검증 각 2회 일치, 응답 model 필드 전수 `claude-haiku-5-5`. 세션 5.1–7.9분·output 49.0–57.6K·API 호출 38–59회로 Sonnet 5.5(EXP-031)보다 길고 많았지만, 단가가 Sonnet 5.5의 1/20이라 run당 환산은 $0.06–0.16(중앙값 $0.09)이다. 이 값은 프롬프트 100K 초과 요청의 5배 단가를 포함한다. 이 실험은 셸에 export된 API 키 때문에 구독이 아니라 API 키로 실행됐다(D-1). 그래서 실제로 과금됐고 캐시가 5분 TTL이었으며, 구독으로 실행한 다른 네이티브 조건과 인증 방식이 다르다. 비격리 조건이라 run 1은 노출된 context7 MCP를 호출했다. 날짜·CLI 버전 교락이 있어 우열로 확정하지 않는다.
+19. **pi × Haiku 5.5도 3/3, 전부 iteration 1에 완주했다 (EXP-038).** 같은 날 Claude Code × Haiku 5.5(EXP-037)와 output(50.0–55.4K)·호출 수(38–46회)가 비슷한 범위였고, 세션은 5.4–5.9분으로 산포가 작았다. 시작 프롬프트가 약 3K로 Claude Code(약 32K)보다 작아 100K 초과 요청이 3건뿐이었고, 환산 비용은 run당 $0.05–0.09다. run 1에서는 에이전트가 `pgrep -fl`로 같은 머신의 다른 프로세스 명령줄을 출력해 그 안의 비밀값이 세션 기록에 남았다(D-1, 보관본은 마스킹). 환경 변수 제거만으로는 에이전트가 다른 프로세스 정보를 읽는 것을 막지 못한다.
 
 ## 실험 라이프사이클
 

@@ -55,5 +55,6 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 | `~/.zsh_secrets` 전체를 에이전트 환경에 export | 에이전트의 `env` 출력으로 키가 세션 로그·아카이브에 남음 (EXP-036 D-3, EXP-029 아카이브에서도 발견) | `key_env.sh`의 `load_secrets`로 필요한 키만 노출(pi: `PI_KEYMAP` 대상+`PI_KEEP_ENV`), 보관 전 `redact_keys.py` |
 | run 디렉터리가 하네스 디렉터리 안에 있음 | 에이전트가 `../measure.sh`·이전 run 로그를 읽거나 실행 → agy 강제 종료(EXP-035 D-1), run 간 정보 노출(EXP-036 D-2) | 세션 기록에서 하네스 경로 참조를 전수 검사해 이탈로 기록. 구조 분리는 ROADMAP 후속 과제 |
 | agy를 실 HOME에서 실행 | keyring의 Google 계정 OAuth가 선택돼 API 키 미사용 | setup이 만드는 격리 HOME(`modelProvider: "gemini"`) 사용, 로그에서 `authMethod=gemini_api_key` 확인 |
+| `claude-native`를 `ANTHROPIC_API_KEY`가 export된 셸에서 실행 | API 키가 구독 로그인보다 우선해 API 과금·캐시 5분 TTL로 실행, "구독 인증"으로 오기록 (EXP-037) | driver·smoke가 `env -u ANTHROPIC_API_KEY`로 실행하고 smoke가 `"apiKeySource":"none"`을 확인. phase0.md에 인증 출처를 기록 |
 | "3/3 완주 = 재현성 확정" 서술 | 관측 범위 초과 | 표본 수와 조건을 함께 적는다 |
 | 과거 실험과 속도·토큰 우열 단정 | 시점·CLI 버전 교락 | 차이를 조합 전체의 차이로 서술 |

@@ -18,7 +18,10 @@ for c in $CONDITIONS; do
           --model "$m" ${THINKING:+--thinking "$THINKING"} "$Q" < /dev/null 2>&1) ;;
     agy) source "$BASE/agy_env.sh"
       r=$(cd "$BASE/smoke-tmp" && agy_run -p "$Q" --model "$m" ${EFFORT:+--effort "$EFFORT"} --output-format json < /dev/null 2>&1) ;;
-    claude-native) r=$(cd "$BASE/smoke-tmp" && claude -p "$Q" --model "$m" --output-format json < /dev/null 2>&1) ;;
+    claude-native) r=$(cd "$BASE/smoke-tmp" && env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL \
+          claude -p "$Q" --model "$m" --output-format json < /dev/null 2>&1)
+      # 구독 인증 확인 (EXP-037: API 키 혼입으로 apiKeySource=ANTHROPIC_API_KEY)
+      echo "$r" | grep -q '"apiKeySource":"none"' || { echo "FAIL $m — 구독 인증 아님: $(echo "$r" | grep -o '"apiKeySource":"[^"]*"')"; fail=1; } ;;
     claude-direct) source "$HOME/.zsh_secrets"
       r=$(cd "$BASE/smoke-tmp" && env -u ANTHROPIC_API_KEY CLAUDE_CONFIG_DIR="$BASE/claude-config" \
           ANTHROPIC_BASE_URL="$BASE_URL" ANTHROPIC_AUTH_TOKEN="${!AUTH_ENV}" ANTHROPIC_MODEL="$m" \

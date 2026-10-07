@@ -40,7 +40,9 @@ invoke_agent() {
       agy_run -p "$(cat "$REPO/PROMPT.md")" --model "$MODEL" ${EFFORT:+--effort "$EFFORT"} \
         --dangerously-skip-permissions --output-format json ;;
     claude-native)
-      claude -p "$(cat "$REPO/PROMPT.md")" --model "$MODEL" --dangerously-skip-permissions ;;
+      # 구독 인증 강제: 셸에 API 키·토큰이 있으면 구독 로그인보다 우선해 API 과금·5분 캐시 TTL이 된다 (EXP-037)
+      env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL \
+        claude -p "$(cat "$REPO/PROMPT.md")" --model "$MODEL" --dangerously-skip-permissions ;;
     claude-direct)
       source "$HOME/.zsh_secrets"
       env -u ANTHROPIC_API_KEY \

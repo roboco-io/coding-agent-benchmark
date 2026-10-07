@@ -1,6 +1,6 @@
 # run당 비용 환산 (공개 단가 기준 추정)
 
-작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
+작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
 
 ## 이 수치가 뜻하는 것
 
@@ -14,6 +14,7 @@
 | pi × DeepSeek V4.1-Flash | 0.06 | — | 피크 단가(상한), pi 하네스 |
 | DeepSeek V4.1-Flash | 0.09 | 0.12 | 피크 단가(상한) |
 | Haiku 5.5 | 0.09 | — | 프롬프트 100K 초과 요청은 5배 단가, API 키 실행(캐시 5분 TTL, 실제 과금) |
+| pi × Haiku 5.5 | 0.06 | — | pi 하네스, 100K 초과 요청 5배 단가, API 키 실행(캐시 5분 TTL) |
 | DeepSeek V4-Pro | 0.52 | 0.48 | 피크 단가(상한) |
 | pi × gpt-6-sol | 0.27 | — | 단문맥 단가, pi 하네스(구독 OAuth, 실제 지출 없음) |
 | pi × Sonnet 5.5 | 0.30 | — | pi 하네스, 캐시 쓰기 5분 TTL, 캐시 쓰기 단가는 미확인 가정(아래) |
@@ -58,6 +59,7 @@ run별 값은 [cost_all_runs.csv](cost_all_runs.csv)의 `est_cost_usd` 열에 �
 - **pi × Sonnet 5.5(EXP-032)**: 대응 방식은 EXP-030과 같고 단가는 위 Sonnet 5.5 항목을 그대로 쓴다. pi 0.87.1 내장 목록에 Sonnet 5.5가 없어 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목으로 실행했다. `cacheWrite1h`가 전 응답(54건) 0이어서 캐시 쓰기를 `cache_write_5m`($2.50, 미확인 가정)에 넣었다. 캐시 쓰기 비중은 run당 약 $0.08–0.09다. 네이티브 Claude Code × Sonnet 5.5(EXP-031)는 전부 1시간 TTL($4)이었으므로 두 조합의 환산 비용 차이(EN 중앙값 0.30 vs 0.68)에는 TTL 정책·에이전트·thinking 설정 차이가 함께 들어 있다.
 - **gemini-3.8-flash(EXP-035/036)**: 2026-10-07에 Gemini API 가격 페이지(<https://ai.google.dev/gemini-api/docs/pricing>)의 유료 티어 Standard 단가를 확인해 적용했다(1M 토큰당 입력 $0.75·캐시 입력 $0.075·출력 $3.75, thinking 포함). 2027-01-01부터 전 항목이 두 배가 되므로 그 이후 같은 사용량은 약 2배다. 명시 캐시 저장비($0.50/1M 토큰·시간)는 두 하네스 모두 암묵 캐시 읽기만 기록돼 넣지 않았다. agy의 `input_tokens`는 캐시 읽기를 제외한 값이다(`total_tokens = input + output` 검산). agy run 3은 하네스 채점기가 강제 종료한 iteration 1(D-1)의 사용량을 transcript에서 포함했다.
 - **Haiku 5.5(EXP-037)**: 2026-10-08에 API 가격 표(<https://platform.claude.com/docs/en/build-with-claude/prompt-caching>)로 단가를 확인했다(1M 토큰당 100K 이하 입력 $0.10·5분 캐시 쓰기 $0.125·1시간 쓰기 $0.20·캐시 읽기 $0.01·출력 $0.50, 100K 초과 $0.50·$0.625·$1·$0.05·$2.50). 장문맥 단가는 요청 단위로 적용되므로, 프롬프트(`input + cache_creation + cache_read`)가 100K를 넘은 요청의 토큰을 `usage_all_runs.csv`의 `lc_*` 열(총량에 포함된 부분)에 따로 기록하고 `compute_cost.py`가 `prices.json`의 `long_context` 단가와의 차액을 더한다. 해당 요청은 en-1 2건·en-2 11건·en-3 0건이다. 이 3 run은 구독이 아니라 Anthropic API 키로 실행돼 실제로 과금됐고(실험 이탈 D-1, 청구액 미대조), 그 때문에 캐시 쓰기가 전부 5분 TTL이다(다른 네이티브 Claude run은 구독·1시간 TTL). 같은 토큰을 1시간 TTL 쓰기 단가로 계산하면 run당 $0.007–0.012(8–12%) 높으므로, 이 값은 구독 조건과 같은 기준의 비용이 아니다. 요청 간격이 최대 44초여서 5분 TTL로 인한 캐시 만료는 관측되지 않았다.
+- **pi × Haiku 5.5(EXP-038)**: 단가·장문맥 처리는 위 Haiku 5.5 항목과 같다. pi의 `cacheWrite`는 `cacheWrite1h`가 전 응답 0이어서 `cache_write_5m`에 넣었다. pi 세션 기록의 자체 비용은 장문맥 단가를 반영하지 않으므로 쓰지 않았다. 100K 초과 요청은 en-1 3건뿐이다.
 - **Solar Pro 4**: 정가로 환산했다. 실험 당시(2026-08)는 무료 또는 프로모션 기간이었다. 이 엔드포인트는 캐시를 계상하지 않아 입력 전량이 비캐시 단가로 계산된다. 이 때문에 값이 크다.
 - **범위**: run 안의 재시도·추가 세션·서브에이전트 호출을 포함한다(실험 품질 규칙 5절 — 실패·재시도 포함). Opus 4.8 run 48-1은 재검증 세션을, Solar Pro 4 run 1은 게이트 오검으로 이어진 세션 12개를 포함한다.
 

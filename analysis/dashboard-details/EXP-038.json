@@ -1,0 +1,29 @@
+{
+  "exp": "EXP-038",
+  "date": "2026-10-08",
+  "report": "experiments/038-pi-haiku55/report.md",
+  "client": "pi 0.87.1",
+  "runs": {
+    "haiku55-en-1": {"iter": 1, "commits": 3},
+    "haiku55-en-2": {"iter": 1, "commits": 4},
+    "haiku55-en-3": {"iter": 1, "commits": 6}
+  },
+  "conditions": {
+    "ko": [["에이전트", "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"], ["연결", "Anthropic API(Messages) 직결, API 키 과금 (청구액 미대조)"], ["모델 ID", "anthropic/claude-haiku-5-5 — pi 내장 목록에 없어 내장 claude-sonnet-5 정의를 복사한 사용자 정의 항목(pi-models.json)"], ["thinking", "pi 기본값 (medium 기록)"], ["격리", "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, PI_OFFLINE=1, 에이전트 환경 비밀값은 ANTHROPIC_API_KEY만 (프로세스 격리는 없음)"], ["상한", "30 iteration · run당 4시간"], ["프롬프트", "정본 EN, n=3, 순차 실행"], ["포트", "하네스가 빈 포트를 PORT로 주입"]],
+    "en": [["Agent", "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"], ["Connection", "Anthropic API (Messages), direct, billed to an API key (invoice not reconciled)"], ["Model ID", "anthropic/claude-haiku-5-5 — not in pi's built-in list, so a custom entry (pi-models.json) copied from the built-in claude-sonnet-5 definition"], ["Thinking", "pi default (recorded as medium)"], ["Isolation", "dedicated PI_CODING_AGENT_DIR, parent AGENTS.md/CLAUDE.md, skills and extensions hidden, PI_OFFLINE=1, ANTHROPIC_API_KEY is the only secret in the agent environment (no process isolation)"], ["Cap", "30 iterations · 4 h per run"], ["Prompt", "canonical EN, n=3, sequential"], ["Port", "harness injects a free port as PORT"]],
+    "ja": [["エージェント", "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"], ["接続", "Anthropic API（Messages）直結、APIキー課金（請求額は未照合）"], ["モデルID", "anthropic/claude-haiku-5-5 — pi内蔵リストにないため内蔵claude-sonnet-5定義を複製したユーザー定義項目（pi-models.json）"], ["thinking", "piデフォルト（mediumと記録）"], ["隔離", "専用PI_CODING_AGENT_DIR、上位AGENTS.md/CLAUDE.md・スキル・拡張は非露出、PI_OFFLINE=1、エージェント環境の秘密値はANTHROPIC_API_KEYのみ（プロセス隔離なし）"], ["上限", "30 iteration・runあたり4時間"], ["プロンプト", "正本EN、n=3、順次実行"], ["ポート", "ハーネスが空きポートをPORTで注入"]],
+    "zh": [["代理", "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"], ["连接", "Anthropic API（Messages）直连，按 API 密钥计费（账单未核对）"], ["模型 ID", "anthropic/claude-haiku-5-5 — pi 内置列表中没有，因此使用复制内置 claude-sonnet-5 定义的自定义条目（pi-models.json）"], ["thinking", "pi 默认值（记录为 medium）"], ["隔离", "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md·技能·扩展，PI_OFFLINE=1，代理环境中的密钥只有 ANTHROPIC_API_KEY（无进程隔离）"], ["上限", "30 iteration · 每 run 4 小时"], ["提示", "标准 EN，n=3，顺序执行"], ["端口", "框架以 PORT 注入空闲端口"]]
+  },
+  "deviations": {
+    "ko": ["게이트 반려·재실행·보류 없음.", "D-1: run 1에서 에이전트가 서버 프로세스를 확인하려고 실행한 `pgrep -fl \"server\"`가 같은 머신의 다른 프로세스 명령줄(비밀값 포함)을 출력해 세션 기록에 남고 API로 전송됐다. 보관본(sessions.tar.gz)은 마스킹했고 판정·채점 영향은 없다.", "모델 메타데이터(compat·thinkingLevelMap)는 Sonnet 5 것을 복사했다. Haiku 5.5에 맞춘 pi 설정이 아니다.", "run 3은 주입된 PORT 대신 API_PORT(기본 8000)를 썼다. 채점기가 포트를 자동 탐지해 판정 영향 없음.", "Claude Code × Haiku 5.5(EXP-037)와는 에이전트·시스템 프롬프트·도구·노출 지침이 다르고 실행 시각도 약 1시간 차이라, 차이를 pi 단독 효과로 보지 않는다."],
+    "en": ["No gate rejections, reruns or holds.", "D-1: in run 1 the agent ran `pgrep -fl \"server\"` to check for leftover server processes. It printed other processes' command lines on the same machine, including secrets, into the session log, and they were sent to the API. The archive (sessions.tar.gz) is masked; no impact on the verdict or grading.", "Model metadata (compat, thinkingLevelMap) is copied from Sonnet 5. It is not a pi configuration tuned for Haiku 5.5.", "Run 3 used API_PORT (default 8000) instead of the injected PORT. The grader auto-detects the port, so the verdict is unaffected.", "Compared with Claude Code × Haiku 5.5 (EXP-037), the agent, system prompt, tools and exposed instructions differ and the runs were about 1 hour apart, so the gap is not attributed to pi alone."],
+    "ja": ["ゲート却下・再実行・保留なし。", "D-1：run 1でエージェントが残りのサーバープロセスを確認するために実行した`pgrep -fl \"server\"`が、同じマシンの他プロセスのコマンドライン（秘密値を含む）を出力し、セッション記録に残ってAPIに送信された。保管版（sessions.tar.gz）はマスキング済みで、判定・採点への影響なし。", "モデルのメタデータ（compat・thinkingLevelMap）はSonnet 5のものを複製した。Haiku 5.5に合わせたpi設定ではない。", "run 3は注入されたPORTの代わりにAPI_PORT（デフォルト8000）を使った。採点器がポートを自動検出するため判定への影響なし。", "Claude Code × Haiku 5.5（EXP-037）とはエージェント・システムプロンプト・ツール・露出した指示が異なり、実行時刻も約1時間違うため、差をpi単独の効果とは見なさない。"],
+    "zh": ["无门控驳回、重跑或保留。", "D-1：run 1 中代理为检查残留的服务器进程执行了 `pgrep -fl \"server\"`，输出了同一台机器上其他进程的命令行（含密钥），这些内容被写入会话记录并发送到 API。存档（sessions.tar.gz）已脱敏，不影响判定和评分。", "模型元数据（compat·thinkingLevelMap）复制自 Sonnet 5，并非针对 Haiku 5.5 调整的 pi 设置。", "run 3 使用 API_PORT（默认 8000）而非注入的 PORT。评分器自动检测端口，不影响判定。", "与 Claude Code × Haiku 5.5（EXP-037）相比，代理、系统提示、工具和暴露的指令不同，运行时间也相差约 1 小时，因此不将差异归因于 pi 本身。"]
+  },
+  "behavior": {
+    "ko": ["3 run 모두 Fastify + Prisma를 선택했다.", "포트는 run 1이 `PORT ?? 8000`, run 2가 `PORT ?? 3000`으로 주입값을 따랐고, run 3은 `API_PORT ?? 8000`으로 변수명을 바꿨다.", "run당 API 호출 38–46회, output 50.0–55.4K(reasoning 19.5–25.4K 포함). 첫 요청이 약 3K 토큰으로 작아 프롬프트 100K 초과 요청은 run 1의 3건뿐이었다."],
+    "en": ["All 3 runs chose Fastify + Prisma.", "For the port, run 1 used `PORT ?? 8000` and run 2 `PORT ?? 3000`, following the injected value; run 3 renamed the variable to `API_PORT ?? 8000`.", "38–46 API calls and 50.0–55.4K output per run (including 19.5–25.4K reasoning). The first request was small (about 3K tokens), so only run 1 had requests with prompts over 100K (3)."],
+    "ja": ["3 runすべてがFastify + Prismaを選択した。", "ポートはrun 1が`PORT ?? 8000`、run 2が`PORT ?? 3000`で注入値に従い、run 3は`API_PORT ?? 8000`に変数名を変えた。", "runあたりAPI呼び出し38–46回、output 50.0–55.4K（reasoning 19.5–25.4Kを含む）。最初のリクエストが約3Kトークンと小さく、プロンプトが100Kを超えたリクエストはrun 1の3件だけだった。"],
+    "zh": ["3 个 run 都选择了 Fastify + Prisma。", "端口方面，run 1 使用 `PORT ?? 8000`、run 2 使用 `PORT ?? 3000`，遵循注入值；run 3 将变量名改为 `API_PORT ?? 8000`。", "每 run API 调用 38–46 次，output 50.0–55.4K（含 reasoning 19.5–25.4K）。首个请求很小（约 3K token），提示超过 100K 的请求只有 run 1 的 3 次。"]
+  }
+}

@@ -1,0 +1,194 @@
+{
+ "exp": "EXP-035",
+ "date": "2026-10-07",
+ "report": "experiments/035-agy-gemini38-flash/report.md",
+ "client": "Antigravity CLI (agy) 1.3.1",
+ "runs": {
+  "flash38-en-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "flash38-en-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "flash38-en-3": {
+   "iter": 2,
+   "commits": 6
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Antigravity CLI (agy) 1.3.1 (`agy -p`, iteration마다 새 프로세스), 자동 업데이트 차단(`AGY_CLI_DISABLE_AUTO_UPDATE=1`)"
+   ],
+   [
+    "연결",
+    "Gemini API 키 직결(종량 과금, 청구액 미확인). 격리 HOME의 settings.json `modelProvider: \"gemini\"`로 API 키 인증 강제, 전 run `gemini_api_key` 인증 확인"
+   ],
+   [
+    "모델 ID",
+    "gemini-3.8-flash, `--effort high` (CLI 내부 ID `gemini-3.8-flash-high`로 해석됨을 전 run 확인)"
+   ],
+   [
+    "격리",
+    "run별 격리 HOME(사용자 AGENTS.md·GEMINI.md·MCP 설정 없음), run 종료마다 대화 기록·brain을 보관 후 초기화. agy 제품 내장 스킬 8종과 시스템 프롬프트는 끄지 않음"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간, 무개입"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, n=3, 순차 실행(이어서 EXP-036 실행)"
+   ],
+   [
+    "포트",
+    "하네스가 run별 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Antigravity CLI (agy) 1.3.1 (`agy -p`, new process per iteration), auto-update disabled (`AGY_CLI_DISABLE_AUTO_UPDATE=1`)"
+   ],
+   [
+    "Connection",
+    "Gemini API key, direct (pay-as-you-go, actual bill not checked). `modelProvider: \"gemini\"` in the isolated HOME's settings.json forces API-key auth; `gemini_api_key` auth confirmed in every run"
+   ],
+   [
+    "Model ID",
+    "gemini-3.8-flash, `--effort high` (resolved to the CLI-internal ID `gemini-3.8-flash-high` in every run)"
+   ],
+   [
+    "Isolation",
+    "isolated HOME per run (no user AGENTS.md, GEMINI.md or MCP config); conversation history and brain archived and reset after each run. agy's 8 built-in product skills and system prompt were not disabled"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3, sequential (EXP-036 ran right after)"
+   ],
+   [
+    "Port",
+    "harness injects a free port per run as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Antigravity CLI (agy) 1.3.1（`agy -p`、iterationごとに新プロセス）、自動アップデート停止（`AGY_CLI_DISABLE_AUTO_UPDATE=1`）"
+   ],
+   [
+    "接続",
+    "Gemini APIキー直結（従量課金、請求額は未確認）。隔離HOMEのsettings.json `modelProvider: \"gemini\"`でAPIキー認証を強制し、全runで`gemini_api_key`認証を確認"
+   ],
+   [
+    "モデルID",
+    "gemini-3.8-flash、`--effort high`（全runでCLI内部ID `gemini-3.8-flash-high`に解決されたことを確認）"
+   ],
+   [
+    "隔離",
+    "runごとの隔離HOME（ユーザーのAGENTS.md・GEMINI.md・MCP設定なし）、run終了ごとに会話履歴・brainを保管して初期化。agy製品内蔵スキル8種とシステムプロンプトは無効化していない"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間、無介入"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3、順次実行（続けてEXP-036を実行）"
+   ],
+   [
+    "ポート",
+    "ハーネスがrunごとに空きポートをPORTで注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Antigravity CLI (agy) 1.3.1（`agy -p`，每个 iteration 新进程），已关闭自动更新（`AGY_CLI_DISABLE_AUTO_UPDATE=1`）"
+   ],
+   [
+    "连接",
+    "Gemini API 密钥直连（按量计费，未核对账单）。通过隔离 HOME 的 settings.json `modelProvider: \"gemini\"` 强制 API 密钥认证，所有 run 均确认为 `gemini_api_key` 认证"
+   ],
+   [
+    "模型 ID",
+    "gemini-3.8-flash，`--effort high`（所有 run 均确认解析为 CLI 内部 ID `gemini-3.8-flash-high`）"
+   ],
+   [
+    "隔离",
+    "每个 run 使用隔离 HOME（无用户 AGENTS.md、GEMINI.md、MCP 配置），每个 run 结束后归档并重置会话记录和 brain。agy 产品内置的 8 个技能和系统提示未关闭"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时，无人干预"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3，顺序执行（随后运行 EXP-036）"
+   ],
+   [
+    "端口",
+    "框架为每个 run 以 PORT 注入空闲端口"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "D-1 (run 3): 에이전트가 상위 디렉터리의 하네스 파일을 읽고 하네스 채점기 `../measure.sh`를 직접 실행했다. 채점기의 정리 단계가 agy 프로세스를 `kill -9`로 종료시킨 것으로 판단한다(driver 로그 `Killed: 9`·exit 137). 이때 코드는 이미 13/13이었으나 완료 선언 전이었고, iteration 2가 완료를 선언했다. **run 3의 완주 iteration 2는 하네스 개입으로 늘어난 값**이다.",
+   "D-4 (run 2): 완료 뒤 마지막 요청에서 일시적 503이 기록되어 결과 JSON status가 `ERROR`였다. `.ralph-done` 생성·agy exit 0·게이트 pass·재검증 2회 13/13이어서 판정에 반영하지 않았다.",
+   "run 디렉터리가 하네스 디렉터리 안에 있어 에이전트가 채점기·이전 run 기록에 접근할 수 있는 구조였다(후속 조치 필요).",
+   "VS Code가 3000·3001을 점유했으나 하네스가 빈 포트를 PORT로 주입했고 거짓 음성 기각은 없었다.",
+   "환산 비용은 2026-10-07 확인 공개 단가(1M 토큰당 입력 $0.75 / 캐시 입력 $0.075 / 출력 $3.75, 2026-12-31까지)로 계산했으며 청구액이 아니다. 2027-01-01부터 단가가 두 배다."
+  ],
+  "en": [
+   "D-1 (run 3): the agent read harness files in the parent directory and ran the harness grader `../measure.sh` itself. The grader's cleanup step is judged to have killed the agy process with `kill -9` (driver log `Killed: 9`, exit 137). The code was already 13/13 but completion had not yet been declared; iteration 2 declared it. **Run 3's completion at iteration 2 was inflated by the harness.**",
+   "D-4 (run 2): a transient 503 on the last request after completion left the result JSON status as `ERROR`. `.ralph-done` was created, agy exited 0, the gate passed and both re-checks were 13/13, so it does not affect the verdict.",
+   "Run directories sat inside the harness directory, so the agent could reach the grader and earlier runs' records (follow-up needed).",
+   "VS Code held ports 3000 and 3001, but the harness injected a free port as PORT and there were no false-negative rejections.",
+   "Estimated cost uses the public price checked on 2026-10-07 ($0.75 input / $0.075 cached input / $3.75 output per 1M, through 2026-12-31) and is not an invoice. Prices double from 2027-01-01."
+  ],
+  "ja": [
+   "D-1（run 3）：エージェントが上位ディレクトリのハーネスファイルを読み、ハーネス採点器`../measure.sh`を自ら実行した。採点器のクリーンアップ段階がagyプロセスを`kill -9`で終了させたと判断する（driverログ`Killed: 9`・exit 137）。この時点でコードは既に13/13だったが完了宣言前で、iteration 2が完了を宣言した。**run 3の完走iteration 2はハーネスの介入で増えた値**である。",
+   "D-4（run 2）：完了後の最後のリクエストで一時的な503が記録され、結果JSONのstatusが`ERROR`だった。`.ralph-done`生成・agy exit 0・ゲートpass・再検証2回13/13のため判定には反映しない。",
+   "runディレクトリがハーネスディレクトリ内にあり、エージェントが採点器・以前のrun記録にアクセスできる構造だった（後続対応が必要）。",
+   "VS Codeが3000・3001を占有していたが、ハーネスが空きポートをPORTで注入し、偽陰性の却下はなかった。",
+   "換算コストは2026-10-07に確認した公開単価（1Mトークンあたり入力$0.75 / キャッシュ入力$0.075 / 出力$3.75、2026-12-31まで）で計算したもので請求額ではない。2027-01-01から単価は2倍になる。"
+  ],
+  "zh": [
+   "D-1（run 3）：代理读取了上级目录中的框架文件，并自行运行了框架评分器 `../measure.sh`。判断为评分器的清理步骤以 `kill -9` 终止了 agy 进程（driver 日志 `Killed: 9`，exit 137）。此时代码已达 13/13，但尚未声明完成；由 iteration 2 声明完成。**run 3 在 iteration 2 完成是框架介入导致的增加值。**",
+   "D-4（run 2）：完成后的最后一次请求记录了一次临时 503，结果 JSON 的 status 为 `ERROR`。由于已生成 `.ralph-done`、agy exit 0、门控通过且 2 次复验均为 13/13，不计入判定。",
+   "run 目录位于框架目录内，代理可以访问评分器和之前 run 的记录（需要后续处理）。",
+   "VS Code 占用了 3000 和 3001，但框架以 PORT 注入空闲端口，没有出现假阴性驳回。",
+   "折算成本按 2026-10-07 核实的公开单价（每 1M token 输入 $0.75 / 缓存输入 $0.075 / 输出 $3.75，至 2026-12-31）计算，不是账单金额。自 2027-01-01 起单价翻倍。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "run 1·2는 iteration 1, run 3은 iteration 2(D-1)에서 합격했고 커밋은 4·4·6개였다.",
+   "run당 모델 응답 스텝 119·121·192회, 세션 15.5–22.4분, output 50.5–63.4K(thinking 포함). run 3의 iteration 1(11.5분)은 driver 채점에서 이미 13/13이었다.",
+   "전 run에서 응답 모델이 `gemini-3.8-flash-high`로 해석되었다."
+  ],
+  "en": [
+   "Runs 1 and 2 passed at iteration 1 and run 3 at iteration 2 (D-1), with 4, 4 and 6 commits.",
+   "119, 121 and 192 model response steps per run, sessions 15.5–22.4 min, output 50.5–63.4K (thinking included). Run 3's iteration 1 (11.5 min) already scored 13/13 in the driver's grading.",
+   "The model resolved to `gemini-3.8-flash-high` in every run."
+  ],
+  "ja": [
+   "run 1・2はiteration 1、run 3はiteration 2（D-1）で合格し、コミットは4・4・6。",
+   "runあたりモデル応答ステップ119・121・192回、セッション15.5–22.4分、output 50.5–63.4K（thinking含む）。run 3のiteration 1（11.5分）はdriverの採点で既に13/13だった。",
+   "全runで応答モデルが`gemini-3.8-flash-high`に解決された。"
+  ],
+  "zh": [
+   "run 1、2 在 iteration 1 通过，run 3 在 iteration 2 通过（D-1），提交 4、4、6 次。",
+   "每 run 模型响应步骤 119、121、192 次，会话 15.5–22.4 分钟，output 50.5–63.4K（含 thinking）。run 3 的 iteration 1（11.5 分钟）在 driver 评分中已达 13/13。",
+   "所有 run 的响应模型均解析为 `gemini-3.8-flash-high`。"
+  ]
+ }
+}

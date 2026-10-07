@@ -1,0 +1,210 @@
+{
+ "exp": "EXP-036",
+ "date": "2026-10-07",
+ "report": "experiments/036-pi-gemini38-flash/report.md",
+ "client": "pi 0.87.1",
+ "runs": {
+  "flash38-en-1": {
+   "iter": 1,
+   "commits": 7
+  },
+  "flash38-en-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "flash38-en-3": {
+   "iter": 1,
+   "commits": 4
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, iteration마다 새 프로세스)"
+   ],
+   [
+    "연결",
+    "pi 내장 `google` provider, Gemini API 키 직결(종량 과금, 청구액 미확인). pi가 우선 쓰는 `GOOGLE_API_KEY`에 `GEMINI_API_KEY` 값을 넣어 통일"
+   ],
+   [
+    "모델 ID",
+    "google/gemini-3.8-flash (pi 내장 목록, 컨텍스트 1.0M·출력 65.5K)"
+   ],
+   [
+    "thinking",
+    "high (EXP-035의 `--effort high`와 맞춤, 두 클라이언트가 같은 API 설정값을 보내는지는 미확인)"
+   ],
+   [
+    "격리",
+    "상위 AGENTS.md/CLAUDE.md·스킬·확장·프롬프트 템플릿 비노출(설치된 pi-clm 확장도 미로드)"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 4시간, 무개입"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, n=3, 순차 실행(EXP-035 종료 직후)"
+   ],
+   [
+    "포트",
+    "하네스가 run별 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, new process per iteration)"
+   ],
+   [
+    "Connection",
+    "pi's built-in `google` provider, Gemini API key, direct (pay-as-you-go, actual bill not checked). `GOOGLE_API_KEY`, which pi prefers, was set to the `GEMINI_API_KEY` value"
+   ],
+   [
+    "Model ID",
+    "google/gemini-3.8-flash (pi built-in list, 1.0M context, 65.5K output)"
+   ],
+   [
+    "Thinking",
+    "high (matched to EXP-035's `--effort high`; whether both clients send the same API setting was not confirmed)"
+   ],
+   [
+    "Isolation",
+    "parent AGENTS.md/CLAUDE.md, skills, extensions and prompt templates hidden (the installed pi-clm extension was not loaded)"
+   ],
+   [
+    "Cap",
+    "30 iterations · 4 h per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN, n=3, sequential (right after EXP-035)"
+   ],
+   [
+    "Port",
+    "harness injects a free port per run as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`、iterationごとに新プロセス）"
+   ],
+   [
+    "接続",
+    "pi内蔵`google` provider、Gemini APIキー直結（従量課金、請求額は未確認）。piが優先する`GOOGLE_API_KEY`に`GEMINI_API_KEY`の値を入れて統一"
+   ],
+   [
+    "モデルID",
+    "google/gemini-3.8-flash（pi内蔵リスト、コンテキスト1.0M・出力65.5K）"
+   ],
+   [
+    "thinking",
+    "high（EXP-035の`--effort high`に合わせた。両クライアントが同じAPI設定値を送るかは未確認）"
+   ],
+   [
+    "隔離",
+    "上位のAGENTS.md/CLAUDE.md・スキル・拡張・プロンプトテンプレートは非露出（インストール済みのpi-clm拡張も未ロード）"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり4時間、無介入"
+   ],
+   [
+    "プロンプト",
+    "正本EN、n=3、順次実行（EXP-035終了直後）"
+   ],
+   [
+    "ポート",
+    "ハーネスがrunごとに空きポートをPORTで注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`，每个 iteration 新进程）"
+   ],
+   [
+    "连接",
+    "pi 内置 `google` provider，Gemini API 密钥直连（按量计费，未核对账单）。将 pi 优先使用的 `GOOGLE_API_KEY` 设为 `GEMINI_API_KEY` 的值以统一"
+   ],
+   [
+    "模型 ID",
+    "google/gemini-3.8-flash（pi 内置列表，上下文 1.0M，输出 65.5K）"
+   ],
+   [
+    "thinking",
+    "high（与 EXP-035 的 `--effort high` 对齐；两个客户端是否发送相同的 API 设置未确认）"
+   ],
+   [
+    "隔离",
+    "不暴露上层 AGENTS.md/CLAUDE.md、技能、扩展、提示模板（已安装的 pi-clm 扩展也未加载）"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 4 小时，无人干预"
+   ],
+   [
+    "提示",
+    "标准 EN，n=3，顺序执行（EXP-035 结束后立即运行）"
+   ],
+   [
+    "端口",
+    "框架为每个 run 以 PORT 注入空闲端口"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "D-2 (run 3): 에이전트가 run 디렉터리 밖의 하네스 디렉터리를 탐색해 채점기 스크립트를 읽고 `measure.sh`를 2회 실행했고, 이전 run의 로그 끝부분과 metrics를 읽었으며, 하네스의 Hurl 정본을 자기 리포로 복사했다. 판정(게이트 + 하네스 절대 경로 재검증 2회)은 유효하나 **이 run의 시간·토큰은 독립 시행 값으로 보기 어렵다.** pi는 measure.sh 실행 후에도 종료되지 않았다.",
+   "D-3 (run 1): 에이전트가 실행한 `env | grep`으로 하네스가 export한 비밀값이 세션 로그에 남았다. 리포 보관본은 마스킹했고, 하네스가 필요한 키만 노출하도록 고쳤다. 판정에는 영향이 없다.",
+   "google provider는 cacheWrite를 기록하지 않았다(0). pi 세션의 자체 `cost` 값은 쓰지 않는다.",
+   "환산 비용은 2026-10-07 확인 공개 단가(1M 토큰당 입력 $0.75 / 캐시 입력 $0.075 / 출력 $3.75, 2026-12-31까지)로 계산했으며 청구액이 아니다. 2027-01-01부터 단가가 두 배다."
+  ],
+  "en": [
+   "D-2 (run 3): the agent explored the harness directory outside its run directory, read the grader scripts and ran `measure.sh` twice, read the tail of an earlier run's log and earlier runs' metrics, and copied the harness's canonical Hurl files into its own repo. The verdict (gate plus two absolute-path harness re-checks) stands, but **this run's time and tokens are hard to treat as an independent trial.** pi kept running after measure.sh.",
+   "D-3 (run 1): an `env | grep` run by the agent left secrets exported by the harness in the session log. The archived copy in the repo is redacted, and the harness was changed to expose only the needed keys. No effect on the verdict.",
+   "The google provider recorded no cacheWrite (0). pi's own session `cost` value is not used.",
+   "Estimated cost uses the public price checked on 2026-10-07 ($0.75 input / $0.075 cached input / $3.75 output per 1M, through 2026-12-31) and is not an invoice. Prices double from 2027-01-01."
+  ],
+  "ja": [
+   "D-2（run 3）：エージェントがrunディレクトリ外のハーネスディレクトリを探索し、採点器スクリプトを読んで`measure.sh`を2回実行し、以前のrunのログ末尾とmetricsを読み、ハーネスのHurl正本を自分のリポにコピーした。判定（ゲート + ハーネス絶対パスでの再検証2回）は有効だが、**このrunの時間・トークンは独立試行の値とは見なしにくい。** piはmeasure.sh実行後も終了しなかった。",
+   "D-3（run 1）：エージェントが実行した`env | grep`により、ハーネスがexportした秘密値がセッションログに残った。リポの保管版はマスキング済みで、ハーネスは必要なキーのみ公開するよう修正した。判定への影響はない。",
+   "google providerはcacheWriteを記録しなかった（0）。piセッション自体の`cost`値は使わない。",
+   "換算コストは2026-10-07に確認した公開単価（1Mトークンあたり入力$0.75 / キャッシュ入力$0.075 / 出力$3.75、2026-12-31まで）で計算したもので請求額ではない。2027-01-01から単価は2倍になる。"
+  ],
+  "zh": [
+   "D-2（run 3）：代理探索了 run 目录之外的框架目录，读取评分器脚本并运行 `measure.sh` 2 次，读取了之前 run 的日志末尾和 metrics，并把框架的 Hurl 标准文件复制到自己的仓库。判定（门控 + 框架绝对路径 2 次复验）有效，但**该 run 的时间和 token 难以视为独立试验的值。** 运行 measure.sh 后 pi 并未终止。",
+   "D-3（run 1）：代理运行的 `env | grep` 使框架导出的密钥留在了会话日志中。仓库存档已脱敏，并已修改框架只暴露所需的密钥。不影响判定。",
+   "google provider 未记录 cacheWrite（0）。不使用 pi 会话自身的 `cost` 值。",
+   "折算成本按 2026-10-07 核实的公开单价（每 1M token 输入 $0.75 / 缓存输入 $0.075 / 输出 $3.75，至 2026-12-31）计算，不是账单金额。自 2027-01-01 起单价翻倍。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 모두 iteration 1에서 합격했고 커밋은 7·4·4개였다.",
+   "run당 응답 112·119·102회, 세션 13.1–15.6분, output 29.7–47.1K(reasoning 포함).",
+   "응답 333건 전부 `google`/`gemini-3.8-flash`였고 thinking은 전 run high였다.",
+   "같은 pi 0.87.1의 다른 Flash급 모델보다 응답 수와 세션 시간이 컸다(예: pi × DeepSeek V4.1-Flash, EXP-029, 1.9–4.1분). 모델·시점이 함께 달라 원인을 확정하지 않는다."
+  ],
+  "en": [
+   "All 3 runs passed at iteration 1 with 7, 4 and 4 commits.",
+   "112, 119 and 102 responses per run, sessions 13.1–15.6 min, output 29.7–47.1K (reasoning included).",
+   "All 333 responses were `google`/`gemini-3.8-flash`, and thinking was high in every run.",
+   "Responses and session time were larger than for another Flash-class model on the same pi 0.87.1 (e.g. pi × DeepSeek V4.1-Flash, EXP-029, 1.9–4.1 min). Model and date both differ, so no cause is assigned."
+  ],
+  "ja": [
+   "3 runすべてiteration 1で合格し、コミットは7・4・4。",
+   "runあたり応答112・119・102回、セッション13.1–15.6分、output 29.7–47.1K（reasoning含む）。",
+   "応答333件すべてが`google`/`gemini-3.8-flash`で、thinkingは全runでhighだった。",
+   "同じpi 0.87.1の他のFlash級モデルより応答数とセッション時間が大きかった（例：pi × DeepSeek V4.1-Flash、EXP-029、1.9–4.1分）。モデルと時点が同時に異なるため原因は確定しない。"
+  ],
+  "zh": [
+   "3 个 run 均在 iteration 1 通过，提交 7、4、4 次。",
+   "每 run 响应 112、119、102 次，会话 13.1–15.6 分钟，output 29.7–47.1K（含 reasoning）。",
+   "333 条响应全部为 `google`/`gemini-3.8-flash`，所有 run 的 thinking 均为 high。",
+   "与同一 pi 0.87.1 上的其他 Flash 级模型相比，响应数和会话时间更大（例如 pi × DeepSeek V4.1-Flash，EXP-029，1.9–4.1 分钟）。模型和时间同时不同，因此不确定原因。"
+  ]
+ }
+}

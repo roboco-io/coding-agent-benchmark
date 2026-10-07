@@ -11,5 +11,6 @@
 - **조치**:
   - 보관본(`sessions.tar.gz`)은 `redact_keys.py`(값 기반, 2건) 후 패턴 기반 마스킹(`sk-…` 2건, `AIza…` 20건)을 추가로 적용했고, pre-commit 키 검사를 통과했다. `redact_keys.py`는 `~/.zsh_secrets`의 현재 값만 찾으므로 이전 값은 놓친다.
   - 로컬 원본(`~/experiments/ralph-exp038/sessions-*`)에는 값이 남아 있다.
-  - 노출된 `KIMI_API_KEY`가 아직 유효하면 회전이 필요하다(사용자 판단).
+  - 노출된 `KIMI_API_KEY`는 사용자가 2026-10-08 아침 재발급하기 전의 키다(`~/.zsh_secrets` 수정 07:07과 일치). 같은 날 이 값으로 `GET /v1/users/me/balance`를 호출하자 `incorrect_api_key_error`가 반환돼 무효임을 확인했다.
+  - `DATA_GO_KR_SERVICE_KEY`는 현재 `~/.zsh_secrets` 값과 같은 값이 노출됐다(값 기반 마스킹 1건으로 확인). 재발급 여부는 사용자 판단이다.
 - **구조적 원인**: pi 하네스는 에이전트 환경의 비밀값을 제거하지만(EXP-036 D-3 조치), 같은 머신의 다른 프로세스 명령줄·환경은 `ps`·`pgrep`으로 볼 수 있다. 프로세스 격리(별도 사용자·컨테이너)는 하지 않는다.

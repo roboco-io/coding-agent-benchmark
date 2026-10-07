@@ -12,7 +12,7 @@ cp "$SKILL"/assets/PROMPT-en.md "$SKILL"/assets/PROMPT-ko.md "$BASE/"
 rm -rf "$BASE/harness-hurl"; cp -r "$SKILL/assets/harness-hurl" "$BASE/"
 (cd "$SKILL/assets" && md5 -r PROMPT-en.md PROMPT-ko.md harness-hurl/*.hurl | diff - checksums.md5) \
   || { echo "정본 해시 불일치 — assets 변경 여부 확인" >&2; exit 1; }
-for f in driver.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py pi_env.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
+for f in driver.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py usage_agy.py pi_env.sh agy_env.sh key_env.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
 
 case "$HARNESS" in
   codex)
@@ -30,6 +30,9 @@ case "$HARNESS" in
       install -m 600 "$HOME/.pi/agent/auth.json" "$BASE/pi-agent/auth.json"
     fi
     command -v "$PI_BIN" >/dev/null || { echo "pi 없음 ($PI_BIN)" >&2; exit 1; } ;;
+  agy)
+    command -v "$AGY_BIN" >/dev/null || { echo "agy 없음 ($AGY_BIN)" >&2; exit 1; }
+    (set +u; source "$BASE/agy_env.sh"; agy_reset_home) ;;
   claude-native) : ;;   # 사용자 기본 설정 사용 — 노출된 지침·스킬·MCP를 phase0.md에 기록할 것
   *) echo "unknown HARNESS=$HARNESS" >&2; exit 1 ;;
 esac

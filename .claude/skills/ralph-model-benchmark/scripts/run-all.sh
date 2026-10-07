@@ -11,6 +11,9 @@ archive_sessions(){ # $1 run
     codex) mv "$BASE/codex-home/sessions" "$BASE/sessions-$1" 2>/dev/null ;;
     claude-direct) mv "$BASE/claude-config/projects" "$BASE/sessions-$1" 2>/dev/null ;;
     pi) : ;;   # driver가 --session-dir sessions-<run>에 직접 기록
+    agy) # 격리 HOME의 대화·로그·brain을 run별로 옮기고 초기화 (run 간 지식 교란 차단)
+      mkdir -p "$BASE/sessions-$1"; mv "$BASE/agy-home/.gemini" "$BASE/sessions-$1/" 2>/dev/null
+      source "$BASE/agy_env.sh"; agy_reset_home ;;
     claude-native) # 기본 설정 디렉터리의 해당 app 프로젝트 로그만 복사
       local enc; enc=$(echo "$BASE/app-$1" | sed 's|[/.]|-|g')
       cp -r "$HOME/.claude/projects/$enc" "$BASE/sessions-$1" 2>/dev/null ;;

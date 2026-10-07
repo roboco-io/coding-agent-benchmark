@@ -16,6 +16,8 @@ for c in $CONDITIONS; do
     pi) source "$BASE/pi_env.sh"
       r=$(cd "$BASE/smoke-tmp" && "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/smoke-tmp/sessions" \
           --model "$m" ${THINKING:+--thinking "$THINKING"} "$Q" < /dev/null 2>&1) ;;
+    agy) source "$BASE/agy_env.sh"
+      r=$(cd "$BASE/smoke-tmp" && agy_run -p "$Q" --model "$m" ${EFFORT:+--effort "$EFFORT"} --output-format json < /dev/null 2>&1) ;;
     claude-native) r=$(cd "$BASE/smoke-tmp" && claude -p "$Q" --model "$m" --output-format json < /dev/null 2>&1) ;;
     claude-direct) source "$HOME/.zsh_secrets"
       r=$(cd "$BASE/smoke-tmp" && env -u ANTHROPIC_API_KEY CLAUDE_CONFIG_DIR="$BASE/claude-config" \
@@ -25,7 +27,8 @@ for c in $CONDITIONS; do
           claude -p "$Q" --output-format json < /dev/null 2>&1) ;;
   esac
   echo "$r" | tail -20 >> "$OUT"
-  if echo "$r" | grep -q 'SMOKE-OK' && ! echo "$r" | grep -qiE '"is_error":true|ERROR:'; then echo "PASS $m"; else echo "FAIL $m"; fail=1; fi
+  if echo "$r" | grep -q 'SMOKE-OK' && ! echo "$r" | grep -qiE '"is_error":true|ERROR:|"status":"ERROR"'; then echo "PASS $m"; else echo "FAIL $m"; fail=1; fi
 done
+[ "$HARNESS" = agy ] && { source "$BASE/agy_env.sh"; agy_reset_home; }
 rm -rf "$BASE/smoke-tmp/sessions" "$BASE/codex-home/sessions" "$BASE/claude-config/projects"
 exit $fail

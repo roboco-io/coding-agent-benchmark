@@ -17,6 +17,7 @@ description: Use when a new LLM model, model variant, or coding agent/harness is
 | 제공자가 Anthropic 호환 `/v1/messages` 제공 | `claude-direct` | EXP-013/014/020/025 |
 | OpenAI 계열(Responses API만 제공) | `codex` | EXP-011/021 |
 | pi coding agent (제공자 OpenAI 호환 등, pi 내장 또는 `models.json` provider) | `pi` | EXP-029 |
+| Google Gemini를 Antigravity CLI(`agy`)로, Gemini API 키 사용 | `agy` | EXP-035 |
 | 위 어느 것도 아님 | 대상 제외 또는 설계에 변환 계층 사유·계측 한계 사전 등록 | CLAUDE.md 하네스 규칙 |
 
 ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실 사례).
@@ -30,8 +31,8 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 5. **Phase 0**: `bash ~/ralph-expNNN/smoke.sh` — 조건 전부 PASS여야 기동. 결과와 CLI·hurl 버전(에이전트 클라이언트 버전은 `claude --version`·`codex --version`·`pi --version` 출력 그대로, 변환 계층이 있으면 그 버전도), 노출된 지침·스킬·MCP(`claude-native`는 비격리)를 `runs/phase0.md`에 기록.
 6. **기동**: `nohup caffeinate -is bash ~/ralph-expNNN/run-all.sh >/dev/null 2>&1 &`. 순차 실행이며 다른 실험과 동시 실행 금지. 진행은 `orchestrator.log`·`metrics-*.csv`로 확인하고 개입하지 않는다.
 7. **독립 재검증**: 완주 run마다 `bash ~/ralph-expNNN/measure.sh ~/ralph-expNNN/app-<run>`을 2회 실행해 `13,154`를 확인하고 `recheck.csv`로 남긴다.
-8. **usage 집계**: `codex` → `python3 ~/ralph-expNNN/usage_codex.py ~/ralph-expNNN <run>...`; Claude 계열 → `python3 scripts/aggregate_tokens.py --json <dir>` (message.id dedup; `<dir>`는 claude-direct면 `sessions-<run>/*/`, claude-native면 `sessions-<run>/`); `pi` → `python3 ~/ralph-expNNN/usage_pi.py ~/ralph-expNNN <run>...` (responseId dedup, 실행 시 `-nc -ns -ne -np -na`로 상위 AGENTS.md/CLAUDE.md·스킬 비노출). 결과는 **토큰 대리지표**이며 청구 비용이 아니다.
-9. **보관**: `bench.env`, 스크립트, `metrics-*.csv`, usage CSV, `orchestrator.log`, `phase0.md`, `recheck.csv`, 로그(`gzip`)를 `experiments/NNN-*/runs/`로 복사한다.
+8. **usage 집계**: `codex` → `python3 ~/ralph-expNNN/usage_codex.py ~/ralph-expNNN <run>...`; Claude 계열 → `python3 scripts/aggregate_tokens.py --json <dir>` (message.id dedup; `<dir>`는 claude-direct면 `sessions-<run>/*/`, claude-native면 `sessions-<run>/`); `pi` → `python3 ~/ralph-expNNN/usage_pi.py ~/ralph-expNNN <run>...` (responseId dedup, 실행 시 `-nc -ns -ne -np -na`로 상위 AGENTS.md/CLAUDE.md·스킬 비노출); `agy` → `python3 ~/ralph-expNNN/usage_agy.py ~/ralph-expNNN <run>...` (transcript 합계, 결과 JSON과 대조). 결과는 **토큰 대리지표**이며 청구 비용이 아니다.
+9. **보관(마스킹 선행)**: 리포에 넣기 전에 `python3 scripts/redact_keys.py <복사본 디렉터리>`로 비밀값을 마스킹하고 `git ls-files` 대상 아카이브에 키 패턴이 없는지 확인한다 (EXP-036 D-3). `bench.env`, 스크립트, `metrics-*.csv`, usage CSV, `orchestrator.log`, `phase0.md`, `recheck.csv`, 로그(`gzip`)를 `experiments/NNN-*/runs/`로 복사한다.
 10. **보고·동기화**: `templates/report.md`로 `report.md` 작성 후 report.md 헤더에 `- 클라이언트: <예: Codex CLI 0.160.0>` 줄을 쓴다(run별로 버전이 다르면 run을 병기하고, 세션 jsonl의 `version`·`cli_version`과 대조하며, 기록이 없으면 추정하지 않고 `미기록`). CLAUDE.md "실험 종료 시 필수 절차" 1–5(i18n·README 재생성·catalog·ROADMAP·대시보드)를 그대로 수행한다.
 
 ## metrics CSV
@@ -50,5 +51,8 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 | 미인식 모델의 200k 창 제한 | 컨텍스트 조기 차단 | `claude-direct`는 `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` 포함 |
 | 3000번대 포트를 외부 프로세스가 점유(VS Code Live Preview 등) | 채점 요청이 앱이 아닌 그 서비스로 가 거짓 음성 기각 (EXP-029 D-1) | smoke.sh의 WARN 확인 후 해당 프로세스 종료, 실험 중 실행 금지 |
 | iteration 종료 후 metrics 행이 수 분째 안 생김 | 채점기 정리 누락으로 driver 대기 (EXP-027 D-1: 상대 경로 watcher 트리) | `hurl-last.log`로 채점 완료 확인 → 잔존 서버 트리 종료 → `runs/deviations.md`에 기록. 세션 시간은 로그 start/end로 산정 |
+| `~/.zsh_secrets` 전체를 에이전트 환경에 export | 에이전트의 `env` 출력으로 키가 세션 로그·아카이브에 남음 (EXP-036 D-3, EXP-029 아카이브에서도 발견) | `key_env.sh`의 `load_secrets`로 필요한 키만 노출(pi: `PI_KEYMAP` 대상+`PI_KEEP_ENV`), 보관 전 `redact_keys.py` |
+| run 디렉터리가 하네스 디렉터리 안에 있음 | 에이전트가 `../measure.sh`·이전 run 로그를 읽거나 실행 → agy 강제 종료(EXP-035 D-1), run 간 정보 노출(EXP-036 D-2) | 세션 기록에서 하네스 경로 참조를 전수 검사해 이탈로 기록. 구조 분리는 ROADMAP 후속 과제 |
+| agy를 실 HOME에서 실행 | keyring의 Google 계정 OAuth가 선택돼 API 키 미사용 | setup이 만드는 격리 HOME(`modelProvider: "gemini"`) 사용, 로그에서 `authMethod=gemini_api_key` 확인 |
 | "3/3 완주 = 재현성 확정" 서술 | 관측 범위 초과 | 표본 수와 조건을 함께 적는다 |
 | 과거 실험과 속도·토큰 우열 단정 | 시점·CLI 버전 교락 | 차이를 조합 전체의 차이로 서술 |

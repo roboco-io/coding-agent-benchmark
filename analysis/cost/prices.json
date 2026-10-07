@@ -172,8 +172,8 @@
       "cache_write_1h": 1.0,
       "output": 2.5
     },
-    "src": "Claude Code 2.1.293 CHANGELOG (~/.claude/plugins/marketplaces/claude-code-plugins/CHANGELOG.md)",
+    "src": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
     "accessed": "2026-10-08",
-    "caveat": "CHANGELOG 문구: $0.10/$0.50 per Mtok ($0.50/$2.50 for prompts over 100K). 캐시 읽기·쓰기 단가는 명시되지 않아 표준 배수(읽기 0.1배, 5m 쓰기 1.25배, 1h 쓰기 2배)로 산정 — 공식 가격 페이지 직접 대조는 미실시. 100K 초과 판정은 요청별 input+cache_creation+cache_read 합으로 했고, 해당 요청 토큰은 lc_* 열에 따로 기록"
+    "caveat": "2026-10-08 API 가격 표 확인: ≤100K 입력 $0.10·5m 쓰기 $0.125·1h 쓰기 $0.20·캐시 읽기 $0.01·출력 $0.50, 100K 초과 $0.50·$0.625·$1·$0.05·$2.50 (Claude Code 2.1.293 CHANGELOG 문구와 일치). 100K 초과 판정은 요청별 input+cache_creation+cache_read 합, 해당 요청 토큰은 lc_* 열"
   }
 }

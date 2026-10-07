@@ -6,6 +6,8 @@
 - **판정: 검증** — EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 2). 게이트 pass와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었으며, 응답 model 필드는 전수 `claude-haiku-5-5`였다. 세션 5.1–7.9분·output 49.0–57.6K·API 호출 38–59회이고, 공개 단가 환산은 run당 $0.06–0.16으로 Claude 계열 조건 중 가장 낮다. 시점·CLI 버전 교락이 있는 관측값이며 우열 확정이 아니다.
 
 > `ralph-model-benchmark` 스킬 `claude-native` 하네스 적용. 설계는 [README.md](README.md)에 실행 전 고정했다.
+>
+> **정정(2026-10-08)**: 설계는 구독 인증이었으나 실제로는 셸에 export된 `ANTHROPIC_API_KEY`로 실행됐다(API 과금, 캐시 5분 TTL). 채점 절차는 인증과 무관하다. 5분 TTL로 인한 캐시 만료는 관측되지 않았으나(요청 간격 최대 44초), 환산 비용은 1시간 TTL 기준보다 run당 8–12% 낮게 잡혔고, 인증 경로 차이가 세션 시간에 준 영향은 측정하지 않았다. 상세는 [이탈 기록 D-1](runs/deviations.md).
 
 ## 사전 기준 대조
 
@@ -23,8 +25,9 @@
 | en-3 | iter 1 | 13/154 · 13/154 ×2 | 5분 07초 | 5 | 49.0K | 135.7K | 38 | $0.06 | 없음 |
 
 - 세션 시간은 로그의 iteration start–end(`claude -p` 실행 구간) 합이며 게이트 채점 시간은 제외했다.
-- 토큰 대리지표는 `input + output + cache_creation`이며 청구 비용이 아니다(구독 OAuth 실행, 실제 청구 미측정). API 호출은 고유 message.id 수.
-- 환산 비용은 [analysis/cost](../../analysis/cost/README.md)의 공개 단가 추정치다. Haiku 5.5는 프롬프트가 100K 토큰을 넘는 요청에 5배 단가($0.50/$2.50)가 붙는다. 이 구간에 든 요청은 en-1 2건, en-2 11건, en-3 0건이며, 이 차이가 run 간 비용 차이의 대부분이다. 캐시 단가는 공개 문구에 없어 표준 배수로 가정했다(미확인).
+- 토큰 대리지표는 `input + output + cache_creation`이며 청구 비용이 아니다. API 호출은 고유 message.id 수.
+- **인증 정정(D-1)**: 3 run은 구독이 아니라 Anthropic API 키로 실행돼 실제 API 요금이 청구됐다. 실제 청구액은 Anthropic 콘솔과 대조하지 않았다.
+- 환산 비용은 [analysis/cost](../../analysis/cost/README.md)의 공개 단가 추정치다. Haiku 5.5는 프롬프트가 100K 토큰을 넘는 요청에 5배 단가($0.50/$2.50)가 붙는다. 이 구간에 든 요청은 en-1 2건, en-2 11건, en-3 0건이며, 이 차이가 run 간 비용 차이의 대부분이다(en-2는 한 세션에서 52회 호출하는 동안 이전 output과 thinking이 누적돼 42번째 호출부터 100K를 넘었다). 단가는 2026-10-08에 API 가격 표(https://platform.claude.com/docs/en/build-with-claude/prompt-caching)와 대조해 캐시 단가까지 일치함을 확인했다.
 - run 1 iteration 1은 스캐폴딩(Fastify·Prisma·Hurl 정본 반입)만 커밋하고 "Hurl이 아직 통과하지 않음"을 보고한 뒤 완료 선언 없이 스스로 종료했다. 랄프 루프 규칙대로 iteration 2가 새 세션으로 이어받아 완주했다.
 - 실패·시간 초과·제외·재실행 없음. 과제 1종의 반복이다.
 
@@ -41,7 +44,7 @@
 | 캐시 쓰기 TTL | 전부 5분 | 전부 1시간 | 전부 1시간 | — |
 
 - Haiku 5.5는 output·API 호출이 Sonnet 5.5보다 2–3배 많고 세션 시간도 길었지만, 단가가 Sonnet 5.5의 1/20이어서 환산 비용은 약 1/7이다. 날짜·Claude Code 버전(2.1.293 vs 2.1.284)이 다르므로 모델 단독 차이로 단정하지 않는다.
-- 캐시 쓰기 TTL이 다른 네이티브 Claude 조건(1시간)과 달리 전부 5분이었다. 이 차이는 Claude Code가 모델별로 정한 캐시 정책으로 보이나 원인은 확인하지 않았다.
+- 캐시 쓰기 TTL이 다른 네이티브 Claude 조건(1시간)과 달리 전부 5분이었다. 원인은 모델이 아니라 API 키 인증이다(D-1): Claude Code는 구독의 플랜 포함 사용량에서만 1시간 TTL을 요청하며, API 키를 제거한 재스모크에서 Haiku 5.5도 1시간 TTL로 기록됐다.
 - 행동 특징: 3 run 모두 Fastify + Prisma + SQLite를 선택했다. run 2는 Bash만, run 1·3은 Bash 외에 Write·Edit를 썼다.
 
 ## 포트 주입 관측
@@ -65,7 +68,7 @@
 
 - 과제 1개·n=3. 3/3은 이 조건의 관측값이며 일반적인 성공률을 확정하지 않는다.
 - 비격리 실행이라 사용자 글로벌 설정이 행동에 영향을 줄 수 있고, 실제로 run 1이 MCP를 사용했다.
-- Haiku 5.5 단가 출처는 Claude Code 2.1.293 CHANGELOG 문구이며 공식 가격 페이지와 대조하지 않았다. 캐시 읽기·쓰기 단가는 표준 배수 가정이다.
+- 인증 방식이 다른 네이티브 Claude 실험(구독)과 다르다(D-1). 캐시 TTL·단가 구조가 달라 비용·캐시 관련 비교에 이 차이가 섞인다.
 - Anthropic 모델 목록 API는 키 미설정으로 조회하지 못했다. 모델 ID는 스모크 응답과 세션의 `model` 필드로 확인했다.
 
 ## 결론 및 후속 실험

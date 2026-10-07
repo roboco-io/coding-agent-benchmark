@@ -17,7 +17,7 @@
 
 | 조건 | 모델 | 실행 도구 | 전략 | 연결 |
 |---|---|---|---|---|
-| haiku55 × EN | `claude-haiku-5-5`, thinking 기본값 | Claude Code (Phase 0에서 버전 기록) `claude -p --dangerously-skip-permissions` | 랄프 루프(iteration마다 새 세션) | Anthropic 네이티브(구독 인증) |
+| haiku55 × EN | `claude-haiku-5-5`, thinking 기본값 | Claude Code (Phase 0에서 버전 기록) `claude -p --dangerously-skip-permissions` | 랄프 루프(iteration마다 새 세션) | Anthropic 네이티브(구독 인증 — 실행 결과 API 키 인증으로 이탈, [D-1](runs/deviations.md)) |
 
 - 언어: EN만(2026-10-03 사용자 지시 기본값). KO는 실행하지 않는다.
 - 프롬프트: 스킬 `assets/` 정본(EN), setup.sh 해시 검증. 채점: Hurl 13파일·154요청, `/opt/homebrew/bin/hurl`, measure v4, 빈 포트 `PORT` 주입(EXP-031부터).

@@ -12,7 +12,7 @@ cp "$SKILL"/assets/PROMPT-en.md "$SKILL"/assets/PROMPT-ko.md "$BASE/"
 rm -rf "$BASE/harness-hurl"; cp -r "$SKILL/assets/harness-hurl" "$BASE/"
 (cd "$SKILL/assets" && md5 -r PROMPT-en.md PROMPT-ko.md harness-hurl/*.hurl | diff - checksums.md5) \
   || { echo "정본 해시 불일치 — assets 변경 여부 확인" >&2; exit 1; }
-for f in driver.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py usage_agy.py pi_env.sh agy_env.sh key_env.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
+for f in driver.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py usage_agy.py pi_env.sh agy_env.sh key_env.sh cleanup.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
 
 case "$HARNESS" in
   codex)

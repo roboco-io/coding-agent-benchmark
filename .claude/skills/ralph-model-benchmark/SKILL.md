@@ -34,6 +34,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 8. **usage 집계**: `codex` → `python3 ~/experiments/ralph-expNNN/usage_codex.py ~/experiments/ralph-expNNN <run>...`; Claude 계열 → `python3 scripts/aggregate_tokens.py --json <dir>` (message.id dedup; `<dir>`는 claude-direct면 `sessions-<run>/*/`, claude-native면 `sessions-<run>/`); `pi` → `python3 ~/experiments/ralph-expNNN/usage_pi.py ~/experiments/ralph-expNNN <run>...` (responseId dedup, 실행 시 `-nc -ns -ne -np -na`로 상위 AGENTS.md/CLAUDE.md·스킬 비노출); `agy` → `python3 ~/experiments/ralph-expNNN/usage_agy.py ~/experiments/ralph-expNNN <run>...` (transcript 합계, 결과 JSON과 대조). 결과는 **토큰 대리지표**이며 청구 비용이 아니다.
 9. **보관(마스킹 선행)**: 리포에 넣기 전에 `python3 scripts/redact_keys.py <복사본 디렉터리>`로 비밀값을 마스킹하고 `git ls-files` 대상 아카이브에 키 패턴이 없는지 확인한다 (EXP-036 D-3). `bench.env`, 스크립트, `metrics-*.csv`, usage CSV, `orchestrator.log`, `phase0.md`, `recheck.csv`, 로그(`gzip`)를 `experiments/NNN-*/runs/`로 복사한다.
 10. **보고·동기화**: `templates/report.md`로 `report.md` 작성 후 report.md 헤더에 `- 클라이언트: <예: Codex CLI 0.160.0>` 줄을 쓴다(run별로 버전이 다르면 run을 병기하고, 세션 jsonl의 `version`·`cli_version`과 대조하며, 기록이 없으면 추정하지 않고 `미기록`). CLAUDE.md "실험 종료 시 필수 절차" 1–5(i18n·README 재생성·catalog·ROADMAP·대시보드)를 그대로 수행한다.
+11. **로컬 정리**: 보관·재검증·보고가 끝나면 `bash ~/experiments/ralph-expNNN/cleanup.sh ~/experiments/ralph-expNNN`. lockfile이 있는 `node_modules`와 격리 HOME의 패키지 캐시만 지운다(전체 용량의 약 95%). 코드·`.git`·세션·로그·metrics는 보존하고 삭제 목록은 `cleanup.log`에 남는다. 재채점이 필요하면 해당 app에서 `npm ci` 후 `measure.sh`(EXP-036에서 복원 확인).
 
 ## metrics CSV
 

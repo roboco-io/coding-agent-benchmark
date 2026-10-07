@@ -9,3 +9,6 @@ if git diff --cached --name-only | grep -qE '^(experiments/.*/report\.md|scripts
   python3 scripts/build_dashboard_details.py || exit 1
   git add dashboard/details.js
 fi
+# API 키·토큰이 커밋에 들어가지 않도록 스테이징 내용 전체(위에서 자동 추가한 파일 포함)를 마지막에 검사한다.
+# 압축 아카이브도 풀어서 검사한다 (EXP-029·036 세션 아카이브 키 유출 재발 방지).
+python3 scripts/check_staged_keys.py || exit 1

@@ -9,7 +9,7 @@ for line in open(os.path.expanduser("~/.zsh_secrets")):
     m = re.match(r"\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)=(.*)", line)
     if m:
         v = m.group(2).strip().strip('"').strip("'")
-        if len(v) >= 12: vals[v] = m.group(1)
+        if len(v) >= 12 and not v.startswith("$"): vals[v] = m.group(1)   # 변수 참조 제외
 total = 0
 def fix(p):
     global total

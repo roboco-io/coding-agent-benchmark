@@ -1,0 +1,4 @@
+# EXP-036 이탈 기록
+
+- **D-2 (flash38-en-3)**: 에이전트가 run 디렉터리 밖의 하네스 디렉터리(`~/ralph-exp036/`)를 탐색했다. 확인된 도구 호출: 하네스 목록 조회, `harness-hurl/run-hurl-tests.sh`·`smoke.sh`·`measure.sh` 읽기, 이전 run의 `ralph-run-flash38-en-1.log` 끝 20줄과 `metrics-flash38-en-{1,2}.csv` 읽기, `harness-hurl/*`를 자기 리포 `api/hurl/`로 복사, `measure.sh`를 2회 실행. 복사한 Hurl 파일은 PROMPT가 GitHub에서 받으라고 지시한 공식 테스트와 같은 정본이므로 채점 기준이 바뀐 것은 아니다. 이전 run 로그·metrics에는 코드가 없고 최종 응답 텍스트와 채점 결과만 있다. 완주 판정(게이트 + 하네스 절대 경로 재검증 2회)은 유효하나, **run 간 정보 노출이 있었던 run으로 표시**한다. pi는 measure.sh 실행 후에도 종료되지 않았다(EXP-035 D-1과 다름).
+- **D-3 (flash38-en-1)**: 에이전트가 `env | grep -E 'PORT|HOST|PI_'`를 실행했다. `PI_` 패턴이 `*_API_KEY` 이름에도 맞아, 하네스가 `~/.zsh_secrets`에서 export한 비밀값 13개가 세션 로그에 평문으로 남았다. 리포에 보관한 `sessions.tar.gz`는 `scripts/redact_keys.py`로 값을 `<REDACTED:NAME>`으로 바꾼 사본으로 만들었다. 원인은 하네스(`pi_env.sh`)가 비밀값 전체를 에이전트 환경에 export한 것이다. 스킬의 `pi_env.sh`·`agy_env.sh`를 필요한 키만 남기도록 고쳤다(`key_env.sh`). 판정에는 영향이 없다.

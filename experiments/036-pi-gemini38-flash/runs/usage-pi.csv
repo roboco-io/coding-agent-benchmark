@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+flash38-en-1,1,112,0,0,0,502693,46827,7775938,0,28429,549520
+flash38-en-2,1,119,0,0,0,771118,47052,4800673,0,29993,818170
+flash38-en-3,1,102,0,0,0,568228,29650,3559063,0,12198,597878

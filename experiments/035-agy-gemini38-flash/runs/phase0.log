@@ -1,0 +1,5 @@
+WARN 3000번대 포트 외부 LISTEN — 하네스가 빈 포트(PORT)를 주입하므로 PORT를 무시하는 앱만 영향 (EXP-031):
+Code\x20H 127.0.0.1:3000
+Code\x20H 127.0.0.1:3001
+=== gemini-3.8-flash (agy) 2026-10-07 16:42:05 ===
+{"conversation_id":"d2faa95c-36ea-4d03-b418-1b739e930de0","status":"SUCCESS","response":"SMOKE-OK\n","duration_seconds":4.360426,"num_turns":1,"usage":{"input_tokens":11800,"output_tokens":142,"thinking_tokens":138,"cache_read_tokens":0,"total_tokens":11942}}

@@ -1,0 +1,4 @@
+run,conversations,planner_steps,input,output,cache_read,proxy,json_results,json_errors,json_proxy,json_thinking
+flash38-en-1,1,119,601789,63420,10441183,665209,1,0,665209,37317
+flash38-en-2,1,121,607788,57039,9604533,664827,1,1,664827,31421
+flash38-en-3,2,192,965502,50454,10238889,1015956,1,0,503471,9965

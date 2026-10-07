@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-034（2026-10-03）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-036（2026-10-07）
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
@@ -61,6 +61,8 @@
 | [EXP-032](experiments/032-pi-sonnet55/report.md) pi coding agent × Sonnet 5.5 Ralphループ完走検証（EN n=3） | M-25: pi coding agent（`pi -p` v0.87.1）で`anthropic/claude-sonnet-5-5`（Anthropic APIキー直結、thinkingはpiデフォルト、pi内蔵の`claude-sonnet-5`定義を複製したユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | pi 0.87.1 |
 | [EXP-033](experiments/033-gpt61-sol-codex/report.md) Codex CLI × gpt-6.1-sol Ralphループ完走検証（EN n=3） | M-26: Codex CLI（`codex exec` 0.160.0）ハーネスで`gpt-6.1-sol`（effort medium）は、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | Codex CLI 0.160.0 |
 | [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol Ralphループ完走検証（EN n=3） | M-27: pi coding agent（`pi -p` 0.87.1）で`openai-codex/gpt-6.1-sol`（ChatGPT OAuth、thinkingはpiデフォルト、pi内蔵の`gpt-6-sol`定義を複製したユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | pi 0.87.1 |
+| [EXP-035](experiments/035-agy-gemini38-flash/report.md) Antigravity CLI × gemini-3.8-flash Ralphループ完走検証（EN n=3） | M-28: Antigravity CLI（`agy -p`）で`gemini-3.8-flash`（effort high、Gemini APIキー）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | Antigravity CLI (agy) 1.3.1 |
+| [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash Ralphループ完走検証（EN n=3） | M-29: pi coding agent（`pi -p` 0.87.1）で`google/gemini-3.8-flash`（thinking high、Gemini APIキー）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -158,6 +160,12 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-034 — pi coding agent × gpt-6.1-sol Ralphループ完走検証（EN n=3）** (検証)  
 **EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答modelフィールド96件すべて`gpt-6.1-sol`、thinking `medium`）。セッション8.3–9.2分・output 12.5–13.3Kで、pi × gpt-6-sol（EXP-030、4.2–5.6分）より長い。同日に両ハーネスで同じ傾向だが、日付とユーザー定義モデル項目が異なるため、モデルの優劣は確定しない。 → [レポート](experiments/034-pi-gpt61-sol/report.md)
 
+**EXP-035 — Antigravity CLI × gemini-3.8-flash Ralphループ完走検証（EN n=3）** (検証)  
+**EN 3/3完走**（run 1・2はiteration 1、run 3はエージェント自身が実行したハーネス採点器がagyを終了させたためiteration 2 — D-1）。ゲートpass + 独立再検証各2回13/13・154/154一致、全runでGemini APIキー認証・`gemini-3.8-flash-high`を確認。セッション15.5–22.4分。 → [レポート](experiments/035-agy-gemini38-flash/report.md)
+
+**EXP-036 — pi coding agent × gemini-3.8-flash Ralphループ完走検証（EN n=3）** (検証)  
+**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答333件すべて`gemini-3.8-flash`、thinking `high`）。セッション13.1–15.6分。run 3はエージェントがハーネスファイルと以前のrunのログを読んだため注記対象（D-2）。 → [レポート](experiments/036-pi-gemini38-flash/report.md)
+
 <!-- RESULTS:END -->
 
 ### 総合インサイト（2026-09-21訂正反映）
@@ -175,6 +183,7 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 14. **piはベンダーの基準モデルでも完走した（EXP-030）。** piでOpus 5.5（Anthropic APIキー直結）とgpt-6-sol（ChatGPT OAuth）を動かし、各EN 3/3、6 runすべてiteration 1で完走した。セッションはOpus 5.5が3.1–4.9分、gpt-6-solが4.2–5.6分で、ネイティブエージェントの基準線（EXP-026 Claude Code 4.0–8.4分、EXP-027 Codex 4.8–5.2分）と範囲が重なり、outputはpi側が少なかった（Opus 5.5 16.6–19.8K対18.6–28.2K、gpt-6-sol 7.0–8.6K対10.4–11.0K）。エージェントとAPI経路（システムプロンプト・ツール・thinkingの渡し方・キャッシュTTL）が同時に異なるため、この差は組み合わせ全体の差であり、piの効果とは断定しない。
 15. **Sonnet 5.5はネイティブハーネスでこれまでのClaude条件の中で最も短い経路で完走した（EXP-031）。** EN 3/3・KO 3/3、6 runすべてiteration 1で完走（再検証各2回一致、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション2.5–4.2分・output 15.2–20.9K・API呼び出し16–24回で、同じネイティブハーネスのOpus 5.5（4.0–8.4分・22–41回）・Fable 5.1・Sonnet 5（11.2–16.8分・82–140回）の分布より下にあり、6 runすべてRead/Write/EditなしでBashだけでファイルを作成した。前世代Sonnet 5との差は大きいが、測定日・Claude Codeバージョン・ハーネスのポート注入（この実験から空きポートを`PORT`で注入）が同時に異なるため、モデル単独の効果とは断定しない。
 16. **pi × Sonnet 5.5はこのリポで最も短い完走セッションを記録した（EXP-032）。** piでSonnet 5.5（Anthropic APIキー直結）を動かし、EN 3/3すべてiteration 1で完走した（再検証各2回一致、応答modelフィールドは全件`claude-sonnet-5-5`）。セッション1.8–3.2分（最短1分49秒）・output 10.9–14.7Kで、同日のネイティブClaude Code × Sonnet 5.5（EN 2.9–4.2分・15.2–20.0K）より短く少なかった。pi 0.87.1の内蔵リストにこのモデルがないため内蔵Sonnet 5定義を複製したユーザー定義項目で呼び出しており、エージェント・thinkingの渡し方・キャッシュTTLも同時に異なるため、この差をpi単独の効果とは断定しない。
+17. **Gemini（gemini-3.8-flash）もAntigravity CLIとpiの両ハーネスで完走したが、他のFlash級モデルよりセッションが長かった（EXP-035・036）。** Gemini APIキーでAntigravity CLI（agy 1.3.1、effort high）とpi（thinking high）がそれぞれEN 3/3、計6/6完走した。agyはrun 1・2がiteration 1で、run 3はエージェント自身が実行したハーネス採点器がagyプロセスを終了させたためiteration 2で完走した。セッションはagy 15.5–22.4分、pi 13.1–15.6分で、runあたりのモデル応答は100–192回とpi × deepseek-flash（EXP-029、25–40回・1.9–4.1分）よりはるかに多かった。両実験でrunディレクトリがハーネスディレクトリ内にあり、エージェントが採点器や以前のrunの記録にアクセスできる構造問題が明らかになった（EXP-029のセッション3件でも確認）。分離が今後の課題である。
 
 ## 実験ライフサイクル
 

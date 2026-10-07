@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-034（2026-10-03）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-036（2026-10-07）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -61,6 +61,8 @@
 | [EXP-032](experiments/032-pi-sonnet55/report.md) pi coding agent × Sonnet 5.5 Ralph 循环完成验证（EN n=3） | M-25: 用 pi coding agent（`pi -p` v0.87.1）运行 `anthropic/claude-sonnet-5-5`（Anthropic API 密钥直连，thinking 为 pi 默认值，复制 pi 内置 `claude-sonnet-5` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
 | [EXP-033](experiments/033-gpt61-sol-codex/report.md) Codex CLI × gpt-6.1-sol Ralph 循环完成验证（EN n=3） | M-26: 在 Codex CLI（`codex exec` 0.160.0）框架中，`gpt-6.1-sol`（effort medium）能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | Codex CLI 0.160.0 |
 | [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol Ralph 循环完成验证（EN n=3） | M-27: 用 pi coding agent（`pi -p` 0.87.1）运行 `openai-codex/gpt-6.1-sol`（ChatGPT OAuth，thinking 为 pi 默认值，复制 pi 内置 `gpt-6-sol` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
+| [EXP-035](experiments/035-agy-gemini38-flash/report.md) Antigravity CLI × gemini-3.8-flash Ralph 循环完成验证（EN n=3） | M-28: 用 Antigravity CLI（`agy -p`）运行 `gemini-3.8-flash`（effort high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | Antigravity CLI (agy) 1.3.1 |
+| [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash Ralph 循环完成验证（EN n=3） | M-29: 用 pi coding agent（`pi -p` 0.87.1）运行 `google/gemini-3.8-flash`（thinking high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -158,6 +160,12 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-034 — pi coding agent × gpt-6.1-sol Ralph 循环完成验证（EN n=3）** (验证)  
 **EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，96 条响应 model 字段全部为 `gpt-6.1-sol`，thinking `medium`）。会话 8.3–9.2 分钟、output 12.5–13.3K，比 pi × gpt-6-sol（EXP-030，4.2–5.6 分钟）更长。同日两个框架方向一致，但日期与自定义模型条目不同，因此不能确定模型优劣。 → [报告](experiments/034-pi-gpt61-sol/report.md)
 
+**EXP-035 — Antigravity CLI × gemini-3.8-flash Ralph 循环完成验证（EN n=3）** (验证)  
+**EN 3/3 完成**（run 1·2 在 iteration 1，run 3 因代理自行运行的框架评分器终止了 agy 而在 iteration 2 完成 — D-1）。门控通过 + 各 2 次独立复验 13/13·154/154 一致，所有 run 均确认使用 Gemini API 密钥认证并解析为 `gemini-3.8-flash-high`。会话 15.5–22.4 分钟。 → [报告](experiments/035-agy-gemini38-flash/report.md)
+
+**EXP-036 — pi coding agent × gemini-3.8-flash Ralph 循环完成验证（EN n=3）** (验证)  
+**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，333 条响应全部为 `gemini-3.8-flash`，thinking `high`）。会话 13.1–15.6 分钟。run 3 因代理读取了框架文件和之前 run 的日志而被标注（D-2）。 → [报告](experiments/036-pi-gemini38-flash/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -175,6 +183,7 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 14. **pi 在厂商的基准模型上也完成了任务（EXP-030）。** 用 pi 运行 Opus 5.5（Anthropic API 密钥直连）和 gpt-6-sol（ChatGPT OAuth），各 EN 3/3，6 个 run 全部在 iteration 1 完成。会话时长 Opus 5.5 为 3.1–4.9 分钟、gpt-6-sol 为 4.2–5.6 分钟，与原生代理基线（EXP-026 Claude Code 4.0–8.4 分钟，EXP-027 Codex 4.8–5.2 分钟）范围重叠；output 则 pi 一侧更低（Opus 5.5 16.6–19.8K 对 18.6–28.2K，gpt-6-sol 7.0–8.6K 对 10.4–11.0K）。代理与 API 路径（系统提示、工具、thinking 传递方式、缓存 TTL）同时不同，因此这些差异是整个组合的差异，不归因于 pi。
 15. **Sonnet 5.5 在原生框架中以迄今所有 Claude 条件中最短的路径完成（EXP-031）。** EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次，低于同一原生框架的 Opus 5.5（4.0–8.4 分钟·22–41 次）、Fable 5.1 和 Sonnet 5（11.2–16.8 分钟·82–140 次）的分布，且 6 个 run 均未使用 Read/Write/Edit，仅用 Bash 编写文件。与上一代 Sonnet 5 差距很大，但测量日期、Claude Code 版本和框架端口注入（自本实验起以 `PORT` 注入空闲端口）同时不同，因此不归因于模型本身。
 16. **pi × Sonnet 5.5 创下本仓库最短的完成会话（EXP-032）。** 通过 pi 运行 Sonnet 5.5（Anthropic API 密钥直连），EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟（最短 1 分 49 秒）、output 10.9–14.7K，比同日原生 Claude Code × Sonnet 5.5（EN 2.9–4.2 分钟·15.2–20.0K）更短更少。pi 0.87.1 内置列表中没有该模型，因此以复制内置 Sonnet 5 定义的自定义条目调用；代理、thinking 传递方式和缓存 TTL 也同时不同，因此不将差异归因于 pi 本身。
+17. **Gemini（gemini-3.8-flash）也在 Antigravity CLI 和 pi 两个框架中完成，但会话比其他 Flash 级模型更长（EXP-035·036）。** 使用 Gemini API 密钥，Antigravity CLI（agy 1.3.1，effort high）和 pi（thinking high）各 EN 3/3，共 6/6 完成。agy 的 run 1·2 在 iteration 1 完成；run 3 因代理自行运行的框架评分器终止了 agy 进程，在 iteration 2 完成。会话 agy 15.5–22.4 分钟、pi 13.1–15.6 分钟，每个 run 的模型响应为 100–192 次，远多于 pi × deepseek-flash（EXP-029，25–40 次·1.9–4.1 分钟）。两项实验暴露了一个结构问题：run 目录位于框架目录内，代理可以访问评分器和之前 run 的记录（EXP-029 的 3 个会话中也有发现），后续需要将两者分离。
 
 ## 实验生命周期
 

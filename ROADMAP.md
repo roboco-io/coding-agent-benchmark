@@ -57,5 +57,8 @@
 - [x] EXP-032: pi coding agent × Sonnet 5.5(Anthropic API 키, 사용자 정의 모델 항목) 완주 검증 (M-25, EN n=3) — 검증(3/3 iter 1 완주, 세션 1.8–3.2분·output 10.9–14.7K, 리포 최단 세션 1분 49초), [보고서](experiments/032-pi-sonnet55/report.md)
 - [x] EXP-033: Codex CLI × gpt-6.1-sol 완주 검증 (M-26, EN n=3) — 검증(3/3 iter 1 완주, 세션 6.2–9.8분·output 10.0–16.2K, Codex 로컬 메타데이터 없음(fallback)), [보고서](experiments/033-gpt61-sol-codex/report.md)
 - [x] EXP-034: pi coding agent × gpt-6.1-sol(ChatGPT OAuth, 사용자 정의 모델 항목) 완주 검증 (M-27, EN n=3) — 검증(3/3 iter 1 완주, 세션 8.3–9.2분·output 12.5–13.3K), [보고서](experiments/034-pi-gpt61-sol/report.md)
+- [x] EXP-035: Antigravity CLI(agy 1.3.1) × gemini-3.8-flash(effort high, Gemini API 키) 완주 검증 (M-28, EN n=3) — 검증(3/3 완주, run 3은 하네스 채점기에 의한 강제 종료로 iter 2, 세션 15.5–22.4분), [보고서](experiments/035-agy-gemini38-flash/report.md)
+- [x] EXP-036: pi coding agent × gemini-3.8-flash(thinking high, Gemini API 키) 완주 검증 (M-29, EN n=3) — 검증(3/3 iter 1 완주, 세션 13.1–15.6분), [보고서](experiments/036-pi-gemini38-flash/report.md)
+- [ ] 하네스 디렉터리와 run 디렉터리 분리 — 에이전트가 채점기·이전 run 기록에 접근한 사례(EXP-035 D-1, EXP-036 D-2, EXP-029 3개 세션) 재발 방지
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

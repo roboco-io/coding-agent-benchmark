@@ -684,6 +684,46 @@
         "verdict": "验证",
         "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，96 条响应 model 字段全部为 `gpt-6.1-sol`，thinking `medium`）。会话 8.3–9.2 分钟、output 12.5–13.3K，比 pi × gpt-6-sol（EXP-030，4.2–5.6 分钟）更长。同日两个框架方向一致，但日期与自定义模型条目不同，因此不能确定模型优劣。"
       }
+    },
+    "EXP-035": {
+      "en": {
+        "name": "Antigravity CLI × gemini-3.8-flash Ralph loop completion check (EN n=3)",
+        "hypothesis": "With Antigravity CLI (`agy -p`) running `gemini-3.8-flash` (effort high, Gemini API key), it can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3 completed** (runs 1–2 at iteration 1, run 3 at iteration 2 because the harness grader that the agent itself ran killed agy — D-1). Gate pass plus two independent re-checks each at 13/13 · 154/154; every run authenticated with the Gemini API key and resolved to `gemini-3.8-flash-high`. Sessions 15.5–22.4 min."
+      },
+      "ja": {
+        "name": "Antigravity CLI × gemini-3.8-flash Ralphループ完走検証（EN n=3）",
+        "hypothesis": "Antigravity CLI（`agy -p`）で`gemini-3.8-flash`（effort high、Gemini APIキー）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3完走**（run 1・2はiteration 1、run 3はエージェント自身が実行したハーネス採点器がagyを終了させたためiteration 2 — D-1）。ゲートpass + 独立再検証各2回13/13・154/154一致、全runでGemini APIキー認証・`gemini-3.8-flash-high`を確認。セッション15.5–22.4分。"
+      },
+      "zh-CN": {
+        "name": "Antigravity CLI × gemini-3.8-flash Ralph 循环完成验证（EN n=3）",
+        "hypothesis": "用 Antigravity CLI（`agy -p`）运行 `gemini-3.8-flash`（effort high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3 完成**（run 1·2 在 iteration 1，run 3 因代理自行运行的框架评分器终止了 agy 而在 iteration 2 完成 — D-1）。门控通过 + 各 2 次独立复验 13/13·154/154 一致，所有 run 均确认使用 Gemini API 密钥认证并解析为 `gemini-3.8-flash-high`。会话 15.5–22.4 分钟。"
+      }
+    },
+    "EXP-036": {
+      "en": {
+        "name": "pi coding agent × gemini-3.8-flash Ralph loop completion check (EN n=3)",
+        "hypothesis": "With the pi coding agent (`pi -p` 0.87.1) running `google/gemini-3.8-flash` (thinking high, Gemini API key), it can finish the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, intervention-free Ralph loop within a 30-iteration · 4-hour cap (EN n=3; completion-rate verdict, billing excluded).",
+        "verdict": "Verified",
+        "summary": "**EN 3/3, all at iteration 1** (gate pass plus two independent re-checks each at 13/13 · 154/154, all 333 responses `gemini-3.8-flash`, thinking `high`). Sessions 13.1–15.6 min. Run 3 is flagged because the agent read harness files and earlier runs' logs (D-2)."
+      },
+      "ja": {
+        "name": "pi coding agent × gemini-3.8-flash Ralphループ完走検証（EN n=3）",
+        "hypothesis": "pi coding agent（`pi -p` 0.87.1）で`google/gemini-3.8-flash`（thinking high、Gemini APIキー）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。",
+        "verdict": "検証",
+        "summary": "**EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答333件すべて`gemini-3.8-flash`、thinking `high`）。セッション13.1–15.6分。run 3はエージェントがハーネスファイルと以前のrunのログを読んだため注記対象（D-2）。"
+      },
+      "zh-CN": {
+        "name": "pi coding agent × gemini-3.8-flash Ralph 循环完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent（`pi -p` 0.87.1）运行 `google/gemini-3.8-flash`（thinking high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。",
+        "verdict": "验证",
+        "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，333 条响应全部为 `gemini-3.8-flash`，thinking `high`）。会话 13.1–15.6 分钟。run 3 因代理读取了框架文件和之前 run 的日志而被标注（D-2）。"
+      }
     }
   }
 }

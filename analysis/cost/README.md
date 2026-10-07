@@ -1,10 +1,10 @@
 # run당 비용 환산 (공개 단가 기준 추정)
 
-작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
+작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
 
 ## 이 수치가 뜻하는 것
 
-각 run이 사용한 토큰을 네 항목(비캐시 입력·캐시 읽기·캐시 쓰기·출력)으로 나누고, 항목마다 2026-09-23(gpt-6-sol·gpt-6-luna는 2026-09-24, Sonnet 5.5는 2026-09-29, gpt-6.1-sol은 2026-10-03)에 확인한 공개 API 단가를 곱해 더한 값이다. **실제로 지출한 금액이 아니다.** 네이티브 Claude run은 구독(OAuth), pi × Opus 5.5(EXP-030)·pi × Sonnet 5.5(EXP-032)는 Anthropic API 키(실제 과금, 청구액 미확인), gpt-5.6-sol·gpt-6-astra·gpt-6-sol·gpt-6-luna·gpt-6.1-sol(pi × gpt-6-sol·pi × gpt-6.1-sol 포함)는 ChatGPT 플랜 OAuth로 실행했고, Solar 두 모델은 무료·프로모션 프리뷰 기간에 실행했다. 따라서 이 값은 "같은 사용량을 지금 공개 API 단가로 과금하면 얼마인가"에 대한 추정이다. 실험 품질 규칙([docs/experiment-quality-rules.md](../../docs/experiment-quality-rules.md) 4절)에 따라 구독 지출과 API 단가 환산을 구분하고, 단가 출처와 확인 시점을 남긴다.
+각 run이 사용한 토큰을 네 항목(비캐시 입력·캐시 읽기·캐시 쓰기·출력)으로 나누고, 항목마다 2026-09-23(gpt-6-sol·gpt-6-luna는 2026-09-24, Sonnet 5.5는 2026-09-29, gpt-6.1-sol은 2026-10-03, gemini-3.8-flash는 2026-10-07)에 확인한 공개 API 단가를 곱해 더한 값이다. **실제로 지출한 금액이 아니다.** 네이티브 Claude run은 구독(OAuth), pi × Opus 5.5(EXP-030)·pi × Sonnet 5.5(EXP-032)는 Anthropic API 키(실제 과금, 청구액 미확인), gpt-5.6-sol·gpt-6-astra·gpt-6-sol·gpt-6-luna·gpt-6.1-sol(pi × gpt-6-sol·pi × gpt-6.1-sol 포함)는 ChatGPT 플랜 OAuth로 실행했고, Solar 두 모델은 무료·프로모션 프리뷰 기간에 실행했다. gemini-3.8-flash(EXP-035/036)는 Gemini API 키로 실행해 실제 과금이 있었으나 청구액은 확인하지 않았다. 따라서 이 값은 "같은 사용량을 지금 공개 API 단가로 과금하면 얼마인가"에 대한 추정이다. 실험 품질 규칙([docs/experiment-quality-rules.md](../../docs/experiment-quality-rules.md) 4절)에 따라 구독 지출과 API 단가 환산을 구분하고, 단가 출처와 확인 시점을 남긴다.
 
 ## 결과 (run당 추정 비용 중앙값, USD)
 
@@ -19,6 +19,8 @@
 | pi × gpt-6.1-sol | 0.30 | — | 단문맥 단가(캐시 입력 $0.10), pi 하네스(구독 OAuth, 실제 지출 없음) |
 | gpt-6.1-sol | 0.36 | — | 단문맥 단가(캐시 입력 $0.10) |
 | gpt-6-sol | 0.43 | — | 단문맥 단가 |
+| pi × gemini-3.8-flash | 1.11 | — | 2026년 단가(2027-01-01부터 2배), pi 하네스 |
+| agy × gemini-3.8-flash | 1.47 | — | 2026년 단가(2027-01-01부터 2배), Antigravity CLI 하네스 |
 | pi × kimi-k3 | 0.65 | — | pi 하네스, 캐시 쓰기는 입력 단가 |
 | Sonnet 5.5 | 0.68 | 0.70 | Sonnet 5와 같은 단가($2/$10), 캐시 쓰기 단가는 미확인 가정(아래) |
 | kimi-k3 | 0.78 | 0.92 | |
@@ -53,14 +55,15 @@ run별 값은 [cost_all_runs.csv](cost_all_runs.csv)의 `est_cost_usd` 열에 �
 - **pi × Opus 5.5·gpt-6-sol(EXP-030)**: 대응 방식은 EXP-029와 같다. pi의 anthropic provider는 기본 캐시 보존이 short(5분 TTL)이며 `cacheWrite1h`가 전 응답 0이어서 캐시 쓰기를 `cache_write_5m`($5)에 넣었다. 네이티브 Claude Code run(EXP-026)은 전부 1시간 TTL($8)이었으므로 두 조합의 환산 비용 차이에는 TTL 정책 차이가 포함된다. openai-codex는 `cacheWrite`를 0으로 기록했다. pi 자체 환산값과 이 표의 값은 소수 둘째 자리까지 같다.
 - **Sonnet 5.5(EXP-031)**: 2026-09-29에 claude-api 스킬의 모델 표(2026-09-25 캐시본)로 입력 $2·출력 $10·캐시 읽기 $0.20(1M 토큰당)을 확인했고, Sonnet 5와 같은 가격이라고 적혀 있다. 캐시 쓰기 단가는 그 표에 없어 Claude 표준 배수(5분 TTL 입력의 1.25배 $2.50, 1시간 TTL 2배 $4)를 가정했으며 공식 가격 페이지와 직접 대조하지 않았다(미확인). 6 run의 캐시 쓰기는 원시 세션 로그 기준 전부 1시간 TTL이었다. 캐시 쓰기 비중은 run당 약 $0.22–0.29로, 단가가 다르면 이 부분이 바뀐다.
 - **pi × Sonnet 5.5(EXP-032)**: 대응 방식은 EXP-030과 같고 단가는 위 Sonnet 5.5 항목을 그대로 쓴다. pi 0.87.1 내장 목록에 Sonnet 5.5가 없어 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목으로 실행했다. `cacheWrite1h`가 전 응답(54건) 0이어서 캐시 쓰기를 `cache_write_5m`($2.50, 미확인 가정)에 넣었다. 캐시 쓰기 비중은 run당 약 $0.08–0.09다. 네이티브 Claude Code × Sonnet 5.5(EXP-031)는 전부 1시간 TTL($4)이었으므로 두 조합의 환산 비용 차이(EN 중앙값 0.30 vs 0.68)에는 TTL 정책·에이전트·thinking 설정 차이가 함께 들어 있다.
+- **gemini-3.8-flash(EXP-035/036)**: 2026-10-07에 Gemini API 가격 페이지(<https://ai.google.dev/gemini-api/docs/pricing>)의 유료 티어 Standard 단가를 확인해 적용했다(1M 토큰당 입력 $0.75·캐시 입력 $0.075·출력 $3.75, thinking 포함). 2027-01-01부터 전 항목이 두 배가 되므로 그 이후 같은 사용량은 약 2배다. 명시 캐시 저장비($0.50/1M 토큰·시간)는 두 하네스 모두 암묵 캐시 읽기만 기록돼 넣지 않았다. agy의 `input_tokens`는 캐시 읽기를 제외한 값이다(`total_tokens = input + output` 검산). agy run 3은 하네스 채점기가 강제 종료한 iteration 1(D-1)의 사용량을 transcript에서 포함했다.
 - **Solar Pro 4**: 정가로 환산했다. 실험 당시(2026-08)는 무료 또는 프로모션 기간이었다. 이 엔드포인트는 캐시를 계상하지 않아 입력 전량이 비캐시 단가로 계산된다. 이 때문에 값이 크다.
 - **범위**: run 안의 재시도·추가 세션·서브에이전트 호출을 포함한다(실험 품질 규칙 5절 — 실패·재시도 포함). Opus 4.8 run 48-1은 재검증 세션을, Solar Pro 4 run 1은 게이트 오검으로 이어진 세션 12개를 포함한다.
 
 ## 토큰 데이터
 
-[usage_all_runs.csv](usage_all_runs.csv)는 대시보드의 97 run을 한 표로 모은 것이다. 감사 절차와 판단은 [audit.md](audit.md)에 있다. 요약하면:
+[usage_all_runs.csv](usage_all_runs.csv)는 대시보드의 109 run을 한 표로 모은 것이다. 감사 절차와 판단은 [audit.md](audit.md)에 있다. 요약하면:
 
-- 40 run은 기존 CSV를 원시 세션 로그로 재집계해 일치를 확인했고, 15 run은 원시 로그에서 새로 집계했으며, EXP-027 6 run은 2026-09-24에 원시 rollout을 재집계해 실험 `runs/usage.csv`와 일치를 확인했고, 6 run(EXP-019 Opus KO)은 원시 로그가 삭제돼 보고서 값을 썼다. EXP-029 9 run은 2026-09-24에 보관된 pi 세션 아카이브를 `usage_pi.py`(responseId 중복 제거)로 재집계해 실험 `runs/usage-pi.csv`와 일치를 확인했다. EXP-030 6 run은 같은 방법으로 집계한 실험 `runs/usage-pi.csv` 값을 옮겼다. EXP-031 6 run은 2026-09-29에 원시 세션 로그(`~/ralph-exp031/sessions-sonnet55-*`)를 message.id 기준으로 다시 읽어 캐시 쓰기 TTL(전부 1시간)을 확인하고 실험 `runs/usage.csv`(`usage031.py`)와 일치를 확인했다. EXP-032 3 run은 EXP-030과 같은 방법으로 집계한 실험 `runs/usage-pi.csv` 값을 옮겼고, 보관된 세션 아카이브에서 `cacheWrite1h`가 전부 0임을 확인했다.
+- 40 run은 기존 CSV를 원시 세션 로그로 재집계해 일치를 확인했고, 15 run은 원시 로그에서 새로 집계했으며, EXP-027 6 run은 2026-09-24에 원시 rollout을 재집계해 실험 `runs/usage.csv`와 일치를 확인했고, 6 run(EXP-019 Opus KO)은 원시 로그가 삭제돼 보고서 값을 썼다. EXP-029 9 run은 2026-09-24에 보관된 pi 세션 아카이브를 `usage_pi.py`(responseId 중복 제거)로 재집계해 실험 `runs/usage-pi.csv`와 일치를 확인했다. EXP-030 6 run은 같은 방법으로 집계한 실험 `runs/usage-pi.csv` 값을 옮겼다. EXP-031 6 run은 2026-09-29에 원시 세션 로그(`~/ralph-exp031/sessions-sonnet55-*`)를 message.id 기준으로 다시 읽어 캐시 쓰기 TTL(전부 1시간)을 확인하고 실험 `runs/usage.csv`(`usage031.py`)와 일치를 확인했다. EXP-032 3 run은 EXP-030과 같은 방법으로 집계한 실험 `runs/usage-pi.csv` 값을 옮겼고, 보관된 세션 아카이브에서 `cacheWrite1h`가 전부 0임을 확인했다. EXP-035 3 run은 agy transcript(`usage_agy.py`)를, EXP-036 3 run은 `usage_pi.py` 결과를 옮겼다.
 - 중복 제거는 assistant `message.id` 기준이며, 같은 ID의 usage가 다르면 스트리밍 중간 기록(출력 0)과 최종 기록 패턴일 때만 최종 기록을 채택했다.
 - 재집계 과정에서 기존 CSV 3건의 오류를 발견했다. qwen-ko-1·qwen-ko-3(EXP-017)은 최종 usage가 없는 중간 기록을 포함해 비캐시 입력이 약 8배·14배 과대했고, sol-1(EXP-011)은 실행 전 스모크 세션을 포함했다. 이 표에는 정정값을 썼다. 해당 실험의 `runs/` 원본 CSV는 기록 보존을 위해 수정하지 않았으며, 보고서 본문은 이 값을 인용하지 않아 판정에 영향이 없다.
 - 집계 스크립트([aggregators/](aggregators/))는 실험 머신의 원시 로그 경로(`~/ralph-exp0NN/` 등)를 읽으므로 다른 환경에서는 그대로 재실행되지 않는다.

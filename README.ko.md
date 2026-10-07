@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-034 (2026-10-03)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-036 (2026-10-07)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -61,6 +61,8 @@
 | [EXP-032](experiments/032-pi-sonnet55/report.md) pi coding agent × Sonnet 5.5 완주 검증 (EN n=3) | M-25: pi coding agent(`pi -p` v0.87.1)로 `anthropic/claude-sonnet-5-5`(Anthropic API 키 직결, thinking pi 기본값, 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 | [EXP-033](experiments/033-gpt61-sol-codex/report.md) Codex CLI × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3) | M-26: Codex CLI(`codex exec` 0.160.0) 하네스에서 `gpt-6.1-sol`(effort medium)은 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | Codex CLI 0.160.0 |
 | [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3) | M-27: pi coding agent(`pi -p` 0.87.1)로 `openai-codex/gpt-6.1-sol`(ChatGPT OAuth, thinking pi 기본값, 사용자 정의 모델 항목)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
+| [EXP-035](experiments/035-agy-gemini38-flash/report.md) Antigravity CLI × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3) | M-28: Antigravity CLI(`agy -p`)로 `gemini-3.8-flash`(effort high, Gemini API 키)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | Antigravity CLI (agy) 1.3.1 |
+| [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3) | M-29: pi coding agent(`pi -p` 0.87.1)로 `google/gemini-3.8-flash`(thinking high, Gemini API 키)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -158,6 +160,12 @@ EN 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/
 **EXP-034 — pi coding agent × gpt-6.1-sol 랄프 루프 완주 검증 (EN n=3)** (검증)  
 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 model 필드 96건 전부 `gpt-6.1-sol`, thinking 전 run `medium`). 세션 8.3–9.2분으로 EXP-030 pi × gpt-6-sol(4.2–5.6분)보다 길었으나 시점·모델 항목 교락이 있다. → [보고서](experiments/034-pi-gpt61-sol/report.md)
 
+**EXP-035 — Antigravity CLI × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3)** (검증)  
+3/3 완주 (run 1·2 iteration 1, run 3 iteration 2 — 에이전트가 실행한 하네스 채점기가 agy를 종료시킨 D-1 때문). 게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 전 run `gemini_api_key` 인증·`gemini-3.8-flash-high` 해석 확인. 세션 15.5–22.4분. → [보고서](experiments/035-agy-gemini38-flash/report.md)
+
+**EXP-036 — pi coding agent × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3)** (검증)  
+3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 333건 전부 `google`/`gemini-3.8-flash`, thinking 전 run `high`). 세션 13.1–15.6분. run 3은 하네스 파일·이전 run 기록을 읽은 run으로 표시(D-2). → [보고서](experiments/036-pi-gemini38-flash/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (2026-09-21 정정 반영)
@@ -175,6 +183,7 @@ EN 3/3 전부 iteration 1 완주 (게이트 pass + 독립 재검증 각 2회 13/
 14. **pi는 제조사 기준 모델에서도 완주했다 (EXP-030).** pi로 Opus 5.5(Anthropic API 키 직결)와 gpt-6-sol(ChatGPT OAuth)을 돌려 각 EN 3/3, 6 run 모두 iteration 1에 완주했다. 세션은 Opus 5.5 3.1–4.9분, gpt-6-sol 4.2–5.6분으로 네이티브 에이전트 기준선(EXP-026 Claude Code 4.0–8.4분, EXP-027 Codex 4.8–5.2분)과 범위가 겹쳤고, output은 pi 쪽이 낮았다(Opus 5.5 16.6–19.8K 대 18.6–28.2K, gpt-6-sol 7.0–8.6K 대 10.4–11.0K). 에이전트와 API 경로(시스템 프롬프트·도구·thinking 전달 방식·캐시 TTL)가 함께 달라 이 차이는 조합 전체의 차이이며 pi의 효과로 단정하지 않는다.
 15. **Sonnet 5.5는 네이티브 하네스에서 지금까지의 Claude 조건 중 가장 짧은 경로로 완주했다 (EXP-031).** EN 3/3·KO 3/3, 6 run 모두 iteration 1 완주(재검증 각 2회 일치, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 2.5–4.2분·output 15.2–20.9K·API 호출 16–24회로 같은 네이티브 하네스의 Opus 5.5(4.0–8.4분·22–41회)·Fable 5.1·Sonnet 5(11.2–16.8분·82–140회) 분포 아래에 있고, 6 run 모두 Read/Write/Edit 없이 Bash만으로 파일을 작성했다. 직전 세대 Sonnet 5와의 차이가 크지만 측정 날짜·Claude Code 버전·하네스 포트 주입(이번 실험부터 빈 포트를 `PORT`로 주입)이 함께 달라 모델 단독 효과로 단정하지 않는다.
 16. **pi × Sonnet 5.5는 이 리포에서 가장 짧은 완주 세션을 기록했다 (EXP-032).** pi로 Sonnet 5.5(Anthropic API 키 직결)를 돌려 EN 3/3, 전부 iteration 1에 완주했다(재검증 각 2회 일치, 응답 model 필드 전수 `claude-sonnet-5-5`). 세션 1.8–3.2분(최단 1분 49초)·output 10.9–14.7K로 같은 날 네이티브 Claude Code × Sonnet 5.5(EN 2.9–4.2분·15.2–20.0K)보다 짧고 적었다. pi 0.87.1 내장 목록에 이 모델이 없어 내장 Sonnet 5 정의를 복사한 사용자 정의 항목으로 호출했고, 에이전트·thinking 전달·캐시 TTL도 함께 달라 이 차이를 pi 단독 효과로 단정하지 않는다.
+17. **Gemini(gemini-3.8-flash)도 Antigravity CLI와 pi 두 하네스에서 완주했지만, 다른 Flash급 모델보다 세션이 길었다 (EXP-035·036).** Gemini API 키로 Antigravity CLI(agy 1.3.1, effort high)와 pi(thinking high)를 각 EN 3/3, 총 6/6 완주했다. agy는 run 1·2가 iteration 1에, run 3은 에이전트가 직접 실행한 하네스 채점기가 agy 프로세스를 종료시켜 iteration 2에 완주했다. 세션은 agy 15.5–22.4분, pi 13.1–15.6분이고, run당 모델 응답이 100–192회로 pi × deepseek-flash(EXP-029, 25–40회·1.9–4.1분)보다 훨씬 많았다. 두 실험에서 run 디렉터리가 하네스 디렉터리 안에 있어 에이전트가 채점기·이전 run 기록에 접근할 수 있다는 구조 문제가 드러났고(EXP-029 세션 3개에서도 확인), 후속으로 분리가 필요하다.
 
 ## 실험 라이프사이클
 

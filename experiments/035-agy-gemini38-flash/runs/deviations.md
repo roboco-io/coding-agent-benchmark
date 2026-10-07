@@ -1,0 +1,4 @@
+# EXP-035 이탈 기록
+
+- **D-1 (flash38-en-3, iteration 1)**: 에이전트가 상위 디렉터리의 하네스 파일을 읽고(transcript step 28–34, 75–80), 마지막에 `bash ../measure.sh $(pwd)`로 하네스 채점기를 직접 실행했다(step 195, 17:27). measure.sh는 채점 전 정리 단계에서 "작업 디렉터리가 리포 안이고 TCP를 LISTEN하는 프로세스"를 모두 `kill -9`한다. agy 프로세스는 작업 디렉터리가 리포이고 내부 서버 포트를 LISTEN하므로 이 조건에 걸려 종료된 것으로 판단한다(종료 직전 마지막 도구 호출이 measure.sh이고, driver 로그에 `Killed: 9`·exit 137이 남음. LISTEN 여부는 사후 확인하지 못했다). 이 시점에 코드는 이미 13/13이었으나(driver 채점 `13,154`) `.ralph-done`을 만들기 전이었다. iteration 2가 완료 선언하여 게이트 pass. **완주 iteration 2는 하네스 개입으로 늘어난 값**이며, 모델 단독으로는 iteration 1 완주 가능성이 높았다. iteration 1의 사용량은 결과 JSON이 없어 transcript에서 집계했다.
+- **D-4 (flash38-en-2)**: 결과 JSON의 status가 `ERROR`다(`API error (attempt 1): Error 503 UNAVAILABLE`). 응답 본문은 완료 보고였고 `.ralph-done`이 생성되었으며 agy exit 0, 게이트 pass, 재검증 2회 `13,154`. 작업 완료 뒤 마지막 요청에서 일시적 503이 기록된 것으로 보고 판정에 반영하지 않는다.

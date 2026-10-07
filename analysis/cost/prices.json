@@ -147,5 +147,15 @@
     "src": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
     "accessed": "2026-10-03",
     "caveat": "Standard 단문맥(입력 272K 이하) 단가. 272K 초과 요청은 입력·캐시 2배, 출력 1.5배 (이번 run은 해당 없음)"
+  },
+  "gemini-3.8-flash": {
+    "input": 0.75,
+    "cache_read": 0.075,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 3.75,
+    "src": "https://ai.google.dev/gemini-api/docs/pricing",
+    "accessed": "2026-10-07",
+    "caveat": "Gemini API 유료 티어 Standard, 2026-12-31까지 단가(2027-01-01부터 전 항목 2배). 출력 단가는 thinking 토큰 포함. 프롬프트 길이 구간 없음. 명시 캐시 저장비($0.50/1M·시간)는 암묵 캐시만 관측돼 미포함"
   }
 }

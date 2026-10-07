@@ -41,6 +41,8 @@
 | EXP-032 | pi 0.87.1 | `experiments/032-pi-sonnet55/README.md`, `runs/phase0.md` |
 | EXP-033 | Codex CLI 0.160.0 | `experiments/033-gpt61-sol-codex/runs/phase0.md`·`phase0.log`, `runs/sessions.tar.gz` rollout `cli_version` 3개 |
 | EXP-034 | pi 0.87.1 | `experiments/034-pi-gpt61-sol/runs/phase0.md`, `README.md` |
+| EXP-035 | Antigravity CLI (agy) 1.3.1 | `experiments/035-agy-gemini38-flash/runs/phase0.md` (사전 조사 중 1.2.16→1.3.1 자동 업데이트, 실행 중 `AGY_CLI_DISABLE_AUTO_UPDATE=1`) |
+| EXP-036 | pi 0.87.1 | `experiments/036-pi-gemini38-flash/runs/phase0.md` |
 
 ## 읽는 법
 

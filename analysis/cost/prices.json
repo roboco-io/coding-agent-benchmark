@@ -157,5 +157,23 @@
     "src": "https://ai.google.dev/gemini-api/docs/pricing",
     "accessed": "2026-10-07",
     "caveat": "Gemini API 유료 티어 Standard, 2026-12-31까지 단가(2027-01-01부터 전 항목 2배). 출력 단가는 thinking 토큰 포함. 프롬프트 길이 구간 없음. 명시 캐시 저장비($0.50/1M·시간)는 암묵 캐시만 관측돼 미포함"
+  },
+  "Haiku 5.5": {
+    "input": 0.1,
+    "cache_read": 0.01,
+    "cache_write_5m": 0.125,
+    "cache_write_1h": 0.2,
+    "output": 0.5,
+    "long_context": {
+      "threshold_prompt_tokens": 100000,
+      "input": 0.5,
+      "cache_read": 0.05,
+      "cache_write_5m": 0.625,
+      "cache_write_1h": 1.0,
+      "output": 2.5
+    },
+    "src": "Claude Code 2.1.293 CHANGELOG (~/.claude/plugins/marketplaces/claude-code-plugins/CHANGELOG.md)",
+    "accessed": "2026-10-08",
+    "caveat": "CHANGELOG 문구: $0.10/$0.50 per Mtok ($0.50/$2.50 for prompts over 100K). 캐시 읽기·쓰기 단가는 명시되지 않아 표준 배수(읽기 0.1배, 5m 쓰기 1.25배, 1h 쓰기 2배)로 산정 — 공식 가격 페이지 직접 대조는 미실시. 100K 초과 판정은 요청별 input+cache_creation+cache_read 합으로 했고, 해당 요청 토큰은 lc_* 열에 따로 기록"
   }
 }

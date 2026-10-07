@@ -15,6 +15,11 @@ def cost(r):
     c += w5 * (p["cache_write_5m"] if p["cache_write_5m"] is not None else p["input"])
     c += w1 * (p["cache_write_1h"] if p["cache_write_1h"] is not None else (p["cache_write_5m"] or p["input"]))
     c += wu * (p["cache_write_1h"] or p["cache_write_5m"] or p["input"])
+    lc = p.get("long_context")  # 장문맥 구간 단가(Haiku 5.5: 프롬프트 100K 초과). lc_* 열은 총량에 포함된 해당 요청분
+    if lc:
+        for col, k in (("input_uncached", "input"), ("cache_read", "cache_read"), ("cache_write_5m", "cache_write_5m"),
+                       ("cache_write_1h", "cache_write_1h"), ("output", "output")):
+            c += (f(r.get("lc_" + col)) or 0) * (lc[k] - p[k])
     return round(c / 1e6, 4)
 
 rows = list(csv.DictReader(open(os.path.join(HERE, "usage_all_runs.csv"))))

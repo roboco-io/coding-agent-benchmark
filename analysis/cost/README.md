@@ -66,7 +66,7 @@ run별 값은 [cost_all_runs.csv](cost_all_runs.csv)의 `est_cost_usd` 열에 �
 - 40 run은 기존 CSV를 원시 세션 로그로 재집계해 일치를 확인했고, 15 run은 원시 로그에서 새로 집계했으며, EXP-027 6 run은 2026-09-24에 원시 rollout을 재집계해 실험 `runs/usage.csv`와 일치를 확인했고, 6 run(EXP-019 Opus KO)은 원시 로그가 삭제돼 보고서 값을 썼다. EXP-029 9 run은 2026-09-24에 보관된 pi 세션 아카이브를 `usage_pi.py`(responseId 중복 제거)로 재집계해 실험 `runs/usage-pi.csv`와 일치를 확인했다. EXP-030 6 run은 같은 방법으로 집계한 실험 `runs/usage-pi.csv` 값을 옮겼다. EXP-031 6 run은 2026-09-29에 원시 세션 로그(`~/ralph-exp031/sessions-sonnet55-*`)를 message.id 기준으로 다시 읽어 캐시 쓰기 TTL(전부 1시간)을 확인하고 실험 `runs/usage.csv`(`usage031.py`)와 일치를 확인했다. EXP-032 3 run은 EXP-030과 같은 방법으로 집계한 실험 `runs/usage-pi.csv` 값을 옮겼고, 보관된 세션 아카이브에서 `cacheWrite1h`가 전부 0임을 확인했다. EXP-035 3 run은 agy transcript(`usage_agy.py`)를, EXP-036 3 run은 `usage_pi.py` 결과를 옮겼다.
 - 중복 제거는 assistant `message.id` 기준이며, 같은 ID의 usage가 다르면 스트리밍 중간 기록(출력 0)과 최종 기록 패턴일 때만 최종 기록을 채택했다.
 - 재집계 과정에서 기존 CSV 3건의 오류를 발견했다. qwen-ko-1·qwen-ko-3(EXP-017)은 최종 usage가 없는 중간 기록을 포함해 비캐시 입력이 약 8배·14배 과대했고, sol-1(EXP-011)은 실행 전 스모크 세션을 포함했다. 이 표에는 정정값을 썼다. 해당 실험의 `runs/` 원본 CSV는 기록 보존을 위해 수정하지 않았으며, 보고서 본문은 이 값을 인용하지 않아 판정에 영향이 없다.
-- 집계 스크립트([aggregators/](aggregators/))는 실험 머신의 원시 로그 경로(`~/ralph-exp0NN/` 등)를 읽으므로 다른 환경에서는 그대로 재실행되지 않는다.
+- 집계 스크립트([aggregators/](aggregators/))는 실험 머신의 원시 로그 경로(`~/experiments/ralph-exp0NN/` 등, 2026-10-08 이전 `~/ralph-exp0NN/`)를 읽으므로 다른 환경에서는 그대로 재실행되지 않는다.
 
 ## 갱신 방법
 

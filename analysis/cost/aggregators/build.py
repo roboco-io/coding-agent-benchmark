@@ -21,22 +21,22 @@ for lang,ts in [('en',[8.35,3.98,4.20]),('ko',[4.00,4.22,3.95])]:
     for i,t in zip([1,2,3],ts): C('Opus 5.5','EXP-026',lang,f'{lang}-{i}',NAT,t,f'{H}/.claude/projects/-Users-dohyunjung-ralph-exp026-app-{lang}-{i}','csv')
 for m,k,tt in [('DeepSeek V4.1-Flash','flash',{'en':[4.57,5.98,4.82],'ko':[8.42,6.32,4.23]}),('DeepSeek V4-Pro','pro',{'en':[13.33,12.08,15.83],'ko':[13.37,13.35,13.72]})]:
     for lang in ['en','ko']:
-        for i,t in zip([1,2,3],tt[lang]): C(m,'EXP-025',lang,f'{k}-{lang}-{i}',DIR('DeepSeek'),t,f'{H}/ralph-exp025/claude-config-projects-{k}-{lang}-{i}','csv')
-for i,(exp,t) in enumerate(zip(['EXP-014','EXP-016','EXP-016'],[21.30,7.62,7.87]),1): C('kimi-k3',exp,'en',f'kimi-{i}',DIR('Moonshot'),t,f'{H}/ralph-exp014/claude-config-projects-kimi-{i}','csv')
-for i,t in zip([1,2,3],[15.88,13.67,10.60]): C('kimi-k3','EXP-017','ko',f'kimi-ko-{i}',DIR('Moonshot'),t,f'{H}/ralph-exp017k/claude-config-projects-kimi-ko-{i}','csv')
-for i,(exp,t) in enumerate(zip(['EXP-013','EXP-016','EXP-016'],[15.08,15.58,14.62]),1): C('qwen3.8-max',exp,'en',f'qwen-{i}',DIR('DashScope'),t,f'{H}/ralph-exp013/claude-config-projects-qwen-{i}','csv')
-for i,t in zip([1,2,3],[22.78,22.32,23.50]): C('qwen3.8-max','EXP-017','ko',f'qwen-ko-{i}',DIR('DashScope'),t,f'{H}/ralph-exp017q/claude-config-projects-qwen-ko-{i}','csv')
-C('Solar Open 2','EXP-015','en','solar-1',DIR('Upstage'),58.25,f'{H}/ralph-exp015/claude-config-projects-solar-1','csv',
+        for i,t in zip([1,2,3],tt[lang]): C(m,'EXP-025',lang,f'{k}-{lang}-{i}',DIR('DeepSeek'),t,f'{H}/experiments/ralph-exp025/claude-config-projects-{k}-{lang}-{i}','csv')
+for i,(exp,t) in enumerate(zip(['EXP-014','EXP-016','EXP-016'],[21.30,7.62,7.87]),1): C('kimi-k3',exp,'en',f'kimi-{i}',DIR('Moonshot'),t,f'{H}/experiments/ralph-exp014/claude-config-projects-kimi-{i}','csv')
+for i,t in zip([1,2,3],[15.88,13.67,10.60]): C('kimi-k3','EXP-017','ko',f'kimi-ko-{i}',DIR('Moonshot'),t,f'{H}/experiments/ralph-exp017k/claude-config-projects-kimi-ko-{i}','csv')
+for i,(exp,t) in enumerate(zip(['EXP-013','EXP-016','EXP-016'],[15.08,15.58,14.62]),1): C('qwen3.8-max',exp,'en',f'qwen-{i}',DIR('DashScope'),t,f'{H}/experiments/ralph-exp013/claude-config-projects-qwen-{i}','csv')
+for i,t in zip([1,2,3],[22.78,22.32,23.50]): C('qwen3.8-max','EXP-017','ko',f'qwen-ko-{i}',DIR('DashScope'),t,f'{H}/experiments/ralph-exp017q/claude-config-projects-qwen-ko-{i}','csv')
+C('Solar Open 2','EXP-015','en','solar-1',DIR('Upstage'),58.25,f'{H}/experiments/ralph-exp015/claude-config-projects-solar-1','csv',
   'includes aborted iter-3 session dc547653 (17 req: input 627342, output 3356) that started after gate false-reject; report 252.3K includes it')
-for i,t in zip([1,2,3],[258.38,171.40,118.67]): C('Solar Pro 4','EXP-020','en',f'pro4-{i}',DIR('Upstage'),t,f'{H}/ralph-exp020/claude-config-projects-pro4-{i}',None,
+for i,t in zip([1,2,3],[258.38,171.40,118.67]): C('Solar Pro 4','EXP-020','en',f'pro4-{i}',DIR('Upstage'),t,f'{H}/experiments/ralph-exp020/claude-config-projects-pro4-{i}',None,
   {1:'12 iteration sessions (iters 3-11 gate false-rejects) all included',2:'2 iterations',3:''}[i])
 def cx(d): return sorted(glob.glob(f'{d}/**/rollout-*.jsonl',recursive=True))
-X('gpt-5.6-sol','EXP-011','en','sol-1',CODEX,5.77,[f for f in cx(f'{H}/ralph-exp011/codex-sessions-sol-1') if '07-41-02' not in f],'csv11',
+X('gpt-5.6-sol','EXP-011','en','sol-1',CODEX,5.77,[f for f in cx(f'{H}/experiments/ralph-exp011/codex-sessions-sol-1') if '07-41-02' not in f],'csv11',
   'excluded pre-run smoke rollout 07-41-02 ("Reply with exactly: OK", 13264 in/9984 cached/5 out) that existing usage-sol-1.csv included')
-X('gpt-5.6-sol','EXP-016','en','sol-2',CODEX,10.0,cx(f'{H}/ralph-exp011/codex-sessions-sol-2'),'csv','2 iteration rollouts summed')
-X('gpt-5.6-sol','EXP-016','en','sol-3',CODEX,5.28,cx(f'{H}/ralph-exp011/codex-sessions-sol-3'),'csv')
-for i,t in zip([1,2,3],[7.53,8.72,6.90]): X('gpt-5.6-sol','EXP-019','ko',f'solko-{i}',CODEX,t,cx(f'{H}/ralph-exp019/codex-sessions-solko-{i}'),'csv')
-for i,t in zip([1,2,3],[7.60,7.10,7.08]): X('gpt-6-astra','EXP-021','en',f'astra-{i}',CODEX,t,cx(f'{H}/ralph-exp021/codex-sessions-astra-{i}'),'csv')
+X('gpt-5.6-sol','EXP-016','en','sol-2',CODEX,10.0,cx(f'{H}/experiments/ralph-exp011/codex-sessions-sol-2'),'csv','2 iteration rollouts summed')
+X('gpt-5.6-sol','EXP-016','en','sol-3',CODEX,5.28,cx(f'{H}/experiments/ralph-exp011/codex-sessions-sol-3'),'csv')
+for i,t in zip([1,2,3],[7.53,8.72,6.90]): X('gpt-5.6-sol','EXP-019','ko',f'solko-{i}',CODEX,t,cx(f'{H}/experiments/ralph-exp019/codex-sessions-solko-{i}'),'csv')
+for i,t in zip([1,2,3],[7.60,7.10,7.08]): X('gpt-6-astra','EXP-021','en',f'astra-{i}',CODEX,t,cx(f'{H}/experiments/ralph-exp021/codex-sessions-astra-{i}'),'csv')
 # existing CSV comparison values (input,cache_create,cache_read,output) for verification
 def load_existing(model,rid):
     E=f'{R}/experiments'

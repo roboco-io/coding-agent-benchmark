@@ -1,10 +1,10 @@
 #!/bin/bash
 # 사용: bash setup.sh <bench.env>
-# $HOME/ralph-exp$EXP 하네스를 만든다: 정본 PROMPT·Hurl 복사+해시 검증, 스크립트 동결 복사, 격리 설정 디렉터리 생성.
+# $HOME/experiments/ralph-exp$EXP 하네스를 만든다: 정본 PROMPT·Hurl 복사+해시 검증, 스크립트 동결 복사, 격리 설정 디렉터리 생성.
 set -euo pipefail
 CFG="$1"; SKILL="$(cd "$(dirname "$0")/.." && pwd)"
 source "$CFG"
-BASE="$HOME/ralph-exp$EXP"
+BASE="$HOME/experiments/ralph-exp$EXP"
 [ -e "$BASE/done-all" ] && { echo "이미 완료된 하네스: $BASE" >&2; exit 1; }
 mkdir -p "$BASE"
 cp "$CFG" "$BASE/bench.env"

@@ -12,7 +12,7 @@ for i in $(seq $((DONE_ITER + 1)) $MAX_ITER); do
   env -u ANTHROPIC_API_KEY \
     CLAUDE_CONFIG_DIR="$BASE/claude-config" \
     ANTHROPIC_BASE_URL=https://api.upstage.ai \
-    ANTHROPIC_AUTH_TOKEN=up_T4PYUlNRhwfWaZsbS7eudT6nE7IA1 \
+    ANTHROPIC_AUTH_TOKEN=<REDACTED:UPSTAGE_API_KEY> \
     ANTHROPIC_MODEL=solar-open2 \
     ANTHROPIC_SMALL_FAST_MODEL=solar-open2 \
     ANTHROPIC_DEFAULT_HAIKU_MODEL=solar-open2 \

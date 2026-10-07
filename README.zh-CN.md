@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-036（2026-10-07）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-037（2026-10-08）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -63,6 +63,7 @@
 | [EXP-034](experiments/034-pi-gpt61-sol/report.md) pi coding agent × gpt-6.1-sol Ralph 循环完成验证（EN n=3） | M-27: 用 pi coding agent（`pi -p` 0.87.1）运行 `openai-codex/gpt-6.1-sol`（ChatGPT OAuth，thinking 为 pi 默认值，复制 pi 内置 `gpt-6-sol` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
 | [EXP-035](experiments/035-agy-gemini38-flash/report.md) Antigravity CLI × gemini-3.8-flash Ralph 循环完成验证（EN n=3） | M-28: 用 Antigravity CLI（`agy -p`）运行 `gemini-3.8-flash`（effort high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | Antigravity CLI (agy) 1.3.1 |
 | [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash Ralph 循环完成验证（EN n=3） | M-29: 用 pi coding agent（`pi -p` 0.87.1）运行 `google/gemini-3.8-flash`（thinking high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
+| [EXP-037](experiments/037-haiku55-ralph/report.md) Claude Code × Haiku 5.5 原生 Ralph 循环完成验证（EN n=3） | M-30: 在 Claude Code 原生框架中，Haiku 5.5（`claude-haiku-5-5`，thinking 默认值）能用 EN 标准 Ralph 循环在上限 30 iteration·4 小时内无人干预地完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | Claude Code 2.1.293 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -166,6 +167,9 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-036 — pi coding agent × gemini-3.8-flash Ralph 循环完成验证（EN n=3）** (验证)  
 **EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，333 条响应全部为 `gemini-3.8-flash`，thinking `high`）。会话 13.1–15.6 分钟。run 3 因代理读取了框架文件和之前 run 的日志而被标注（D-2）。 → [报告](experiments/036-pi-gemini38-flash/report.md)
 
+**EXP-037 — Claude Code × Haiku 5.5 原生 Ralph 循环完成验证（EN n=3）** (验证)  
+**EN 3/3 完成**（run 2、3 在 iteration 1；run 1 的 iteration 1 在搭建脚手架后自行结束，于 iteration 2 完成）。门控通过 + 各 2 次独立复验 13/13·154/154 一致，所有响应均为 `claude-haiku-5-5`。会话 5.1–7.9 分钟，output 49.0–57.6K，按公开单价折算每 run $0.06–0.16，为 Claude 系列条件中最低。run 1 调用了暴露的 context7 MCP。 → [报告](experiments/037-haiku55-ralph/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -184,6 +188,7 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 15. **Sonnet 5.5 在原生框架中以迄今所有 Claude 条件中最短的路径完成（EXP-031）。** EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次，低于同一原生框架的 Opus 5.5（4.0–8.4 分钟·22–41 次）、Fable 5.1 和 Sonnet 5（11.2–16.8 分钟·82–140 次）的分布，且 6 个 run 均未使用 Read/Write/Edit，仅用 Bash 编写文件。与上一代 Sonnet 5 差距很大，但测量日期、Claude Code 版本和框架端口注入（自本实验起以 `PORT` 注入空闲端口）同时不同，因此不归因于模型本身。
 16. **pi × Sonnet 5.5 创下本仓库最短的完成会话（EXP-032）。** 通过 pi 运行 Sonnet 5.5（Anthropic API 密钥直连），EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟（最短 1 分 49 秒）、output 10.9–14.7K，比同日原生 Claude Code × Sonnet 5.5（EN 2.9–4.2 分钟·15.2–20.0K）更短更少。pi 0.87.1 内置列表中没有该模型，因此以复制内置 Sonnet 5 定义的自定义条目调用；代理、thinking 传递方式和缓存 TTL 也同时不同，因此不将差异归因于 pi 本身。
 17. **Gemini（gemini-3.8-flash）也在 Antigravity CLI 和 pi 两个框架中完成，但会话比其他 Flash 级模型更长（EXP-035·036）。** 使用 Gemini API 密钥，Antigravity CLI（agy 1.3.1，effort high）和 pi（thinking high）各 EN 3/3，共 6/6 完成。agy 的 run 1·2 在 iteration 1 完成；run 3 因代理自行运行的框架评分器终止了 agy 进程，在 iteration 2 完成。会话 agy 15.5–22.4 分钟、pi 13.1–15.6 分钟，每个 run 的模型响应为 100–192 次，远多于 pi × deepseek-flash（EXP-029，25–40 次·1.9–4.1 分钟）。两项实验暴露了一个结构问题：run 目录位于框架目录内，代理可以访问评分器和之前 run 的记录（EXP-029 的 3 个会话中也有发现），后续需要将两者分离。
+18. **Haiku 5.5 在原生框架中完成，按公开单价折算的成本是 Claude 系列条件中最低的（EXP-037）。** EN 3/3 完成（run 2、3 在 iteration 1；run 1 的 iteration 1 搭建脚手架后未声明完成即结束，于 iteration 2 完成）。复验各 2 次一致，响应 model 字段全部为 `claude-haiku-5-5`。会话 5.1–7.9 分钟、output 49.0–57.6K、API 调用 38–59 次，比 Sonnet 5.5（EXP-031）更长更多，但单价为 Sonnet 5.5 的 1/20，每 run 折算 $0.06–0.16（中位数 $0.09）。该值包含提示超过 100K 请求的 5 倍单价，缓存单价为未确认的假设。因未隔离，run 1 调用了暴露的 context7 MCP。存在日期与 CLI 版本混杂，不据此确定优劣。
 
 ## 实验生命周期
 

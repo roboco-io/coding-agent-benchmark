@@ -15,6 +15,10 @@
 - `timeline.py`: Codex·pi·Claude Code 세션 파서와 구간 귀속(`analyze`). 기존 `analysis/gpt61-sol-slowdown/timeline.py`는 이 스크립트를 호출하는 래퍼이며 같은 출력(codex, pi)을 낸다.
 - `collect.py`: `analysis/cost/usage_all_runs.csv`의 EN run과 `source_path`로 세션을 찾아 `runs.csv`를 만든다. tar.gz는 임시 디렉터리에 풀어서 읽는다. 실행: `python3 analysis/latency/collect.py <임시 디렉터리>`.
 - `build_dashboard_data.py`: `runs.csv`를 `dashboard/index.html`의 `LAT` 상수로 반영한다.
+- **2026-10-08 추가 (EXP-035/036 gemini-3.8-flash)**: 두 실험은 대시보드 반영 때 이 분석에 추가되지 않아 해당 열이 비어 있었다. EXP-036(pi)은 기존 pi 파서로, EXP-035(Antigravity CLI)는 새 `agy` 파서로 분해해 `runs.csv`에 6 run을 추가했다.
+  - `agy` 파서: `transcript_full.jsonl`의 도구 결과 단계(GENERIC) 본문 `Created At`(도구 시작 = 직전 모델 응답 완료)을 모델 이벤트로, `Completed At`(도구 종료)을 도구 이벤트로 쓴다. 백그라운드 작업 대기(`schedule` 타이머)는 결과에 `Completed At`이 없으므로, 타이머 만료를 알리는 SYSTEM_MESSAGE 시각을 도구 이벤트로 써서 대기를 도구 쪽에 넣는다(이 처리를 빼면 EXP-035 run 2의 모델 대기가 54초 많게 잡혔다).
+  - 한계: agy 시각은 초 단위이고, 도구 호출이 없는 마지막 응답의 생성 시간은 완료 시각이 없어 빠진다. 세션 시간 합은 기록된 소요 시간과 -0.5분 이내로 맞는다(17.3/17.5, 15.3/15.5, 22.0/22.4분).
+  - 교차 확인: 같은 모델을 밀리초 단위로 기록하는 pi(EXP-036)의 호출당 대기 6.1–7.7초·모델 대기 비중 86–94%가 agy(EXP-035)의 6.5–8.1초·88–95%와 같은 범위다.
 - 검증: Codex EXP-033은 기존 분석(587/557/31초, 31호출, 16.2K)과 일치했다. 전체 73 run에서 `wall_s`가 대시보드 소요 시간과 거의 일치했다(대부분 -0.2분 이내). Claude Code는 EXP-026 en-1이 494초(기록 8.35분), output 28,166으로 대시보드의 28.2K와 일치했고 EXP-023 fable-1은 408초(6.9분), 31,102 토큰이었다.
 
 ## 범위

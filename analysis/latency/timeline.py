@@ -1,8 +1,13 @@
-"""세션 원자료(Codex rollout / pi / Claude Code jsonl)를 모델 대기 시간과 도구 실행 시간으로 분해한다.
-usage: timeline.py codex|pi|claude <session.jsonl>...  → CSV 한 줄/세션
+"""세션 원자료(Codex rollout / pi / Claude Code jsonl / Antigravity CLI transcript_full.jsonl)를 모델 대기 시간과 도구 실행 시간으로 분해한다.
+usage: timeline.py codex|pi|claude|agy <session.jsonl>...  → CSV 한 줄/세션
 구간 정의: 직전 이벤트 시각부터 다음 이벤트 시각까지를, 다음 이벤트가 모델 산출물이면 model, 도구 결과면 tool로 귀속.
 모델 호출 수: Codex=last_token_usage가 있는 token_count 수, pi=assistant 메시지 수,
-              Claude Code=assistant 레코드의 고유 message.id 수(스트리밍으로 같은 id가 여러 줄이므로 1회로 계산, usage는 id별 최댓값).
+              Claude Code=assistant 레코드의 고유 message.id 수(스트리밍으로 같은 id가 여러 줄이므로 1회로 계산, usage는 id별 최댓값),
+              agy=PLANNER_RESPONSE 단계 수.
+agy(EXP-035 이후): 도구 결과 단계(GENERIC) 본문의 'Created At'(도구 시작 = 직전 모델 응답 완료)을 model 이벤트로,
+              'Completed At'(도구 종료)을 tool 이벤트로 쓴다. 시각이 초 단위이고, 도구 호출이 없는 마지막 응답의
+              생성 시간은 완료 시각이 기록되지 않아 빠진다(run당 수 초 과소). 백그라운드 작업 대기(schedule 타이머)는
+              결과에 'Completed At'이 없으므로, 타이머 만료를 알리는 SYSTEM_MESSAGE 시각을 tool 이벤트로 써서 대기를 tool에 넣는다.
 함수 analyze(kind, paths)는 여러 세션(iteration)을 합산한다."""
 import json, sys, re
 from datetime import datetime
@@ -61,7 +66,24 @@ def claude(path):
                 ev.append((t, 'start', None))  # 사용자 프롬프트: 시각만 기준점으로 사용, 구간 귀속 없음
     return ev, len(ids), sum(ids.values())
 
-PARSERS = {'codex': codex, 'pi': pi, 'claude': claude}
+def agy(path):
+    ev = []; calls = 0; out = 0
+    for l in open(path):
+        if not l.strip(): continue
+        d = json.loads(l); ty = d.get('type')
+        if ty == 'USER_INPUT': ev.append((ts(d['created_at']), 'start', None))
+        elif ty == 'PLANNER_RESPONSE':
+            calls += 1; out += int(d.get('output_tokens') or 0)
+        elif ty == 'GENERIC':
+            c = str(d.get('content') or '')
+            a = re.search(r'Created At: (\S+)', c); b = re.search(r'Completed At: (\S+)', c)
+            if a: ev.append((ts(a.group(1)), 'model', None))
+            if b: ev.append((ts(b.group(1)), 'tool', None))
+        elif ty == 'SYSTEM_MESSAGE':  # schedule 타이머 만료·백그라운드 작업 알림 = 대기 종료
+            ev.append((ts(d['created_at']), 'tool', None))
+    return ev, calls, out
+
+PARSERS = {'codex': codex, 'pi': pi, 'claude': claude, 'agy': agy}
 
 def split(ev):
     ev.sort(key=lambda x: x[0]); model = tool = 0.0; prev = ev[0][0]; tools = []

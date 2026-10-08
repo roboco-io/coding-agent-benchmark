@@ -21,6 +21,10 @@ LANGS = {"ko": None, "en": "en", "ja": "ja", "zh": "zh-CN"}  # 대시보드 키 
 DETAIL_DIR = ROOT / "analysis/dashboard-details"
 
 
+# 대시보드에서 제외한 행(2026-10-09: Solar 두 모델은 프리뷰 API 측정이라 비교 의미가 없어 목록에서 제거). 원자료(JSON·CSV)는 유지한다.
+EXCLUDE = {"Solar Open 2", "Solar Pro 4"}
+
+
 def row_name(r: dict) -> str:
     """cost CSV 행 → 대시보드 매트릭스 모델명 (pi 하네스는 'pi × ' 접두)."""
     return ("pi × " + r["model"]) if r["harness"].startswith("pi") else r["model"]
@@ -43,6 +47,8 @@ def main() -> int:
 
     groups: dict[tuple[str, str], list[dict]] = {}
     for r in csv.DictReader(open(ROOT / "analysis/cost/cost_all_runs.csv", encoding="utf-8")):
+        if row_name(r) in EXCLUDE:
+            continue
         groups.setdefault((row_name(r), r["exp"]), []).append(r)
 
     errors, out = [], {}

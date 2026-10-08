@@ -38,7 +38,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 
 ## metrics CSV
 
-`iter,종료시각,exit,성공 hurl 파일 수,실행 요청 수,완료 선언,게이트` — 게이트 `pass`만 완주. 에이전트의 `.ralph-done` 선언은 채점기가 13/13이 아니면 `rejected`로 삭제된다. `timeout,<시각>` 행은 wall-clock 상한 도달.
+`iter,종료시각,exit,성공 hurl 파일 수,실행 요청 수,완료 선언,게이트` — 게이트 `pass`만 완주. 에이전트의 `.ralph-done` 선언은 채점기가 13/13이 아니면 `rejected`로 삭제된다. `timeout,<시각>` 행은 wall-clock 상한 도달. exit `124`는 정체 감시(`STALL_SEC`, 기본 900초)가, `125`는 run 상한(`MAX_SEC`)이 진행 중 iteration을 종료한 것이다(`watchdog.sh`, 로그에 `watchdog:` 줄). 종료된 iteration도 채점하고 루프는 계속된다.
 
 ## 흔한 실수
 
@@ -56,5 +56,6 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 | run 디렉터리가 하네스 디렉터리 안에 있음 | 에이전트가 `../measure.sh`·이전 run 로그를 읽거나 실행 → agy 강제 종료(EXP-035 D-1), run 간 정보 노출(EXP-036 D-2) | 세션 기록에서 하네스 경로 참조를 전수 검사해 이탈로 기록. 구조 분리는 ROADMAP 후속 과제 |
 | agy를 실 HOME에서 실행 | keyring의 Google 계정 OAuth가 선택돼 API 키 미사용 | setup이 만드는 격리 HOME(`modelProvider: "gemini"`) 사용, 로그에서 `authMethod=gemini_api_key` 확인 |
 | `claude-native`를 `ANTHROPIC_API_KEY`가 export된 셸에서 실행 | API 키가 구독 로그인보다 우선해 API 과금·캐시 5분 TTL로 실행, "구독 인증"으로 오기록 (EXP-037) | driver·smoke가 `env -u ANTHROPIC_API_KEY`로 실행하고 smoke가 `"apiKeySource":"none"`을 확인. phase0.md에 인증 출처를 기록 |
+| 에이전트가 장기 실행 서버를 포그라운드로 실행(`npm run dev` 등) | 도구 호출이 반환되지 않아 iteration 정체. pi bash 도구는 기본 timeout이 없고, run 상한은 예전엔 iteration 사이에서만 검사 (EXP-039 luna-en-2: 에이전트가 붙인 `timeout: 1000`초로 약 17분 뒤 해제) | driver의 정체 감시(`STALL_SEC`)·iteration 중 run 상한이 종료. 정체 종료는 이탈로 기록 |
 | "3/3 완주 = 재현성 확정" 서술 | 관측 범위 초과 | 표본 수와 조건을 함께 적는다 |
 | 과거 실험과 속도·토큰 우열 단정 | 시점·CLI 버전 교락 | 차이를 조합 전체의 차이로 서술 |

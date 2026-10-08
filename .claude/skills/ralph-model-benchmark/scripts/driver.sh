@@ -24,6 +24,21 @@ free_port() {
   done
 }
 
+source "$BASE/watchdog.sh"
+STALL_SEC="${STALL_SEC:-900}"   # iteration 정체 한도(초). 세션·로그·앱 파일이 이 시간 동안 갱신되지 않으면 iteration 종료 (EXP-039)
+
+# 정체 판단에 쓰는 갱신 감시 경로: 실행 로그·앱 작업 트리·하네스별 세션 기록
+watch_paths() {
+  echo "$LOG"; echo "$REPO"
+  case "$HARNESS" in
+    pi) echo "$BASE/sessions-$RUN" ;;
+    codex) echo "$BASE/codex-home/sessions" ;;
+    claude-direct) echo "$BASE/claude-config/projects" ;;
+    claude-native) echo "$HOME/.claude/projects/$(echo "$REPO" | sed 's|[/.]|-|g')" ;;
+    agy) echo "$BASE/agy-home" ;;
+  esac
+}
+
 invoke_agent() {
   case "$HARNESS" in
     codex)
@@ -75,8 +90,10 @@ for i in $(seq $((DONE_ITER + 1)) "$MAX_ITER"); do
     break
   fi
   echo "=== [$RUN] iteration $i start: $(date '+%F %T') ===" >> "$LOG"
-  invoke_agent < /dev/null >> "$LOG" 2>&1
+  WATCH=(); while IFS= read -r w; do WATCH+=("$w"); done < <(watch_paths)
+  run_with_watchdog "$STALL_SEC" $((START + MAX_SEC)) "${WATCH[@]}" -- invoke_agent < /dev/null >> "$LOG" 2>&1
   EXIT=$?
+  [ -n "$WATCHDOG_REASON" ] && echo "=== [$RUN] watchdog: iteration $i 종료 — $WATCHDOG_REASON (exit $EXIT, 124=정체·125=run 상한) ===" >> "$LOG"
   echo "=== [$RUN] iteration $i end (exit $EXIT): $(date '+%F %T') ===" >> "$LOG"
   RESULT=$(bash "$BASE/measure.sh" "$REPO")
   CLAIM=0; [ -f "$REPO/.ralph-done" ] && CLAIM=1

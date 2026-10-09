@@ -107,6 +107,37 @@ table.mx{border-collapse:collapse; width:100%; min-width:960px;}
    overflow가 있으면 sticky가 그 상자 안에서만 동작하므로, 표가 다 들어가는 폭에서는 overflow를 해제한다.
    좁은 화면은 가로 스크롤이 필요하므로 기존 overflow-x:auto를 유지한다(이때는 머리글 고정 없음). */
 @media (min-width:1080px){ .mxscroll{overflow:visible;} }
+/* overview charts (time × cost scatter, agent-pair arrows) */
+.charts{display:grid; gap:30px; margin-top:4px;}
+.fig{position:relative; min-width:0;}
+.fig h3{font-size:.92rem; font-weight:600; margin:0; color:var(--ink);}
+.fig .sub{margin:4px 0 10px;}
+.fig svg{display:block; width:100%; height:auto; overflow:visible;}
+.ax text{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--faint);}
+.ax .g{stroke:var(--hair); stroke-width:1;}
+.ax .base{stroke:var(--line); stroke-width:1;}
+.axt{font-size:11px; fill:var(--muted);}
+.mk{stroke:var(--surface); stroke-width:2;}
+.wh{stroke-width:1.5; opacity:.38;}
+.fr{fill:none; stroke:var(--muted); stroke-width:1.5; stroke-dasharray:4 3;}
+.lbl{font-size:11px; fill:var(--ink-2); paint-order:stroke; stroke:var(--surface); stroke-width:3px; stroke-linejoin:round;}
+.lbl.sm{fill:var(--muted);}
+.rt{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--ink-2);}
+.arw{stroke:var(--muted); stroke-width:1.5; fill:none;}
+.hit{fill:transparent; cursor:pointer;}
+.ptg{outline:none;}
+.ptg:focus-visible .mk, .ptg.on .mk{stroke:var(--ink);}
+.dbr.on .rowbg{fill:var(--sunk);}
+.rowbg{fill:transparent;}
+.tip{position:absolute; z-index:6; pointer-events:none; display:none; min-width:190px; max-width:260px;
+  background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:8px 10px;
+  box-shadow:0 4px 14px rgb(0 0 0 / .12); font-size:.76rem; line-height:1.45; color:var(--ink-2);}
+.tip b{color:var(--ink); font-weight:600;}
+.tip .k{color:var(--muted);}
+.tip .h{color:var(--faint); font-size:.7rem; margin-top:4px;}
+.legend svg{width:12px; height:12px; margin-right:6px; vertical-align:-2px; overflow:visible;}
+.empty{font-size:.8rem; color:var(--muted); padding:14px 0;}
+
 table.mx > thead th{position:sticky; top:0; z-index:3; background:var(--ground); padding-top:8px; border-bottom:none; box-shadow:inset 0 -1px 0 var(--line);}
 table.mx th{text-align:left; vertical-align:bottom; padding:0 12px 8px 0; border-bottom:1px solid var(--line);}
 table.mx th button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
@@ -271,6 +302,36 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
   </div>
 </header>
 
+
+<section class="panel" id="overview">
+  <div class="panel-head">
+    <div>
+      <h2 data-i18n="ovTitle"></h2>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Prompt language condition">
+      <button type="button" data-plang="en" aria-pressed="true" data-i18n="segEn"></button>
+      <button type="button" data-plang="ko" aria-pressed="false" data-i18n="segKo"></button>
+    </div>
+    <span class="hint" id="ovhint"></span>
+  </div>
+  <div class="legend" id="ovlegend"></div>
+  <div class="charts">
+    <figure class="fig" id="scfig" style="margin:12px 0 0">
+      <h3 data-i18n="scTitle"></h3>
+      <p class="sub" data-i18n="scSub"></p>
+      <div id="scatter"></div>
+      <div class="tip" role="tooltip"></div>
+    </figure>
+    <figure class="fig" id="dbfig" style="margin:0">
+      <h3 data-i18n="dbTitle"></h3>
+      <p class="sub" data-i18n="dbSub"></p>
+      <div id="dumbbell"></div>
+      <div class="tip" role="tooltip"></div>
+    </figure>
+  </div>
+</section>
 
 <section class="panel">
   <div class="panel-head">
@@ -542,6 +603,21 @@ en: {
   deck2:"The task is the <b>RealWorld backend</b>, the API for a blog-style service with sign-up and login, articles, comments, follows and tags. We chose it because it follows patterns that real projects build all the time, it is hard enough to be a genuine test, and it comes with a well-written public spec and an official test suite (154 Hurl requests), so every result can be graded objectively. So far all 111 runs have finished, so the table below compares <b>how</b> each model gets there: how long it takes, how consistent it is, how it works, and what it would cost.",
   repoPitch:"<b>Everything is open.</b> Experiment designs, per-run raw logs and token records, the grading scripts and the cost calculations are all in the repository — check any number yourself, or add your own model with the same harness.",
   metaLink:"View on GitHub ↗",
+  scFrontLg:"Best trade-off (dashed)",
+  ovTitle:"Time and cost at a glance",
+  scTitle:"Time to finish × estimated cost per run",
+  scSub:"One point per model × agent combination: median session time to finish (across) against median estimated cost per run (up). Both axes use a <b>log scale</b>; lower-left is faster and cheaper. Thin lines span the fastest to slowest and cheapest to most expensive run. The dashed line links the combinations that nothing else beats on both time and cost. Cost is an estimate from public prices, not a bill. Names are shown for the 10 combinations with the smallest time × cost (closest to the lower-left); hover over the others. Click a point to open its row in the matrix below.",
+  scX:"Median time to finish (min, log scale)",
+  scY:"Est. cost per run (USD, log scale)",
+  dbTitle:"Same model, different agent",
+  dbSub:"Models that ran under two agents. Each arrow goes from the original agent to pi; the figure on the right is pi's value divided by the original's. The two runs also differ in date and client version, so each change mixes the agent effect with those differences.",
+  dbTime:"Median time (min)",
+  dbCost:"Est. cost per run (USD)",
+  dbEmpty:"No model ran under two agents with the Korean prompt (the pi conditions ran English only).",
+  ttTime:"Time",
+  ttCost:"Cost/run",
+  ttOpen:"Click to open in the matrix",
+  ttRuns:"runs",
   mxTitle:"Performance matrix",
   mxSub:"One row per model × agent combination; the “How to read” list below explains each column. Time, output and cost vary by orders of magnitude, so they use a <b>log scale</b> (ticks under each header). Click a header to sort.",
   dtOpen:"Show overview and experiment details", lbClient:"Client", clientUnrec:"not recorded", clientTitle:"Agent client version used in this experiment (see the note on client versions below)", secVerdict:"Verdict & hypothesis", secRuns:"Runs", secTokens:"Token breakdown", secCond:"Conditions", secDev:"Deviations & confounders", secBeh:"Agent behaviour", lbHypo:"Hypothesis", report:"Report ↗", noRecord:"Not recorded in the report.", xRun:"Run", xLang:"Prompt", xIter:"Iter", xTime:"Session (min)", xCommits:"Commits", xOut:"Output", xCost:"Cost (USD)", xIn:"Uncached in", xCR:"Cache read", xCW:"Cache write", xReq:"Requests", xRunsNote:"Iterations and commits are taken from the report; — means not recorded. Cost is an estimate at public API prices, not an invoice.", xTokNote:"Token proxy counted per unique message/response ID. Not billing data.",
@@ -611,8 +687,23 @@ ko: {
   deck2:"과제는 <b>RealWorld 백엔드</b>입니다. 회원가입·로그인, 글, 댓글, 팔로우, 태그를 갖춘 블로그형 서비스의 API입니다. 이 과제를 고른 이유는 세 가지입니다. 실무에서 많이 구현하는 패턴이고, 모델의 실력을 가를 만큼 난이도가 있으며, 잘 작성된 명세와 공식 테스트(Hurl 요청 154개)가 공개돼 있어 결과를 객관적으로 채점할 수 있기 때문입니다. 지금까지 111번의 실행이 모두 완주했기 때문에, 아래 표는 모델마다 <b>어떻게</b> 완주했는지 — 얼마나 걸렸고, 얼마나 일정했고, 어떤 방식으로 작업했고, 비용이 얼마인지를 비교합니다.",
   repoPitch:"<b>모든 것이 공개돼 있습니다.</b> 실험 설계, run별 원시 로그와 토큰 기록, 채점 스크립트, 비용 계산까지 리포지토리에 있습니다. 숫자를 직접 검증하거나, 같은 하네스로 원하는 모델을 추가해 보세요.",
   metaLink:"GitHub에서 보기 ↗",
+  scFrontLg:"가성비 경계(점선)",
+  ovTitle:"소요 시간과 비용 한눈에 보기",
+  scTitle:"완주 시간 × run당 환산 비용",
+  scSub:"점 하나가 한 모델×에이전트 조합입니다. 가로축은 완주까지 걸린 세션 시간의 중앙값, 세로축은 run당 환산 비용의 중앙값이며 둘 다 <b>로그 스케일</b>입니다. 왼쪽 아래일수록 빠르고 쌉니다. 가는 선은 가장 빠른 run부터 가장 느린 run까지, 가장 싼 run부터 가장 비싼 run까지의 범위입니다. 점선은 시간과 비용 둘 다에서 자신보다 나은 조합이 없는 조합을 이은 선입니다. 비용은 공개 단가로 계산한 추정치이며 실제 청구액이 아닙니다. 이름은 시간×비용이 가장 작은(왼쪽 아래에 가장 가까운) 상위 10개 조합에만 표시했고, 나머지는 마우스를 올리면 보입니다. 점을 누르면 아래 매트릭스에서 해당 행이 펼쳐집니다.",
+  scX:"완주 시간 중앙값(분, 로그 스케일)",
+  scY:"run당 환산 비용(USD, 로그 스케일)",
+  dbTitle:"같은 모델, 다른 에이전트",
+  dbSub:"두 에이전트로 실행한 모델입니다. 화살표는 원래 에이전트에서 pi로 바꿨을 때의 변화이고, 오른쪽 숫자는 pi 값을 원래 값으로 나눈 배율입니다. 두 실행은 날짜와 클라이언트 버전도 달라서, 변화에는 에이전트 차이와 이 차이가 함께 섞여 있습니다.",
+  dbTime:"소요 시간 중앙값(분)",
+  dbCost:"run당 환산 비용(USD)",
+  dbEmpty:"한국어 프롬프트로 같은 모델을 두 에이전트에서 실행한 쌍은 없습니다(pi 조건은 영어만 실행).",
+  ttTime:"소요 시간",
+  ttCost:"run당 비용",
+  ttOpen:"누르면 매트릭스에서 펼쳐집니다",
+  ttRuns:"run",
   mxTitle:"성능 매트릭스",
-  mxSub:"한 행이 한 모델×에이전트 조합이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 눈금</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다.",
+  mxSub:"한 행이 한 모델×에이전트 조합이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 스케일</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다.",
   dtOpen:"개요·실험 상세 보기", lbClient:"클라이언트", clientUnrec:"미기록", clientTitle:"이 실험에서 사용한 에이전트 클라이언트 버전(아래 클라이언트 버전 안내 참고)", secVerdict:"판정·가설", secRuns:"run별 결과", secTokens:"토큰 내역", secCond:"실험 조건", secDev:"편차·교란 요인", secBeh:"에이전트 행동 특징", lbHypo:"가설", report:"보고서 ↗", noRecord:"보고서에 기록 없음.", xRun:"run", xLang:"프롬프트", xIter:"iter", xTime:"세션(분)", xCommits:"커밋", xOut:"output", xCost:"비용(USD)", xIn:"비캐시 입력", xCR:"캐시 읽기", xCW:"캐시 쓰기", xReq:"요청 수", xRunsNote:"iteration·커밋은 보고서 기준이며 —는 기록 없음입니다. 비용은 공개 API 단가 환산 추정치이며 청구액이 아닙니다.", xTokNote:"고유 message/response ID 기준으로 센 토큰 대리지표입니다. 청구 데이터가 아닙니다.",
   segEn:"EN 정본", segKo:"KO 정본",
   hintEn:"영문 프롬프트 정본 — 17 모델 전부(그중 8 모델은 pi 하네스로도 실행)", hintKo:"한국어 번역 정본(전 산출물 한국어 지시) — 10 모델만 실험됨",
@@ -680,8 +771,23 @@ ja: {
   deck2:"課題は<b>RealWorldバックエンド</b>です。会員登録・ログイン、記事、コメント、フォロー、タグを備えたブログ型サービスのAPIです。この課題を選んだ理由は3つあります。実務でよく実装されるパターンであること、モデルの実力を見分けられるだけの難しさがあること、そしてよく書かれた仕様と公式テスト（Hurlリクエスト154件）が公開されていて結果を客観的に採点できることです。これまでの111回の実行はすべて完走したため、下の表ではモデルごとに<b>どのように</b>完走したか——どれだけ時間がかかり、どれだけ安定していて、どう作業し、いくらかかるか——を比較します。",
   repoPitch:"<b>すべて公開しています。</b>実験設計、runごとの生ログとトークン記録、採点スクリプト、コスト計算までリポジトリにあります。数字を自分で検証したり、同じハーネスで好きなモデルを追加したりしてみてください。",
   metaLink:"GitHubで見る ↗",
+  scFrontLg:"コスパ境界（点線）",
+  ovTitle:"所要時間とコストの概観",
+  scTitle:"完走時間 × runあたり換算コスト",
+  scSub:"点1つが1つのモデル×エージェントの組み合わせです。横軸は完走までのセッション時間の中央値、縦軸はrunあたり換算コストの中央値で、どちらも<b>対数スケール</b>です。左下ほど速く安くなります。細い線は最も速いrunから最も遅いrunまで、最も安いrunから最も高いrunまでの範囲です。点線は、時間とコストの両方で自分より優れた組み合わせがない組み合わせを結んだ線です。コストは公開単価から計算した推定値で、実際の請求額ではありません。名前は時間×コストが最も小さい（左下に最も近い）上位10の組み合わせにだけ表示し、それ以外はマウスを重ねると表示されます。点をクリックすると下のマトリクスで該当行が開きます。",
+  scX:"完走時間の中央値（分、対数スケール）",
+  scY:"runあたり換算コスト（USD、対数スケール）",
+  dbTitle:"同じモデル、異なるエージェント",
+  dbSub:"2つのエージェントで実行したモデルです。矢印は元のエージェントからpiに変えたときの変化で、右の数字はpiの値を元の値で割った倍率です。2つの実行は日付とクライアントのバージョンも異なるため、変化にはエージェントの違いとこれらの違いが混ざっています。",
+  dbTime:"所要時間の中央値（分）",
+  dbCost:"runあたり換算コスト（USD）",
+  dbEmpty:"韓国語プロンプトで同じモデルを2つのエージェントで実行した組はありません（pi条件は英語のみ実行）。",
+  ttTime:"所要時間",
+  ttCost:"runあたりコスト",
+  ttOpen:"クリックでマトリクスの該当行を開きます",
+  ttRuns:"run",
   mxTitle:"性能マトリクス",
-  mxSub:"1行が1つのモデル×エージェントの組み合わせで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数目盛</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。",
+  mxSub:"1行が1つのモデル×エージェントの組み合わせで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数スケール</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。",
   dtOpen:"概要・実験の詳細を表示", lbClient:"クライアント", clientUnrec:"未記録", clientTitle:"この実験で使用したエージェントクライアントのバージョン（下のクライアントバージョンに関する注記を参照）", secVerdict:"判定・仮説", secRuns:"runごとの結果", secTokens:"トークン内訳", secCond:"実験条件", secDev:"逸脱・交絡要因", secBeh:"エージェントの行動特徴", lbHypo:"仮説", report:"レポート ↗", noRecord:"レポートに記録なし。", xRun:"run", xLang:"プロンプト", xIter:"iter", xTime:"セッション(分)", xCommits:"コミット", xOut:"output", xCost:"コスト(USD)", xIn:"非キャッシュ入力", xCR:"キャッシュ読み取り", xCW:"キャッシュ書き込み", xReq:"リクエスト数", xRunsNote:"iteration・コミットはレポート基準で、—は記録なしです。コストは公開API単価による換算推定で、請求額ではありません。", xTokNote:"固有のmessage/response IDで数えたトークン代理指標です。請求データではありません。",
   segEn:"EN正本", segKo:"KO正本",
   hintEn:"英語プロンプト正本——17モデル全て（うち8モデルはpiハーネスでも実行）", hintKo:"韓国語翻訳正本（全成果物を韓国語で指示）——10モデルのみ実験",
@@ -749,6 +855,21 @@ zh: {
   deck2:"任务是 <b>RealWorld 后端</b>——一个具备注册登录、文章、评论、关注和标签的博客型服务 API。选择它有三个原因：它是实际项目中经常实现的模式；难度足以区分模型的能力；并且有写得很好的公开规范和官方测试（154 个 Hurl 请求），可以客观地评判结果。到目前为止 111 次运行全部完成，因此下表比较的是每个模型<b>如何</b>完成：花了多长时间、有多稳定、如何工作，以及要花多少钱。",
   repoPitch:"<b>一切都是公开的。</b>实验设计、逐 run 的原始日志和 token 记录、评分脚本以及成本计算都在仓库中。你可以亲自核对任何数字，或用同一套框架加入你想测试的模型。",
   metaLink:"在 GitHub 上查看 ↗",
+  scFrontLg:"性价比边界（虚线）",
+  ovTitle:"耗时与成本一览",
+  scTitle:"完成耗时 × 每 run 折算成本",
+  scSub:"每个点是一个模型×代理组合。横轴为完成所需会话时间的中位数，纵轴为每 run 折算成本的中位数，两者都是<b>对数刻度</b>。越靠左下越快越便宜。细线表示从最快到最慢、从最便宜到最贵的 run 的范围。虚线连接的是在时间和成本上都没有被其他组合同时超越的组合。成本是按公开单价计算的估算值，并非实际计费金额。只为时间×成本最小（最接近左下角）的前 10 个组合标注名称，其余组合将鼠标悬停即可查看。点击某个点即可在下方矩阵中展开对应行。",
+  scX:"完成耗时中位数（分钟，对数刻度）",
+  scY:"每 run 折算成本（USD，对数刻度）",
+  dbTitle:"同一模型，不同代理",
+  dbSub:"用两个代理运行过的模型。箭头表示从原代理换成 pi 后的变化，右侧数字是 pi 的值除以原值的倍率。两次运行的日期和客户端版本也不同，因此变化中混有代理差异和这些差异。",
+  dbTime:"耗时中位数（分钟）",
+  dbCost:"每 run 折算成本（USD）",
+  dbEmpty:"在韩文提示词条件下，没有同一模型用两个代理运行的组合（pi 条件只运行了英文）。",
+  ttTime:"耗时",
+  ttCost:"每 run 成本",
+  ttOpen:"点击在矩阵中展开",
+  ttRuns:"个 run",
   mxTitle:"性能矩阵",
   mxSub:"每行一个模型×代理组合，各列的含义见下方“阅读方法”。时间、output 和成本在模型之间相差可达数十倍，因此使用<b>对数刻度</b>（见列标题下方的刻度）。点击列标题即可按该列排序。",
   dtOpen:"查看概览和实验详情", lbClient:"客户端", clientUnrec:"未记录", clientTitle:"本实验使用的代理客户端版本（见下方关于客户端版本的说明）", secVerdict:"判定·假设", secRuns:"各 run 结果", secTokens:"token 明细", secCond:"实验条件", secDev:"偏差·混杂因素", secBeh:"代理行为特征", lbHypo:"假设", report:"报告 ↗", noRecord:"报告中无记录。", xRun:"run", xLang:"提示", xIter:"iter", xTime:"会话(分钟)", xCommits:"提交", xOut:"output", xCost:"成本(USD)", xIn:"非缓存输入", xCR:"缓存读取", xCW:"缓存写入", xReq:"请求数", xRunsNote:"iteration 与提交数取自报告，— 表示无记录。成本为按公开 API 单价换算的估算，并非账单。", xTokNote:"按唯一 message/response ID 统计的 token 代理指标，并非计费数据。",
@@ -847,6 +968,7 @@ function setLang(l, persist) {
   render();
   renderRaw();
   renderNotes();
+  renderCharts();
 }
 
 function applyStatic() {
@@ -1075,6 +1197,155 @@ function renderNotes() {
 }
 
 /* ───────────────────────── events ───────────────────────── */
+/* ───────────────────────── overview charts: time × cost scatter + agent-pair arrows ───────────────────────── */
+const CH = { tLo: 1.5, tHi: 30, uLo: 0.02, uHi: 10 };
+const SHAPE = { native: "circle", direct: "square", codex: "diamond", pi: "tri", agy: "trid" };
+const LGKEY = { native: "lgNative", direct: "lgDirect", codex: "lgCodex", pi: "lgPi", agy: "lgAgy" };
+function shapePath(stack, x, y, r) {
+  switch (SHAPE[stack]) {
+    case "square": { const s = r * 0.9; return `M${x - s},${y - s}h${2 * s}v${2 * s}h${-2 * s}Z`; }
+    case "diamond": { const s = r * 1.25; return `M${x},${y - s}L${x + s},${y}L${x},${y + s}L${x - s},${y}Z`; }
+    case "tri": { const s = r * 1.2; return `M${x},${y - s}L${x + s * 0.95},${y + s * 0.7}L${x - s * 0.95},${y + s * 0.7}Z`; }
+    case "trid": { const s = r * 1.2; return `M${x},${y + s}L${x + s * 0.95},${y - s * 0.7}L${x - s * 0.95},${y - s * 0.7}Z`; }
+    default: return `M${x - r},${y}a${r},${r} 0 1,0 ${2 * r},0a${r},${r} 0 1,0 ${-2 * r},0`;
+  }
+}
+const lgx = (v, a, b, p0, p1) => p0 + (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) * (p1 - p0);
+const money = v => "$" + (v < 0.1 ? v.toFixed(2) : usd(v));
+const short = m => agentName(m) + (m.stack === "direct" ? " · " + t("stDirect") : "");
+function chartRows() {
+  return M.map(m => ({ m, s: stats(m[plang]) })).filter(r => r.s && r.s.usd.length)
+    .map(({ m, s }) => ({ m, t: s.tMed, tLo: s.tLo, tHi: s.tHi, u: med(s.usd), uLo: lo(s.usd), uHi: hi(s.usd), n: s.n, exp: s.exp }));
+}
+function tipHtml(r) {
+  return `<b>${esc(r.m.name)}</b><br><span class="k">${esc(short(r.m))} · ${esc(r.exp)} · ${r.n} ${t("ttRuns")}</span><br>`
+    + `${t("ttTime")} <b>${f1(r.t)}${t("min")}</b> <span class="k">(${f1(r.tLo)}–${f1(r.tHi)})</span><br>`
+    + `${t("ttCost")} <b>${money(r.u)}</b> <span class="k">(${money(r.uLo)}–${money(r.uHi)})</span>`;
+}
+function showTip(fig, html, x, y) {
+  const tip = fig.querySelector(".tip"), w = fig.clientWidth;
+  tip.innerHTML = html; tip.style.display = "block";
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  tip.style.left = Math.max(0, Math.min(w - tw, x + 14)) + "px";
+  tip.style.top = Math.max(0, y - th - 12) + "px";
+}
+function hideTip(fig) { fig.querySelector(".tip").style.display = "none"; }
+function openInMatrix(name) {
+  openRows.add(name); render();
+  const tr = document.querySelector(`#mxbody tr[data-key="${CSS.escape(name)}"]`);
+  if (tr) tr.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+function axisX(ticks, x0, x1, y0, y1, fmt, sx) {
+  return ticks.map(v => { const x = sx(v); return `<line class="g" x1="${x}" x2="${x}" y1="${y0}" y2="${y1}"/><text x="${x}" y="${y1 + 15}" text-anchor="middle">${fmt(v)}</text>`; }).join("");
+}
+function renderLegend() {
+  const used = new Set(M.filter(m => m[plang]).map(m => m.stack));
+  document.getElementById("ovlegend").innerHTML = Object.keys(SHAPE).filter(k => used.has(k)).map(k =>
+    `<span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="${shapePath(k, 6, 6, 4.6)}" fill="var(--${k})"/></svg>${t(LGKEY[k])}</span>`).join("")
+    + `<span><svg viewBox="0 0 20 12" style="width:20px" aria-hidden="true"><line x1="0" y1="6" x2="20" y2="6" class="fr"/></svg>${t("scFrontLg")}</span>`;
+}
+function renderScatter() {
+  const box = document.getElementById("scatter"), fig = document.getElementById("scfig");
+  const W = Math.max(300, box.clientWidth), H = Math.round(Math.min(460, Math.max(320, W * 0.52)));
+  const ml = 66, mr = 14, mt = 10, mb = 44, x0 = ml, x1 = W - mr, y0 = mt, y1 = H - mb;
+  const sx = v => lgx(v, CH.tLo, CH.tHi, x0, x1), sy = v => lgx(v, CH.uLo, CH.uHi, y1, y0);
+  const rows = chartRows();
+  const byT = [...rows].sort((a, b) => a.t - b.t || a.u - b.u);
+  let best = Infinity; const front = [];
+  byT.forEach(r => { if (r.u < best) { front.push(r); best = r.u; } });
+  const top = [...rows].sort((a, b) => a.t * a.u - b.t * b.u).slice(0, 10);
+  let g = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(t("scTitle"))}"><g class="ax">`;
+  g += axisX([2, 3, 5, 10, 20, 30], x0, x1, y0, y1, v => v, sx);
+  g += [0.03, 0.1, 0.3, 1, 3, 10].map(v => { const y = sy(v); return `<line class="g" x1="${x0}" x2="${x1}" y1="${y}" y2="${y}"/><text x="${x0 - 6}" y="${y + 3.5}" text-anchor="end">$${v}</text>`; }).join("");
+  g += `<line class="base" x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}"/></g>`;
+  g += `<text class="axt" x="${(x0 + x1) / 2}" y="${H - 6}" text-anchor="middle">${t("scX")}</text>`;
+  g += `<text class="axt" transform="translate(12 ${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle">${t("scY")}</text>`;
+  rows.forEach(r => { const c = `var(--${r.m.stack})`, x = sx(r.t), y = sy(r.u);
+    g += `<line class="wh" stroke="${c}" x1="${sx(r.tLo)}" x2="${sx(r.tHi)}" y1="${y}" y2="${y}"/><line class="wh" stroke="${c}" x1="${x}" x2="${x}" y1="${sy(r.uLo)}" y2="${sy(r.uHi)}"/>`; });
+  if (front.length > 1) g += `<path class="fr" d="${front.map((r, i) => (i ? "L" : "M") + sx(r.t) + "," + sy(r.u)).join("")}"/>`;
+  [...rows].sort((a, b) => b.u - a.u).forEach(r => { const x = sx(r.t), y = sy(r.u), i = rows.indexOf(r);
+    g += `<g class="ptg" tabindex="0" role="button" data-i="${i}" aria-label="${esc(r.m.name + " · " + short(r.m) + " · " + f1(r.t) + t("min") + " · " + money(r.u))}">`
+      + `<path class="mk" d="${shapePath(r.m.stack, x, y, 5)}" fill="var(--${r.m.stack})"/><circle class="hit" cx="${x}" cy="${y}" r="12"/></g>`; });
+  top.forEach((r, k) => { g += `<text class="lbl" data-k="${k}">${esc(r.m.name)}</text>`; });
+  box.innerHTML = g + "</svg>";
+  /* place labels greedily: try 8 offsets around the point, skip spots that hit a placed label, a marker or the plot edge */
+  const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+  const taken = rows.map(r => ({ x: sx(r.t) - 7, y: sy(r.u) - 7, w: 14, h: 14 }));
+  const OFF = [[9, -7, "start"], [9, 13, "start"], [-9, -7, "end"], [-9, 13, "end"], [0, -12, "middle"], [0, 20, "middle"], [12, 3, "start"], [-12, 3, "end"]];
+  box.querySelectorAll("text.lbl").forEach(el => {
+    const r = top[+el.dataset.k], px = sx(r.t), py = sy(r.u);
+    let first = null;
+    for (const [dx, dy, anc] of OFF) {
+      el.setAttribute("x", px + dx); el.setAttribute("y", py + dy); el.setAttribute("text-anchor", anc);
+      const b = el.getBBox(), bb = { x: b.x - 2, y: b.y - 1, w: b.width + 4, h: b.height + 2 };
+      if (!first) first = [dx, dy, anc, bb];
+      if (bb.x >= x0 && bb.x + bb.w <= x1 && bb.y >= y0 && bb.y + bb.h <= y1 && !taken.some(o => hit(o, bb))) { taken.push(bb); return; }
+    }
+    el.setAttribute("x", px + first[0]); el.setAttribute("y", py + first[1]); el.setAttribute("text-anchor", first[2]); taken.push(first[3]);
+  });
+  box.querySelectorAll(".ptg").forEach(el => {
+    const r = rows[+el.dataset.i];
+    const show = () => { const b = el.getBoundingClientRect(), f = fig.getBoundingClientRect();
+      showTip(fig, tipHtml(r) + `<div class="h">${t("ttOpen")}</div>`, b.left - f.left + b.width / 2, b.top - f.top); el.classList.add("on"); };
+    const hide = () => { hideTip(fig); el.classList.remove("on"); };
+    el.addEventListener("mouseenter", show); el.addEventListener("focus", show);
+    el.addEventListener("mouseleave", hide); el.addEventListener("blur", hide);
+    el.addEventListener("click", () => openInMatrix(r.m.name));
+    el.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); openInMatrix(r.m.name); } });
+  });
+}
+function renderDumbbell() {
+  const box = document.getElementById("dumbbell"), fig = document.getElementById("dbfig");
+  const rows = chartRows(), groups = {};
+  rows.forEach(r => { (groups[r.m.base || r.m.name] = groups[r.m.base || r.m.name] || []).push(r); });
+  const pairs = Object.entries(groups).map(([base, rs]) => ({ base, a: rs.find(r => r.m.stack !== "pi"), b: rs.find(r => r.m.stack === "pi") }))
+    .filter(p => p.a && p.b).sort((p, q) => p.a.t - q.a.t);
+  if (!pairs.length) { box.innerHTML = `<p class="empty">${t("dbEmpty")}</p>`; return; }
+  const W = Math.max(300, box.clientWidth), narrow = W < 620;
+  const labW = narrow ? 0 : 190, gap = 18, ratW = 46, rowH = narrow ? 50 : 30, top = 22, bot = 22;
+  const panW = (W - labW - gap) / 2, H = top + pairs.length * rowH + bot;
+  const panels = [
+    { key: "t", lo: CH.tLo, hi: 30, ticks: narrow ? [2, 5, 20] : [2, 5, 10, 20], fmt: v => v, title: t("dbTime"), val: r => r.t, txt: v => f1(v) + t("min") },
+    { key: "u", lo: CH.uLo, hi: 10, ticks: narrow ? [0.03, 0.3, 3] : [0.03, 0.1, 0.3, 1, 3], fmt: v => "$" + v, title: t("dbCost"), val: r => r.u, txt: money }];
+  let g = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(t("dbTitle"))}">`;
+  pairs.forEach((p, i) => { g += `<g class="dbr" data-i="${i}"><rect class="rowbg" x="0" y="${top + i * rowH}" width="${W}" height="${rowH}"/></g>`; });
+  panels.forEach((pn, k) => {
+    const px0 = labW + k * (panW + gap), px1 = px0 + panW - ratW, sx = v => lgx(v, pn.lo, pn.hi, px0, px1);
+    g += `<text class="axt" x="${px0}" y="12">${pn.title}</text><g class="ax">`;
+    g += axisX(pn.ticks, px0, px1, top, H - bot, pn.fmt, sx).replace(/y="(\d+(\.\d+)?)" text-anchor/g, `y="${H - bot + 14}" text-anchor`);
+    g += `</g>`;
+    pairs.forEach((p, i) => {
+      const yb = top + i * rowH, y = narrow ? yb + 34 : yb + rowH / 2, va = pn.val(p.a), vb = pn.val(p.b), xa = sx(va), xb = sx(vb);
+      const dir = xb >= xa ? 1 : -1, ok = Math.abs(xb - xa) > 12;
+      if (ok) g += `<path class="arw" d="M${xa + dir * 7},${y}L${xb - dir * 9},${y}M${xb - dir * 13},${y - 4}L${xb - dir * 9},${y}L${xb - dir * 13},${y + 4}"/>`;
+      g += `<path class="mk" d="${shapePath(p.a.m.stack, xa, y, 4.5)}" fill="var(--${p.a.m.stack})"/><path class="mk" d="${shapePath("pi", xb, y, 4.5)}" fill="var(--pi)"/>`;
+      g += `<text class="rt" x="${px0 + panW}" y="${y + 3.5}" text-anchor="end">×${(vb / va).toFixed(2)}</text>`;
+    });
+  });
+  pairs.forEach((p, i) => {
+    const yb = top + i * rowH;
+    g += narrow ? `<text class="lbl" x="0" y="${yb + 15}">${esc(p.base)} <tspan class="lbl sm">${esc(short(p.a.m))} → pi</tspan></text>`
+                : `<text class="lbl" x="0" y="${yb + rowH / 2 - 1}">${esc(p.base)}</text><text class="lbl sm" x="0" y="${yb + rowH / 2 + 11}" style="font-size:10px">${esc(short(p.a.m))} → pi</text>`;
+  });
+  box.innerHTML = g + "</svg>";
+  const svg = box.querySelector("svg");
+  svg.addEventListener("mousemove", ev => {
+    const b = svg.getBoundingClientRect(), f = fig.getBoundingClientRect(), yy = (ev.clientY - b.top) * (H / b.height);
+    const i = Math.floor((yy - top) / rowH);
+    svg.querySelectorAll(".dbr").forEach(r => r.classList.toggle("on", +r.dataset.i === i));
+    if (i < 0 || i >= pairs.length) return hideTip(fig);
+    const p = pairs[i];
+    showTip(fig, tipHtml(p.a) + `<div class="h"></div>` + tipHtml(p.b), ev.clientX - f.left, ev.clientY - f.top);
+  });
+  svg.addEventListener("mouseleave", () => { hideTip(fig); svg.querySelectorAll(".dbr").forEach(r => r.classList.remove("on")); });
+}
+function renderCharts() {
+  document.getElementById("ovhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
+  renderLegend(); renderScatter(); renderDumbbell();
+}
+let chartRaf = 0;
+window.addEventListener("resize", () => { cancelAnimationFrame(chartRaf); chartRaf = requestAnimationFrame(renderCharts); });
+
 document.getElementById("mxbody").addEventListener("click", ev => {
   const tr = ev.target.closest("tr.row");
   if (!tr || ev.target.closest("tr.dt")) return;
@@ -1096,6 +1367,7 @@ document.querySelectorAll(".seg button").forEach(b => {
     document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.plang === plang)));
     document.getElementById("langhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
     render();
+    renderCharts();
   });
 });
 document.querySelectorAll(".langs button").forEach(b => {

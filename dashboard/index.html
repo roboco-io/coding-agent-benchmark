@@ -122,6 +122,18 @@ table.mx{border-collapse:collapse; width:100%; min-width:960px;}
 .fr{fill:none; stroke:var(--muted); stroke-width:1.5; stroke-dasharray:4 3;}
 .lbl{font-size:11px; fill:var(--ink-2); paint-order:stroke; stroke:var(--surface); stroke-width:3px; stroke-linejoin:round;}
 .lbl.sm{fill:var(--muted);}
+.lbl.top{font-size:12px; font-weight:700; fill:var(--ink);}
+.lbl.sm{font-size:10.5px;}
+.lead{stroke:var(--faint); stroke-width:1;}
+.ptg.top .mk{stroke-width:2.5;}
+.filters{display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; margin:0 0 12px;}
+.fgrp{display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+.flab{font-size:.72rem; color:var(--faint); margin-right:2px;}
+.chip{font:inherit; font-size:.74rem; padding:3px 10px; border:1px solid var(--line); border-radius:999px; background:transparent; color:var(--faint); cursor:pointer; text-decoration:line-through;}
+.chip[aria-pressed="true"]{background:var(--sunk); color:var(--ink); border-color:var(--muted); text-decoration:none;}
+.chip.reset{text-decoration:none; color:var(--focus); border-color:transparent;}
+.chip:focus-visible{outline:2px solid var(--focus); outline-offset:1px;}
+.fig-head{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between;}
 .rt{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--ink-2);}
 .arw{stroke:var(--muted); stroke-width:1.5; fill:none;}
 .hit{fill:transparent; cursor:pointer;}
@@ -316,10 +328,17 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
     </div>
     <span class="hint" id="ovhint"></span>
   </div>
+  <div class="filters" id="ovfilters"></div>
   <div class="legend" id="ovlegend"></div>
   <div class="charts">
     <figure class="fig" id="scfig" style="margin:12px 0 0">
-      <h3 data-i18n="scTitle"></h3>
+      <div class="fig-head">
+        <h3 data-i18n="scTitle"></h3>
+        <div class="seg" id="scmode" role="group" aria-label="Axis scale">
+          <button type="button" data-scmode="log" aria-pressed="true" data-i18n="scLog"></button>
+          <button type="button" data-scmode="lin" aria-pressed="false" data-i18n="scLin"></button>
+        </div>
+      </div>
       <p class="sub" data-i18n="scSub"></p>
       <div id="scatter"></div>
       <div class="tip" role="tooltip"></div>
@@ -604,9 +623,18 @@ en: {
   repoPitch:"<b>Everything is open.</b> Experiment designs, per-run raw logs and token records, the grading scripts and the cost calculations are all in the repository — check any number yourself, or add your own model with the same harness.",
   metaLink:"View on GitHub ↗",
   scFrontLg:"Best trade-off (dashed)",
+  scLog:"Log scale",
+  scLin:"Linear scale",
+  scXlin:"Median time to finish (min, linear scale)",
+  scYlin:"Est. cost per run (USD, linear scale)",
+  fAgent:"Agent",
+  fVendor:"Model maker",
+  fAll:"Show all",
+  scEmpty:"No combination matches the selected filters.",
+  dbEmptyF:"No same-model pair matches the selected filters.",
   ovTitle:"Time and cost at a glance",
   scTitle:"Time to finish × estimated cost per run",
-  scSub:"One point per model × agent combination: median session time to finish (across) against median estimated cost per run (up). Both axes use a <b>log scale</b>; lower-left is faster and cheaper. Thin lines span the fastest to slowest and cheapest to most expensive run. The dashed line links the combinations that nothing else beats on both time and cost. Cost is an estimate from public prices, not a bill. Names are shown for the 10 combinations with the smallest time × cost (closest to the lower-left); hover over the others. Click a point to open its row in the matrix below.",
+  scSub:"One point per model × agent combination: median session time to finish (across) against median estimated cost per run (up). Both axes use a <b>log scale</b> by default; the buttons above the chart switch to a linear scale. Lower-left is faster and cheaper. Thin lines span the fastest to slowest and cheapest to most expensive run. The dashed line links the combinations that nothing else beats on both time and cost. Cost is an estimate from public prices, not a bill. Every combination is named; the 5 with the smallest time × cost (closest to the lower-left) are numbered and in bold, and names in crowded spots are tied to their point by a thin line. The filters above narrow the view by agent or model maker, and the top 5 are recomputed within the selection. Click a point to open its row in the matrix below.",
   scX:"Median time to finish (min, log scale)",
   scY:"Est. cost per run (USD, log scale)",
   dbTitle:"Same model, different agent",
@@ -688,9 +716,18 @@ ko: {
   repoPitch:"<b>모든 것이 공개돼 있습니다.</b> 실험 설계, run별 원시 로그와 토큰 기록, 채점 스크립트, 비용 계산까지 리포지토리에 있습니다. 숫자를 직접 검증하거나, 같은 하네스로 원하는 모델을 추가해 보세요.",
   metaLink:"GitHub에서 보기 ↗",
   scFrontLg:"가성비 경계(점선)",
+  scLog:"로그 스케일",
+  scLin:"선형 스케일",
+  scXlin:"완주 시간 중앙값(분, 선형 스케일)",
+  scYlin:"run당 환산 비용(USD, 선형 스케일)",
+  fAgent:"에이전트",
+  fVendor:"모델 회사",
+  fAll:"전체 보기",
+  scEmpty:"선택한 필터에 해당하는 조합이 없습니다.",
+  dbEmptyF:"선택한 필터에 해당하는 같은 모델 쌍이 없습니다.",
   ovTitle:"소요 시간과 비용 한눈에 보기",
   scTitle:"완주 시간 × run당 환산 비용",
-  scSub:"점 하나가 한 모델×에이전트 조합입니다. 가로축은 완주까지 걸린 세션 시간의 중앙값, 세로축은 run당 환산 비용의 중앙값이며 둘 다 <b>로그 스케일</b>입니다. 왼쪽 아래일수록 빠르고 쌉니다. 가는 선은 가장 빠른 run부터 가장 느린 run까지, 가장 싼 run부터 가장 비싼 run까지의 범위입니다. 점선은 시간과 비용 둘 다에서 자신보다 나은 조합이 없는 조합을 이은 선입니다. 비용은 공개 단가로 계산한 추정치이며 실제 청구액이 아닙니다. 이름은 시간×비용이 가장 작은(왼쪽 아래에 가장 가까운) 상위 10개 조합에만 표시했고, 나머지는 마우스를 올리면 보입니다. 점을 누르면 아래 매트릭스에서 해당 행이 펼쳐집니다.",
+  scSub:"점 하나가 한 모델×에이전트 조합입니다. 가로축은 완주까지 걸린 세션 시간의 중앙값, 세로축은 run당 환산 비용의 중앙값이며 기본은 둘 다 <b>로그 스케일</b>이며, 그래프 위 버튼으로 선형 스케일로 바꿀 수 있습니다. 왼쪽 아래일수록 빠르고 쌉니다. 가는 선은 가장 빠른 run부터 가장 느린 run까지, 가장 싼 run부터 가장 비싼 run까지의 범위입니다. 점선은 시간과 비용 둘 다에서 자신보다 나은 조합이 없는 조합을 이은 선입니다. 비용은 공개 단가로 계산한 추정치이며 실제 청구액이 아닙니다. 모든 조합에 이름을 붙였고, 시간×비용이 가장 작은(왼쪽 아래에 가장 가까운) 상위 5개는 번호와 굵은 글씨로 강조했습니다. 점이 몰린 곳의 이름은 가는 선으로 점과 이었습니다. 위 필터로 에이전트·모델 회사별로 골라 볼 수 있으며, 상위 5개는 선택한 조합 안에서 다시 계산합니다. 점을 누르면 아래 매트릭스에서 해당 행이 펼쳐집니다.",
   scX:"완주 시간 중앙값(분, 로그 스케일)",
   scY:"run당 환산 비용(USD, 로그 스케일)",
   dbTitle:"같은 모델, 다른 에이전트",
@@ -772,9 +809,18 @@ ja: {
   repoPitch:"<b>すべて公開しています。</b>実験設計、runごとの生ログとトークン記録、採点スクリプト、コスト計算までリポジトリにあります。数字を自分で検証したり、同じハーネスで好きなモデルを追加したりしてみてください。",
   metaLink:"GitHubで見る ↗",
   scFrontLg:"コスパ境界（点線）",
+  scLog:"対数スケール",
+  scLin:"線形スケール",
+  scXlin:"完走時間の中央値（分、線形スケール）",
+  scYlin:"runあたり換算コスト（USD、線形スケール）",
+  fAgent:"エージェント",
+  fVendor:"モデル企業",
+  fAll:"すべて表示",
+  scEmpty:"選択したフィルタに該当する組み合わせはありません。",
+  dbEmptyF:"選択したフィルタに該当する同一モデルの組はありません。",
   ovTitle:"所要時間とコストの概観",
   scTitle:"完走時間 × runあたり換算コスト",
-  scSub:"点1つが1つのモデル×エージェントの組み合わせです。横軸は完走までのセッション時間の中央値、縦軸はrunあたり換算コストの中央値で、どちらも<b>対数スケール</b>です。左下ほど速く安くなります。細い線は最も速いrunから最も遅いrunまで、最も安いrunから最も高いrunまでの範囲です。点線は、時間とコストの両方で自分より優れた組み合わせがない組み合わせを結んだ線です。コストは公開単価から計算した推定値で、実際の請求額ではありません。名前は時間×コストが最も小さい（左下に最も近い）上位10の組み合わせにだけ表示し、それ以外はマウスを重ねると表示されます。点をクリックすると下のマトリクスで該当行が開きます。",
+  scSub:"点1つが1つのモデル×エージェントの組み合わせです。横軸は完走までのセッション時間の中央値、縦軸はrunあたり換算コストの中央値で、既定ではどちらも<b>対数スケール</b>で、グラフ上のボタンで線形スケールに切り替えられます。左下ほど速く安くなります。細い線は最も速いrunから最も遅いrunまで、最も安いrunから最も高いrunまでの範囲です。点線は、時間とコストの両方で自分より優れた組み合わせがない組み合わせを結んだ線です。コストは公開単価から計算した推定値で、実際の請求額ではありません。すべての組み合わせに名前を付け、時間×コストが最も小さい（左下に最も近い）上位5つは番号と太字で強調しました。点が密集した場所の名前は細い線で点とつないでいます。上のフィルタでエージェント・モデル企業ごとに絞り込め、上位5つは選択した組み合わせの中で再計算されます。点をクリックすると下のマトリクスで該当行が開きます。",
   scX:"完走時間の中央値（分、対数スケール）",
   scY:"runあたり換算コスト（USD、対数スケール）",
   dbTitle:"同じモデル、異なるエージェント",
@@ -856,9 +902,18 @@ zh: {
   repoPitch:"<b>一切都是公开的。</b>实验设计、逐 run 的原始日志和 token 记录、评分脚本以及成本计算都在仓库中。你可以亲自核对任何数字，或用同一套框架加入你想测试的模型。",
   metaLink:"在 GitHub 上查看 ↗",
   scFrontLg:"性价比边界（虚线）",
+  scLog:"对数刻度",
+  scLin:"线性刻度",
+  scXlin:"完成耗时中位数（分钟，线性刻度）",
+  scYlin:"每 run 折算成本（USD，线性刻度）",
+  fAgent:"代理",
+  fVendor:"模型厂商",
+  fAll:"全部显示",
+  scEmpty:"没有符合所选筛选条件的组合。",
+  dbEmptyF:"没有符合所选筛选条件的同模型组合。",
   ovTitle:"耗时与成本一览",
   scTitle:"完成耗时 × 每 run 折算成本",
-  scSub:"每个点是一个模型×代理组合。横轴为完成所需会话时间的中位数，纵轴为每 run 折算成本的中位数，两者都是<b>对数刻度</b>。越靠左下越快越便宜。细线表示从最快到最慢、从最便宜到最贵的 run 的范围。虚线连接的是在时间和成本上都没有被其他组合同时超越的组合。成本是按公开单价计算的估算值，并非实际计费金额。只为时间×成本最小（最接近左下角）的前 10 个组合标注名称，其余组合将鼠标悬停即可查看。点击某个点即可在下方矩阵中展开对应行。",
+  scSub:"每个点是一个模型×代理组合。横轴为完成所需会话时间的中位数，纵轴为每 run 折算成本的中位数，默认两者都是<b>对数刻度</b>，可用图表上方的按钮切换为线性刻度。越靠左下越快越便宜。细线表示从最快到最慢、从最便宜到最贵的 run 的范围。虚线连接的是在时间和成本上都没有被其他组合同时超越的组合。成本是按公开单价计算的估算值，并非实际计费金额。所有组合都标注了名称，时间×成本最小（最接近左下角）的前 5 个以编号和粗体强调。点密集处的名称用细线与对应的点相连。可用上方的筛选按代理或模型厂商查看，前 5 名会在所选组合内重新计算。点击某个点即可在下方矩阵中展开对应行。",
   scX:"完成耗时中位数（分钟，对数刻度）",
   scY:"每 run 折算成本（USD，对数刻度）",
   dbTitle:"同一模型，不同代理",
@@ -1031,7 +1086,7 @@ function fitDetails() {
 }
 
 /* ───────────────────────── matrix ───────────────────────── */
-const W_MIN = 2, W_MAX = 60, U_MIN = 0.03, U_MAX = 20, T_MIN = 1.5, T_MAX = 260, O_MIN = 10, O_MAX = 260, S_MAX = 4, C_MAX = 8;
+const W_MIN = 2, W_MAX = 30, U_MIN = 0.02, U_MAX = 10, T_MIN = 1.5, T_MAX = 30, O_MIN = 5, O_MAX = 100, S_MAX = 4, C_MAX = 8;
 const lg = (v, lo, hi) => Math.max(0, Math.min(100, (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) * 100));
 const med = a => { const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
 const lo = a => Math.min(...a), hi = a => Math.max(...a);
@@ -1150,14 +1205,14 @@ function scales() {
     if (el) el.innerHTML = marks.map(([label, pct]) => `<span style="left:${pct}%">${label}</span>`).join("");
   };
   const mt = t("minTick");
-  put("time", [["1.5", 0], ["10", lg(10, T_MIN, T_MAX)], ["30", lg(30, T_MIN, T_MAX)], ["260 " + mt, 100]]);
+  put("time", [["1.5", 0], ["5", lg(5, T_MIN, T_MAX)], ["30 " + mt, 100]]);
   put("spread", [["1.0×", 0], ["2×", 33.3], ["3×", 66.7], ["4×", 100]]);
   const cm = document.querySelector('.scale[data-scale="commits"]');
   if (cm) cm.innerHTML = `<span style="left:0">${t("commitsScale")}</span>`;
-  put("cost", [["$0.03", 0], ["$0.5", lg(0.5, U_MIN, U_MAX)], ["$20", 100]]);
-  put("wait", [["2" + t("sec"), 0], ["10", lg(10, W_MIN, W_MAX)], ["60" + t("sec"), 100]]);
+  put("cost", [["$0.02", 0], ["$1", lg(1, U_MIN, U_MAX)], ["$10", 100]]);
+  put("wait", [["2" + t("sec"), 0], ["5", lg(5, W_MIN, W_MAX)], ["10", lg(10, W_MIN, W_MAX)], ["30" + t("sec"), 100]]);
   put("share", [["0%", 0], ["50", 50], ["100%", 100]]);
-  put("output", [["10K", 0], ["30", lg(30, O_MIN, O_MAX)], ["100", lg(100, O_MIN, O_MAX)], ["260K", 100]]);
+  put("output", [["5K", 0], ["10", lg(10, O_MIN, O_MAX)], ["30", lg(30, O_MIN, O_MAX)], ["100K", 100]]);
 }
 
 /* ───────────────────────── cards / raw / notes ───────────────────────── */
@@ -1213,8 +1268,26 @@ function shapePath(stack, x, y, r) {
 const lgx = (v, a, b, p0, p1) => p0 + (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) * (p1 - p0);
 const money = v => "$" + (v < 0.1 ? v.toFixed(2) : usd(v));
 const short = m => agentName(m) + (m.stack === "direct" ? " · " + t("stDirect") : "");
+/* overview filters: excluded agents / model makers (empty = show all) */
+const ovEx = { agent: new Set(), vendor: new Set() };
+function vendorOf(m) {
+  const b = m.base || m.name;
+  return /^(Opus|Sonnet|Haiku|Fable)/.test(b) ? "Anthropic" : /^gpt/.test(b) ? "OpenAI" : /^gemini/.test(b) ? "Google"
+    : /^DeepSeek/.test(b) ? "DeepSeek" : /^qwen/.test(b) ? "Alibaba" : /^kimi/.test(b) ? "Moonshot AI" : "—";
+}
+const passes = m => !ovEx.agent.has(agentName(m)) && !ovEx.vendor.has(vendorOf(m));
+function renderFilters() {
+  const ms = M.filter(m => m[plang]);
+  const uniq = f => [...new Set(ms.map(f))];
+  const chips = (kind, vals) => vals.map(v => `<button type="button" class="chip" data-kind="${kind}" data-v="${esc(v)}" aria-pressed="${!ovEx[kind].has(v)}">${esc(v)}</button>`).join("");
+  const any = ovEx.agent.size || ovEx.vendor.size;
+  document.getElementById("ovfilters").innerHTML =
+    `<div class="fgrp"><span class="flab">${t("fAgent")}</span>${chips("agent", uniq(agentName))}</div>`
+    + `<div class="fgrp"><span class="flab">${t("fVendor")}</span>${chips("vendor", uniq(vendorOf))}</div>`
+    + (any ? `<button type="button" class="chip reset" data-kind="reset">${t("fAll")}</button>` : "");
+}
 function chartRows() {
-  return M.map(m => ({ m, s: stats(m[plang]) })).filter(r => r.s && r.s.usd.length)
+  return M.filter(passes).map(m => ({ m, s: stats(m[plang]) })).filter(r => r.s && r.s.usd.length)
     .map(({ m, s }) => ({ m, t: s.tMed, tLo: s.tLo, tHi: s.tHi, u: med(s.usd), uLo: lo(s.usd), uHi: hi(s.usd), n: s.n, exp: s.exp }));
 }
 function tipHtml(r) {
@@ -1239,51 +1312,132 @@ function axisX(ticks, x0, x1, y0, y1, fmt, sx) {
   return ticks.map(v => { const x = sx(v); return `<line class="g" x1="${x}" x2="${x}" y1="${y0}" y2="${y1}"/><text x="${x}" y="${y1 + 15}" text-anchor="middle">${fmt(v)}</text>`; }).join("");
 }
 function renderLegend() {
-  const used = new Set(M.filter(m => m[plang]).map(m => m.stack));
+  const used = new Set(M.filter(m => m[plang] && passes(m)).map(m => m.stack));
   document.getElementById("ovlegend").innerHTML = Object.keys(SHAPE).filter(k => used.has(k)).map(k =>
     `<span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="${shapePath(k, 6, 6, 4.6)}" fill="var(--${k})"/></svg>${t(LGKEY[k])}</span>`).join("")
     + `<span><svg viewBox="0 0 20 12" style="width:20px" aria-hidden="true"><line x1="0" y1="6" x2="20" y2="6" class="fr"/></svg>${t("scFrontLg")}</span>`;
 }
+let scMode = "log", scMix = 0, scAnim = 0;
+const LIN_T = 30;
 function renderScatter() {
+  /* a rebuild (resize, language, filter) during a scale transition snaps to the selected scale */
+  cancelAnimationFrame(scAnim); scMix = scMode === "lin" ? 1 : 0;
   const box = document.getElementById("scatter"), fig = document.getElementById("scfig");
-  const W = Math.max(300, box.clientWidth), H = Math.round(Math.min(460, Math.max(320, W * 0.52)));
-  const ml = 66, mr = 14, mt = 10, mb = 44, x0 = ml, x1 = W - mr, y0 = mt, y1 = H - mb;
-  const sx = v => lgx(v, CH.tLo, CH.tHi, x0, x1), sy = v => lgx(v, CH.uLo, CH.uHi, y1, y0);
   const rows = chartRows();
+  document.querySelectorAll("#scmode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.scmode === scMode)));
+  if (!rows.length) { box.innerHTML = `<p class="empty">${t("scEmpty")}</p>`; return; }
+  const W = Math.max(300, box.clientWidth), H = Math.round(Math.min(560, Math.max(380, W * 0.6)));
+  const ml = 66, mr = 14, mt = 10, mb = 44, x0 = ml, x1 = W - mr, y0 = mt, y1 = H - mb;
+  const uMax = Math.max(1, Math.ceil(Math.max(...rows.map(r => r.uHi))));
+  const lgP = (v, a, b, p0, p1) => lgx(Math.max(v, a), a, b, p0, p1), lnP = (v, a, b, p0, p1) => p0 + (v - a) / (b - a) * (p1 - p0);
+  /* m = 0 → log, 1 → linear; intermediate values blend the two screen positions so marks glide between scales */
+  const SX = (v, m) => (1 - m) * lgP(v, CH.tLo, CH.tHi, x0, x1) + m * lnP(v, 0, LIN_T, x0, x1);
+  const SY = (v, m) => (1 - m) * lgP(v, CH.uLo, CH.uHi, y1, y0) + m * lnP(v, 0, uMax, y1, y0);
+  const yStep = uMax > 4 ? 1 : 0.5;
+  const tickSet = (logT, linT) => [...new Set([...logT, ...linT])].sort((a, b) => a - b).map(v => ({ v, inLog: logT.includes(v), inLin: linT.includes(v) }));
+  const xT = tickSet([2, 3, 5, 10, 20, 30], [0, 5, 10, 15, 20, 25, 30]);
+  const yT = tickSet([0.03, 0.1, 0.3, 1, 3, 10], Array.from({ length: Math.round(uMax / yStep) + 1 }, (_, k) => +(k * yStep).toFixed(1)));
   const byT = [...rows].sort((a, b) => a.t - b.t || a.u - b.u);
   let best = Infinity; const front = [];
   byT.forEach(r => { if (r.u < best) { front.push(r); best = r.u; } });
-  const top = [...rows].sort((a, b) => a.t * a.u - b.t * b.u).slice(0, 10);
+  /* label order = rank by time × cost (closest to the lower-left first); the first 5 are emphasised */
+  const ranked = [...rows].sort((a, b) => a.t * a.u - b.t * b.u);
+  const rank = new Map(ranked.map((r, k) => [r, k]));
+
   let g = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(t("scTitle"))}"><g class="ax">`;
-  g += axisX([2, 3, 5, 10, 20, 30], x0, x1, y0, y1, v => v, sx);
-  g += [0.03, 0.1, 0.3, 1, 3, 10].map(v => { const y = sy(v); return `<line class="g" x1="${x0}" x2="${x1}" y1="${y}" y2="${y}"/><text x="${x0 - 6}" y="${y + 3.5}" text-anchor="end">$${v}</text>`; }).join("");
+  g += xT.map((k, i) => `<g class="xt" data-i="${i}"><line class="g" y1="${y0}" y2="${y1}"/><text y="${y1 + 15}" text-anchor="middle">${k.v}</text></g>`).join("");
+  g += yT.map((k, i) => `<g class="yt" data-i="${i}"><line class="g" x1="${x0}" x2="${x1}"/><text x="${x0 - 6}" text-anchor="end">$${k.v}</text></g>`).join("");
   g += `<line class="base" x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}"/></g>`;
-  g += `<text class="axt" x="${(x0 + x1) / 2}" y="${H - 6}" text-anchor="middle">${t("scX")}</text>`;
-  g += `<text class="axt" transform="translate(12 ${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle">${t("scY")}</text>`;
-  rows.forEach(r => { const c = `var(--${r.m.stack})`, x = sx(r.t), y = sy(r.u);
-    g += `<line class="wh" stroke="${c}" x1="${sx(r.tLo)}" x2="${sx(r.tHi)}" y1="${y}" y2="${y}"/><line class="wh" stroke="${c}" x1="${x}" x2="${x}" y1="${sy(r.uLo)}" y2="${sy(r.uHi)}"/>`; });
-  if (front.length > 1) g += `<path class="fr" d="${front.map((r, i) => (i ? "L" : "M") + sx(r.t) + "," + sy(r.u)).join("")}"/>`;
-  [...rows].sort((a, b) => b.u - a.u).forEach(r => { const x = sx(r.t), y = sy(r.u), i = rows.indexOf(r);
-    g += `<g class="ptg" tabindex="0" role="button" data-i="${i}" aria-label="${esc(r.m.name + " · " + short(r.m) + " · " + f1(r.t) + t("min") + " · " + money(r.u))}">`
-      + `<path class="mk" d="${shapePath(r.m.stack, x, y, 5)}" fill="var(--${r.m.stack})"/><circle class="hit" cx="${x}" cy="${y}" r="12"/></g>`; });
-  top.forEach((r, k) => { g += `<text class="lbl" data-k="${k}">${esc(r.m.name)}</text>`; });
+  g += `<text class="axt" id="scxt" x="${(x0 + x1) / 2}" y="${H - 6}" text-anchor="middle"></text>`;
+  g += `<text class="axt" id="scyt" transform="translate(12 ${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle"></text>`;
+  rows.forEach((r, i) => { g += `<line class="wh" data-i="${i}" data-a="t" stroke="var(--${r.m.stack})"/><line class="wh" data-i="${i}" data-a="u" stroke="var(--${r.m.stack})"/>`; });
+  g += `<path class="fr"/><g class="leads">` + ranked.map((r, k) => `<line class="lead" data-k="${k}"/>`).join("") + `</g>`;
+  [...rows].sort((a, b) => rank.get(b) - rank.get(a)).forEach(r => { const i = rows.indexOf(r);
+    g += `<g class="ptg${rank.get(r) < 5 ? " top" : ""}" tabindex="0" role="button" data-i="${i}" aria-label="${esc(r.m.name + " · " + short(r.m) + " · " + f1(r.t) + t("min") + " · " + money(r.u))}">`
+      + `<path class="mk" fill="var(--${r.m.stack})"/><circle class="hit" r="12"/></g>`; });
+  g += `<g class="lbls">` + ranked.map((r, k) => `<text class="lbl${k < 5 ? " top" : " sm"}" data-k="${k}" x="0" y="0">${k < 5 ? (k + 1) + ". " : ""}${esc(r.m.name)}</text>`).join("") + `</g>`;
   box.innerHTML = g + "</svg>";
-  /* place labels greedily: try 8 offsets around the point, skip spots that hit a placed label, a marker or the plot edge */
-  const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
-  const taken = rows.map(r => ({ x: sx(r.t) - 7, y: sy(r.u) - 7, w: 14, h: 14 }));
-  const OFF = [[9, -7, "start"], [9, 13, "start"], [-9, -7, "end"], [-9, 13, "end"], [0, -12, "middle"], [0, 20, "middle"], [12, 3, "start"], [-12, 3, "end"]];
-  box.querySelectorAll("text.lbl").forEach(el => {
-    const r = top[+el.dataset.k], px = sx(r.t), py = sy(r.u);
-    let first = null;
-    for (const [dx, dy, anc] of OFF) {
-      el.setAttribute("x", px + dx); el.setAttribute("y", py + dy); el.setAttribute("text-anchor", anc);
-      const b = el.getBBox(), bb = { x: b.x - 2, y: b.y - 1, w: b.width + 4, h: b.height + 2 };
-      if (!first) first = [dx, dy, anc, bb];
-      if (bb.x >= x0 && bb.x + bb.w <= x1 && bb.y >= y0 && bb.y + bb.h <= y1 && !taken.some(o => hit(o, bb))) { taken.push(bb); return; }
-    }
-    el.setAttribute("x", px + first[0]); el.setAttribute("y", py + first[1]); el.setAttribute("text-anchor", first[2]); taken.push(first[3]);
-  });
-  box.querySelectorAll(".ptg").forEach(el => {
+
+  const svg = box.querySelector("svg"), $$ = q => svg.querySelectorAll(q);
+  const inPlot = (p, a, b) => p >= Math.min(a, b) - 0.5 && p <= Math.max(a, b) + 0.5;
+  const lblEls = [...$$("text.lbl")], leadEls = [...$$("line.lead")];
+  const dims = lblEls.map(el => { const b = el.getBBox(); return { w: b.width, h: b.height, asc: -b.y }; });
+
+  /* label layout for one settled scale: try rings of growing radius in 8 directions, keep the first spot that stays inside
+     the plot and hits no placed label or marker; far spots get a thin leader line back to the point */
+  function layout(m) {
+    const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    const marks = rows.map(r => ({ x: SX(r.t, m) - 6, y: SY(r.u, m) - 6, w: 12, h: 12 }));
+    const taken = [];
+    const RAD = [7, 16, 28, 42, 60, 82, 108, 140, 180], ANG = [-40, 0, 40, -90, -140, 180, 140, 90];
+    return ranked.map((r, k) => {
+      const px = SX(r.t, m), py = SY(r.u, m), { w, h } = dims[k];
+      let bestC = null, bestN = Infinity;
+      for (const rad of RAD) for (const a of ANG) {
+        const c = Math.cos(a * Math.PI / 180), sn = Math.sin(a * Math.PI / 180), ax = px + rad * c, ay = py + rad * sn;
+        const bx = c > 0.35 ? ax : c < -0.35 ? ax - w : ax - w / 2, by = sn < -0.35 ? ay - h : sn > 0.35 ? ay : ay - h / 2;
+        const bb = { x: bx - 2, y: by - 1, w: w + 4, h: h + 2 };
+        if (bb.x < x0 || bb.x + bb.w > x1 || bb.y < y0 || bb.y + bb.h > y1) continue;
+        const n = taken.filter(o => hit(o, bb)).length + marks.filter(o => hit(o, bb)).length;
+        if (n === 0) { taken.push(bb); return { dx: bx - px, dy: by - py, lead: rad >= 16 }; }
+        if (n < bestN) { bestN = n; bestC = { bb, dx: bx - px, dy: by - py, lead: rad >= 16 }; }
+      }
+      if (!bestC) bestC = { bb: { x: px + 8, y: py - h, w, h }, dx: 8, dy: -h, lead: false };
+      taken.push(bestC.bb); return { dx: bestC.dx, dy: bestC.dy, lead: bestC.lead };
+    });
+  }
+  const L = [layout(0), layout(1)];
+
+  function place(m) {
+    $$(".xt").forEach(el => { const k = xT[+el.dataset.i], x = SX(k.v, m), w = (k.inLog ? 1 - m : 0) + (k.inLin ? m : 0);
+      el.querySelector("line").setAttribute("x1", x); el.querySelector("line").setAttribute("x2", x); el.querySelector("text").setAttribute("x", x);
+      el.style.opacity = inPlot(x, x0, x1) ? Math.min(1, w) : 0; });
+    $$(".yt").forEach(el => { const k = yT[+el.dataset.i], y = SY(k.v, m), w = (k.inLog ? 1 - m : 0) + (k.inLin ? m : 0);
+      el.querySelector("line").setAttribute("y1", y); el.querySelector("line").setAttribute("y2", y); el.querySelector("text").setAttribute("y", y + 3.5);
+      el.style.opacity = inPlot(y, y0, y1) ? Math.min(1, w) : 0; });
+    $$(".wh").forEach(el => { const r = rows[+el.dataset.i];
+      if (el.dataset.a === "t") { el.setAttribute("x1", SX(r.tLo, m)); el.setAttribute("x2", SX(r.tHi, m)); el.setAttribute("y1", SY(r.u, m)); el.setAttribute("y2", SY(r.u, m)); }
+      else { el.setAttribute("x1", SX(r.t, m)); el.setAttribute("x2", SX(r.t, m)); el.setAttribute("y1", SY(r.uLo, m)); el.setAttribute("y2", SY(r.uHi, m)); } });
+    $$(".ptg").forEach(el => { const r = rows[+el.dataset.i], x = SX(r.t, m), y = SY(r.u, m);
+      el.querySelector(".mk").setAttribute("d", shapePath(r.m.stack, x, y, rank.get(r) < 5 ? 6 : 5));
+      el.querySelector(".hit").setAttribute("cx", x); el.querySelector(".hit").setAttribute("cy", y); });
+    const fr = svg.querySelector(".fr");
+    if (front.length > 1) fr.setAttribute("d", front.map((r, i) => (i ? "L" : "M") + SX(r.t, m) + "," + SY(r.u, m)).join(""));
+    /* labels ride with their points; the offset blends between the two settled layouts */
+    ranked.forEach((r, k) => {
+      const a = L[0][k], b = L[1][k], px = SX(r.t, m), py = SY(r.u, m), d = dims[k];
+      const bx = px + a.dx + (b.dx - a.dx) * m, by = py + a.dy + (b.dy - a.dy) * m;
+      lblEls[k].setAttribute("x", bx); lblEls[k].setAttribute("y", by + d.asc);
+      const lo = (a.lead ? 1 - m : 0) + (b.lead ? m : 0), ln = leadEls[k];
+      const qx = Math.max(bx, Math.min(px, bx + d.w)), qy = Math.max(by, Math.min(py, by + d.h)), dist = Math.hypot(qx - px, qy - py);
+      if (lo < 0.02 || dist < 9) { ln.style.opacity = 0; return; }
+      const s0 = 6 / dist;
+      ln.setAttribute("x1", px + (qx - px) * s0); ln.setAttribute("y1", py + (qy - py) * s0); ln.setAttribute("x2", qx); ln.setAttribute("y2", qy);
+      ln.style.opacity = lo;
+    });
+  }
+  function titles() {
+    const lin = scMode === "lin";
+    svg.querySelector("#scxt").textContent = t(lin ? "scXlin" : "scX");
+    svg.querySelector("#scyt").textContent = t(lin ? "scYlin" : "scY");
+  }
+  place(scMix); titles();
+
+  /* animate between scales (eased, 0.8 s). Always animated: the switch is a deliberate, user-initiated change of view */
+  svg.animateTo = target => {
+    cancelAnimationFrame(scAnim); hideTip(fig); titles();
+    document.querySelectorAll("#scmode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.scmode === scMode)));
+    const from = scMix, t0 = performance.now(), dur = 800;
+    const ease = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    const step = now => {
+      const p = Math.min(1, (now - t0) / dur);
+      scMix = from + (target - from) * ease(p); place(scMix);
+      if (p < 1) scAnim = requestAnimationFrame(step); else scMix = target;
+    };
+    scAnim = requestAnimationFrame(step);
+  };
+
+  $$(".ptg").forEach(el => {
     const r = rows[+el.dataset.i];
     const show = () => { const b = el.getBoundingClientRect(), f = fig.getBoundingClientRect();
       showTip(fig, tipHtml(r) + `<div class="h">${t("ttOpen")}</div>`, b.left - f.left + b.width / 2, b.top - f.top); el.classList.add("on"); };
@@ -1300,7 +1454,7 @@ function renderDumbbell() {
   rows.forEach(r => { (groups[r.m.base || r.m.name] = groups[r.m.base || r.m.name] || []).push(r); });
   const pairs = Object.entries(groups).map(([base, rs]) => ({ base, a: rs.find(r => r.m.stack !== "pi"), b: rs.find(r => r.m.stack === "pi") }))
     .filter(p => p.a && p.b).sort((p, q) => p.a.t - q.a.t);
-  if (!pairs.length) { box.innerHTML = `<p class="empty">${t("dbEmpty")}</p>`; return; }
+  if (!pairs.length) { box.innerHTML = `<p class="empty">${t(ovEx.agent.size || ovEx.vendor.size ? "dbEmptyF" : "dbEmpty")}</p>`; return; }
   const W = Math.max(300, box.clientWidth), narrow = W < 620;
   const labW = narrow ? 0 : 190, gap = 18, ratW = 46, rowH = narrow ? 50 : 30, top = 22, bot = 22;
   const panW = (W - labW - gap) / 2, H = top + pairs.length * rowH + bot;
@@ -1341,7 +1495,7 @@ function renderDumbbell() {
 }
 function renderCharts() {
   document.getElementById("ovhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
-  renderLegend(); renderScatter(); renderDumbbell();
+  renderFilters(); renderLegend(); renderScatter(); renderDumbbell();
 }
 let chartRaf = 0;
 window.addEventListener("resize", () => { cancelAnimationFrame(chartRaf); chartRaf = requestAnimationFrame(renderCharts); });
@@ -1361,10 +1515,10 @@ document.querySelectorAll("table.mx th button").forEach(b => {
     render();
   });
 });
-document.querySelectorAll(".seg button").forEach(b => {
+document.querySelectorAll(".seg button[data-plang]").forEach(b => {
   b.addEventListener("click", () => {
     plang = b.dataset.plang;
-    document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.plang === plang)));
+    document.querySelectorAll(".seg button[data-plang]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.plang === plang)));
     document.getElementById("langhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
     render();
     renderCharts();
@@ -1374,6 +1528,21 @@ document.querySelectorAll(".langs button").forEach(b => {
   b.addEventListener("click", () => setLang(b.dataset.lang, true));
 });
 
+document.getElementById("ovfilters").addEventListener("click", ev => {
+  const b = ev.target.closest("button.chip");
+  if (!b) return;
+  if (b.dataset.kind === "reset") { ovEx.agent.clear(); ovEx.vendor.clear(); }
+  else { const set = ovEx[b.dataset.kind], v = b.dataset.v; if (set.has(v)) set.delete(v); else set.add(v); }
+  renderCharts();
+});
+document.querySelectorAll("#scmode button").forEach(b => {
+  b.addEventListener("click", () => {
+    if (scMode === b.dataset.scmode) return;
+    scMode = b.dataset.scmode;
+    const svg = document.querySelector("#scatter svg");
+    if (svg && svg.animateTo) svg.animateTo(scMode === "lin" ? 1 : 0);
+  });
+});
 setLang(detectLang(), false);
 </script>
 

@@ -1,0 +1,6 @@
+run,requests,input_max,cache_read_max,cache_write_max,output_max,model
+flash-en-1,50,1012541,2807796,88380,43525,qwen3.8-flash
+coder-en-1,665,71747408,0,0,139330,qwen3-coder-next
+q27-en-1,75,1546077,5489807,119711,60055,qwen3.8-27b
+flash-en-2,55,1096464,3289101,90865,37801,qwen3.8-flash
+coder-en-2,534,60348723,0,0,133649,qwen3-coder-next

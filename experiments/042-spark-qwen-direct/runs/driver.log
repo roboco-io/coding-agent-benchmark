@@ -1,0 +1,9 @@
+=== RUN flash-en-1 (claude-direct qwen3.8-flash, PROMPT-en.md, PORT=48795) start: 2026-10-10 11:35:34 ===
+=== RUN flash-en-1 finished: 2026-10-10 11:49:16 | 1,2026-10-10 11:49:16,0,13,154,1,pass ===
+=== RUN coder-en-1 (claude-direct qwen3-coder-next, PROMPT-en.md, PORT=48720) start: 2026-10-10 11:49:16 ===
+=== RUN coder-en-1 finished: 2026-10-10 13:52:23 | 3,2026-10-10 13:52:23,0,13,154,1,pass ===
+=== RUN q27-en-1 (claude-direct qwen3.8-27b, PROMPT-en.md, PORT=46326) start: 2026-10-10 13:52:23 ===
+=== RUN q27-en-1 finished: 2026-10-10 14:17:40 | 1,2026-10-10 14:17:40,0,13,154,1,pass ===
+=== RUN flash-en-2 (claude-direct qwen3.8-flash, PROMPT-en.md, PORT=43132) start: 2026-10-10 14:17:40 ===
+=== RUN flash-en-2 finished: 2026-10-10 14:29:40 | 1,2026-10-10 14:29:40,0,13,154,1,pass ===
+=== RUN coder-en-2 (claude-direct qwen3-coder-next, PROMPT-en.md, PORT=41729) start: 2026-10-10 14:29:41 ===

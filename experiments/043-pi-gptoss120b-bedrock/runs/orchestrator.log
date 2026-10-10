@@ -1,0 +1,8 @@
+=== starting sequential runs (pi: oss:amazon-bedrock/openai.gpt-oss-120b-1:0 / en / n=3) : 2026-10-10 15:41:21 ===
+=== start oss-en-1 : 2026-10-10 15:41:21 ===
+=== end oss-en-1 | timeout,2026-10-10 17:23:00 : 2026-10-10 17:23:00 ===
+=== start oss-en-2 : 2026-10-10 17:23:00 ===
+=== end oss-en-2 | timeout,2026-10-10 18:23:10 : 2026-10-10 18:23:10 ===
+=== start oss-en-3 : 2026-10-10 18:23:10 ===
+=== end oss-en-3 | timeout,2026-10-10 18:44:40 : 2026-10-10 18:44:40 ===
+=== ALL RUNS FINISHED : 2026-10-10 18:44:40 ===

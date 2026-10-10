@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-038（2026-10-08）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-044（2026-10-10）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -65,6 +65,9 @@
 | [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash Ralph 循环完成验证（EN n=3） | M-29: 用 pi coding agent（`pi -p` 0.87.1）运行 `google/gemini-3.8-flash`（thinking high，Gemini API 密钥），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
 | [EXP-037](experiments/037-haiku55-ralph/report.md) Claude Code × Haiku 5.5 原生 Ralph 循环完成验证（EN n=3） | M-30: 在 Claude Code 原生框架中，Haiku 5.5（`claude-haiku-5-5`，thinking 默认值）能用 EN 标准 Ralph 循环在上限 30 iteration·4 小时内无人干预地完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | Claude Code 2.1.293 |
 | [EXP-038](experiments/038-pi-haiku55/report.md) pi coding agent × Haiku 5.5 Ralph 循环完成验证（EN n=3） | M-31: 用 pi coding agent（`pi -p` 0.87.1）运行 `anthropic/claude-haiku-5-5`（Anthropic API 密钥，thinking 为 pi 默认值，复制内置 `claude-sonnet-5` 定义的自定义模型条目），能在隔离·无人干预的 Ralph 循环中于上限 30 iteration·4 小时内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）。 | **验证** | pi 0.87.1 |
+| [EXP-042](experiments/042-spark-qwen-direct/report.md) Claude Code × Spark 级 Qwen 三款直连（中止） | M-35: 将 Claude Code 直连 DashScope 的 Anthropic 兼容端点，可用三款能装进一台 DGX Spark 的开放权重 Qwen 模型完成 RealWorld 后端 | **搁置（实验中止）** | Claude Code 2.1.296 |
+| [EXP-043](experiments/043-pi-gptoss120b-bedrock/report.md) pi × gpt-oss-120b（Amazon Bedrock） | M-36: 用 pi 运行可装进一台 DGX Spark 的开放权重 gpt-oss-120b（Bedrock），可在每 run 20 分钟内完成 RealWorld 后端 | **否定（20 分钟上限）** | pi 0.87.1 |
+| [EXP-044](experiments/044-pi-spark-qwen/report.md) pi × Spark 级 Qwen 三款（中止） | M-37: 将 pi 连接到 DashScope 的 OpenAI 兼容端点，可用三款 Spark 级 Qwen 模型在每 run 20 分钟内完成 RealWorld 后端 | **搁置（实验中止）** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -174,6 +177,15 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 **EXP-038 — pi coding agent × Haiku 5.5 Ralph 循环完成验证（EN n=3）** (验证)  
 **EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，所有响应均为 `claude-haiku-5-5`，thinking `medium`）。会话 5.4–5.9 分钟，output 50.0–55.4K，按公开单价折算每 run $0.05–0.09。run 1 中代理的 `pgrep` 输出使其他进程的密钥留在会话记录中（D-1），存档已脱敏。 → [报告](experiments/038-pi-haiku55/report.md)
 
+**EXP-042 — Claude Code × Spark 级 Qwen 三款直连（中止）** (搁置（实验中止）)  
+9 个 run 中执行 5 个后中止：flash 2/2、q27 1/1、coder 1/2 完成（均复检 13/13）。该端点在 usage 中漏报 tool_result token，导致自动压缩从未触发；qwen3-coder-next 撞上 204,800 输入上限，两个 run 折算成本下限约 $89（估算）。 → [报告](experiments/042-spark-qwen-direct/report.md)
+
+**EXP-043 — pi × gpt-oss-120b（Amazon Bedrock）** (否定（20 分钟上限）)  
+0/3。上限内的所有 iteration 均为 0/13，超出上限多运行约 120 分钟也没有通过。智能体反复在前台运行 `npm run dev` 导致停滞。上限在实验中从 4 小时改为 20 分钟。按 Bedrock 公开单价约 $2.2。 → [报告](experiments/043-pi-gptoss120b-bedrock/report.md)
+
+**EXP-044 — pi × Spark 级 Qwen 三款（中止）** (搁置（实验中止）)  
+按用户决定在第一个 run（flash-en-1，iteration 1）开始 7 分钟后中止，9 个 run 中 0 个完成。仅确认了经 pi 时该端点能正确记录 usage。 → [报告](experiments/044-pi-spark-qwen/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -194,6 +206,7 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 17. **Gemini（gemini-3.8-flash）也在 Antigravity CLI 和 pi 两个框架中完成，但会话比其他 Flash 级模型更长（EXP-035·036）。** 使用 Gemini API 密钥，Antigravity CLI（agy 1.3.1，effort high）和 pi（thinking high）各 EN 3/3，共 6/6 完成。agy 的 run 1·2 在 iteration 1 完成；run 3 因代理自行运行的框架评分器终止了 agy 进程，在 iteration 2 完成。会话 agy 15.5–22.4 分钟、pi 13.1–15.6 分钟，每个 run 的模型响应为 100–192 次，远多于 pi × deepseek-flash（EXP-029，25–40 次·1.9–4.1 分钟）。两项实验暴露了一个结构问题：run 目录位于框架目录内，代理可以访问评分器和之前 run 的记录（EXP-029 的 3 个会话中也有发现），后续需要将两者分离。
 18. **Haiku 5.5 在原生框架中完成，按公开单价折算的成本是 Claude 系列条件中最低的（EXP-037）。** EN 3/3 完成（run 2、3 在 iteration 1；run 1 的 iteration 1 搭建脚手架后未声明完成即结束，于 iteration 2 完成）。复验各 2 次一致，响应 model 字段全部为 `claude-haiku-5-5`。会话 5.1–7.9 分钟、output 49.0–57.6K、API 调用 38–59 次，比 Sonnet 5.5（EXP-031）更长更多，但单价为 Sonnet 5.5 的 1/20，每 run 折算 $0.06–0.16（中位数 $0.09）。该值包含提示超过 100K 请求的 5 倍单价。由于 shell 中导出了 API 密钥，本实验使用 API 密钥而非订阅运行（D-1），因此实际产生了费用，缓存为 5 分钟 TTL，与使用订阅运行的其他原生条件认证方式不同。因未隔离，run 1 调用了暴露的 context7 MCP。存在日期与 CLI 版本混杂，不据此确定优劣。
 19. **pi × Haiku 5.5 也 3/3、全部在 iteration 1 完成（EXP-038）。** 与同日的 Claude Code × Haiku 5.5（EXP-037）相比，output（50.0–55.4K）和 API 调用（38–46 次）处于相近范围，会话 5.4–5.9 分钟，波动小。起始提示约 3K，小于 Claude Code（约 32K），因此超过 100K 的请求只有 3 次，每 run 折算 $0.05–0.09。run 1 中代理运行 `pgrep -fl` 输出了同一台机器上其他进程的命令行，其中的密钥留在了会话记录中（D-1，存档已脱敏）。仅移除环境变量并不能阻止代理读取其他进程的信息。
+20. **能装进一台 DGX Spark 的开放权重模型首次出现了未完成和提供方计量缺陷（EXP-042、043、044）。** pi × Bedrock gpt-oss-120b 在 20 分钟上限下为 0/3（EXP-043）。它反复在前台运行开发服务器导致停滞，并提交无法启动的代码，超出上限再运行约 120 分钟也未通过。Claude Code 直连 DashScope 的三款 Qwen（EXP-042）在 flash 2/2、q27 1/1、coder 1/2 完成后中止。DashScope 的 Anthropic 兼容端点在 usage 中漏报 tool_result token，导致自动压缩从未触发；输入上限最小的 qwen3-coder-next 反复出现 400 错误，两个 run 折算成本下限约 $89。使用同一端点的早期实验（EXP-013、016、017）的 token 数据需要复查。EXP-044（pi × Qwen 三款）在第一个 run 中止。从这一批起每 run 上限由 4 小时改为 20 分钟，因此完成率不与早期实验直接比较。
 
 ## 实验生命周期
 

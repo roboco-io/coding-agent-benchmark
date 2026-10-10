@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-038 (2026-10-08)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-044 (2026-10-10)
 
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
@@ -65,6 +65,9 @@
 | [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash 랄프 루프 완주 검증 (EN n=3) | M-29: pi coding agent(`pi -p` 0.87.1)로 `google/gemini-3.8-flash`(thinking high, Gemini API 키)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 | [EXP-037](experiments/037-haiku55-ralph/report.md) Claude Code × Haiku 5.5 네이티브 랄프 루프 완주 검증 (EN n=3) | M-30: Claude Code 네이티브 하네스에서 Haiku 5.5(`claude-haiku-5-5`, thinking 기본값)는 EN 정본 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 무개입 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | Claude Code 2.1.293 |
 | [EXP-038](experiments/038-pi-haiku55/report.md) pi coding agent × Haiku 5.5 완주 검증 (EN n=3) | M-31: pi coding agent(`pi -p` 0.87.1)로 `anthropic/claude-haiku-5-5`(Anthropic API 키 직결, thinking pi 기본값, 내장 `claude-sonnet-5` 정의를 복사한 사용자 정의 모델 항목)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4h 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
+| [EXP-042](experiments/042-spark-qwen-direct/report.md) Claude Code × DGX Spark 탑재 가능 Qwen 3종 직결 (중단) | M-35: Claude Code(`claude -p` 2.1.296)를 DashScope Anthropic 호환 엔드포인트로 DGX Spark 1대(128GB)에 올릴 수 있는 크기의 오픈 웨이트 Qwen 3종(`qwen3.8-flash`·`qwen3-coder-next`·`qwen3.8-27b`, thinking 기본값)에 직결하면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4시간 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **보류(실험 중단)** | Claude Code 2.1.296 |
+| [EXP-043](experiments/043-pi-gptoss120b-bedrock/report.md) pi × gpt-oss-120b (Amazon Bedrock) 랄프 루프 완주 검증 (EN n=3) | M-36: pi coding agent(`pi -p` 0.87.1)로 DGX Spark 1대(128GB)에 올릴 수 있는 오픈 웨이트 `gpt-oss-120b`(Amazon Bedrock `amazon-bedrock/openai.gpt-oss-120b-1:0`, us-west-2, thinking pi 기본값, Bedrock API 키)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분(실행 중 4시간에서 변경, D-1·D-2) 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **기각** | pi 0.87.1 |
+| [EXP-044](experiments/044-pi-spark-qwen/report.md) pi × DGX Spark 탑재 가능 Qwen 3종 (중단) | M-37: pi coding agent(`pi -p` 0.87.1)로 DashScope OpenAI 호환 엔드포인트의 Qwen 3종(`dashscope/qwen3.8-flash`·`dashscope/qwen3-coder-next`·`dashscope/qwen3.8-27b`, thinking pi 기본값, 사용자 정의 `models.json`)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **보류(실험 중단)** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -174,6 +177,15 @@ EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 2). 게이트 pass와 
 **EXP-038 — pi coding agent × Haiku 5.5 완주 검증 (EN n=3)** (검증)  
 EN 3/3 전부 iteration 1 완주. 게이트 pass와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었으며, 응답 model 필드는 전수 `claude-haiku-5-5`, thinking은 pi 기본값 `medium`이었다. 세션 5.4–5.9분·output 50.0–55.4K·API 호출 38–46회, 공개 단가 환산 run당 $0.05–0.09. run 1은 에이전트의 프로세스 조회로 다른 프로세스의 비밀값이 세션 기록에 남았다(D-1, 판정 무관). → [보고서](experiments/038-pi-haiku55/report.md)
 
+**EXP-042 — Claude Code × DGX Spark 탑재 가능 Qwen 3종 직결 (중단)** (보류(실험 중단))  
+사용자 결정으로 5/9 run에서 중단해 사전 기준(조건별 3 run)을 채우지 못했다. 실행한 범위의 관측: flash 2/2, q27 1/1, coder 1/2 완주(완주 4 run 모두 게이트와 독립 재검증 2회 13/13·154/154 일치). 중단 원인은 DashScope Anthropic 호환 엔드포인트가 tool_result 토큰을 `message_start` usage에서 빼고 보고해 Claude Code의 자동 압축이 작동하지 않은 것이다. coder는 입력 한도(204,800)에 닿아 HTTP 400을 반복했고, 2 run의 환산 비용이 하한 약 $89로 이 리포의 run당 비용 최고치를 크게 넘었다. → [보고서](experiments/042-spark-qwen-direct/report.md)
+
+**EXP-043 — pi × gpt-oss-120b (Amazon Bedrock) 랄프 루프 완주 검증 (EN n=3)** (기각)  
+3 run 모두 20분 상한 안에 완주하지 못했다(0/3). 상한 안의 모든 iteration이 Hurl 0/13이었고, 상한 밖까지 실행된 구간(oss-en-1 약 100분, oss-en-2 60분)에서도 게이트 통과는 없었다. 주된 실패 양상은 에이전트가 `npm run dev`를 포그라운드로 실행해 도구 호출이 반환되지 않는 정체였다. 상한이 실행 중 두 번 바뀌었으므로 "20분 안 완주 실패"로만 해석한다. → [보고서](experiments/043-pi-gptoss120b-bedrock/report.md)
+
+**EXP-044 — pi × DGX Spark 탑재 가능 Qwen 3종 (중단)** (보류(실험 중단))  
+사용자가 결과 정리를 위해 중단을 결정해 9 run 중 0 run이 끝났다. flash-en-1의 iteration 1을 7분 실행한 뒤 중단했고, 그 시점 상태를 실험자가 채점한 결과는 3/13·요청 81건이었다(커밋 없음). 가설은 판정하지 않는다. → [보고서](experiments/044-pi-spark-qwen/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (2026-09-21 정정 반영)
@@ -194,6 +206,7 @@ EN 3/3 전부 iteration 1 완주. 게이트 pass와 독립 재검증 2회가 모
 17. **Gemini(gemini-3.8-flash)도 Antigravity CLI와 pi 두 하네스에서 완주했지만, 다른 Flash급 모델보다 세션이 길었다 (EXP-035·036).** Gemini API 키로 Antigravity CLI(agy 1.3.1, effort high)와 pi(thinking high)를 각 EN 3/3, 총 6/6 완주했다. agy는 run 1·2가 iteration 1에, run 3은 에이전트가 직접 실행한 하네스 채점기가 agy 프로세스를 종료시켜 iteration 2에 완주했다. 세션은 agy 15.5–22.4분, pi 13.1–15.6분이고, run당 모델 응답이 100–192회로 pi × deepseek-flash(EXP-029, 25–40회·1.9–4.1분)보다 훨씬 많았다. 두 실험에서 run 디렉터리가 하네스 디렉터리 안에 있어 에이전트가 채점기·이전 run 기록에 접근할 수 있다는 구조 문제가 드러났고(EXP-029 세션 3개에서도 확인), 후속으로 분리가 필요하다.
 18. **Haiku 5.5는 네이티브 하네스에서 완주했고, 공개 단가 환산 비용이 Claude 계열 조건 중 가장 낮았다 (EXP-037).** EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 1이 스캐폴딩 후 완료 선언 없이 끝나 iteration 2). 재검증 각 2회 일치, 응답 model 필드 전수 `claude-haiku-5-5`. 세션 5.1–7.9분·output 49.0–57.6K·API 호출 38–59회로 Sonnet 5.5(EXP-031)보다 길고 많았지만, 단가가 Sonnet 5.5의 1/20이라 run당 환산은 $0.06–0.16(중앙값 $0.09)이다. 이 값은 프롬프트 100K 초과 요청의 5배 단가를 포함한다. 이 실험은 셸에 export된 API 키 때문에 구독이 아니라 API 키로 실행됐다(D-1). 그래서 실제로 과금됐고 캐시가 5분 TTL이었으며, 구독으로 실행한 다른 네이티브 조건과 인증 방식이 다르다. 비격리 조건이라 run 1은 노출된 context7 MCP를 호출했다. 날짜·CLI 버전 교락이 있어 우열로 확정하지 않는다.
 19. **pi × Haiku 5.5도 3/3, 전부 iteration 1에 완주했다 (EXP-038).** 같은 날 Claude Code × Haiku 5.5(EXP-037)와 output(50.0–55.4K)·호출 수(38–46회)가 비슷한 범위였고, 세션은 5.4–5.9분으로 산포가 작았다. 시작 프롬프트가 약 3K로 Claude Code(약 32K)보다 작아 100K 초과 요청이 3건뿐이었고, 환산 비용은 run당 $0.05–0.09다. run 1에서는 에이전트가 `pgrep -fl`로 같은 머신의 다른 프로세스 명령줄을 출력해 그 안의 비밀값이 세션 기록에 남았다(D-1, 보관본은 마스킹). 환경 변수 제거만으로는 에이전트가 다른 프로세스 정보를 읽는 것을 막지 못한다.
+20. **DGX Spark 1대에 올릴 수 있는 오픈 웨이트 모델에서 처음으로 완주 실패와 제공자 계측 결함이 나왔다 (EXP-042·043·044).** pi × Bedrock gpt-oss-120b는 20분 상한에서 0/3이었다(EXP-043). 포그라운드 서버 실행에 따른 정체와 미완성 코드 커밋이 반복됐고, 상한 밖까지 약 120분을 더 실행해도 통과하지 못했다. Claude Code × DashScope 직결 Qwen 3종(EXP-042)은 flash 2/2·q27 1/1·coder 1/2 완주 후 중단했다. DashScope Anthropic 호환 엔드포인트가 usage에서 tool_result 토큰을 빼고 보고해 자동 압축이 작동하지 않았고, 입력 한도가 작은 qwen3-coder-next는 400 오류를 반복하며 2 run에 환산 하한 약 $89를 썼다. 같은 엔드포인트를 쓴 과거 실험(EXP-013·016·017)의 토큰 수치는 재점검이 필요하다. EXP-044(pi × Qwen 3종)는 첫 run에서 중단했다. 이 묶음부터 run 상한을 4시간에서 20분으로 줄였으므로 완주율을 이전 실험과 직접 비교하지 않는다.
 
 ## 실험 라이프사이클
 

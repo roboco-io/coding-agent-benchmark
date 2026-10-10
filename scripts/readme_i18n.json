@@ -764,6 +764,66 @@
         "verdict": "验证",
         "summary": "**EN 3/3，全部在 iteration 1 完成**（门控通过 + 各 2 次独立复验 13/13·154/154 一致，所有响应均为 `claude-haiku-5-5`，thinking `medium`）。会话 5.4–5.9 分钟，output 50.0–55.4K，按公开单价折算每 run $0.05–0.09。run 1 中代理的 `pgrep` 输出使其他进程的密钥留在会话记录中（D-1），存档已脱敏。"
       }
+    },
+    "EXP-042": {
+      "en": {
+        "name": "Claude Code × Spark-class Qwen trio, direct (aborted)",
+        "hypothesis": "Claude Code connected directly to DashScope's Anthropic-compatible endpoint can finish the RealWorld backend with three open-weight Qwen models that fit on one DGX Spark",
+        "verdict": "Inconclusive (experiment aborted)",
+        "summary": "Aborted after 5 of 9 runs: flash 2/2, q27 1/1, coder 1/2 finished (all re-checked 13/13). The endpoint omits tool_result tokens from usage, so auto-compaction never fired; qwen3-coder-next hit its 204,800-token input limit, and its two runs cost at least about $89 (estimate)."
+      },
+      "ja": {
+        "name": "Claude Code × Spark級 Qwen 3種 直結（中断）",
+        "hypothesis": "Claude CodeをDashScopeのAnthropic互換エンドポイントに直結すると、DGX Spark 1台に載るオープンウェイトQwen 3種でRealWorldバックエンドを完走できる",
+        "verdict": "保留（実験中断）",
+        "summary": "9 run中5 runで中断。flash 2/2、q27 1/1、coder 1/2が完走（すべて再検証13/13）。エンドポイントがtool_resultトークンをusageから除外するため自動圧縮が働かず、qwen3-coder-nextは入力上限204,800に達し、2 runの換算コストは下限で約$89（推定）。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × Spark 级 Qwen 三款直连（中止）",
+        "hypothesis": "将 Claude Code 直连 DashScope 的 Anthropic 兼容端点，可用三款能装进一台 DGX Spark 的开放权重 Qwen 模型完成 RealWorld 后端",
+        "verdict": "搁置（实验中止）",
+        "summary": "9 个 run 中执行 5 个后中止：flash 2/2、q27 1/1、coder 1/2 完成（均复检 13/13）。该端点在 usage 中漏报 tool_result token，导致自动压缩从未触发；qwen3-coder-next 撞上 204,800 输入上限，两个 run 折算成本下限约 $89（估算）。"
+      }
+    },
+    "EXP-043": {
+      "en": {
+        "name": "pi × gpt-oss-120b (Amazon Bedrock)",
+        "hypothesis": "pi running Bedrock gpt-oss-120b, an open-weight model that fits on one DGX Spark, can finish the RealWorld backend within 20 minutes per run",
+        "verdict": "Rejected (20-minute cap)",
+        "summary": "0/3. Every iteration inside the cap scored 0/13; about 120 more minutes past the cap also produced no pass. The agent repeatedly ran `npm run dev` in the foreground and stalled. The cap was cut from 4 h to 20 min mid-experiment. About $2.2 at Bedrock list price."
+      },
+      "ja": {
+        "name": "pi × gpt-oss-120b（Amazon Bedrock）",
+        "hypothesis": "piでDGX Spark 1台に載るオープンウェイトgpt-oss-120b（Bedrock）を動かすと、run 20分以内にRealWorldバックエンドを完走できる",
+        "verdict": "棄却（20分上限）",
+        "summary": "0/3。上限内のiterationはすべて0/13で、上限を超えて実行した約120分でも合格なし。エージェントが`npm run dev`をフォアグラウンドで実行して停滞する失敗が繰り返された。上限は実行中に4時間から20分へ変更。Bedrock公開単価で約$2.2。"
+      },
+      "zh-CN": {
+        "name": "pi × gpt-oss-120b（Amazon Bedrock）",
+        "hypothesis": "用 pi 运行可装进一台 DGX Spark 的开放权重 gpt-oss-120b（Bedrock），可在每 run 20 分钟内完成 RealWorld 后端",
+        "verdict": "否定（20 分钟上限）",
+        "summary": "0/3。上限内的所有 iteration 均为 0/13，超出上限多运行约 120 分钟也没有通过。智能体反复在前台运行 `npm run dev` 导致停滞。上限在实验中从 4 小时改为 20 分钟。按 Bedrock 公开单价约 $2.2。"
+      }
+    },
+    "EXP-044": {
+      "en": {
+        "name": "pi × Spark-class Qwen trio (aborted)",
+        "hypothesis": "pi connected to DashScope's OpenAI-compatible endpoint can finish the RealWorld backend with three Spark-class Qwen models within 20 minutes per run",
+        "verdict": "Inconclusive (experiment aborted)",
+        "summary": "Aborted by user decision 7 minutes into the first run (flash-en-1, iteration 1); 0 of 9 runs finished. It only confirmed that this endpoint reports usage correctly under pi."
+      },
+      "ja": {
+        "name": "pi × Spark級 Qwen 3種（中断）",
+        "hypothesis": "piをDashScopeのOpenAI互換エンドポイントに接続すると、Spark級Qwen 3種でrun 20分以内にRealWorldバックエンドを完走できる",
+        "verdict": "保留（実験中断）",
+        "summary": "ユーザー判断で最初のrun（flash-en-1、iteration 1）開始7分後に中断し、9 run中0 runが終了。pi経由でこのエンドポイントのusageが正常に記録されることだけを確認した。"
+      },
+      "zh-CN": {
+        "name": "pi × Spark 级 Qwen 三款（中止）",
+        "hypothesis": "将 pi 连接到 DashScope 的 OpenAI 兼容端点，可用三款 Spark 级 Qwen 模型在每 run 20 分钟内完成 RealWorld 后端",
+        "verdict": "搁置（实验中止）",
+        "summary": "按用户决定在第一个 run（flash-en-1，iteration 1）开始 7 分钟后中止，9 个 run 中 0 个完成。仅确认了经 pi 时该端点能正确记录 usage。"
+      }
     }
   }
 }

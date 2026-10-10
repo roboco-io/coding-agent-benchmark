@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-038（2026-10-08）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-044（2026-10-10）
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
@@ -65,6 +65,9 @@
 | [EXP-036](experiments/036-pi-gemini38-flash/report.md) pi coding agent × gemini-3.8-flash Ralphループ完走検証（EN n=3） | M-29: pi coding agent（`pi -p` 0.87.1）で`google/gemini-3.8-flash`（thinking high、Gemini APIキー）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | pi 0.87.1 |
 | [EXP-037](experiments/037-haiku55-ralph/report.md) Claude Code × Haiku 5.5 ネイティブ Ralphループ完走検証（EN n=3） | M-30: Claude Codeネイティブハーネスで Haiku 5.5（`claude-haiku-5-5`、thinking既定値）は、EN正本Ralphループで RealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に無介入で完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | Claude Code 2.1.293 |
 | [EXP-038](experiments/038-pi-haiku55/report.md) pi coding agent × Haiku 5.5 Ralphループ完走検証（EN n=3） | M-31: pi coding agent（`pi -p` 0.87.1）で`anthropic/claude-haiku-5-5`（Anthropic APIキー、thinkingはpi既定値、内蔵`claude-sonnet-5`定義をコピーしたユーザー定義モデル項目）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13・154/154）を上限30 iteration・4時間以内に完走できる（EN n=3、完走率で判定・課金は対象外）。 | **検証** | pi 0.87.1 |
+| [EXP-042](experiments/042-spark-qwen-direct/report.md) Claude Code × Spark級 Qwen 3種 直結（中断） | M-35: Claude CodeをDashScopeのAnthropic互換エンドポイントに直結すると、DGX Spark 1台に載るオープンウェイトQwen 3種でRealWorldバックエンドを完走できる | **保留（実験中断）** | Claude Code 2.1.296 |
+| [EXP-043](experiments/043-pi-gptoss120b-bedrock/report.md) pi × gpt-oss-120b（Amazon Bedrock） | M-36: piでDGX Spark 1台に載るオープンウェイトgpt-oss-120b（Bedrock）を動かすと、run 20分以内にRealWorldバックエンドを完走できる | **棄却（20分上限）** | pi 0.87.1 |
+| [EXP-044](experiments/044-pi-spark-qwen/report.md) pi × Spark級 Qwen 3種（中断） | M-37: piをDashScopeのOpenAI互換エンドポイントに接続すると、Spark級Qwen 3種でrun 20分以内にRealWorldバックエンドを完走できる | **保留（実験中断）** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -174,6 +177,15 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 **EXP-038 — pi coding agent × Haiku 5.5 Ralphループ完走検証（EN n=3）** (検証)  
 **EN 3/3、すべてiteration 1で完走**（ゲートpass + 独立再検証各2回13/13・154/154一致、応答はすべて`claude-haiku-5-5`、thinking `medium`）。セッション5.4–5.9分、output 50.0–55.4K、公開単価換算でrun当たり$0.05–0.09。run 1ではエージェントの`pgrep`出力で他プロセスの秘密値がセッション記録に残った（D-1）。保管版はマスキング済み。 → [レポート](experiments/038-pi-haiku55/report.md)
 
+**EXP-042 — Claude Code × Spark級 Qwen 3種 直結（中断）** (保留（実験中断）)  
+9 run中5 runで中断。flash 2/2、q27 1/1、coder 1/2が完走（すべて再検証13/13）。エンドポイントがtool_resultトークンをusageから除外するため自動圧縮が働かず、qwen3-coder-nextは入力上限204,800に達し、2 runの換算コストは下限で約$89（推定）。 → [レポート](experiments/042-spark-qwen-direct/report.md)
+
+**EXP-043 — pi × gpt-oss-120b（Amazon Bedrock）** (棄却（20分上限）)  
+0/3。上限内のiterationはすべて0/13で、上限を超えて実行した約120分でも合格なし。エージェントが`npm run dev`をフォアグラウンドで実行して停滞する失敗が繰り返された。上限は実行中に4時間から20分へ変更。Bedrock公開単価で約$2.2。 → [レポート](experiments/043-pi-gptoss120b-bedrock/report.md)
+
+**EXP-044 — pi × Spark級 Qwen 3種（中断）** (保留（実験中断）)  
+ユーザー判断で最初のrun（flash-en-1、iteration 1）開始7分後に中断し、9 run中0 runが終了。pi経由でこのエンドポイントのusageが正常に記録されることだけを確認した。 → [レポート](experiments/044-pi-spark-qwen/report.md)
+
 <!-- RESULTS:END -->
 
 ### 総合インサイト（2026-09-21訂正反映）
@@ -194,6 +206,7 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 17. **Gemini（gemini-3.8-flash）もAntigravity CLIとpiの両ハーネスで完走したが、他のFlash級モデルよりセッションが長かった（EXP-035・036）。** Gemini APIキーでAntigravity CLI（agy 1.3.1、effort high）とpi（thinking high）がそれぞれEN 3/3、計6/6完走した。agyはrun 1・2がiteration 1で、run 3はエージェント自身が実行したハーネス採点器がagyプロセスを終了させたためiteration 2で完走した。セッションはagy 15.5–22.4分、pi 13.1–15.6分で、runあたりのモデル応答は100–192回とpi × deepseek-flash（EXP-029、25–40回・1.9–4.1分）よりはるかに多かった。両実験でrunディレクトリがハーネスディレクトリ内にあり、エージェントが採点器や以前のrunの記録にアクセスできる構造問題が明らかになった（EXP-029のセッション3件でも確認）。分離が今後の課題である。
 18. **Haiku 5.5はネイティブハーネスで完走し、公開単価換算コストはClaude系条件で最も低かった（EXP-037）。** EN 3/3完走（run 2・3はiteration 1、run 1はiteration 1がスキャフォールド後に完了宣言なしで終了したためiteration 2）。再検証各2回一致、応答modelフィールドはすべて`claude-haiku-5-5`。セッション5.1–7.9分・output 49.0–57.6K・API呼び出し38–59回とSonnet 5.5（EXP-031）より長く多かったが、単価がSonnet 5.5の1/20のためrun当たり換算は$0.06–0.16（中央値$0.09）。この値はプロンプト100K超リクエストの5倍単価を含む。シェルにexportされたAPIキーのため、この実験はサブスクリプションではなくAPIキーで実行された（D-1）。そのため実際に課金され、キャッシュは5分TTLで、サブスクリプションで実行した他のネイティブ条件とは認証方式が異なる。非隔離条件のためrun 1は露出したcontext7 MCPを呼び出した。日付・CLIバージョンの交絡があり優劣とは確定しない。
 19. **pi × Haiku 5.5も3/3、すべてiteration 1で完走した（EXP-038）。** 同日のClaude Code × Haiku 5.5（EXP-037）とoutput（50.0–55.4K）・呼び出し回数（38–46回）は同程度の範囲で、セッションは5.4–5.9分とばらつきが小さかった。開始プロンプトが約3KとClaude Code（約32K）より小さく、100K超のリクエストは3件のみで、換算コストはrun当たり$0.05–0.09。run 1ではエージェントが`pgrep -fl`で同じマシンの他プロセスのコマンドラインを出力し、その中の秘密値がセッション記録に残った（D-1、保管版はマスキング済み）。環境変数の除去だけでは、エージェントが他プロセスの情報を読むことは防げない。
+20. **DGX Spark 1台に載るオープンウェイトモデルで、初めて完走失敗と提供者の計測欠陥が出た（EXP-042・043・044）。** pi × Bedrock gpt-oss-120bは20分上限で0/3だった（EXP-043）。開発サーバーをフォアグラウンドで実行して停滞する失敗と、起動しないコードのコミットが繰り返され、上限を超えて約120分実行しても合格しなかった。Claude Code × DashScope直結のQwen 3種（EXP-042）はflash 2/2・q27 1/1・coder 1/2の完走後に中断した。DashScopeのAnthropic互換エンドポイントがusageからtool_resultトークンを除外して報告するため自動圧縮が働かず、入力上限が小さいqwen3-coder-nextは400エラーを繰り返し、2 runの換算コストは下限で約$89だった。同じエンドポイントを使った過去の実験（EXP-013・016・017）のトークン数値は再点検が必要。EXP-044（pi × Qwen 3種）は最初のrunで中断した。このまとまりからrun上限を4時間から20分に短縮したため、完走率を以前の実験と直接比較しない。
 
 ## 実験ライフサイクル
 

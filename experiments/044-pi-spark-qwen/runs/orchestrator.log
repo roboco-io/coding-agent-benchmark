@@ -1,0 +1,3 @@
+=== starting sequential runs (pi: flash:dashscope/qwen3.8-flash coder:dashscope/qwen3-coder-next q27:dashscope/qwen3.8-27b / en / n=3) : 2026-10-10 18:46:03 ===
+=== start flash-en-1 : 2026-10-10 18:46:03 ===
+=== ABORTED by experimenter (user decision: 지금 중단하고 마무리) : 2026-10-10 18:53:05 ===

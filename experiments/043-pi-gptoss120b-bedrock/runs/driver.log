@@ -1,0 +1,7 @@
+=== RUN oss-en-1 (pi amazon-bedrock/openai.gpt-oss-120b-1:0, PROMPT-en.md, PORT=44904) start: 2026-10-10 15:41:21 ===
+=== RUN oss-en-1 finished (experimenter cap): 2026-10-10 17:23:00 ===
+=== RUN oss-en-2 (pi amazon-bedrock/openai.gpt-oss-120b-1:0, PROMPT-en.md, PORT=43204) start: 2026-10-10 17:23:00 ===
+=== RUN oss-en-2 finished (experimenter cap): 2026-10-10 17:44:38 ===
+=== RUN oss-en-2 finished: 2026-10-10 18:23:10 | timeout,2026-10-10 18:23:10 ===
+=== RUN oss-en-3 (pi amazon-bedrock/openai.gpt-oss-120b-1:0, PROMPT-en.md, PORT=44334) start: 2026-10-10 18:23:11 ===
+=== RUN oss-en-3 finished: 2026-10-10 18:44:40 | timeout,2026-10-10 18:44:40 ===

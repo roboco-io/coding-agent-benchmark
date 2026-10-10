@@ -50,7 +50,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 | 공유 설정 디렉터리에서 실행 | 이전 세션·메모리 교란, usage 범위 혼입 (EXP-007) | `codex-home`/`claude-config` 격리, run별 `sessions-<run>` 분리 |
 | 프롬프트 수정·재작성 | 기존 실험과 비교 불가 | `assets/` 정본만 사용, 해시 불일치 시 setup 중단 |
 | 미인식 모델의 200k 창 제한 | 컨텍스트 조기 차단 | `claude-direct`는 `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` 포함 |
-| 3000번대 포트를 외부 프로세스가 점유(VS Code Live Preview 등) | 채점 요청이 앱이 아닌 그 서비스로 가 거짓 음성 기각 (EXP-029 D-1) | smoke.sh의 WARN 확인 후 해당 프로세스 종료, 실험 중 실행 금지 |
+| 포트를 고정(3000 등)해 채점·서버 기동 | 외부 프로세스(VS Code 확장 등)가 점유한 포트로 채점 요청이 가 거짓 음성 기각 (EXP-029 D-1) | 포트를 고정하지 않는다. driver·measure가 40000–49999 빈 포트를 골라 `PORT`로 주입하고, 채점은 리포 소속 프로세스가 실제 LISTEN한 포트로만 한다(EXP-031). 외부 프로세스는 종료하지 않는다. 앱이 `PORT`를 무시하고 점유 포트에 고정 바인딩해 실패하면 산출물 결함으로 판정한다 (2026-10-10 사용자 지시) |
 | iteration 종료 후 metrics 행이 수 분째 안 생김 | 채점기 정리 누락으로 driver 대기 (EXP-027 D-1: 상대 경로 watcher 트리) | `hurl-last.log`로 채점 완료 확인 → 잔존 서버 트리 종료 → `runs/deviations.md`에 기록. 세션 시간은 로그 start/end로 산정 |
 | `~/.zsh_secrets` 전체를 에이전트 환경에 export | 에이전트의 `env` 출력으로 키가 세션 로그·아카이브에 남음 (EXP-036 D-3, EXP-029 아카이브에서도 발견) | `key_env.sh`의 `load_secrets`로 필요한 키만 노출(pi: `PI_KEYMAP` 대상+`PI_KEEP_ENV`), 보관 전 `redact_keys.py` |
 | run 디렉터리가 하네스 디렉터리 안에 있음 | 에이전트가 `../measure.sh`·이전 run 로그를 읽거나 실행 → agy 강제 종료(EXP-035 D-1), run 간 정보 노출(EXP-036 D-2) | 세션 기록에서 하네스 경로 참조를 전수 검사해 이탈로 기록. 구조 분리는 ROADMAP 후속 과제 |

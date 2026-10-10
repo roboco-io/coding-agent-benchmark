@@ -3,7 +3,8 @@
 #   명령을 백그라운드로 실행하고 30초마다 확인한다.
 #   - watch 경로 아래 파일이 idle_sec 동안 하나도 갱신되지 않으면 정체로 보고 프로세스 트리를 종료한다.
 #   - 현재 시각이 deadline_epoch(run 상한)를 넘으면 같은 방식으로 종료한다.
-#   종료 코드: 명령의 종료 코드, 정체 종료 124, 상한 종료 125. 사유는 WATCHDOG_REASON에 남긴다.
+#   - driver가 budget_check 함수를 정의했으면 30초마다 호출해, 출력이 있으면(비용 상한 초과) 종료한다(EXP-042 재발 방지).
+#   종료 코드: 명령의 종료 코드, 정체 종료 124, 상한 종료 125, 비용 상한 종료 126. 사유는 WATCHDOG_REASON에 남긴다.
 # 근거: EXP-039 luna-en-2에서 에이전트가 `npm run dev`를 포그라운드로 실행해 iteration이 반환되지 않았다.
 #   pi bash 도구에는 기본 timeout이 없고, run 상한은 iteration 사이에서만 검사됐다.
 #   EXP-020–036 세션 109개의 기록 간 최대 공백은 8.4분이었다(기본 idle 900초의 근거).
@@ -49,6 +50,12 @@ run_with_watchdog() {
     [ $((now - last_check)) -lt 30 ] && continue
     if _wd_recent "$((last_check - 5))" "${watch[@]}"; then last_active=$now; fi
     last_check=$now
+    if declare -F budget_check >/dev/null; then
+      local over; over=$(budget_check)
+      if [ -n "$over" ]; then
+        WATCHDOG_REASON="비용 상한 — $over"; _wd_killtree "$pid"; wait "$pid" 2>/dev/null; return 126
+      fi
+    fi
     if [ $((now - last_active)) -ge "$idle" ]; then
       WATCHDOG_REASON="${idle}초 동안 세션·로그 갱신 없음"; _wd_killtree "$pid"; wait "$pid" 2>/dev/null; return 124
     fi

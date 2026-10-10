@@ -5,6 +5,12 @@ set -euo pipefail
 CFG="$1"; SKILL="$(cd "$(dirname "$0")/.." && pwd)"
 source "$CFG"
 BASE="$HOME/experiments/ralph-exp$EXP"
+# 비용 상한 필수 (EXP-042: 사후 집계 상한만 두어 2 run에 약 $92 과금). 구독 실행(claude-native·codex OAuth)은 단가 0을 명시한다.
+for v in PRICE_IN PRICE_OUT RUN_BUDGET_USD EXP_BUDGET_USD; do
+  [ -n "${!v:-}" ] || { echo "$v 미설정 — 비용 상한과 공개 단가는 필수 (bench.env.example 참조)" >&2; exit 1; }
+done
+NRUNS=$(( $(echo $CONDITIONS | wc -w) * $(echo $LANGS | wc -w) * N ))
+echo "비용 상한: run당 \$$RUN_BUDGET_USD, 실험 \$$EXP_BUDGET_USD (run ${NRUNS}개, 최악 run당 상한×run 수 = \$$(awk -v a="$RUN_BUDGET_USD" -v n="$NRUNS" 'BEGIN{print a*n}'))"
 [ -e "$BASE/done-all" ] && { echo "이미 완료된 하네스: $BASE" >&2; exit 1; }
 mkdir -p "$BASE"
 cp "$CFG" "$BASE/bench.env"
@@ -12,7 +18,7 @@ cp "$SKILL"/assets/PROMPT-en.md "$SKILL"/assets/PROMPT-ko.md "$BASE/"
 rm -rf "$BASE/harness-hurl"; cp -r "$SKILL/assets/harness-hurl" "$BASE/"
 (cd "$SKILL/assets" && md5 -r PROMPT-en.md PROMPT-ko.md harness-hurl/*.hurl | diff - checksums.md5) \
   || { echo "정본 해시 불일치 — assets 변경 여부 확인" >&2; exit 1; }
-for f in driver.sh watchdog.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py usage_agy.py pi_env.sh agy_env.sh key_env.sh cleanup.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
+for f in driver.sh watchdog.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py usage_agy.py cost_guard.py usage_probe.py pi_env.sh agy_env.sh key_env.sh cleanup.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
 
 case "$HARNESS" in
   codex)

@@ -27,9 +27,9 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 1. **사전 조사**: 모델 ID를 추측하지 않는다. 제공자 모델 목록(예: `GET /v1/models`, `~/.codex/models_cache.json`)에서 정확한 ID·추론 설정·컨텍스트를 확인한다. 사용자가 말한 이름이 목록에 없으면 멈추고 `AskUserQuestion`으로 확인한다.
 2. **언어 조건**: 사용자가 따로 지시하지 않으면 **영문(EN) PROMPT만** 실행한다(`LANGS="en"`, 2026-10-03 사용자 지시). 한국어(KO)는 사용자가 명시적으로 요청한 경우에만 추가한다.
 3. **설계 문서**: 다음 번호로 `experiments/NNN-<slug>/README.md`를 `templates/experiment-readme.md`로 작성한다. 질문 유형(완주 가능성 등), 조건, 반복 수, 상한, 판정 기준(예: 검증 3/3 / 부분 검증 1–2/3 / run 단위 보류)을 **실행 전에** 고정하고 `hypotheses/catalog.md`에 가설을 등록한다.
-4. **하네스 생성**: `scripts/bench.env.example`을 복사해 채운 뒤 `bash .claude/skills/ralph-model-benchmark/scripts/setup.sh <bench.env>`.
-5. **Phase 0**: `bash ~/experiments/ralph-expNNN/smoke.sh` — 조건 전부 PASS여야 기동. 결과와 CLI·hurl 버전(에이전트 클라이언트 버전은 `claude --version`·`codex --version`·`pi --version` 출력 그대로, 변환 계층이 있으면 그 버전도), 노출된 지침·스킬·MCP(`claude-native`는 비격리)를 `runs/phase0.md`에 기록.
-6. **기동**: `nohup caffeinate -is bash ~/experiments/ralph-expNNN/run-all.sh >/dev/null 2>&1 &`. 순차 실행이며 다른 실험과 동시 실행 금지. 진행은 `orchestrator.log`·`metrics-*.csv`로 확인하고 개입하지 않는다.
+4. **하네스 생성**: `scripts/bench.env.example`을 복사해 채운 뒤(**`PRICE_IN`·`PRICE_OUT`·`RUN_BUDGET_USD`·`EXP_BUDGET_USD` 필수** — 단가 출처·최악 총액을 설계 문서에 쓰고 사용자 승인) `bash .claude/skills/ralph-model-benchmark/scripts/setup.sh <bench.env>`.
+5. **Phase 0**: `bash ~/experiments/ralph-expNNN/smoke.sh` — 조건 전부 PASS여야 기동(`claude-direct`는 usage 정확도 점검 `usage_probe.py` 포함). 결과와 CLI·hurl 버전(에이전트 클라이언트 버전은 `claude --version`·`codex --version`·`pi --version` 출력 그대로, 변환 계층이 있으면 그 버전도), 노출된 지침·스킬·MCP(`claude-native`는 비격리)를 `runs/phase0.md`에 기록.
+6. **기동**: `nohup caffeinate -is bash ~/experiments/ralph-expNNN/run-all.sh >/dev/null 2>&1 &`. 순차 실행이며 다른 실험과 동시 실행 금지. 진행은 `orchestrator.log`·`metrics-*.csv`·`cost-guard.csv`(30초 간격 추정 비용)로 확인하고 개입하지 않는다. 단, 같은 API 오류가 반복되는 등 이상 징후가 보이면 원인 조사 전에 먼저 멈추고 사용자에게 알린다.
 7. **독립 재검증**: 완주 run마다 `bash ~/experiments/ralph-expNNN/measure.sh ~/experiments/ralph-expNNN/app-<run>`을 2회 실행해 `13,154`를 확인하고 `recheck.csv`로 남긴다.
 8. **usage 집계**: `codex` → `python3 ~/experiments/ralph-expNNN/usage_codex.py ~/experiments/ralph-expNNN <run>...`; Claude 계열 → `python3 scripts/aggregate_tokens.py --json <dir>` (message.id dedup; `<dir>`는 claude-direct면 `sessions-<run>/*/`, claude-native면 `sessions-<run>/`); `pi` → `python3 ~/experiments/ralph-expNNN/usage_pi.py ~/experiments/ralph-expNNN <run>...` (responseId dedup, 실행 시 `-nc -ns -ne -np -na`로 상위 AGENTS.md/CLAUDE.md·스킬 비노출); `agy` → `python3 ~/experiments/ralph-expNNN/usage_agy.py ~/experiments/ralph-expNNN <run>...` (transcript 합계, 결과 JSON과 대조). 결과는 **토큰 대리지표**이며 청구 비용이 아니다.
 9. **보관(마스킹 선행)**: 리포에 넣기 전에 `python3 scripts/redact_keys.py <복사본 디렉터리>`로 비밀값을 마스킹하고 `git ls-files` 대상 아카이브에 키 패턴이 없는지 확인한다 (EXP-036 D-3). `bench.env`, 스크립트, `metrics-*.csv`, usage CSV, `orchestrator.log`, `phase0.md`, `recheck.csv`, 로그(`gzip`)를 `experiments/NNN-*/runs/`로 복사한다.
@@ -38,12 +38,13 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 
 ## metrics CSV
 
-`iter,종료시각,exit,성공 hurl 파일 수,실행 요청 수,완료 선언,게이트` — 게이트 `pass`만 완주. 에이전트의 `.ralph-done` 선언은 채점기가 13/13이 아니면 `rejected`로 삭제된다. `timeout,<시각>` 행은 wall-clock 상한 도달. exit `124`는 정체 감시(`STALL_SEC`, 기본 900초)가, `125`는 run 상한(`MAX_SEC`)이 진행 중 iteration을 종료한 것이다(`watchdog.sh`, 로그에 `watchdog:` 줄). 종료된 iteration도 채점하고 루프는 계속된다.
+`iter,종료시각,exit,성공 hurl 파일 수,실행 요청 수,완료 선언,게이트` — 게이트 `pass`만 완주. 에이전트의 `.ralph-done` 선언은 채점기가 13/13이 아니면 `rejected`로 삭제된다. `timeout,<시각>` 행은 wall-clock 상한 도달. exit `124`는 정체 감시(`STALL_SEC`, 기본 300초)가, `125`는 run 상한(`MAX_SEC`, 기본 1200초)이, `126`은 비용 상한이 진행 중 iteration을 종료한 것이다. `budget,<시각>` 행은 비용 상한으로 run을 멈춘 것이다(`watchdog.sh`, 로그에 `watchdog:` 줄). 종료된 iteration도 채점하고 루프는 계속된다.
 
 ## 흔한 실수
 
 | 실수 | 결과 | 대응 |
 |---|---|---|
+| 비용 상한을 사후 집계로만 둠 | 제공자 usage 누락으로 자동 압축이 멈춘 coder 2 run이 약 $92 과금(EXP-042, 청구 $94.22) | `RUN_BUDGET_USD`·`EXP_BUDGET_USD` 필수 — 하네스가 30초마다 추정해 초과 시 종료(exit 126)·`budget-stop`. claude-direct는 smoke의 `usage_probe.py` 통과 필수 |
 | PATH의 `hurl` 사용 | npm shim이 실 Hurl을 가려 0건 통과 오검(EXP-020) | measure.sh의 절대 경로 유지 |
 | 오래된 `auth.json` 사본 재사용 | Codex 401 (EXP-021) | setup.sh가 매번 `~/.codex/auth.json` 최신본 복사 |
 | pi OAuth provider(`openai-codex` 등) 자격증명 누락 | 격리 `pi-agent`에 인증 없음 → 실행 실패 | setup.sh가 매번 `~/.pi/agent/auth.json` 최신본을 `$BASE/pi-agent/auth.json`(600)으로 복사 (EXP-030). 사전에 `pi auth check --provider <p>` ready 확인 |

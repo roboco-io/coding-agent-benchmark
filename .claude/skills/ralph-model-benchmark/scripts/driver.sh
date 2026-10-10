@@ -25,7 +25,30 @@ free_port() {
 }
 
 source "$BASE/watchdog.sh"
-STALL_SEC="${STALL_SEC:-900}"   # iteration 정체 한도(초). 세션·로그·앱 파일이 이 시간 동안 갱신되지 않으면 iteration 종료 (EXP-039)
+STALL_SEC="${STALL_SEC:-300}"   # iteration 정체 한도(초). 세션·로그·앱 파일이 이 시간 동안 갱신되지 않으면 iteration 종료 (EXP-039)
+
+# 비용 가드 (EXP-042 재발 방지, 2026-10-10): 진행 중 run과 실험 전체의 추정 비용을 30초마다 확인한다.
+# 추정은 cost_guard.py — 제공자 보고 usage와 대화 기록 바이트 기반 하한 중 큰 값(보고 누락 대비).
+export PRICE_IN PRICE_OUT PRICE_CACHE_READ PRICE_TIERS
+cost_path() {  # 진행 중 run의 세션 기록 위치
+  case "$HARNESS" in
+    pi) echo "$BASE/sessions-$RUN" ;;
+    codex) echo "$BASE/codex-home/sessions" ;;
+    claude-direct) echo "$BASE/claude-config/projects" ;;
+    claude-native) echo "$HOME/.claude/projects/$(echo "$REPO" | sed 's|[/.]|-|g')" ;;
+    agy) echo "$BASE/agy-home" ;;
+  esac
+}
+budget_check() {  # 상한 초과 시 사유를 출력, 아니면 아무것도 출력하지 않음
+  local cur prev p others=()
+  cur=$(python3 "$BASE/cost_guard.py" "$BASE" "$HARNESS" "$RUN" "$(cost_path)" 2>/dev/null) || cur=0
+  for p in "$BASE"/sessions-*; do [ -d "$p" ] && [ "$p" != "$BASE/sessions-$RUN" ] && others+=("$p"); done
+  prev=0; [ ${#others[@]} -gt 0 ] && prev=$(python3 "$BASE/cost_guard.py" "$BASE" "$HARNESS" ALL "${others[@]}" 2>/dev/null)
+  echo "$(date '+%F %T'),$RUN,$cur,$prev" >> "$BASE/cost-guard.csv"
+  awk -v c="$cur" -v p="${prev:-0}" -v rb="$RUN_BUDGET_USD" -v eb="$EXP_BUDGET_USD" 'BEGIN{
+    if (c+0 >= rb+0) printf "run 추정 $%.2f ≥ RUN_BUDGET_USD $%s", c, rb;
+    else if (c+p >= eb+0) printf "실험 누적 추정 $%.2f ≥ EXP_BUDGET_USD $%s", c+p, eb }'
+}
 
 # 정체 판단에 쓰는 갱신 감시 경로: 실행 로그·앱 작업 트리·하네스별 세션 기록
 watch_paths() {
@@ -89,11 +112,17 @@ for i in $(seq $((DONE_ITER + 1)) "$MAX_ITER"); do
     echo "timeout,$(date '+%F %T')" >> "$MET"
     break
   fi
+  OVER=$(budget_check)
+  if [ -n "$OVER" ]; then
+    echo "=== [$RUN] 비용 상한 도달 — iteration $i 미실행: $OVER : $(date '+%F %T') ===" >> "$LOG"
+    echo "budget,$(date '+%F %T')" >> "$MET"; touch "$BASE/budget-stop"
+    break
+  fi
   echo "=== [$RUN] iteration $i start: $(date '+%F %T') ===" >> "$LOG"
   WATCH=(); while IFS= read -r w; do WATCH+=("$w"); done < <(watch_paths)
   run_with_watchdog "$STALL_SEC" $((START + MAX_SEC)) "${WATCH[@]}" -- invoke_agent < /dev/null >> "$LOG" 2>&1
   EXIT=$?
-  [ -n "$WATCHDOG_REASON" ] && echo "=== [$RUN] watchdog: iteration $i 종료 — $WATCHDOG_REASON (exit $EXIT, 124=정체·125=run 상한) ===" >> "$LOG"
+  [ -n "$WATCHDOG_REASON" ] && echo "=== [$RUN] watchdog: iteration $i 종료 — $WATCHDOG_REASON (exit $EXIT, 124=정체·125=run 상한·126=비용 상한) ===" >> "$LOG"
   echo "=== [$RUN] iteration $i end (exit $EXIT): $(date '+%F %T') ===" >> "$LOG"
   RESULT=$(bash "$BASE/measure.sh" "$REPO")
   CLAIM=0; [ -f "$REPO/.ralph-done" ] && CLAIM=1
@@ -110,6 +139,10 @@ for i in $(seq $((DONE_ITER + 1)) "$MAX_ITER"); do
   # metrics 열: iter,종료시각,exit,성공 hurl 파일 수,실행 요청 수,완료 선언,게이트
   echo "$i,$(date '+%F %T'),$EXIT,$RESULT,$CLAIM,$GATE" >> "$MET"
   [ -f "$REPO/.ralph-done" ] && break
+  if [ "$EXIT" = 126 ]; then
+    echo "budget,$(date '+%F %T')" >> "$MET"; touch "$BASE/budget-stop"
+    break
+  fi
 done
 touch "$BASE/done-$RUN"
 echo "=== RUN $RUN finished: $(date '+%F %T') | $(tail -1 "$MET") ===" >> "$BASE/driver.log"

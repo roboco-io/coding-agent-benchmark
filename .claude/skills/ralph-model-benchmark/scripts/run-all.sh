@@ -21,6 +21,8 @@ archive_sessions(){ # $1 run
 }
 run_one(){
   [ -f "$BASE/done-$1" ] && { log "skip $1"; return; }
+  # 비용 상한으로 멈춘 실험은 남은 run을 시작하지 않는다 (EXP-042 재발 방지)
+  [ -f "$BASE/budget-stop" ] && { log "skip $1 (budget-stop)"; return; }
   log "start $1"
   bash "$BASE/driver.sh" "$1"
   archive_sessions "$1"

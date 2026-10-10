@@ -3,7 +3,7 @@
 - 실험일: 2026-10-10 (11:35–15:41 KST, 단일 오케스트레이터 순차, 9 run 중 5 run 실행 후 중단)
 - 가설: [M-35](../../hypotheses/catalog.md) — Claude Code(`claude -p` 2.1.296)를 DashScope Anthropic 호환 엔드포인트로 DGX Spark 1대(128GB)에 올릴 수 있는 크기의 오픈 웨이트 Qwen 3종(`qwen3.8-flash`·`qwen3-coder-next`·`qwen3.8-27b`, thinking 기본값)에 직결하면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·4시간 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제).
 - 클라이언트: Claude Code 2.1.296
-- **판정: 보류(실험 중단)** — 사용자 결정으로 5/9 run에서 중단해 사전 기준(조건별 3 run)을 채우지 못했다. 실행한 범위의 관측: flash 2/2, q27 1/1, coder 1/2 완주(완주 4 run 모두 게이트와 독립 재검증 2회 13/13·154/154 일치). 중단 원인은 DashScope Anthropic 호환 엔드포인트가 tool_result 토큰을 `message_start` usage에서 빼고 보고해 Claude Code의 자동 압축이 작동하지 않은 것이다. coder는 입력 한도(204,800)에 닿아 HTTP 400을 반복했고, 2 run의 환산 비용이 하한 약 $89로 이 리포의 run당 비용 최고치를 크게 넘었다.
+- **판정: 보류(실험 중단)** — 사용자 결정으로 5/9 run에서 중단해 사전 기준(조건별 3 run)을 채우지 못했다. 실행한 범위의 관측: flash 2/2, q27 1/1, coder 1/2 완주(완주 4 run 모두 게이트와 독립 재검증 2회 13/13·154/154 일치). 중단 원인은 DashScope Anthropic 호환 엔드포인트가 tool_result 토큰을 `message_start` usage에서 빼고 보고해 Claude Code의 자동 압축이 작동하지 않은 것이다. coder는 입력 한도(204,800)에 닿아 HTTP 400을 반복했고, 2 run의 환산 비용이 하한 약 $89(콘솔 청구 합계 $94.22)로 이 리포의 run당 비용 최고치를 크게 넘었다.
 
 > 설계는 [README.md](README.md)에 실행 전 고정했다. 같은 모델의 pi 측정은 [EXP-044](../044-pi-spark-qwen/README.md)로 넘겼으나 그 실험도 첫 run에서 중단됐다.
 
@@ -27,7 +27,7 @@
 
 - run 소요는 run 시작부터 마지막 채점까지의 wall-clock이다.
 - 요청 수와 토큰은 세션 jsonl에서 `message.id`별로 각 usage 필드의 최대값을 취한 하한값이다([runs/usage042.py](runs/usage042.py), [runs/usage.csv](runs/usage.csv)). 표준 집계기 `aggregate_tokens.py`는 같은 id에 서로 다른 usage가 기록되어 "conflicting usage" 오류로 중단한다(D-1과 같은 원인). tool_result 누락분은 복원되지 않으므로 실제 토큰은 이보다 많을 수 있다.
-- 환산 비용은 Alibaba Cloud Model Studio 공개 단가(싱가포르, 2026-10-09 갱신 페이지)로 계산한 추정이며 청구액이 아니다. qwen3.8-flash $0.15/$0.47, qwen3.8-27b $0.50/$3.00(100만 토큰당 입력/출력, 구간 없음), qwen3-coder-next는 요청 입력 길이 구간별 $0.30/$1.50(32K 이하)·$0.50/$2.50(32K–128K)·$0.80/$4.00(128K–256K)이다. 캐시 읽기는 공개 단가 표에 없어 입력 단가의 10%로 가정했다(flash·q27만 해당, coder는 캐시 기록 0). 실제 청구액은 Alibaba Cloud 결제 콘솔에서 확인해야 한다.
+- 환산 비용은 Alibaba Cloud Model Studio 공개 단가(싱가포르, 2026-10-09 갱신 페이지)로 계산한 추정이며 청구액이 아니다. qwen3.8-flash $0.15/$0.47, qwen3.8-27b $0.50/$3.00(100만 토큰당 입력/출력, 구간 없음), qwen3-coder-next는 요청 입력 길이 구간별 $0.30/$1.50(32K 이하)·$0.50/$2.50(32K–128K)·$0.80/$4.00(128K–256K)이다. 캐시 읽기는 공개 단가 표에 없어 입력 단가의 10%로 가정했다(flash·q27만 해당, coder는 캐시 기록 0). 실제 청구액은 Alibaba Cloud 결제 콘솔에서 사용자가 확인한 **$94.22**다(2026-10-10 확인). 이 금액에는 EXP-044(약 $0.03)와 Phase 0 확인 요청(약 $0.1)도 들어 있을 수 있고, 같은 계정의 다른 사용분이 섞였는지는 확인하지 않았다. 세션 기록 기반 하한 추정(EXP-042 합계 $90.4)은 청구액의 약 96%로, 하한 추정이 실제보다 약간 낮다는 해석과 맞는다.
 - coder 2 run의 요청 1,199건 중 442건이 128K 초과 구간이었다. 자동 압축이 없어 매 요청이 입력 한도 근처의 전체 대화를 다시 보냈다.
 
 ## 모델 유지·루프 기여

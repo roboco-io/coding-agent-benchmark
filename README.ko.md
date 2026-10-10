@@ -178,7 +178,7 @@ EN 3/3 완주(run 2·3은 iteration 1, run 1은 iteration 2). 게이트 pass와 
 EN 3/3 전부 iteration 1 완주. 게이트 pass와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었으며, 응답 model 필드는 전수 `claude-haiku-5-5`, thinking은 pi 기본값 `medium`이었다. 세션 5.4–5.9분·output 50.0–55.4K·API 호출 38–46회, 공개 단가 환산 run당 $0.05–0.09. run 1은 에이전트의 프로세스 조회로 다른 프로세스의 비밀값이 세션 기록에 남았다(D-1, 판정 무관). → [보고서](experiments/038-pi-haiku55/report.md)
 
 **EXP-042 — Claude Code × DGX Spark 탑재 가능 Qwen 3종 직결 (중단)** (보류(실험 중단))  
-사용자 결정으로 5/9 run에서 중단해 사전 기준(조건별 3 run)을 채우지 못했다. 실행한 범위의 관측: flash 2/2, q27 1/1, coder 1/2 완주(완주 4 run 모두 게이트와 독립 재검증 2회 13/13·154/154 일치). 중단 원인은 DashScope Anthropic 호환 엔드포인트가 tool_result 토큰을 `message_start` usage에서 빼고 보고해 Claude Code의 자동 압축이 작동하지 않은 것이다. coder는 입력 한도(204,800)에 닿아 HTTP 400을 반복했고, 2 run의 환산 비용이 하한 약 $89로 이 리포의 run당 비용 최고치를 크게 넘었다. → [보고서](experiments/042-spark-qwen-direct/report.md)
+사용자 결정으로 5/9 run에서 중단해 사전 기준(조건별 3 run)을 채우지 못했다. 실행한 범위의 관측: flash 2/2, q27 1/1, coder 1/2 완주(완주 4 run 모두 게이트와 독립 재검증 2회 13/13·154/154 일치). 중단 원인은 DashScope Anthropic 호환 엔드포인트가 tool_result 토큰을 `message_start` usage에서 빼고 보고해 Claude Code의 자동 압축이 작동하지 않은 것이다. coder는 입력 한도(204,800)에 닿아 HTTP 400을 반복했고, 2 run의 환산 비용이 하한 약 $89(콘솔 청구 합계 $94.22)로 이 리포의 run당 비용 최고치를 크게 넘었다. → [보고서](experiments/042-spark-qwen-direct/report.md)
 
 **EXP-043 — pi × gpt-oss-120b (Amazon Bedrock) 랄프 루프 완주 검증 (EN n=3)** (기각)  
 3 run 모두 20분 상한 안에 완주하지 못했다(0/3). 상한 안의 모든 iteration이 Hurl 0/13이었고, 상한 밖까지 실행된 구간(oss-en-1 약 100분, oss-en-2 60분)에서도 게이트 통과는 없었다. 주된 실패 양상은 에이전트가 `npm run dev`를 포그라운드로 실행해 도구 호출이 반환되지 않는 정체였다. 상한이 실행 중 두 번 바뀌었으므로 "20분 안 완주 실패"로만 해석한다. → [보고서](experiments/043-pi-gptoss120b-bedrock/report.md)

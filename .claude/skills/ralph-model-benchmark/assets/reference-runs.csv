@@ -1,0 +1,116 @@
+model,exp,run,harness,total_input,output,requests,max_prompt
+Opus 4.8,EXP-010,48-1,claude-code-native,4388684,37120,65,100022
+Opus 4.8,EXP-010,48-2,claude-code-native,3106111,32106,42,97155
+Opus 4.8,EXP-010,48-3,claude-code-native,3393141,29582,46,99992
+Opus 4.8,EXP-019,48ko-1,claude-code-native,2799894,29196,,0
+Opus 4.8,EXP-019,48ko-2,claude-code-native,3065867,26472,,0
+Opus 4.8,EXP-019,48ko-3,claude-code-native,2714164,31656,,0
+Opus 5,EXP-009,opus5-1,claude-code-native,6755545,48431,67,134765
+Opus 5,EXP-009,opus5-2,claude-code-native,8050514,47696,84,131677
+Opus 5,EXP-009,opus5-3,claude-code-native,3844059,42633,43,112830
+Opus 5,EXP-010,5-1,claude-code-native,6928710,47910,74,137074
+Opus 5,EXP-010,5-2,claude-code-native,7560330,46195,85,122291
+Opus 5,EXP-010,5-3,claude-code-native,4347936,41084,49,120997
+Opus 5,EXP-019,5ko-1,claude-code-native,3855355,48744,,0
+Opus 5,EXP-019,5ko-2,claude-code-native,5130056,45476,,0
+Opus 5,EXP-019,5ko-3,claude-code-native,5012851,39148,,0
+Fable 5.1,EXP-023,fable-1,claude-code-native,1519298,31102,26,90111
+Fable 5.1,EXP-023,fable-2,claude-code-native,2293761,35753,34,96524
+Fable 5.1,EXP-023,fable-3,claude-code-native,1317133,28747,22,84454
+Opus 5.5,EXP-026,en-1,claude-code-native,2685485,28166,41,89410
+Opus 5.5,EXP-026,en-2,claude-code-native,1593272,19871,27,79210
+Opus 5.5,EXP-026,en-3,claude-code-native,1358072,18607,23,78781
+Opus 5.5,EXP-026,ko-1,claude-code-native,1407613,20873,25,75535
+Opus 5.5,EXP-026,ko-2,claude-code-native,1442018,21089,26,76169
+Opus 5.5,EXP-026,ko-3,claude-code-native,1241933,20066,22,77236
+DeepSeek V4.1-Flash,EXP-025,flash-en-1,claude-code-direct(DeepSeek),2879306,41061,48,85638
+DeepSeek V4.1-Flash,EXP-025,flash-en-2,claude-code-direct(DeepSeek),4055717,43276,65,89615
+DeepSeek V4.1-Flash,EXP-025,flash-en-3,claude-code-direct(DeepSeek),4387335,47565,66,90161
+DeepSeek V4.1-Flash,EXP-025,flash-ko-1,claude-code-direct(DeepSeek),5780525,53678,81,107686
+DeepSeek V4.1-Flash,EXP-025,flash-ko-2,claude-code-direct(DeepSeek),5546618,58871,73,106878
+DeepSeek V4.1-Flash,EXP-025,flash-ko-3,claude-code-direct(DeepSeek),3340396,38890,61,80964
+DeepSeek V4-Pro,EXP-025,pro-en-1,claude-code-direct(DeepSeek),4210261,62497,50,111118
+DeepSeek V4-Pro,EXP-025,pro-en-2,claude-code-direct(DeepSeek),2087050,65548,24,112514
+DeepSeek V4-Pro,EXP-025,pro-en-3,claude-code-direct(DeepSeek),5124982,69590,62,116558
+DeepSeek V4-Pro,EXP-025,pro-ko-1,claude-code-direct(DeepSeek),3820080,64804,51,113918
+DeepSeek V4-Pro,EXP-025,pro-ko-2,claude-code-direct(DeepSeek),3908214,59621,52,105000
+DeepSeek V4-Pro,EXP-025,pro-ko-3,claude-code-direct(DeepSeek),2809852,62160,33,114800
+kimi-k3,EXP-014,kimi-1,claude-code-direct(Moonshot),2420580,31302,50,75721
+kimi-k3,EXP-016,kimi-2,claude-code-direct(Moonshot),1188672,14390,31,51775
+kimi-k3,EXP-016,kimi-3,claude-code-direct(Moonshot),1375961,14205,38,55030
+kimi-k3,EXP-017,kimi-ko-1,claude-code-direct(Moonshot),1337385,24024,30,64135
+kimi-k3,EXP-017,kimi-ko-2,claude-code-direct(Moonshot),1663659,18767,37,62474
+kimi-k3,EXP-017,kimi-ko-3,claude-code-direct(Moonshot),1209236,17176,31,55630
+qwen3.8-max,EXP-013,qwen-1,claude-code-direct(DashScope),2217287,34617,39,81813
+qwen3.8-max,EXP-016,qwen-2,claude-code-direct(DashScope),3764565,40930,61,93447
+qwen3.8-max,EXP-016,qwen-3,claude-code-direct(DashScope),2713383,37005,44,87880
+qwen3.8-max,EXP-017,qwen-ko-1,claude-code-direct(DashScope),4734308,45819,71,95929
+qwen3.8-max,EXP-017,qwen-ko-2,claude-code-direct(DashScope),3095070,32750,51,81902
+qwen3.8-max,EXP-017,qwen-ko-3,claude-code-direct(DashScope),4286221,44362,67,95989
+gpt-5.6-sol,EXP-011,sol-1,codex-cli,1181148,13330,26,0
+gpt-5.6-sol,EXP-016,sol-2,codex-cli,2144593,21788,55,0
+gpt-5.6-sol,EXP-016,sol-3,codex-cli,1334530,12202,28,0
+gpt-5.6-sol,EXP-019,solko-1,codex-cli,1430591,16191,34,0
+gpt-5.6-sol,EXP-019,solko-2,codex-cli,1701886,17349,34,0
+gpt-5.6-sol,EXP-019,solko-3,codex-cli,1210163,13655,30,0
+gpt-6-astra,EXP-021,astra-1,codex-cli,925428,12524,21,0
+gpt-6-astra,EXP-021,astra-2,codex-cli,879449,12214,22,0
+gpt-6-astra,EXP-021,astra-3,codex-cli,769822,12625,20,0
+Solar Open 2,EXP-015,solar-1,claude-code-direct(Upstage),32711307,252341,396,153455
+Solar Pro 4,EXP-020,pro4-1,claude-code-direct(Upstage),51314046,195628,627,174422
+Solar Pro 4,EXP-020,pro4-2,claude-code-direct(Upstage),26097914,113539,292,166734
+Solar Pro 4,EXP-020,pro4-3,claude-code-direct(Upstage),15410410,103633,160,166650
+gpt-6-sol,EXP-027,sol-en-1,codex-cli,1460178,10764,,0
+gpt-6-sol,EXP-027,sol-en-2,codex-cli,1067955,11005,,0
+gpt-6-sol,EXP-027,sol-en-3,codex-cli,1080252,10438,,0
+gpt-6-luna,EXP-027,luna-en-1,codex-cli,4018493,21483,,0
+gpt-6-luna,EXP-027,luna-en-2,codex-cli,1532724,14123,,0
+gpt-6-luna,EXP-027,luna-en-3,codex-cli,1116331,13411,,0
+Sonnet 5,EXP-028,en-1,claude-code-native,7922685,73701,104,130530
+Sonnet 5,EXP-028,ko-1,claude-code-native,11472345,64721,96,167676
+Sonnet 5,EXP-028,en-2,claude-code-native,8714875,57585,90,130022
+Sonnet 5,EXP-028,ko-2,claude-code-native,14496793,72126,140,172769
+Sonnet 5,EXP-028,en-3,claude-code-native,10485568,59152,105,152713
+Sonnet 5,EXP-028,ko-3,claude-code-native,7383518,66360,84,134509
+kimi-k3,EXP-029,kimi-en-1,pi(Moonshot),683878,17429,30,0
+kimi-k3,EXP-029,kimi-en-2,pi(Moonshot),866453,18742,41,0
+kimi-k3,EXP-029,kimi-en-3,pi(Moonshot),853423,18667,38,0
+qwen3.8-max,EXP-029,qwen-en-1,pi(DashScope),3785331,50441,136,0
+qwen3.8-max,EXP-029,qwen-en-2,pi(DashScope),1613441,34147,42,0
+qwen3.8-max,EXP-029,qwen-en-3,pi(DashScope),1259916,29269,41,0
+DeepSeek V4.1-Flash,EXP-029,flash-en-1r,pi(DeepSeek),1780016,42919,40,0
+DeepSeek V4.1-Flash,EXP-029,flash-en-2,pi(DeepSeek),921945,17583,25,0
+DeepSeek V4.1-Flash,EXP-029,flash-en-3,pi(DeepSeek),1479628,33005,32,0
+Opus 5.5,EXP-030,opus-en-1,pi(Anthropic API),704186,18990,24,0
+Opus 5.5,EXP-030,opus-en-2,pi(Anthropic API),769077,16594,17,0
+Opus 5.5,EXP-030,opus-en-3,pi(Anthropic API),944412,19824,27,0
+gpt-6-sol,EXP-030,sol-en-1,pi(ChatGPT OAuth),503725,6961,32,0
+gpt-6-sol,EXP-030,sol-en-2,pi(ChatGPT OAuth),584814,7599,35,0
+gpt-6-sol,EXP-030,sol-en-3,pi(ChatGPT OAuth),543597,8587,31,0
+Sonnet 5.5,EXP-031,en-1,claude-code-native,1150221,15203,18,80323
+Sonnet 5.5,EXP-031,ko-1,claude-code-native,1332683,17432,19,89825
+Sonnet 5.5,EXP-031,en-2,claude-code-native,1517542,16223,24,77401
+Sonnet 5.5,EXP-031,ko-2,claude-code-native,1130252,17129,16,93995
+Sonnet 5.5,EXP-031,en-3,claude-code-native,1474331,19993,20,91279
+Sonnet 5.5,EXP-031,ko-3,claude-code-native,1689737,20892,23,93290
+Sonnet 5.5,EXP-032,sonnet55-en-1,pi(Anthropic API),476074,14742,23,0
+Sonnet 5.5,EXP-032,sonnet55-en-2,pi(Anthropic API),281444,10880,13,0
+Sonnet 5.5,EXP-032,sonnet55-en-3,pi(Anthropic API),427884,12223,18,0
+gpt-6.1-sol,EXP-033,sol61-en-1,codex-cli,1230179,16179,,0
+gpt-6.1-sol,EXP-033,sol61-en-2,codex-cli,920508,14330,,0
+gpt-6.1-sol,EXP-033,sol61-en-3,codex-cli,811134,10048,,0
+gpt-6.1-sol,EXP-034,sol61-en-1,pi(ChatGPT OAuth),835584,13263,33,0
+gpt-6.1-sol,EXP-034,sol61-en-2,pi(ChatGPT OAuth),813696,13251,34,0
+gpt-6.1-sol,EXP-034,sol61-en-3,pi(ChatGPT OAuth),585966,12463,29,0
+gemini-3.8-flash,EXP-035,flash38-en-1,agy(Gemini API key),11042972,63420,119,0
+gemini-3.8-flash,EXP-035,flash38-en-2,agy(Gemini API key),10212321,57039,121,0
+gemini-3.8-flash,EXP-035,flash38-en-3,agy(Gemini API key),11204391,50454,192,0
+gemini-3.8-flash,EXP-036,flash38-en-1,pi(Gemini API key),8278631,46827,112,0
+gemini-3.8-flash,EXP-036,flash38-en-2,pi(Gemini API key),5571791,47052,119,0
+gemini-3.8-flash,EXP-036,flash38-en-3,pi(Gemini API key),4127291,29650,102,0
+Haiku 5.5,EXP-037,en-1,claude-code-native,3606145,56251,59,101418
+Haiku 5.5,EXP-037,en-2,claude-code-native,3902072,57617,52,113772
+Haiku 5.5,EXP-037,en-3,claude-code-native,2562080,48967,38,97513
+Haiku 5.5,EXP-038,haiku55-en-1,pi(Anthropic API),2430145,54120,46,0
+Haiku 5.5,EXP-038,haiku55-en-2,pi(Anthropic API),2281921,55444,43,0
+Haiku 5.5,EXP-038,haiku55-en-3,pi(Anthropic API),1827478,49981,38,0

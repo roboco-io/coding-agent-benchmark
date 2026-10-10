@@ -4,6 +4,7 @@
 # run 종료마다 세션 로그를 run별 디렉터리로 옮겨 usage 계측 범위를 분리한다.
 BASE="$(cd "$(dirname "$0")" && pwd)"
 source "$BASE/bench.env"
+source "$BASE/gate.sh"; require_approval 2>>"$BASE/orchestrator.log" || { echo "=== 거부: 실행 승인 없음 또는 승인 뒤 설정 변경 : $(date '+%F %T') ===" >> "$BASE/orchestrator.log"; exit 1; }
 LOG="$BASE/orchestrator.log"
 log(){ echo "=== $* : $(date '+%F %T') ===" >> "$LOG"; }
 archive_sessions(){ # $1 run

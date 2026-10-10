@@ -1,0 +1,26 @@
+{
+  "_comment": "랄프 루프 RealWorld 과제의 과거 완주 run 토큰 프로파일. preflight.py가 모델 적합성·비용 추정에 쓴다. 원자료: reference-runs.csv (analysis/cost/usage_all_runs.csv 115 run + 세션 기록에서 요청별 최대 프롬프트를 다시 측정, 61 run). 2026-10-10 산출.",
+  "measured_at": "2026-10-10",
+  "runs": 115,
+  "max_prompt_runs": 61,
+  "max_prompt_tokens": {
+    "p50": 96524,
+    "p90": 152713,
+    "max": 174422
+  },
+  "total_input_tokens_per_run": {
+    "p50": 2217287,
+    "p90": 8278631,
+    "max": 51314046
+  },
+  "output_tokens_per_run": {
+    "p50": 31102,
+    "p90": 63420,
+    "max": 252341
+  },
+  "fit_rule": {
+    "min_context_tokens": 200000,
+    "recommended_context_tokens": 256000,
+    "why": "완주 run 최대 프롬프트 최대 174K·p90 153K에 하네스 시스템 프롬프트·출력 여유를 더한 값. 200K 미만 모델은 자동 압축에 의존해야 한다. EXP-042 coder(입력 한도 204,800)는 제공자 usage 누락과 겹쳐 한도에 닿아 400을 반복했다. gpt-oss-120b(공개 모델 카드 기준 약 128K)는 EXP-043에서 0/3이었으나 주된 실패 양상은 정체였고 컨텍스트 한도가 원인인지는 확인하지 않았다."
+  }
+}

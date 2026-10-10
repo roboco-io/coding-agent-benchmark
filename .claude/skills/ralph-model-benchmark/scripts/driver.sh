@@ -29,7 +29,7 @@ STALL_SEC="${STALL_SEC:-300}"   # iteration 정체 한도(초). 세션·로그·
 
 # 비용 가드 (EXP-042 재발 방지, 2026-10-10): 진행 중 run과 실험 전체의 추정 비용을 30초마다 확인한다.
 # 추정은 cost_guard.py — 제공자 보고 usage와 대화 기록 바이트 기반 하한 중 큰 값(보고 누락 대비).
-export PRICE_IN PRICE_OUT PRICE_CACHE_READ PRICE_TIERS
+export PRICE_IN PRICE_OUT PRICE_CACHE_READ PRICE_TIERS CONDITIONS
 cost_path() {  # 진행 중 run의 세션 기록 위치
   case "$HARNESS" in
     pi) echo "$BASE/sessions-$RUN" ;;

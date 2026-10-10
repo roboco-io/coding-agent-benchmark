@@ -2,10 +2,11 @@
 # Phase 0 스모크: 조건별 모델 ID·인증·usage 기록 확인. 결과는 phase0.log, 세션은 본 계측에서 제외(삭제).
 BASE="$(cd "$(dirname "$0")" && pwd)"
 source "$BASE/bench.env"
+source "$BASE/gate.sh"; require_approval || exit 1
 OUT="$BASE/phase0.log"; mkdir -p "$BASE/smoke-tmp"
 Q="Output exactly the string SMOKE-OK and nothing else."
 fail=0
-for v in PRICE_IN PRICE_OUT RUN_BUDGET_USD EXP_BUDGET_USD; do
+for v in RUN_BUDGET_USD EXP_BUDGET_USD; do
   [ -n "${!v:-}" ] || { echo "FAIL $v 미설정 — 비용 상한 없이 기동 금지 (EXP-042)" | tee -a "$OUT"; fail=1; }
 done
 # 채점 교란 방지 (EXP-029 D-1: VS Code Live Preview가 127.0.0.1:3000 점유 → 거짓 음성)

@@ -23,8 +23,25 @@ TIERS = []
 for t in filter(None, os.environ.get("PRICE_TIERS", "").split(",")):
     lim, pi_, po = t.split(":"); TIERS.append((int(lim), float(pi_), float(po)))
 TIERS.sort()
-if P_IN != P_IN or P_OUT != P_OUT:
-    sys.exit("PRICE_IN·PRICE_OUT 미설정")
+# model-specs.json(조건별 단가)이 있으면 run 이름의 조건으로 단가를 고른다. 없으면 PRICE_* 환경변수.
+SPECS = {}
+_sp = os.path.join(BASE, "model-specs.json")
+if os.path.exists(_sp):
+    SPECS = json.load(open(_sp))
+COND_MODEL = dict(c.split(":", 1) for c in os.environ.get("CONDITIONS", "").split() if ":" in c)
+
+
+def use_prices(run):
+    global P_IN, P_OUT, P_CR, TIERS
+    model = COND_MODEL.get(run.split("-", 1)[0])
+    s = SPECS.get(model) or SPECS.get((model or "").split("/", 1)[-1]) if model else None
+    if s and s.get("pricing"):
+        p = s["pricing"]
+        P_IN, P_OUT = float(p["input"]), float(p["output"])
+        P_CR = float(p["cache_read"]) if p.get("cache_read") is not None else P_IN * 0.1
+        TIERS = sorted((int(a), float(b), float(c)) for a, b, c in (p.get("tiers") or []))
+    if P_IN != P_IN or P_OUT != P_OUT:
+        sys.exit(f"단가 없음({run}) — model-specs.json pricing 또는 PRICE_IN·PRICE_OUT 필요")
 BYTES_PER_TOKEN = 3.0
 
 
@@ -109,6 +126,8 @@ if not PATHS:
     PATHS = sorted(glob.glob(os.path.join(BASE, "sessions-*"))) if RUN == "ALL" else [os.path.join(BASE, f"sessions-{RUN}")]
 total = 0.0
 for root in PATHS:
+    b = os.path.basename(root.rstrip("/"))
+    use_prices(b[len("sessions-"):] if b.startswith("sessions-") else RUN)
     if HARNESS == "codex":
         files, fn = glob.glob(os.path.join(root, "**", "rollout-*.jsonl"), recursive=True), cost_codex
     elif HARNESS == "agy":

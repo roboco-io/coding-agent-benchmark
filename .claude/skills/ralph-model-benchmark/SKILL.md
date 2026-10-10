@@ -24,10 +24,11 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 
 ## 절차
 
-1. **사전 조사**: 모델 ID를 추측하지 않는다. 제공자 모델 목록(예: `GET /v1/models`, `~/.codex/models_cache.json`)에서 정확한 ID·추론 설정·컨텍스트를 확인한다. 사용자가 말한 이름이 목록에 없으면 멈추고 `AskUserQuestion`으로 확인한다.
+1. **사전 조사**: 모델 ID를 추측하지 않는다. 제공자 모델 목록(예: `GET /v1/models`, `~/.codex/models_cache.json`)에서 정확한 ID·추론 설정·컨텍스트를 확인한다. 사용자가 말한 이름이 목록에 없으면 멈추고 `AskUserQuestion`으로 확인한다. **같은 단계에서 모델별 입력 컨텍스트 한도·최대 출력·과금 체계(입력/출력/캐시 단가, 입력 길이 구간 단가, 구독 여부)를 제공자 문서·모델 목록 API·직접 측정으로 확인하고 출처·확인일과 함께 `model-specs.json`으로 작성한다**(형식: `scripts/preflight.py` 주석, 예시: `assets/model-specs.example.json`). 확인하지 못한 값은 추정하지 않고 사용자에게 알린다.
 2. **언어 조건**: 사용자가 따로 지시하지 않으면 **영문(EN) PROMPT만** 실행한다(`LANGS="en"`, 2026-10-03 사용자 지시). 한국어(KO)는 사용자가 명시적으로 요청한 경우에만 추가한다.
 3. **설계 문서**: 다음 번호로 `experiments/NNN-<slug>/README.md`를 `templates/experiment-readme.md`로 작성한다. 질문 유형(완주 가능성 등), 조건, 반복 수, 상한, 판정 기준(예: 검증 3/3 / 부분 검증 1–2/3 / run 단위 보류)을 **실행 전에** 고정하고 `hypotheses/catalog.md`에 가설을 등록한다.
-4. **하네스 생성**: `scripts/bench.env.example`을 복사해 채운 뒤(**`PRICE_IN`·`PRICE_OUT`·`RUN_BUDGET_USD`·`EXP_BUDGET_USD` 필수** — 단가 출처·최악 총액을 설계 문서에 쓰고 사용자 승인) `bash .claude/skills/ralph-model-benchmark/scripts/setup.sh <bench.env>`.
+4. **하네스 생성**: `scripts/bench.env.example`을 복사해 채운 뒤(**`MODEL_SPECS`·`RUN_BUDGET_USD`·`EXP_BUDGET_USD` 필수**) `bash .claude/skills/ralph-model-benchmark/scripts/setup.sh <bench.env>`.
+4-1. **실행 전 점검·사용자 승인 (필수, 2026-10-10 사용자 지시)**: setup이 `preflight.py`로 `preflight-report.md`를 만든다 — 조건별 입력 한도 적합성(과거 완주 run 최대 프롬프트 p90 153K·최대 174K 기준: 256K 이상 적합, 200K 이상 주의, 미만 부적합), 단가·구간 단가, run당·실험 전체 추정 비용(p50/p90), 최악 총액. **이 보고서를 사용자에게 보여 주고 `AskUserQuestion`으로 진행 여부를 묻는다.** 사용자가 진행을 고른 경우에만 `bash ~/experiments/ralph-expNNN/approve.sh "<답변 원문>"`. 승인 기록이 없거나 승인 뒤 `bench.env`·`model-specs.json`이 바뀌면 smoke.sh·run-all.sh가 실행을 거부한다(API 호출 전 차단). 보고서와 승인 기록은 `runs/`에 보관한다.
 5. **Phase 0**: `bash ~/experiments/ralph-expNNN/smoke.sh` — 조건 전부 PASS여야 기동(`claude-direct`는 usage 정확도 점검 `usage_probe.py` 포함). 결과와 CLI·hurl 버전(에이전트 클라이언트 버전은 `claude --version`·`codex --version`·`pi --version` 출력 그대로, 변환 계층이 있으면 그 버전도), 노출된 지침·스킬·MCP(`claude-native`는 비격리)를 `runs/phase0.md`에 기록.
 6. **기동**: `nohup caffeinate -is bash ~/experiments/ralph-expNNN/run-all.sh >/dev/null 2>&1 &`. 순차 실행이며 다른 실험과 동시 실행 금지. 진행은 `orchestrator.log`·`metrics-*.csv`·`cost-guard.csv`(30초 간격 추정 비용)로 확인하고 개입하지 않는다. 단, 같은 API 오류가 반복되는 등 이상 징후가 보이면 원인 조사 전에 먼저 멈추고 사용자에게 알린다.
 7. **독립 재검증**: 완주 run마다 `bash ~/experiments/ralph-expNNN/measure.sh ~/experiments/ralph-expNNN/app-<run>`을 2회 실행해 `13,154`를 확인하고 `recheck.csv`로 남긴다.
@@ -44,6 +45,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 
 | 실수 | 결과 | 대응 |
 |---|---|---|
+| 입력 한도·과금 체계를 확인하지 않고 기동 | 작은 컨텍스트 모델(qwen3-coder-next 204,800)이 한도에 닿아 400 반복·구간 최고 단가 과금(EXP-042), 128K급 gpt-oss 0/3(EXP-043) | `model-specs.json` 작성 → preflight 보고서 → AskUserQuestion 승인 → `approve.sh`. 승인 없으면 smoke·run-all 거부 |
 | 비용 상한을 사후 집계로만 둠 | 제공자 usage 누락으로 자동 압축이 멈춘 coder 2 run이 약 $92 과금(EXP-042, 청구 $94.22) | `RUN_BUDGET_USD`·`EXP_BUDGET_USD` 필수 — 하네스가 30초마다 추정해 초과 시 종료(exit 126)·`budget-stop`. claude-direct는 smoke의 `usage_probe.py` 통과 필수 |
 | PATH의 `hurl` 사용 | npm shim이 실 Hurl을 가려 0건 통과 오검(EXP-020) | measure.sh의 절대 경로 유지 |
 | 오래된 `auth.json` 사본 재사용 | Codex 401 (EXP-021) | setup.sh가 매번 `~/.codex/auth.json` 최신본 복사 |

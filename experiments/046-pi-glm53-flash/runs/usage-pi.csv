@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+g53f-en-1,1,39,0,0,0,46350,23240,940864,0,9686,69590
+g53f-en-2,1,30,0,0,0,60537,18953,692032,0,6774,79490
+g53f-en-3,1,54,0,0,0,63428,27361,1502528,0,8816,90789

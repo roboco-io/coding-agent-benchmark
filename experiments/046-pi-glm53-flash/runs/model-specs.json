@@ -1,0 +1,10 @@
+{
+  "zai/glm-5.3-flash": {
+    "provider": "Z.ai (pi 내장 provider zai, https://api.z.ai/api/coding/paas/v4, OpenAI 호환)",
+    "context_window": 1000000, "max_output": 131072,
+    "context_source": "https://docs.z.ai/guides/llm/glm-5.3-flash (1M / 128K, 2026-10-11 확인), pi 0.87.1 내장 데이터 zai.json과 일치. GET /models에 glm-5.3-flash 존재 확인 2026-10-11",
+    "billing": "api",
+    "pricing": {"input": 0.15, "output": 0.50, "cache_read": 0.03, "tiers": [],
+                "source": "https://docs.z.ai/guides/overview/pricing (구간 단가 없음). coding 엔드포인트는 Coding Plan 쿼터 차감 방식(https://docs.z.ai/devpack/faq)이나 비용 상한은 보수적으로 종량제 단가로 추정", "checked_at": "2026-10-11"}
+  }
+}

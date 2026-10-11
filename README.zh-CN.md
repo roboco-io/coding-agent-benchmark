@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-045（2026-10-11）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-046（2026-10-11）
 
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
@@ -69,6 +69,7 @@
 | [EXP-043](experiments/043-pi-gptoss120b-bedrock/report.md) pi × gpt-oss-120b（Amazon Bedrock） | M-36: 用 pi 运行可装进一台 DGX Spark 的开放权重 gpt-oss-120b（Bedrock），可在每 run 20 分钟内完成 RealWorld 后端 | **否定（20 分钟上限）** | pi 0.87.1 |
 | [EXP-044](experiments/044-pi-spark-qwen/report.md) pi × Spark 级 Qwen 三款（中止） | M-37: 将 pi 连接到 DashScope 的 OpenAI 兼容端点，可用三款 Spark 级 Qwen 模型在每 run 20 分钟内完成 RealWorld 后端 | **搁置（实验中止）** | pi 0.87.1 |
 | [EXP-045](experiments/045-pi-qwen38-27b/report.md) pi × Qwen 3.8 27B（DashScope） | M-38: 将 pi 连接到 DashScope 的 OpenAI 兼容端点，可用 qwen3.8-27b 在每 run 30 分钟内完成 RealWorld 后端 | **已验证** | pi 0.87.1 |
+| [EXP-046](experiments/046-pi-glm53-flash/report.md) pi × GLM-5.3-Flash（Z.ai） | M-39: 使用 pi 内置的 Z.ai provider（Coding Plan 端点），可用 glm-5.3-flash 在每 run 20 分钟内完成 RealWorld 后端 | **已验证** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -189,6 +190,9 @@ solar-1 未完成（测试执行 0 次·提交 0 次，在 iteration 6/15 时提
 
 **EXP-045 — pi × Qwen 3.8 27B（DashScope）** (已验证)  
 3/3 个 run 均在 iteration 1 完成（会话 8.8–12.1 分钟，API 调用 43–49 次，按公开单价折算每 run 约 $0.22–0.24）。因 harness 缺陷，成本守护只记录了 $0（D-1），不影响判定，已修复。 → [报告](experiments/045-pi-qwen38-27b/report.md)
+
+**EXP-046 — pi × GLM-5.3-Flash（Z.ai）** (已验证)  
+3/3 个 run 均在 iteration 1 完成（会话 7.1–11.0 分钟，API 调用 30–54 次，按按量计费公开单价折算每 run 约 $0.04–0.07）。本仓库首次测量 GLM。 → [报告](experiments/046-pi-glm53-flash/report.md)
 
 <!-- RESULTS:END -->
 

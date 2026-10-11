@@ -844,6 +844,26 @@
         "verdict": "已验证",
         "summary": "3/3 个 run 均在 iteration 1 完成（会话 8.8–12.1 分钟，API 调用 43–49 次，按公开单价折算每 run 约 $0.22–0.24）。因 harness 缺陷，成本守护只记录了 $0（D-1），不影响判定，已修复。"
       }
+    },
+    "EXP-046": {
+      "en": {
+        "name": "pi × GLM-5.3-Flash (Z.ai)",
+        "hypothesis": "pi with its built-in Z.ai provider (Coding Plan endpoint) can finish the RealWorld backend with glm-5.3-flash within 20 minutes per run",
+        "verdict": "Verified",
+        "summary": "3/3 runs finished in iteration 1 (7.1–11.0 min sessions, 30–54 API calls, about $0.04–0.07 per run at pay-as-you-go list prices). First GLM measurement in this repo."
+      },
+      "ja": {
+        "name": "pi × GLM-5.3-Flash（Z.ai）",
+        "hypothesis": "pi内蔵のZ.aiプロバイダー（Coding Planエンドポイント）を使うと、glm-5.3-flashでrun 20分以内にRealWorldバックエンドを完走できる",
+        "verdict": "検証",
+        "summary": "3/3 runがiteration 1で完走（セッション7.1–11.0分、API呼び出し30–54回、従量課金の公開単価換算でrun当たり約$0.04–0.07）。本リポジトリ初のGLM計測。"
+      },
+      "zh-CN": {
+        "name": "pi × GLM-5.3-Flash（Z.ai）",
+        "hypothesis": "使用 pi 内置的 Z.ai provider（Coding Plan 端点），可用 glm-5.3-flash 在每 run 20 分钟内完成 RealWorld 后端",
+        "verdict": "已验证",
+        "summary": "3/3 个 run 均在 iteration 1 完成（会话 7.1–11.0 分钟，API 调用 30–54 次，按按量计费公开单价折算每 run 约 $0.04–0.07）。本仓库首次测量 GLM。"
+      }
     }
   }
 }

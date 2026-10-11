@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-045（2026-10-11）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-046（2026-10-11）
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。
 
@@ -69,6 +69,7 @@
 | [EXP-043](experiments/043-pi-gptoss120b-bedrock/report.md) pi × gpt-oss-120b（Amazon Bedrock） | M-36: piでDGX Spark 1台に載るオープンウェイトgpt-oss-120b（Bedrock）を動かすと、run 20分以内にRealWorldバックエンドを完走できる | **棄却（20分上限）** | pi 0.87.1 |
 | [EXP-044](experiments/044-pi-spark-qwen/report.md) pi × Spark級 Qwen 3種（中断） | M-37: piをDashScopeのOpenAI互換エンドポイントに接続すると、Spark級Qwen 3種でrun 20分以内にRealWorldバックエンドを完走できる | **保留（実験中断）** | pi 0.87.1 |
 | [EXP-045](experiments/045-pi-qwen38-27b/report.md) pi × Qwen 3.8 27B（DashScope） | M-38: piをDashScopeのOpenAI互換エンドポイントに接続すると、qwen3.8-27bでrun 30分以内にRealWorldバックエンドを完走できる | **検証** | pi 0.87.1 |
+| [EXP-046](experiments/046-pi-glm53-flash/report.md) pi × GLM-5.3-Flash（Z.ai） | M-39: pi内蔵のZ.aiプロバイダー（Coding Planエンドポイント）を使うと、glm-5.3-flashでrun 20分以内にRealWorldバックエンドを完走できる | **検証** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -189,6 +190,9 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 
 **EXP-045 — pi × Qwen 3.8 27B（DashScope）** (検証)  
 3/3 runがiteration 1で完走（セッション8.8–12.1分、API呼び出し43–49回、公開単価換算でrun当たり約$0.22–0.24）。ハーネス欠陥でコストガードが$0のみを記録した（D-1）が判定には影響せず、修正済み。 → [レポート](experiments/045-pi-qwen38-27b/report.md)
+
+**EXP-046 — pi × GLM-5.3-Flash（Z.ai）** (検証)  
+3/3 runがiteration 1で完走（セッション7.1–11.0分、API呼び出し30–54回、従量課金の公開単価換算でrun当たり約$0.04–0.07）。本リポジトリ初のGLM計測。 → [レポート](experiments/046-pi-glm53-flash/report.md)
 
 <!-- RESULTS:END -->
 

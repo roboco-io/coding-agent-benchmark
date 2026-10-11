@@ -1,0 +1,10 @@
+{
+  "dashscope/qwen3.8-27b": {
+    "provider": "DashScope intl (dashscope-intl.aliyuncs.com, OpenAI 호환)",
+    "context_window": 983616, "max_output": 131072,
+    "context_source": "직접 측정 2026-10-10 (compatible-mode 오류 메시지 'Range of input length should be [1, 983616]', EXP-044 Phase 0)",
+    "billing": "api",
+    "pricing": {"input": 0.50, "output": 3.00, "cache_read": null, "tiers": [],
+                "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing (싱가포르, 2026-10-09 갱신 페이지, EXP-042 확인값 재사용)", "checked_at": "2026-10-10"}
+  }
+}

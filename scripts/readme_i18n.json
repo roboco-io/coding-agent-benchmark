@@ -824,6 +824,26 @@
         "verdict": "搁置（实验中止）",
         "summary": "按用户决定在第一个 run（flash-en-1，iteration 1）开始 7 分钟后中止，9 个 run 中 0 个完成。仅确认了经 pi 时该端点能正确记录 usage。"
       }
+    },
+    "EXP-045": {
+      "en": {
+        "name": "pi × Qwen 3.8 27B (DashScope)",
+        "hypothesis": "pi connected to DashScope's OpenAI-compatible endpoint can finish the RealWorld backend with qwen3.8-27b within 30 minutes per run",
+        "verdict": "Verified",
+        "summary": "3/3 runs finished in iteration 1 (8.8–12.1 min sessions, 43–49 API calls, about $0.22–0.24 per run at list prices). A harness defect left the cost guard recording $0 (D-1); it did not affect the verdict and was fixed."
+      },
+      "ja": {
+        "name": "pi × Qwen 3.8 27B（DashScope）",
+        "hypothesis": "piをDashScopeのOpenAI互換エンドポイントに接続すると、qwen3.8-27bでrun 30分以内にRealWorldバックエンドを完走できる",
+        "verdict": "検証",
+        "summary": "3/3 runがiteration 1で完走（セッション8.8–12.1分、API呼び出し43–49回、公開単価換算でrun当たり約$0.22–0.24）。ハーネス欠陥でコストガードが$0のみを記録した（D-1）が判定には影響せず、修正済み。"
+      },
+      "zh-CN": {
+        "name": "pi × Qwen 3.8 27B（DashScope）",
+        "hypothesis": "将 pi 连接到 DashScope 的 OpenAI 兼容端点，可用 qwen3.8-27b 在每 run 30 分钟内完成 RealWorld 后端",
+        "verdict": "已验证",
+        "summary": "3/3 个 run 均在 iteration 1 完成（会话 8.8–12.1 分钟，API 调用 43–49 次，按公开单价折算每 run 约 $0.22–0.24）。因 harness 缺陷，成本守护只记录了 $0（D-1），不影响判定，已修复。"
+      }
     }
   }
 }

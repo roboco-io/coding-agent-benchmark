@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+q27-en-1,1,49,0,0,0,145992,30630,1565824,0,11674,176622
+q27-en-2,1,45,0,0,0,143000,30890,1373184,0,13468,173890
+q27-en-3,1,43,0,0,0,135792,28248,1377920,0,9234,164040

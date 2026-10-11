@@ -1,0 +1,210 @@
+{
+  "exp": "EXP-045",
+  "date": "2026-10-11",
+  "report": "experiments/045-pi-qwen38-27b/report.md",
+  "client": "pi 0.87.1",
+  "runs": {
+    "q27-en-1": {
+      "iter": 1,
+      "commits": 2
+    },
+    "q27-en-2": {
+      "iter": 1,
+      "commits": 6
+    },
+    "q27-en-3": {
+      "iter": 1,
+      "commits": 5
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"
+      ],
+      [
+        "연결",
+        "DashScope OpenAI 호환 API(싱가포르 intl) 직결, API 키 과금 (청구액 미대조)"
+      ],
+      [
+        "모델 ID",
+        "dashscope/qwen3.8-27b — 오픈 웨이트, DGX Spark 등급. 사용자 정의 models.json 항목(pi-models.json)"
+      ],
+      [
+        "thinking",
+        "pi 기본값 (medium 기록)"
+      ],
+      [
+        "격리",
+        "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, 에이전트 환경 비밀값은 DASHSCOPE_API_KEY만"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 30분 (사용자 지시, 2026-10-11)"
+      ],
+      [
+        "프롬프트",
+        "정본 EN, n=3, 순차 실행"
+      ],
+      [
+        "포트",
+        "하네스가 빈 포트를 PORT로 주입"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"
+      ],
+      [
+        "Connection",
+        "DashScope OpenAI-compatible API (Singapore intl), direct, billed to an API key (invoice not reconciled)"
+      ],
+      [
+        "Model ID",
+        "dashscope/qwen3.8-27b — open weight, DGX Spark class. Custom models.json entry (pi-models.json)"
+      ],
+      [
+        "Thinking",
+        "pi default (recorded as medium)"
+      ],
+      [
+        "Isolation",
+        "dedicated PI_CODING_AGENT_DIR, parent AGENTS.md/CLAUDE.md, skills and extensions hidden, DASHSCOPE_API_KEY is the only secret in the agent environment"
+      ],
+      [
+        "Cap",
+        "30 iterations · 30 min per run (user instruction, 2026-10-11)"
+      ],
+      [
+        "Prompt",
+        "canonical EN, n=3, sequential"
+      ],
+      [
+        "Port",
+        "harness injects a free port as PORT"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"
+      ],
+      [
+        "接続",
+        "DashScope OpenAI互換API（シンガポールintl）直結、APIキー課金（請求額は未照合）"
+      ],
+      [
+        "モデルID",
+        "dashscope/qwen3.8-27b — オープンウェイト、DGX Spark級。ユーザー定義models.json項目（pi-models.json）"
+      ],
+      [
+        "thinking",
+        "piデフォルト（mediumと記録）"
+      ],
+      [
+        "隔離",
+        "専用PI_CODING_AGENT_DIR、上位AGENTS.md/CLAUDE.md・スキル・拡張は非露出、エージェント環境の秘密値はDASHSCOPE_API_KEYのみ"
+      ],
+      [
+        "上限",
+        "30 iteration・runあたり30分（ユーザー指示、2026-10-11）"
+      ],
+      [
+        "プロンプト",
+        "正本EN、n=3、順次実行"
+      ],
+      [
+        "ポート",
+        "ハーネスが空きポートをPORTで注入"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"
+      ],
+      [
+        "连接",
+        "DashScope OpenAI 兼容 API（新加坡 intl）直连，按 API 密钥计费（账单未核对）"
+      ],
+      [
+        "模型 ID",
+        "dashscope/qwen3.8-27b — 开放权重，DGX Spark 级。自定义 models.json 条目（pi-models.json）"
+      ],
+      [
+        "thinking",
+        "pi 默认值（记录为 medium）"
+      ],
+      [
+        "隔离",
+        "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md·技能·扩展，代理环境中的密钥只有 DASHSCOPE_API_KEY"
+      ],
+      [
+        "上限",
+        "30 iteration · 每 run 30 分钟（用户指示，2026-10-11）"
+      ],
+      [
+        "提示",
+        "标准 EN，n=3，顺序执行"
+      ],
+      [
+        "端口",
+        "框架以 PORT 注入空闲端口"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 반려·재실행·보류 없음. 5xx·레이트 리밋·게이트 오검·정체 종료 0건.",
+      "D-1: 비용 가드가 실행 내내 추정 비용 0을 기록했다. `bench.env`의 빈 `PRICE_IN`을 `float(\"\")`로 읽다 실패한 것을 `driver.sh`가 0으로 삼켰다(fail-open). 그래서 run당 $4·실험 $12 상한이 실제로 강제되지 않았다. 3 run은 추정 $0.22–0.24로 끝나 판정 영향은 없고, 실험 후 fail-closed와 smoke 점검으로 수정했다.",
+      "같은 모델의 Claude Code 직결 결과(EXP-042, 1 run, 4시간 상한)와는 하네스·API 형식(OpenAI 호환과 Anthropic 호환)·시작 프롬프트 크기·실행 시점이 모두 달라 우열로 확정하지 않는다.",
+      "DashScope 제공자 API 결과이며 DGX Spark 로컬 실행이 아니다. 단가는 2026-10-10 확인값을 실험 당일 재확인 없이 썼다."
+    ],
+    "en": [
+      "No gate rejections, reruns or holds. Zero 5xx errors, rate limits, grader false results or stall exits.",
+      "D-1: the cost guard recorded an estimated cost of 0 throughout. It failed reading the empty `PRICE_IN` in `bench.env` as `float(\"\")`, and `driver.sh` swallowed the failure as 0 (fail-open), so the $4-per-run and $12-per-experiment caps were not actually enforced. The 3 runs ended at an estimated $0.22–0.24, so the verdict is unaffected; after the experiment the harness was made fail-closed and smoke now checks it.",
+      "Compared with the same model on Claude Code direct (EXP-042, 1 run, 4-hour cap), the harness, API format (OpenAI-compatible vs Anthropic-compatible), starting prompt size and date all differ, so no superiority is claimed.",
+      "These are results from DashScope's provider API, not local inference on a DGX Spark. Prices are the 2026-10-10 values, not re-checked on the day of the experiment."
+    ],
+    "ja": [
+      "ゲート却下・再実行・保留なし。5xx・レート制限・ゲート誤判定・停滞終了は0件。",
+      "D-1：コストガードが実行中ずっと推定コスト0を記録した。`bench.env`の空の`PRICE_IN`を`float(\"\")`で読んで失敗したのを`driver.sh`が0として飲み込んだ（fail-open）。そのためrunあたり$4・実験$12の上限は実際には強制されなかった。3 runは推定$0.22–0.24で終わり判定への影響はなく、実験後にfail-closedとsmokeでの点検に修正した。",
+      "同じモデルのClaude Code直結の結果（EXP-042、1 run、4時間上限）とは、ハーネス・API形式（OpenAI互換とAnthropic互換）・開始プロンプトの大きさ・実行時期がすべて異なるため、優劣とは確定しない。",
+      "DashScopeの提供者APIでの結果であり、DGX Sparkでのローカル実行ではない。単価は2026-10-10の確認値を実験当日に再確認せずに使った。"
+    ],
+    "zh": [
+      "无门控驳回、重跑或保留。5xx、限流、评分误判、停滞退出均为 0 次。",
+      "D-1：成本守卫在整个运行中都把估算成本记录为 0。它以 `float(\"\")` 读取 `bench.env` 中为空的 `PRICE_IN` 时失败，`driver.sh` 把失败吞掉记为 0（fail-open），因此每 run $4、整个实验 $12 的上限实际上没有强制执行。3 个 run 以估算 $0.22–0.24 结束，不影响判定；实验后已改为 fail-closed 并加入 smoke 检查。",
+      "与同一模型在 Claude Code 直连下的结果（EXP-042，1 个 run，4 小时上限）相比，框架、API 格式（OpenAI 兼容与 Anthropic 兼容）、初始提示大小和运行时间都不同，因此不判定优劣。",
+      "这是 DashScope 提供方 API 的结果，不是在 DGX Spark 上本地推理。单价使用 2026-10-10 的核实值，实验当天未重新核实。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "3 run 모두 Fastify + Prisma를 골랐다.",
+      "포트는 run 2·3이 `PORT ?? 3000`으로 주입값을 따랐고, run 1은 변수명을 `APP_PORT ?? 8000`으로 바꿔 주입값을 무시했다. 채점은 LISTEN 포트 자동 탐지라 영향이 없다.",
+      "run당 API 호출 43–49회, output 28.2–30.9K(reasoning 9.2–13.5K 포함), 최대 프롬프트 52.2–54.3K.",
+      "세션 기록에서 하네스 파일이나 다른 run 디렉터리를 참조한 기록은 없었다."
+    ],
+    "en": [
+      "All 3 runs chose Fastify + Prisma.",
+      "For the port, runs 2 and 3 used `PORT ?? 3000`, following the injected value; run 1 renamed the variable to `APP_PORT ?? 8000` and ignored it. The grader auto-detects the LISTEN port, so there was no effect.",
+      "43–49 API calls and 28.2–30.9K output per run (including 9.2–13.5K reasoning); the largest prompt was 52.2–54.3K.",
+      "The session logs show no references to harness files or other runs' directories."
+    ],
+    "ja": [
+      "3 runすべてがFastify + Prismaを選んだ。",
+      "ポートはrun 2・3が`PORT ?? 3000`で注入値に従い、run 1は変数名を`APP_PORT ?? 8000`に変えて注入値を無視した。採点はLISTENポートの自動検出のため影響なし。",
+      "runあたりAPI呼び出し43–49回、output 28.2–30.9K（reasoning 9.2–13.5Kを含む）、最大プロンプト52.2–54.3K。",
+      "セッション記録にハーネスファイルや他のrunのディレクトリを参照した記録はなかった。"
+    ],
+    "zh": [
+      "3 个 run 都选择了 Fastify + Prisma。",
+      "端口方面，run 2、3 使用 `PORT ?? 3000`，遵循注入值；run 1 把变量改名为 `APP_PORT ?? 8000`，忽略了注入值。评分自动检测 LISTEN 端口，因此没有影响。",
+      "每 run API 调用 43–49 次，output 28.2–30.9K（含 reasoning 9.2–13.5K），最大提示 52.2–54.3K。",
+      "会话记录中没有引用框架文件或其他 run 目录的记录。"
+    ]
+  }
+}

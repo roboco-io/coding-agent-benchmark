@@ -175,5 +175,15 @@
     "src": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
     "accessed": "2026-10-08",
     "caveat": "2026-10-08 API 가격 표 확인: ≤100K 입력 $0.10·5m 쓰기 $0.125·1h 쓰기 $0.20·캐시 읽기 $0.01·출력 $0.50, 100K 초과 $0.50·$0.625·$1·$0.05·$2.50 (Claude Code 2.1.293 CHANGELOG 문구와 일치). 100K 초과 판정은 요청별 input+cache_creation+cache_read 합, 해당 요청 토큰은 lc_* 열"
+  },
+  "qwen3.8-27b": {
+    "input": 0.5,
+    "cache_read": 0.05,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 3.0,
+    "src": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+    "accessed": "2026-10-10",
+    "caveat": "싱가포르 리전(DashScope intl). 2026-10-10 확인값(EXP-042 확인값 재사용, EXP-045 실험 당일 재확인 안 함). 캐시 읽기 단가가 공개 표에 없어 입력 단가의 10%로 가정(EXP-042·045 보고서와 같은 가정). pi 경로는 cacheWrite 0"
   }
 }

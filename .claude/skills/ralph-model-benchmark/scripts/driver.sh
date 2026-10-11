@@ -41,9 +41,12 @@ cost_path() {  # 진행 중 run의 세션 기록 위치
 }
 budget_check() {  # 상한 초과 시 사유를 출력, 아니면 아무것도 출력하지 않음
   local cur prev p others=()
-  cur=$(python3 "$BASE/cost_guard.py" "$BASE" "$HARNESS" "$RUN" "$(cost_path)" 2>/dev/null) || cur=0
+  # 추정 실패는 0으로 보지 않고 run을 멈춘다(fail-closed). EXP-045에서 예외를 0으로 삼켜 가드가 무력화됐다.
+  cur=$(python3 "$BASE/cost_guard.py" "$BASE" "$HARNESS" "$RUN" "$(cost_path)" 2>>"$BASE/cost-guard.err") \
+    || { echo "$(date '+%F %T'),$RUN,ERR," >> "$BASE/cost-guard.csv"; echo "비용 추정 실패(cost-guard.err 참조)"; return; }
   for p in "$BASE"/sessions-*; do [ -d "$p" ] && [ "$p" != "$BASE/sessions-$RUN" ] && others+=("$p"); done
-  prev=0; [ ${#others[@]} -gt 0 ] && prev=$(python3 "$BASE/cost_guard.py" "$BASE" "$HARNESS" ALL "${others[@]}" 2>/dev/null)
+  prev=0; [ ${#others[@]} -gt 0 ] && { prev=$(python3 "$BASE/cost_guard.py" "$BASE" "$HARNESS" ALL "${others[@]}" 2>>"$BASE/cost-guard.err") \
+    || { echo "$(date '+%F %T'),$RUN,$cur,ERR" >> "$BASE/cost-guard.csv"; echo "비용 추정 실패(cost-guard.err 참조)"; return; }; }
   echo "$(date '+%F %T'),$RUN,$cur,$prev" >> "$BASE/cost-guard.csv"
   awk -v c="$cur" -v p="${prev:-0}" -v rb="$RUN_BUDGET_USD" -v eb="$EXP_BUDGET_USD" 'BEGIN{
     if (c+0 >= rb+0) printf "run 추정 $%.2f ≥ RUN_BUDGET_USD $%s", c, rb;

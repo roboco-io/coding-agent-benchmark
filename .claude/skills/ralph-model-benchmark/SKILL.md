@@ -47,6 +47,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 |---|---|---|
 | 입력 한도·과금 체계를 확인하지 않고 기동 | 작은 컨텍스트 모델(qwen3-coder-next 204,800)이 한도에 닿아 400 반복·구간 최고 단가 과금(EXP-042), 128K급 gpt-oss 0/3(EXP-043) | `model-specs.json` 작성 → preflight 보고서 → AskUserQuestion 승인 → `approve.sh`. 승인 없으면 smoke·run-all 거부 |
 | 비용 상한을 사후 집계로만 둠 | 제공자 usage 누락으로 자동 압축이 멈춘 coder 2 run이 약 $92 과금(EXP-042, 청구 $94.22) | `RUN_BUDGET_USD`·`EXP_BUDGET_USD` 필수 — 하네스가 30초마다 추정해 초과 시 종료(exit 126)·`budget-stop`. claude-direct는 smoke의 `usage_probe.py` 통과 필수 |
+| `cost-guard.csv`가 0만 기록하는데 그대로 둠 | 빈 `PRICE_IN`으로 `cost_guard.py`가 예외 → driver가 0으로 삼켜 비용 상한 무력화 (EXP-045 D-1) | 수정 후 driver는 추정 실패 시 run을 멈추고(fail-closed, `cost-guard.err`), smoke가 조건마다 `cost_guard.py`를 실행해 점검. 실행 중 추정이 계속 0이면 즉시 확인 |
 | PATH의 `hurl` 사용 | npm shim이 실 Hurl을 가려 0건 통과 오검(EXP-020) | measure.sh의 절대 경로 유지 |
 | 오래된 `auth.json` 사본 재사용 | Codex 401 (EXP-021) | setup.sh가 매번 `~/.codex/auth.json` 최신본 복사 |
 | pi OAuth provider(`openai-codex` 등) 자격증명 누락 | 격리 `pi-agent`에 인증 없음 → 실행 실패 | setup.sh가 매번 `~/.pi/agent/auth.json` 최신본을 `$BASE/pi-agent/auth.json`(600)으로 복사 (EXP-030). 사전에 `pi auth check --provider <p>` ready 확인 |

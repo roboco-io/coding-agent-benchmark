@@ -16,8 +16,9 @@ import glob, json, os, sys
 
 BASE, HARNESS, RUN = sys.argv[1], sys.argv[2], sys.argv[3]
 PATHS = sys.argv[4:]
-P_IN = float(os.environ.get("PRICE_IN", "nan"))
-P_OUT = float(os.environ.get("PRICE_OUT", "nan"))
+# 빈 문자열(bench.env 기본값)도 미지정으로 본다 — EXP-045에서 float("") 예외로 가드가 0을 기록한 결함
+P_IN = float(os.environ.get("PRICE_IN") or "nan")
+P_OUT = float(os.environ.get("PRICE_OUT") or "nan")
 P_CR = float(os.environ.get("PRICE_CACHE_READ") or P_IN * 0.1)
 TIERS = []
 for t in filter(None, os.environ.get("PRICE_TIERS", "").split(",")):

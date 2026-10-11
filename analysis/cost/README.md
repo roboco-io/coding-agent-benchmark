@@ -1,6 +1,6 @@
 # run당 비용 환산 (공개 단가 기준 추정)
 
-작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가), 2026-10-11(EXP-045 pi × qwen3.8-27b 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
+작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가), 2026-10-11(EXP-045 pi × qwen3.8-27b, EXP-046 pi × GLM-5.3-Flash 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
 
 ## 이 수치가 뜻하는 것
 
@@ -11,6 +11,7 @@
 | 모델 | EN | KO | 단가 적용 조건 |
 |------|----|----|----------------|
 | gpt-6-luna | 0.03 | — | 단문맥 단가 |
+| pi × GLM-5.3-Flash | 0.05 | — | Z.ai 종량제 단가, pi 하네스, 실제 호출은 Coding Plan 쿼터 차감(종량제 환산 추정, 아래) |
 | pi × DeepSeek V4.1-Flash | 0.06 | — | 피크 단가(상한), pi 하네스 |
 | DeepSeek V4.1-Flash | 0.09 | 0.12 | 피크 단가(상한) |
 | Haiku 5.5 | 0.09 | — | 프롬프트 100K 초과 요청은 5배 단가, API 키 실행(캐시 5분 TTL, 실제 과금) |
@@ -62,6 +63,7 @@ run별 값은 [cost_all_runs.csv](cost_all_runs.csv)의 `est_cost_usd` 열에 �
 - **Haiku 5.5(EXP-037)**: 2026-10-08에 API 가격 표(<https://platform.claude.com/docs/en/build-with-claude/prompt-caching>)로 단가를 확인했다(1M 토큰당 100K 이하 입력 $0.10·5분 캐시 쓰기 $0.125·1시간 쓰기 $0.20·캐시 읽기 $0.01·출력 $0.50, 100K 초과 $0.50·$0.625·$1·$0.05·$2.50). 장문맥 단가는 요청 단위로 적용되므로, 프롬프트(`input + cache_creation + cache_read`)가 100K를 넘은 요청의 토큰을 `usage_all_runs.csv`의 `lc_*` 열(총량에 포함된 부분)에 따로 기록하고 `compute_cost.py`가 `prices.json`의 `long_context` 단가와의 차액을 더한다. 해당 요청은 en-1 2건·en-2 11건·en-3 0건이다. 이 3 run은 구독이 아니라 Anthropic API 키로 실행돼 실제로 과금됐고(실험 이탈 D-1, 청구액 미대조), 그 때문에 캐시 쓰기가 전부 5분 TTL이다(다른 네이티브 Claude run은 구독·1시간 TTL). 같은 토큰을 1시간 TTL 쓰기 단가로 계산하면 run당 $0.007–0.012(8–12%) 높으므로, 이 값은 구독 조건과 같은 기준의 비용이 아니다. 요청 간격이 최대 44초여서 5분 TTL로 인한 캐시 만료는 관측되지 않았다.
 - **pi × Haiku 5.5(EXP-038)**: 단가·장문맥 처리는 위 Haiku 5.5 항목과 같다. pi의 `cacheWrite`는 `cacheWrite1h`가 전 응답 0이어서 `cache_write_5m`에 넣었다. pi 세션 기록의 자체 비용은 장문맥 단가를 반영하지 않으므로 쓰지 않았다. 100K 초과 요청은 en-1 3건뿐이다.
 - **pi × qwen3.8-27b(EXP-045)**: 모델 사양 파일(`experiments/045-pi-qwen38-27b/runs/model-specs.json`)에 기록된 2026-10-10 확인 단가(싱가포르 리전, 1M 토큰당 입력 $0.50·출력 $3.00, <https://www.alibabacloud.com/help/en/model-studio/model-pricing>)를 실험 당일 재확인 없이 적용했다. 캐시 읽기 단가는 공개 표에 없어 EXP-042·045 보고서와 같이 입력 단가의 10%($0.05)로 가정했다. pi 세션 기록의 `cacheWrite`는 전 응답 0이다. DashScope API 키로 실행해 실제 과금이 있었으나 청구액은 대조하지 않았다. 결과(run당 $0.2432·0.2328·0.2215)는 보고서 값과 같다.
+- **pi × GLM-5.3-Flash(EXP-046)**: 2026-10-11에 Z.ai 가격 페이지(<https://docs.z.ai/guides/overview/pricing>)의 종량제 단가를 확인해 적용했다(1M 토큰당 입력 $0.15·캐시 읽기 $0.03·출력 $0.50, 구간 단가 없음). pi 세션 기록의 `cacheWrite`는 전 응답 0이다. 실제 호출은 GLM Coding Plan 엔드포인트(`https://api.z.ai/api/coding/paas/v4`)로 보내져 구독 쿼터에서 차감됐고 토큰 단위 청구가 없으므로, 이 값은 같은 토큰을 종량제 API로 보냈을 때의 추정이며 청구액과 대조하지 않았다. 결과(run당 $0.0468·0.0393·0.0683)는 보고서 값과 같다.
 - **Solar Pro 4**: 정가로 환산했다. 실험 당시(2026-08)는 무료 또는 프로모션 기간이었다. 이 엔드포인트는 캐시를 계상하지 않아 입력 전량이 비캐시 단가로 계산된다. 이 때문에 값이 크다.
 - **범위**: run 안의 재시도·추가 세션·서브에이전트 호출을 포함한다(실험 품질 규칙 5절 — 실패·재시도 포함). Opus 4.8 run 48-1은 재검증 세션을, Solar Pro 4 run 1은 게이트 오검으로 이어진 세션 12개를 포함한다.
 

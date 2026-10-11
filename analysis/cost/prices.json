@@ -185,5 +185,15 @@
     "src": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
     "accessed": "2026-10-10",
     "caveat": "싱가포르 리전(DashScope intl). 2026-10-10 확인값(EXP-042 확인값 재사용, EXP-045 실험 당일 재확인 안 함). 캐시 읽기 단가가 공개 표에 없어 입력 단가의 10%로 가정(EXP-042·045 보고서와 같은 가정). pi 경로는 cacheWrite 0"
+  },
+  "glm-5.3-flash": {
+    "input": 0.15,
+    "cache_read": 0.03,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 0.5,
+    "src": "https://docs.z.ai/guides/overview/pricing",
+    "accessed": "2026-10-11",
+    "caveat": "Z.ai 종량제 API 단가(구간 단가 없음). EXP-046 실제 호출은 GLM Coding Plan 엔드포인트(https://api.z.ai/api/coding/paas/v4)로 구독 쿼터에서 차감돼 토큰 단위 청구가 없으므로 환산값은 종량제 단가 추정이다(청구 미대조). pi 경로는 cacheWrite 0"
   }
 }

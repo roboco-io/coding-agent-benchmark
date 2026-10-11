@@ -1,0 +1,214 @@
+{
+  "exp": "EXP-046",
+  "date": "2026-10-11",
+  "report": "experiments/046-pi-glm53-flash/report.md",
+  "client": "pi 0.87.1",
+  "runs": {
+    "g53f-en-1": {
+      "iter": 1,
+      "commits": 3
+    },
+    "g53f-en-2": {
+      "iter": 1,
+      "commits": 2
+    },
+    "g53f-en-3": {
+      "iter": 1,
+      "commits": 3
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"
+      ],
+      [
+        "연결",
+        "Z.ai GLM Coding Plan 엔드포인트(https://api.z.ai/api/coding/paas/v4, OpenAI 호환) 직결, pi 내장 provider zai. 플랜 쿼터 차감(청구·쿼터 차감액 미대조)"
+      ],
+      [
+        "모델 ID",
+        "zai/glm-5.3-flash — 이 리포의 첫 GLM 계열 측정"
+      ],
+      [
+        "thinking",
+        "pi 기본값 high (이 모델은 thinking을 끌 수 없음)"
+      ],
+      [
+        "격리",
+        "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, 에이전트 환경 비밀값은 ZAI_API_KEY만"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 20분"
+      ],
+      [
+        "프롬프트",
+        "정본 EN, n=3, 순차 실행"
+      ],
+      [
+        "포트",
+        "하네스가 빈 포트를 PORT로 주입"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"
+      ],
+      [
+        "Connection",
+        "Z.ai GLM Coding Plan endpoint (https://api.z.ai/api/coding/paas/v4, OpenAI-compatible), direct, via pi's built-in zai provider. Deducted from the plan quota (billing and quota use not reconciled)"
+      ],
+      [
+        "Model ID",
+        "zai/glm-5.3-flash — the first GLM-family measurement in this repo"
+      ],
+      [
+        "Thinking",
+        "pi default high (thinking cannot be turned off for this model)"
+      ],
+      [
+        "Isolation",
+        "Dedicated PI_CODING_AGENT_DIR; parent AGENTS.md/CLAUDE.md, skills and extensions hidden; the only secret in the agent environment is ZAI_API_KEY"
+      ],
+      [
+        "Cap",
+        "30 iterations · 20 min per run"
+      ],
+      [
+        "Prompt",
+        "Canonical EN, n=3, run sequentially"
+      ],
+      [
+        "Port",
+        "The harness injects a free port as PORT"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"
+      ],
+      [
+        "接続",
+        "Z.ai GLM Coding Planエンドポイント（https://api.z.ai/api/coding/paas/v4、OpenAI互換）直結、pi内蔵プロバイダzai。プランのクォータから差し引き（請求・クォータ消費は未照合）"
+      ],
+      [
+        "モデルID",
+        "zai/glm-5.3-flash — このリポで初めてのGLM系の測定"
+      ],
+      [
+        "thinking",
+        "piのデフォルトhigh（このモデルはthinkingをオフにできない）"
+      ],
+      [
+        "隔離",
+        "専用PI_CODING_AGENT_DIR、上位のAGENTS.md/CLAUDE.md・スキル・拡張は非公開、エージェント環境の秘密値はZAI_API_KEYのみ"
+      ],
+      [
+        "上限",
+        "30 iteration · runあたり20分"
+      ],
+      [
+        "プロンプト",
+        "正本EN、n=3、順次実行"
+      ],
+      [
+        "ポート",
+        "ハーネスが空きポートをPORTとして注入"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"
+      ],
+      [
+        "连接",
+        "Z.ai GLM Coding Plan 端点（https://api.z.ai/api/coding/paas/v4，OpenAI 兼容）直连，使用 pi 内置 provider zai。从套餐配额中扣除（计费与配额消耗未核对）"
+      ],
+      [
+        "模型 ID",
+        "zai/glm-5.3-flash — 本仓库首次测量 GLM 系列"
+      ],
+      [
+        "thinking",
+        "pi 默认值 high（该模型无法关闭 thinking）"
+      ],
+      [
+        "隔离",
+        "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md、技能和扩展，代理环境中的密钥只有 ZAI_API_KEY"
+      ],
+      [
+        "上限",
+        "30 iteration · 每 run 20 分钟"
+      ],
+      [
+        "提示词",
+        "标准 EN，n=3，顺序执行"
+      ],
+      [
+        "端口",
+        "框架把空闲端口作为 PORT 注入"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 반려·재실행·보류·시간 초과·실패 없음.",
+      "외부 프로세스(DeepSRT)가 127.0.0.1:3003을 점유했으나 하네스가 빈 포트를 주입해 채점에 영향이 없었다.",
+      "환산 비용은 공개 종량제 단가(2026-10-11 확인)로 계산한 추정이다. 실제 호출은 Coding Plan 엔드포인트로 가서 플랜 쿼터에서 차감됐을 것으로 보이며, 청구·쿼터 차감액은 대조하지 않았다.",
+      "Coding Plan 엔드포인트의 응답 속도·쿼터 정책은 종량제 엔드포인트(/api/paas/v4)와 다를 수 있다. 이 실험은 Coding Plan 엔드포인트만 측정했다."
+    ],
+    "en": [
+      "No gate rejections, reruns, holds, timeouts or failures.",
+      "An external process (DeepSRT) occupied 127.0.0.1:3003, but the harness injected a free port, so grading was unaffected.",
+      "The cost is an estimate at the public pay-as-you-go price (checked 2026-10-11). The actual calls went to the Coding Plan endpoint and were presumably deducted from the plan quota; billing and quota use were not reconciled.",
+      "The Coding Plan endpoint's response speed and quota policy may differ from the pay-as-you-go endpoint (/api/paas/v4). This experiment measured only the Coding Plan endpoint."
+    ],
+    "ja": [
+      "ゲート差し戻し・再実行・保留・タイムアウト・失敗なし。",
+      "外部プロセス（DeepSRT）が127.0.0.1:3003を占有していましたが、ハーネスが空きポートを注入したため採点に影響はありませんでした。",
+      "換算コストは公開の従量課金単価（2026-10-11確認）で計算した推定です。実際の呼び出しはCoding Planエンドポイントに送られ、プランのクォータから差し引かれたと見られます。請求・クォータ消費は照合していません。",
+      "Coding Planエンドポイントの応答速度・クォータ方針は従量課金エンドポイント（/api/paas/v4）と異なる可能性があります。この実験はCoding Planエンドポイントのみを測定しました。"
+    ],
+    "zh": [
+      "没有门控驳回、重跑、搁置、超时或失败。",
+      "外部进程（DeepSRT）占用了 127.0.0.1:3003，但框架注入了空闲端口，评分不受影响。",
+      "折算成本是按公开按量计费单价（2026-10-11 核实）计算的估算。实际调用发往 Coding Plan 端点，应已从套餐配额中扣除；计费与配额消耗未核对。",
+      "Coding Plan 端点的响应速度和配额政策可能与按量计费端点（/api/paas/v4）不同。本实验只测量了 Coding Plan 端点。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "3 run 모두 TypeScript + Fastify + Prisma + SQLite를 골랐다.",
+      "3 run 모두 공식 Hurl 13파일을 리포에 넣어 스스로 실행했다.",
+      "포트는 3 run 모두 `process.env.PORT`로 주입값을 따랐다(기본값 run 1은 3000, run 2·3은 8000).",
+      "run당 API 호출 30–54회, output 19.0–27.4K(reasoning 6.8–9.7K 포함), 최대 프롬프트 38.4–48.4K.",
+      "세션 기록에서 하네스 파일이나 다른 run 디렉터리를 참조한 기록은 없었다."
+    ],
+    "en": [
+      "All 3 runs chose TypeScript + Fastify + Prisma + SQLite.",
+      "All 3 runs copied the 13 official Hurl files into the repo and ran them on their own.",
+      "For the port, all 3 runs followed the injected value through `process.env.PORT` (fallback 3000 in run 1, 8000 in runs 2 and 3).",
+      "30–54 API calls and 19.0–27.4K output per run (including 6.8–9.7K reasoning); the largest prompt was 38.4–48.4K.",
+      "The session logs show no references to harness files or other runs' directories."
+    ],
+    "ja": [
+      "3 runすべてがTypeScript + Fastify + Prisma + SQLiteを選びました。",
+      "3 runすべてが公式Hurl 13ファイルをリポに入れて自分で実行しました。",
+      "ポートは3 runすべてが`process.env.PORT`で注入値に従いました（デフォルトはrun 1が3000、run 2・3が8000）。",
+      "runあたりAPI呼び出し30–54回、output 19.0–27.4K（reasoning 6.8–9.7Kを含む）、最大プロンプト38.4–48.4K。",
+      "セッション記録にハーネスのファイルや他のrunのディレクトリを参照した記録はありませんでした。"
+    ],
+    "zh": [
+      "3 个 run 都选择了 TypeScript + Fastify + Prisma + SQLite。",
+      "3 个 run 都把官方 13 个 Hurl 文件放进仓库并自行运行。",
+      "端口方面，3 个 run 都通过 `process.env.PORT` 使用注入值（默认值 run 1 为 3000，run 2·3 为 8000）。",
+      "每 run API 调用 30–54 次，output 19.0–27.4K（含 reasoning 6.8–9.7K），最大提示 38.4–48.4K。",
+      "会话记录中没有引用框架文件或其他 run 目录的记录。"
+    ]
+  }
+}

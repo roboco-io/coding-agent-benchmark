@@ -20,6 +20,10 @@ def resolve(path, run_id):
     files = []
     for p in paths:
         if not os.path.isabs(p): p = os.path.join(ROOT, p)
+        # 2026-10-08 하네스 원자료가 ~/ralph-expNNN → ~/experiments/ralph-expNNN으로 이동했다(CLAUDE.md 환경 주의)
+        home = os.path.expanduser('~')
+        if not os.path.exists(p) and p.startswith(home + '/ralph-exp'):
+            p = home + '/experiments/' + p[len(home) + 1:]
         if p.endswith('.tar.gz'):
             d = os.path.join(scratch, 'x', p.replace('/', '_')); 
             if not os.path.isdir(d):

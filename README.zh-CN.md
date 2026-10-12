@@ -22,6 +22,8 @@
 
 **📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-046（2026-10-11）
 
+**💬 异议与基准测试委托**：如果对结果（判定、测量值、成本或实验条件）有异议，请提交 [结果异议](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=result-dispute.yml) issue，并写明实验编号和依据。如果希望测试新的模型或智能体，请提交 [基准测试委托](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=benchmark-request.yml) issue。
+
 > 外部仪表板尚未反映2026-09-21更正。数值判断请参考下方报告及更正记录。
 
 <!-- RESULTS:BEGIN -->

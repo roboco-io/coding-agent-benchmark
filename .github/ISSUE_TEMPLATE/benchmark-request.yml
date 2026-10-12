@@ -1,0 +1,50 @@
+name: "벤치마크 의뢰 / Benchmark request"
+description: "새 모델·에이전트(하네스)를 같은 랄프 루프 과제로 측정해 달라는 요청 / Ask us to run a new model or coding agent on the same Ralph loop task"
+title: "[의뢰] "
+labels: ["benchmark-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        모든 측정은 같은 과제(RealWorld 백엔드), 같은 정본 프롬프트(기본 영어), 같은 채점기(Hurl 13파일·154요청)로 run 3회를 돌립니다. 의뢰를 받아도 실행 여부와 시점은 API 접근·비용·하네스 지원 여부에 따라 달라지며 보장하지 않습니다.
+        Every benchmark uses the same task, canonical prompt (English by default) and grader, with 3 runs. We cannot guarantee that or when a request will run; it depends on API access, cost and harness support.
+
+        **API 키·토큰 등 비밀값은 붙이지 마세요. / Do not paste API keys or other secrets.**
+  - type: input
+    id: model
+    attributes:
+      label: "모델 이름과 정확한 모델 ID / Model name and exact model ID"
+      description: "제공자 모델 목록에 나오는 ID / The ID as listed by the provider"
+      placeholder: "GLM-5.3-Flash · glm-5.3-flash"
+    validations:
+      required: true
+  - type: dropdown
+    id: harness
+    attributes:
+      label: "에이전트(하네스) / Agent harness"
+      multiple: true
+      options:
+        - "Claude Code (네이티브 또는 Anthropic 호환 엔드포인트 직결) / Claude Code (native or Anthropic-compatible endpoint)"
+        - "Codex CLI"
+        - "pi coding agent"
+        - "Antigravity CLI"
+        - "기타·새 에이전트 (아래에 설명) / Other or new agent (describe below)"
+        - "모름 — 알아서 선택 / Not sure, your choice"
+    validations:
+      required: true
+  - type: textarea
+    id: access
+    attributes:
+      label: "제공자·엔드포인트·과금 / Provider, endpoint and pricing"
+      description: |
+        제공자, API 형식(Anthropic 호환 / OpenAI 호환 / 기타), 입력 컨텍스트 한도, 입력·출력 단가와 출처 링크를 적어 주세요. 입력 한도 200K 미만 모델은 이 과제와 상성이 나빠 우선순위가 낮습니다. 변환 프록시(ccr 등)가 필요한 경로는 측정하지 않습니다.
+        Provider, API format, input context limit, input/output prices with source links. Models under 200K input context fit this task poorly. Paths that need a translation proxy (e.g. ccr) are not benchmarked.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: "의뢰 이유·비교하고 싶은 것 / Why, and what to compare"
+      description: "예: 어떤 기존 조건과 비교하고 싶은지, 한국어(KO) 프롬프트 조건도 필요한지 / e.g. which existing condition to compare against, whether a Korean-prompt run is needed"
+    validations:
+      required: true

@@ -1,0 +1,54 @@
+name: "결과 이의 제기 / Result dispute"
+description: "판정·측정값·비용·실험 조건이 틀렸다고 보는 경우 / Report a verdict, measurement, cost or setup you believe is wrong"
+title: "[이의] EXP-"
+labels: ["result-dispute"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        벤치마크 결과에 대한 이의를 남겨 주셔서 감사합니다. 검토할 수 있도록 대상 실험과 근거를 구체적으로 적어 주세요.
+        Thanks for checking our results. Please name the experiment and give evidence so we can re-check it.
+
+        참고 / Before filing: 각 실험의 `experiments/NNN-*/report.md`와 [정정 기록](https://github.com/roboco-io/coding-agent-benchmark/blob/main/docs/2026-09-21-corrections.md)에 이미 다룬 내용인지 확인해 주세요.
+        **API 키·토큰 등 비밀값은 붙이지 마세요. / Do not paste API keys or other secrets.**
+  - type: input
+    id: experiment
+    attributes:
+      label: "실험 번호 / Experiment"
+      description: "예 / e.g. EXP-046. 대시보드 행이면 모델·에이전트 이름도 / or the dashboard row (model × agent)"
+      placeholder: "EXP-046 · pi × glm-5.3-flash"
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: "이의 대상 / What is disputed"
+      multiple: true
+      options:
+        - "판정(완주 여부·검증/기각) / Verdict"
+        - "시간·iteration·커밋 등 측정값 / Time, iterations, commits"
+        - "토큰·환산 비용 / Tokens or estimated cost"
+        - "실험 조건·하네스 설정(모델 ID, thinking, 엔드포인트 등) / Setup or harness configuration"
+        - "채점 방식(Hurl 정본·게이트) / Grading"
+        - "기타 / Other"
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: "무엇이 틀렸다고 보는지 / What you think is wrong"
+      description: "현재 기재된 값·서술과, 맞다고 보는 값·서술을 함께 적어 주세요 / Quote the current value or statement and what you think it should be"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "근거 / Evidence"
+      description: "재현 절차, 로그 경로(`experiments/NNN-*/runs/…`), 제공자 문서 링크, 단가 출처 등 / Reproduction steps, log paths, provider docs, price sources"
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: "영향 범위 (선택) / Impact (optional)"
+      description: "다른 실험이나 README·대시보드의 결론에도 영향이 있다고 보면 적어 주세요 / Other experiments or conclusions affected"

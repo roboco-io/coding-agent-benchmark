@@ -73,6 +73,7 @@ html[lang="ja"] h1, html[lang="zh-CN"] h1{letter-spacing:-.01em;}
 .deck b{font-weight:600; color:var(--ink);}
 .repo{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; max-width:78ch;
   border-left:3px solid var(--native); padding:4px 0 4px 14px;}
+.repo + .repo{margin-top:12px;}
 .repo p{margin:0; flex:1 1 320px; font-size:.88rem; color:var(--ink-2);}
 .repo p b{color:var(--ink); font-weight:600;}
 .repo-link{flex:none; font-size:.84rem; font-weight:600; text-decoration:none; border:1px solid var(--native);
@@ -311,6 +312,10 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
   <div class="repo">
     <p data-i18n="repoPitch"></p>
     <a class="repo-link" href="https://github.com/roboco-io/coding-agent-benchmark" data-i18n="metaLink"></a>
+  </div>
+  <div class="repo">
+    <p data-i18n="issuePitch"></p>
+    <a class="repo-link" href="https://github.com/roboco-io/coding-agent-benchmark/issues/new/choose" data-i18n="issueLink"></a>
   </div>
 </header>
 
@@ -631,6 +636,8 @@ en: {
   deck2:"The task is the <b>RealWorld backend</b>, the API for a blog-style service with sign-up and login, articles, comments, follows and tags. We chose it because it follows patterns that real projects build all the time, it is hard enough to be a genuine test, and it comes with a well-written public spec and an official test suite (154 Hurl requests), so every result can be graded objectively. So far all 117 runs have finished, so the table below compares <b>how</b> each model gets there: how long it takes, how consistent it is, how it works, and what it would cost.",
   repoPitch:"<b>Everything is open.</b> Experiment designs, per-run raw logs and token records, the grading scripts and the cost calculations are all in the repository — check any number yourself, or add your own model with the same harness.",
   metaLink:"View on GitHub ↗",
+  issuePitch:"<b>Disagree with a result, or want a model benchmarked?</b> Open a GitHub issue. Use the “Result dispute” template to point out a verdict, measurement or cost you think is wrong, with the experiment number and your evidence. Use the “Benchmark request” template to ask for a new model or agent.",
+  issueLink:"Open an issue ↗",
   scFrontLg:"Best trade-off (dashed)",
   scLog:"Log scale",
   scLin:"Linear scale",
@@ -726,6 +733,8 @@ ko: {
   deck2:"과제는 <b>RealWorld 백엔드</b>입니다. 회원가입·로그인, 글, 댓글, 팔로우, 태그를 갖춘 블로그형 서비스의 API입니다. 이 과제를 고른 이유는 세 가지입니다. 실무에서 많이 구현하는 패턴이고, 모델의 실력을 가를 만큼 난이도가 있으며, 잘 작성된 명세와 공식 테스트(Hurl 요청 154개)가 공개돼 있어 결과를 객관적으로 채점할 수 있기 때문입니다. 지금까지 117번의 실행이 모두 완주했기 때문에, 아래 표는 모델마다 <b>어떻게</b> 완주했는지 — 얼마나 걸렸고, 얼마나 일정했고, 어떤 방식으로 작업했고, 비용이 얼마인지를 비교합니다.",
   repoPitch:"<b>모든 것이 공개돼 있습니다.</b> 실험 설계, run별 원시 로그와 토큰 기록, 채점 스크립트, 비용 계산까지 리포지토리에 있습니다. 숫자를 직접 검증하거나, 같은 하네스로 원하는 모델을 추가해 보세요.",
   metaLink:"GitHub에서 보기 ↗",
+  issuePitch:"<b>결과에 이의가 있거나 벤치마크를 의뢰하고 싶으신가요?</b> GitHub 이슈로 남겨 주세요. 판정·측정값·비용이 틀렸다고 보시면 “결과 이의 제기” 템플릿에 실험 번호와 근거를 적어 주시고, 새 모델이나 에이전트의 측정을 원하시면 “벤치마크 의뢰” 템플릿을 사용해 주세요.",
+  issueLink:"이슈 남기기 ↗",
   scFrontLg:"가성비 경계(점선)",
   scLog:"로그 스케일",
   scLin:"선형 스케일",
@@ -821,6 +830,8 @@ ja: {
   deck2:"課題は<b>RealWorldバックエンド</b>です。会員登録・ログイン、記事、コメント、フォロー、タグを備えたブログ型サービスのAPIです。この課題を選んだ理由は3つあります。実務でよく実装されるパターンであること、モデルの実力を見分けられるだけの難しさがあること、そしてよく書かれた仕様と公式テスト（Hurlリクエスト154件）が公開されていて結果を客観的に採点できることです。これまでの117回の実行はすべて完走したため、下の表ではモデルごとに<b>どのように</b>完走したか——どれだけ時間がかかり、どれだけ安定していて、どう作業し、いくらかかるか——を比較します。",
   repoPitch:"<b>すべて公開しています。</b>実験設計、runごとの生ログとトークン記録、採点スクリプト、コスト計算までリポジトリにあります。数字を自分で検証したり、同じハーネスで好きなモデルを追加したりしてみてください。",
   metaLink:"GitHubで見る ↗",
+  issuePitch:"<b>結果に異議がある、またはベンチマークを依頼したい場合は</b> GitHubのissueでお知らせください。判定・測定値・コストが誤っていると思われる場合は「結果への異議」テンプレートに実験番号と根拠を、新しいモデルやエージェントの測定を希望する場合は「ベンチマーク依頼」テンプレートをお使いください。",
+  issueLink:"issueを作成 ↗",
   scFrontLg:"コスパ境界（点線）",
   scLog:"対数スケール",
   scLin:"線形スケール",
@@ -916,6 +927,8 @@ zh: {
   deck2:"任务是 <b>RealWorld 后端</b>——一个具备注册登录、文章、评论、关注和标签的博客型服务 API。选择它有三个原因：它是实际项目中经常实现的模式；难度足以区分模型的能力；并且有写得很好的公开规范和官方测试（154 个 Hurl 请求），可以客观地评判结果。到目前为止 117 次运行全部完成，因此下表比较的是每个模型<b>如何</b>完成：花了多长时间、有多稳定、如何工作，以及要花多少钱。",
   repoPitch:"<b>一切都是公开的。</b>实验设计、逐 run 的原始日志和 token 记录、评分脚本以及成本计算都在仓库中。你可以亲自核对任何数字，或用同一套框架加入你想测试的模型。",
   metaLink:"在 GitHub 上查看 ↗",
+  issuePitch:"<b>对结果有异议，或想委托新的基准测试？</b>请在 GitHub 提交 issue。如果你认为某项判定、测量值或成本有误，请使用“结果异议”模板并写明实验编号和依据；如果希望测试新的模型或智能体，请使用“基准测试委托”模板。",
+  issueLink:"提交 issue ↗",
   scFrontLg:"性价比边界（虚线）",
   scLog:"对数刻度",
   scLin:"线性刻度",

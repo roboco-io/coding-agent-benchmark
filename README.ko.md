@@ -22,6 +22,8 @@
 
 **📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-046 (2026-10-11)
 
+**💬 이의 제기·벤치마크 의뢰**: 결과(판정·측정값·비용·실험 조건)에 이의가 있으면 [결과 이의 제기](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=result-dispute.yml) 이슈에 실험 번호와 근거를 적어 주세요. 새 모델이나 에이전트의 측정을 원하면 [벤치마크 의뢰](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=benchmark-request.yml) 이슈를 남겨 주세요.
+
 > 외부 대시보드는 2026-09-21 계측 정정 미반영. 수치 판단에는 아래 보고서와 정정 기록을 사용한다.
 
 <!-- RESULTS:BEGIN -->

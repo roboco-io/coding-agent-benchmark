@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "라이브 대시보드 / Live dashboard"
+    url: https://roboco.io/coding-agent-benchmark/
+    about: "최신 결과를 먼저 확인해 주세요 / Check the latest results first"

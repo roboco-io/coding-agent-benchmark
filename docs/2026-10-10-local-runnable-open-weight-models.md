@@ -32,9 +32,12 @@ M5 Ultra Mac Studio는 2026-08-25 발표되었고 512GB 구성은 2026-10월 말
 | `Qwen/Qwen3.6-35B-A3B` | 36B / 3B 확인 | Apache-2.0 확인 | NVFP4 약 20GB | 세 장비 모두 |
 | `zai-org/GLM-5.3-Flash` | 320B / 18B | MIT | 4비트 MLX 177.6GB | 256·512 |
 | `deepseek-ai/DeepSeek-V4-Flash` | 284B / 13B | MIT | 4비트 MLX 151GB | 256·512 (Spark는 약 2비트에서만) |
+| `deepseek-ai/DeepSeek-V4.1-Flash` | 백본 552B / 활성 8B(prefill)·16B(decode), 별도 Engram 메모리 196B. safetensors 합계 약 763B 확인 | MIT 확인 | 4비트 약 370GB 이상(추정, 미측정) | 512 (추정) |
 | `MiniMaxAI/MiniMax-M3` | 약 428B / 23B | MiniMax Community | 4비트 약 240GB | 512 |
 | GLM-5.3 (전체) | 약 743B / 40B | 미확인 | Q3 343GB | 512 (3비트) |
 | `moonshotai/Kimi-K2.7-Code` | 1T / 32B | Modified MIT (2차 자료) | 2비트 339GB | 512 (2비트) |
+
+- **DeepSeek V4.1-Flash 추가 (2026-10-15)**: Hugging Face `deepseek-ai/DeepSeek-V4.1-Flash`(2026-09-10 생성, gated 아님, 라이선스 MIT, safetensors 합계 763,205,315,794 파라미터)를 모델 API로 직접 확인했다. 공식 발표(https://api-docs.deepseek.com/news/news260910)는 API 출시와 가중치 공개를 함께 알렸다. V4.1-Flash는 V4-Flash의 가중치 갱신이 아니라 아키텍처를 바꾸고 다시 사전학습한 별도 모델이므로, 위 V4-Flash 행의 크기·탑재 판정을 적용하지 않는다. 4비트 크기와 512GB 등급 판정은 파라미터 수에서 계산한 추정이다. 이 리포의 V4.1-Flash 측정(EXP-025·029)은 DeepSeek API로 했으며 로컬 실행은 측정하지 않았다.
 
 512GB에도 올라가지 않는 모델: DeepSeek-V4-Pro(1.6T), Kimi K3(2.8T), Qwen3.8-Max. 크기 출처는 [Pinggy](https://pinggy.io/blog/self_hosting_llms_on_512gb_m5_ultra_mac_studio/)와 각 HF 모델 카드다.
 

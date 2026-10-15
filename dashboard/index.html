@@ -57,6 +57,9 @@ html[lang="zh-CN"] body{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHe
 html[lang="en"] body{font-family:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
 .wrap{max-width:1120px; margin:0 auto; display:flex; flex-direction:column; gap:clamp(28px,4vw,44px);}
 .mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums;}
+.brandrow{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.brand{display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:700; font-size:.95rem; letter-spacing:.01em;}
+.brand .logo{flex:none;}
 .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin:0;}
 a{color:var(--native); text-underline-offset:3px; text-decoration-thickness:1px;}
 :focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:2px;}
@@ -298,7 +301,10 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
 
 <header>
   <div class="topbar">
+    <div class="brandrow">
+    <a class="brand" href="https://roboco.io" title="Roboco"><svg class="logo" viewBox="20 28 160 144" width="28" height="28" fill="currentColor" role="img" aria-label="Roboco"><rect x="29.1" y="162.47" width="141.63" height="8.28"/><rect x="54" y="28.99" width="8.4" height="8.46" transform="translate(116.41 66.43) rotate(-180)"/><rect x="62.41" y="37.4" width="8.4" height="8.35" transform="translate(133.23 83.14) rotate(-180)"/><rect x="45.72" y="37.42" width="8.32" height="16.75" transform="translate(99.76 91.59) rotate(-180)"/><rect x="29.07" y="54.13" width="16.67" height="8.34" transform="translate(74.8 116.59) rotate(-180)"/><rect x="20.64" y="62.43" width="8.46" height="100.07" transform="translate(49.74 224.94) rotate(-180)"/><path d="M45.69,78.08v67.56h107.66v-67.56H45.69ZM75.5,130h-9.66v-29.22h9.66v29.22ZM134,129.73h-9.66v-29.22h9.66v29.22Z"/><rect x="70.71" y="45.7" width="58.34" height="8.35" transform="translate(199.76 99.75) rotate(-180)"/><rect x="137.38" y="29.05" width="8.33" height="8.38"/><rect x="129.03" y="37.44" width="8.37" height="8.29"/><rect x="145.7" y="37.43" width="8.33" height="16.69"/><rect x="154.02" y="54.09" width="16.7" height="8.3"/><rect x="170.69" y="62.4" width="8.34" height="100.1"/></svg><span>Roboco</span></a>
     <p class="eyebrow" data-i18n="eyebrow"></p>
+    </div>
     <div class="langs" role="group" aria-label="Language">
       <button type="button" data-lang="en" lang="en">English</button>
       <button type="button" data-lang="ko" lang="ko">한국어</button>

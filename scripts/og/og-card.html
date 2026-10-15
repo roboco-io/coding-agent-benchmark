@@ -10,7 +10,7 @@ html,body{width:1200px;height:630px;overflow:hidden}
 body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,sans-serif;padding:56px 64px;display:grid;grid-template-columns:470px 1fr;gap:56px}
 .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
 .left{display:flex;flex-direction:column;gap:22px}
-.eyebrow{font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.brandrow{display:flex;align-items:center;gap:14px;color:var(--ink)}.bname{font-size:22px;font-weight:700;margin-right:6px}.eyebrow{font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 h1{font-size:50px;line-height:1.1;font-weight:700;letter-spacing:-.03em}
 .ko{font-size:21px;color:var(--ink-2);line-height:1.45}
 .stats{margin-top:auto;display:flex;gap:34px;border-top:2px solid var(--ink);padding-top:18px}
@@ -28,7 +28,7 @@ h1{font-size:50px;line-height:1.1;font-weight:700;letter-spacing:-.03em}
 .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:1px}
 </style></head><body>
 <div class="left">
-  <p class="eyebrow mono">Ralph loop benchmark</p>
+  <div class="brandrow"><svg class="logo" viewBox="20 28 160 144" width="44" height="44" fill="currentColor" role="img" aria-label="Roboco"><rect x="29.1" y="162.47" width="141.63" height="8.28"/><rect x="54" y="28.99" width="8.4" height="8.46" transform="translate(116.41 66.43) rotate(-180)"/><rect x="62.41" y="37.4" width="8.4" height="8.35" transform="translate(133.23 83.14) rotate(-180)"/><rect x="45.72" y="37.42" width="8.32" height="16.75" transform="translate(99.76 91.59) rotate(-180)"/><rect x="29.07" y="54.13" width="16.67" height="8.34" transform="translate(74.8 116.59) rotate(-180)"/><rect x="20.64" y="62.43" width="8.46" height="100.07" transform="translate(49.74 224.94) rotate(-180)"/><path d="M45.69,78.08v67.56h107.66v-67.56H45.69ZM75.5,130h-9.66v-29.22h9.66v29.22ZM134,129.73h-9.66v-29.22h9.66v29.22Z"/><rect x="70.71" y="45.7" width="58.34" height="8.35" transform="translate(199.76 99.75) rotate(-180)"/><rect x="137.38" y="29.05" width="8.33" height="8.38"/><rect x="129.03" y="37.44" width="8.37" height="8.29"/><rect x="145.7" y="37.43" width="8.33" height="16.69"/><rect x="154.02" y="54.09" width="16.7" height="8.3"/><rect x="170.69" y="62.4" width="8.34" height="100.1"/></svg><span class="bname">Roboco</span><span class="eyebrow mono">Ralph loop benchmark</span></div>
   <h1>Which coding agents finish a backend unattended?</h1>
   <p class="ko">같은 RealWorld 백엔드 과제를 모델·하네스 조합별로 무개입 자율 루프에 맡기고, 공식 Hurl 테스트로 완주를 판정했습니다.</p>
   <div class="stats">

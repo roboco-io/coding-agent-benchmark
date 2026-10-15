@@ -171,6 +171,19 @@ table.mx th[aria-sort] button .dir{opacity:1;}
 table.mx td{padding:11px 12px 11px 0; border-bottom:1px solid var(--hair); vertical-align:middle;}
 table.mx tbody tr:hover{background:var(--sunk);}
 table.mx tbody tr.dim td{opacity:.42;}
+/* ── ?model= highlight ─────────────────── */
+.hlbar{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; margin:0 0 18px; padding:10px 14px; border:1px solid var(--native); border-radius:3px; background:color-mix(in srgb,var(--native) 8%,var(--surface)); font-size:.86rem; color:var(--ink-2);}
+.hlbar[hidden]{display:none;}
+.hlbar p{margin:0; flex:1 1 260px;}
+.hlbar b{color:var(--ink);}
+.hlbtn{font:inherit; font-size:.8rem; font-weight:600; padding:4px 11px; border:1px solid var(--native); border-radius:2px; background:transparent; color:var(--native); cursor:pointer; white-space:nowrap;}
+.hlbtn:hover{background:var(--native); color:var(--surface);}
+.hlbtn:focus-visible{outline:2px solid var(--focus); outline-offset:1px;}
+table.mx tbody tr.hl > td:first-child{box-shadow:inset 3px 0 0 var(--native);}
+table.mx tbody tr.hl{background:color-mix(in srgb,var(--native) 7%,transparent);}
+table.mx tbody tr.fade td, #rawbody tr.fade td{opacity:.3;}
+.ptg.fade, .mk.fade, .arw.fade, .rt.fade, .lbl.fade, .wh.fade, .lead.fade{opacity:.18;}
+.dtlink{align-self:flex-start;}
 
 .mdl{display:flex; flex-direction:column; gap:3px; min-width:140px;}
 .mdl .nm{font-weight:600; font-size:.92rem; letter-spacing:-.01em; display:flex; align-items:center; gap:7px;}
@@ -324,6 +337,7 @@ footer{font-size:.75rem; color:var(--faint); border-top:1px solid var(--line); p
     <a class="repo-link" href="https://github.com/roboco-io/coding-agent-benchmark/issues/new/choose" data-i18n="issueLink"></a>
   </div>
 </header>
+<div class="hlbar" id="hlbar" hidden role="status"></div>
 
 
 <section class="panel" id="overview">
@@ -670,7 +684,7 @@ en: {
   ttRuns:"runs",
   mxTitle:"Performance matrix",
   mxSub:"One row per model × agent combination; the “How to read” list below explains each column. Time, output and cost vary by orders of magnitude, so they use a <b>log scale</b> (ticks under each header). Click a header to sort.",
-  dtOpen:"Show overview and experiment details", lbClient:"Client", clientUnrec:"not recorded", clientTitle:"Agent client version used in this experiment (see the note on client versions below)", secVerdict:"Verdict & hypothesis", secRuns:"Runs", secTokens:"Token breakdown", secCond:"Conditions", secDev:"Deviations & confounders", secBeh:"Agent behaviour", lbHypo:"Hypothesis", report:"Report ↗", noRecord:"Not recorded in the report.", xRun:"Run", xLang:"Prompt", xIter:"Iter", xTime:"Session (min)", xCommits:"Commits", xOut:"Output", xCost:"Cost (USD)", xIn:"Uncached in", xCR:"Cache read", xCW:"Cache write", xReq:"Requests", xRunsNote:"Iterations and commits are taken from the report; — means not recorded. Cost is an estimate at public API prices, not an invoice.", xTokNote:"Token proxy counted per unique message/response ID. Not billing data.",
+  hlOn:"Highlighting <b>{x}</b>. Other models are dimmed.", hlMiss:"No model matches “{x}”. Showing all models.", hlAll:"Show all", hlCopy:"Copy link", hlCopied:"Copied ✓", dtLink:"Copy link highlighting this model", dtOpen:"Show overview and experiment details", lbClient:"Client", clientUnrec:"not recorded", clientTitle:"Agent client version used in this experiment (see the note on client versions below)", secVerdict:"Verdict & hypothesis", secRuns:"Runs", secTokens:"Token breakdown", secCond:"Conditions", secDev:"Deviations & confounders", secBeh:"Agent behaviour", lbHypo:"Hypothesis", report:"Report ↗", noRecord:"Not recorded in the report.", xRun:"Run", xLang:"Prompt", xIter:"Iter", xTime:"Session (min)", xCommits:"Commits", xOut:"Output", xCost:"Cost (USD)", xIn:"Uncached in", xCR:"Cache read", xCW:"Cache write", xReq:"Requests", xRunsNote:"Iterations and commits are taken from the report; — means not recorded. Cost is an estimate at public API prices, not an invoice.", xTokNote:"Token proxy counted per unique message/response ID. Not billing data.",
   segEn:"EN prompt", segKo:"KO prompt",
   hintEn:"English canonical prompt — all 19 models (11 of them on the pi harness; qwen3.8-27b and glm-5.3-flash on pi only)", hintKo:"Korean canonical prompt (all deliverables in Korean) — 10 models tested",
   lgNative:"Claude Code native", lgDirect:"Claude Code direct (ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -767,7 +781,7 @@ ko: {
   ttRuns:"run",
   mxTitle:"성능 매트릭스",
   mxSub:"한 행이 한 모델×에이전트 조합이며, 각 열의 뜻은 아래 '읽는 법'에서 설명합니다. 시간·output·비용은 모델 간 차이가 수십 배까지 벌어져 <b>로그 스케일</b>을 씁니다(열 제목 아래 눈금 참조). 열 제목을 누르면 그 기준으로 정렬됩니다.",
-  dtOpen:"개요·실험 상세 보기", lbClient:"클라이언트", clientUnrec:"미기록", clientTitle:"이 실험에서 사용한 에이전트 클라이언트 버전(아래 클라이언트 버전 안내 참고)", secVerdict:"판정·가설", secRuns:"run별 결과", secTokens:"토큰 내역", secCond:"실험 조건", secDev:"편차·교란 요인", secBeh:"에이전트 행동 특징", lbHypo:"가설", report:"보고서 ↗", noRecord:"보고서에 기록 없음.", xRun:"run", xLang:"프롬프트", xIter:"iter", xTime:"세션(분)", xCommits:"커밋", xOut:"output", xCost:"비용(USD)", xIn:"비캐시 입력", xCR:"캐시 읽기", xCW:"캐시 쓰기", xReq:"요청 수", xRunsNote:"iteration·커밋은 보고서 기준이며 —는 기록 없음입니다. 비용은 공개 API 단가 환산 추정치이며 청구액이 아닙니다.", xTokNote:"고유 message/response ID 기준으로 센 토큰 대리지표입니다. 청구 데이터가 아닙니다.",
+  hlOn:"<b>{x}</b> 강조 중입니다. 다른 모델은 흐리게 표시합니다.", hlMiss:"“{x}”와 일치하는 모델이 없어 전체를 표시합니다.", hlAll:"전체 보기", hlCopy:"링크 복사", hlCopied:"복사됨 ✓", dtLink:"이 모델 강조 링크 복사", dtOpen:"개요·실험 상세 보기", lbClient:"클라이언트", clientUnrec:"미기록", clientTitle:"이 실험에서 사용한 에이전트 클라이언트 버전(아래 클라이언트 버전 안내 참고)", secVerdict:"판정·가설", secRuns:"run별 결과", secTokens:"토큰 내역", secCond:"실험 조건", secDev:"편차·교란 요인", secBeh:"에이전트 행동 특징", lbHypo:"가설", report:"보고서 ↗", noRecord:"보고서에 기록 없음.", xRun:"run", xLang:"프롬프트", xIter:"iter", xTime:"세션(분)", xCommits:"커밋", xOut:"output", xCost:"비용(USD)", xIn:"비캐시 입력", xCR:"캐시 읽기", xCW:"캐시 쓰기", xReq:"요청 수", xRunsNote:"iteration·커밋은 보고서 기준이며 —는 기록 없음입니다. 비용은 공개 API 단가 환산 추정치이며 청구액이 아닙니다.", xTokNote:"고유 message/response ID 기준으로 센 토큰 대리지표입니다. 청구 데이터가 아닙니다.",
   segEn:"EN 정본", segKo:"KO 정본",
   hintEn:"영문 프롬프트 정본 — 19 모델 전부(그중 11 모델은 pi 하네스로 실행, qwen3.8-27b·glm-5.3-flash는 pi만)", hintKo:"한국어 번역 정본(전 산출물 한국어 지시) — 10 모델만 실험됨",
   lgNative:"Claude Code 네이티브", lgDirect:"Claude Code 직결(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -864,7 +878,7 @@ ja: {
   ttRuns:"run",
   mxTitle:"性能マトリクス",
   mxSub:"1行が1つのモデル×エージェントの組み合わせで、各列の意味は下の「読み方」で説明しています。時間・output・コストはモデル間の差が数十倍に及ぶため<b>対数スケール</b>を使います（列見出しの下の目盛を参照）。列見出しをクリックするとその基準で並び替わります。",
-  dtOpen:"概要・実験の詳細を表示", lbClient:"クライアント", clientUnrec:"未記録", clientTitle:"この実験で使用したエージェントクライアントのバージョン（下のクライアントバージョンに関する注記を参照）", secVerdict:"判定・仮説", secRuns:"runごとの結果", secTokens:"トークン内訳", secCond:"実験条件", secDev:"逸脱・交絡要因", secBeh:"エージェントの行動特徴", lbHypo:"仮説", report:"レポート ↗", noRecord:"レポートに記録なし。", xRun:"run", xLang:"プロンプト", xIter:"iter", xTime:"セッション(分)", xCommits:"コミット", xOut:"output", xCost:"コスト(USD)", xIn:"非キャッシュ入力", xCR:"キャッシュ読み取り", xCW:"キャッシュ書き込み", xReq:"リクエスト数", xRunsNote:"iteration・コミットはレポート基準で、—は記録なしです。コストは公開API単価による換算推定で、請求額ではありません。", xTokNote:"固有のmessage/response IDで数えたトークン代理指標です。請求データではありません。",
+  hlOn:"<b>{x}</b>を強調表示中です。他のモデルは薄く表示します。", hlMiss:"“{x}”に一致するモデルがないため、すべて表示します。", hlAll:"すべて表示", hlCopy:"リンクをコピー", hlCopied:"コピーしました ✓", dtLink:"このモデルを強調するリンクをコピー", dtOpen:"概要・実験の詳細を表示", lbClient:"クライアント", clientUnrec:"未記録", clientTitle:"この実験で使用したエージェントクライアントのバージョン（下のクライアントバージョンに関する注記を参照）", secVerdict:"判定・仮説", secRuns:"runごとの結果", secTokens:"トークン内訳", secCond:"実験条件", secDev:"逸脱・交絡要因", secBeh:"エージェントの行動特徴", lbHypo:"仮説", report:"レポート ↗", noRecord:"レポートに記録なし。", xRun:"run", xLang:"プロンプト", xIter:"iter", xTime:"セッション(分)", xCommits:"コミット", xOut:"output", xCost:"コスト(USD)", xIn:"非キャッシュ入力", xCR:"キャッシュ読み取り", xCW:"キャッシュ書き込み", xReq:"リクエスト数", xRunsNote:"iteration・コミットはレポート基準で、—は記録なしです。コストは公開API単価による換算推定で、請求額ではありません。", xTokNote:"固有のmessage/response IDで数えたトークン代理指標です。請求データではありません。",
   segEn:"EN正本", segKo:"KO正本",
   hintEn:"英語プロンプト正本——19モデル全て（うち11モデルはpiハーネスで実行、qwen3.8-27b・glm-5.3-flashはpiのみ）", hintKo:"韓国語翻訳正本（全成果物を韓国語で指示）——10モデルのみ実験",
   lgNative:"Claude Code ネイティブ", lgDirect:"Claude Code 直結(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -961,7 +975,7 @@ zh: {
   ttRuns:"个 run",
   mxTitle:"性能矩阵",
   mxSub:"每行一个模型×代理组合，各列的含义见下方“阅读方法”。时间、output 和成本在模型之间相差可达数十倍，因此使用<b>对数刻度</b>（见列标题下方的刻度）。点击列标题即可按该列排序。",
-  dtOpen:"查看概览和实验详情", lbClient:"客户端", clientUnrec:"未记录", clientTitle:"本实验使用的代理客户端版本（见下方关于客户端版本的说明）", secVerdict:"判定·假设", secRuns:"各 run 结果", secTokens:"token 明细", secCond:"实验条件", secDev:"偏差·混杂因素", secBeh:"代理行为特征", lbHypo:"假设", report:"报告 ↗", noRecord:"报告中无记录。", xRun:"run", xLang:"提示", xIter:"iter", xTime:"会话(分钟)", xCommits:"提交", xOut:"output", xCost:"成本(USD)", xIn:"非缓存输入", xCR:"缓存读取", xCW:"缓存写入", xReq:"请求数", xRunsNote:"iteration 与提交数取自报告，— 表示无记录。成本为按公开 API 单价换算的估算，并非账单。", xTokNote:"按唯一 message/response ID 统计的 token 代理指标，并非计费数据。",
+  hlOn:"正在突出显示 <b>{x}</b>，其他模型已淡化。", hlMiss:"没有与“{x}”匹配的模型，显示全部。", hlAll:"显示全部", hlCopy:"复制链接", hlCopied:"已复制 ✓", dtLink:"复制突出显示此模型的链接", dtOpen:"查看概览和实验详情", lbClient:"客户端", clientUnrec:"未记录", clientTitle:"本实验使用的代理客户端版本（见下方关于客户端版本的说明）", secVerdict:"判定·假设", secRuns:"各 run 结果", secTokens:"token 明细", secCond:"实验条件", secDev:"偏差·混杂因素", secBeh:"代理行为特征", lbHypo:"假设", report:"报告 ↗", noRecord:"报告中无记录。", xRun:"run", xLang:"提示", xIter:"iter", xTime:"会话(分钟)", xCommits:"提交", xOut:"output", xCost:"成本(USD)", xIn:"非缓存输入", xCR:"缓存读取", xCW:"缓存写入", xReq:"请求数", xRunsNote:"iteration 与提交数取自报告，— 表示无记录。成本为按公开 API 单价换算的估算，并非账单。", xTokNote:"按唯一 message/response ID 统计的 token 代理指标，并非计费数据。",
   segEn:"EN 标准版", segKo:"KO 标准版",
   hintEn:"英文标准提示词——全部 19 个模型（其中 11 个用 pi 框架运行，qwen3.8-27b 和 glm-5.3-flash 仅用 pi）", hintKo:"韩文翻译标准版（要求全部产出为韩文）——仅 10 个模型测试",
   lgNative:"Claude Code 原生", lgDirect:"Claude Code 直连(ANTHROPIC_BASE_URL)", lgCodex:"Codex CLI",
@@ -1055,6 +1069,7 @@ function setLang(l, persist) {
   document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   if (persist) { try { localStorage.setItem("dash-lang", lang); } catch (e) {} }
   applyStatic();
+  renderHLBar();
   scales();
   render();
   renderRaw();
@@ -1065,6 +1080,52 @@ function setLang(l, persist) {
 function applyStatic() {
   document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t(el.dataset.i18n); });
   document.getElementById("langhint").textContent = plang === "en" ? t("hintEn") : t("hintKo");
+}
+
+/* ───────────────────────── ?model= highlight (shareable link) ─────────────────────────
+   Each comma-separated token matches rows whose name equals it; if none does, rows whose base model equals it
+   (so ?model=opus-5.5 is the Claude Code row only, ?model=glm-5.3-flash finds pi × glm-5.3-flash).
+   Matching ignores case, spaces, "×" and hyphens. */
+const normKey = v => String(v).toLowerCase().replace(/[^a-z0-9.]+/g, "");
+const slugOf = v => String(v).toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-+|-+$/g, "");
+let HL = null, hlQuery = "";
+function parseHL() {
+  try { hlQuery = new URLSearchParams(location.search).get("model") || ""; } catch (e) { hlQuery = ""; }
+  const toks = hlQuery.split(",").map(normKey).filter(Boolean);
+  if (!toks.length) return null;
+  const set = new Set();
+  toks.forEach(k => {
+    const byName = M.filter(m => normKey(m.name) === k || normKey(Object.keys(NAMES).find(x => NAMES[x] === m.name) || "\u0000") === k);
+    (byName.length ? byName : M.filter(m => normKey(m.base || m.name) === k)).forEach(m => set.add(m.name));
+  });
+  return set;
+}
+const isHL = name => !HL || !HL.size || HL.has(name);
+const hlCls = name => !HL || !HL.size ? "" : HL.has(name) ? "hl" : "fade";
+function hlUrl(names) {
+  const u = new URL(location.href); u.hash = "";
+  u.searchParams.delete("lang");
+  if (names && names.length) u.searchParams.set("model", names.map(slugOf).join(",")); else u.searchParams.delete("model");
+  return u.toString().replace(/%2C/g, ",");
+}
+function copyText(text, btn, label) {
+  const done = () => { if (!btn) return; btn.textContent = t("hlCopied"); setTimeout(() => { btn.textContent = t(label); }, 1600); };
+  const fallback = () => { window.prompt("", text); };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+}
+function renderHLBar() {
+  const bar = document.getElementById("hlbar");
+  if (HL === null) { bar.hidden = true; bar.innerHTML = ""; return; }
+  bar.hidden = false;
+  const names = M.filter(m => HL.has(m.name)).map(m => esc(m.name)).join(", ");
+  bar.innerHTML = HL.size
+    ? `<p>${t("hlOn").replace("{x}", names)}</p><button type="button" class="hlbtn" data-hl="copy">${t("hlCopy")}</button><button type="button" class="hlbtn" data-hl="all">${t("hlAll")}</button>`
+    : `<p>${t("hlMiss").replace("{x}", esc(hlQuery))}</p><button type="button" class="hlbtn" data-hl="all">${t("hlAll")}</button>`;
+}
+function clearHL() {
+  HL = null;
+  try { const u = new URL(location.href); u.searchParams.delete("model"); history.replaceState(null, "", u.toString()); } catch (e) {}
+  renderHLBar(); render(); renderRaw(); renderCharts();
 }
 
 /* ───────────────────────── matrix accordion (data: details.js) ───────────────────────── */
@@ -1114,7 +1175,7 @@ function featBlock(m) {
     + `<ul>${d.li.map(x => `<li>${x}</li>`).join("")}</ul>${d.cav ? `<p class="cav">${d.cav}</p>` : ""}</div>`;
 }
 function detailRow(m) {
-  return `<tr class="dt"><td colspan="9"><div class="dtwrap">${featBlock(m)}${expsFor(m).map(expBlock).join("")}</div></td></tr>`;
+  return `<tr class="dt${hlCls(m.name) === "fade" ? " fade" : ""}"><td colspan="9"><div class="dtwrap"><button type="button" class="hlbtn dtlink" data-link="${esc(m.name)}">${t("dtLink")}</button>${featBlock(m)}${expsFor(m).map(expBlock).join("")}</div></td></tr>`;
 }
 function fitDetails() {
   const sc = document.querySelector(".scroller");
@@ -1198,13 +1259,15 @@ function render() {
       + `<span class="st">${s ? s.exp : ""}${s && m[plang].iter !== "iterAll1" ? " · " + s.iter : ""}</span></div></td>`
       + `<td><div class="agt"><span class="an">${agentName(m)}</span><span class="ac">${connLabel(m)}</span>`
       + (s ? `<span class="av" title="${esc(t("clientTitle"))}">${esc(clientText(s.exp, m.stack, t))}</span>` : "") + `</div></td>`;
-    if (!s) return `<tr class="dim">${nameCell}<td colspan="7"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
+    const hc = hlCls(m.name);
+    if (!s) return `<tr class="dim${hc ? " " + hc : ""}">${nameCell}<td colspan="7"><span class="na">${t("koMissing")}${t(m.koNote || "notePreview")}</span></td></tr>`;
 
     const spreadTxt = s.n === 1 ? `<span class="na">${t("n1na")}</span>`
       : `<span class="figs"><em>${f1(s.spread)}×</em> <small>${t("span").replace("{x}", f1(s.tHi - s.tLo))}</small></span>`;
     const spreadBar = s.n === 1 ? `<div class="bar"></div>` : linBar(Math.min(s.spread, S_MAX) - 1, S_MAX - 1, color);
 
-    return `<tr${hasDt ? ` class="row${isOpen ? " open" : ""}" data-key="${esc(m.name)}"` : ""}>${nameCell}`
+    const cls = [hasDt ? "row" : "", isOpen ? "open" : "", hc].filter(Boolean).join(" ");
+    return `<tr${cls ? ` class="${cls}"` : ""}${hasDt ? ` data-key="${esc(m.name)}"` : ""}>${nameCell}`
       + `<td><div class="cell">${rangeBar(s.tLo, s.tHi, s.tMed, s.n, T_MIN, T_MAX, color, false)}`
       + `<span class="figs"><em>${f1(s.tMed)}${min}</em>${s.n > 1 ? ` <small>${f1(s.tLo)}–${f1(s.tHi)}</small>` : ` <small>${t("n1")}</small>`}</span></div></td>`
       + `<td><div class="cell">${spreadBar}${spreadTxt}</div></td>`
@@ -1275,7 +1338,8 @@ function renderRaw() {
     if (!seen[model]) { seen[model] = true; first = `<td${span[model] > 1 ? ` rowspan="${span[model]}"` : ""} class="g">${model}</td>`; }
     const lt = rawLat(model, exp, pl);
     const time = tlo === "58m15s" ? t("t58") : `${tlo}–${thi}${min}`;
-    return `<tr>${first}<td class="n">${exp}</td><td>${cond[stack]} · ${pl}</td><td class="n">${esc(clientText(exp, stack, t))}</td><td class="n">${n}</td><td class="n">${done === "one" ? t("doneOne") : done}</td><td class="n">${iter}</td><td class="n">${time}</td><td class="n">${commits}</td><td class="n">${out}</td>${lt}<td>${notes[nk]}</td></tr>`;
+    const hc = hlCls(model);
+    return `<tr${hc ? ` class="${hc}"` : ""}>${first}<td class="n">${exp}</td><td>${cond[stack]} · ${pl}</td><td class="n">${esc(clientText(exp, stack, t))}</td><td class="n">${n}</td><td class="n">${done === "one" ? t("doneOne") : done}</td><td class="n">${iter}</td><td class="n">${time}</td><td class="n">${commits}</td><td class="n">${out}</td>${lt}<td>${notes[nk]}</td></tr>`;
   }).join("");
   /* keep numeric ranges on one line (word joiners around the en dash); cells may still wrap before the unit */
   document.querySelectorAll("#rawbody td.n").forEach(td => { td.innerHTML = td.innerHTML.replace(/\u2013/g, "\u2060\u2013\u2060"); });
@@ -1309,7 +1373,7 @@ const ovEx = { agent: new Set(), vendor: new Set() };
 function vendorOf(m) {
   const b = m.base || m.name;
   return /^(Opus|Sonnet|Haiku|Fable)/.test(b) ? "Anthropic" : /^gpt/.test(b) ? "OpenAI" : /^gemini/.test(b) ? "Google"
-    : /^DeepSeek/.test(b) ? "DeepSeek" : /^qwen/.test(b) ? "Alibaba" : /^kimi/.test(b) ? "Moonshot AI" : "—";
+    : /^DeepSeek/.test(b) ? "DeepSeek" : /^qwen/.test(b) ? "Alibaba" : /^kimi/.test(b) ? "Moonshot AI" : /^glm/.test(b) ? "Z.ai" : "—";
 }
 const passes = m => !ovEx.agent.has(agentName(m)) && !ovEx.vendor.has(vendorOf(m));
 function renderFilters() {
@@ -1386,12 +1450,12 @@ function renderScatter() {
   g += `<line class="base" x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}"/></g>`;
   g += `<text class="axt" id="scxt" x="${(x0 + x1) / 2}" y="${H - 6}" text-anchor="middle"></text>`;
   g += `<text class="axt" id="scyt" transform="translate(12 ${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle"></text>`;
-  rows.forEach((r, i) => { g += `<line class="wh" data-i="${i}" data-a="t" stroke="var(--${r.m.stack})"/><line class="wh" data-i="${i}" data-a="u" stroke="var(--${r.m.stack})"/>`; });
-  g += `<path class="fr"/><g class="leads">` + ranked.map((r, k) => `<line class="lead" data-k="${k}"/>`).join("") + `</g>`;
-  [...rows].sort((a, b) => rank.get(b) - rank.get(a)).forEach(r => { const i = rows.indexOf(r);
-    g += `<g class="ptg${rank.get(r) < 5 ? " top" : ""}" tabindex="0" role="button" data-i="${i}" aria-label="${esc(r.m.name + " · " + short(r.m) + " · " + f1(r.t) + t("min") + " · " + money(r.u))}">`
+  rows.forEach((r, i) => { const fd = isHL(r.m.name) ? "" : " fade"; g += `<line class="wh${fd}" data-i="${i}" data-a="t" stroke="var(--${r.m.stack})"/><line class="wh${fd}" data-i="${i}" data-a="u" stroke="var(--${r.m.stack})"/>`; });
+  g += `<path class="fr"/><g class="leads">` + ranked.map((r, k) => `<line class="lead${isHL(r.m.name) ? "" : " fade"}" data-k="${k}"/>`).join("") + `</g>`;
+  [...rows].sort((a, b) => (isHL(a.m.name) - isHL(b.m.name)) || rank.get(b) - rank.get(a)).forEach(r => { const i = rows.indexOf(r);
+    g += `<g class="ptg${rank.get(r) < 5 ? " top" : ""}${isHL(r.m.name) ? "" : " fade"}" tabindex="0" role="button" data-i="${i}" aria-label="${esc(r.m.name + " · " + short(r.m) + " · " + f1(r.t) + t("min") + " · " + money(r.u))}">`
       + `<path class="mk" fill="var(--${r.m.stack})"/><circle class="hit" r="12"/></g>`; });
-  g += `<g class="lbls">` + ranked.map((r, k) => `<text class="lbl${k < 5 ? " top" : " sm"}" data-k="${k}" x="0" y="0">${k < 5 ? (k + 1) + ". " : ""}${esc(r.m.name)}</text>`).join("") + `</g>`;
+  g += `<g class="lbls">` + ranked.map((r, k) => `<text class="lbl${k < 5 ? " top" : " sm"}${isHL(r.m.name) ? "" : " fade"}" data-k="${k}" x="0" y="0">${k < 5 ? (k + 1) + ". " : ""}${esc(r.m.name)}</text>`).join("") + `</g>`;
   box.innerHTML = g + "</svg>";
 
   const svg = box.querySelector("svg"), $$ = q => svg.querySelectorAll(q);
@@ -1506,16 +1570,16 @@ function renderDumbbell() {
     g += `</g>`;
     pairs.forEach((p, i) => {
       const yb = top + i * rowH, y = narrow ? yb + 34 : yb + rowH / 2, va = pn.val(p.a), vb = pn.val(p.b), xa = sx(va), xb = sx(vb);
-      const dir = xb >= xa ? 1 : -1, ok = Math.abs(xb - xa) > 12;
-      if (ok) g += `<path class="arw" d="M${xa + dir * 7},${y}L${xb - dir * 9},${y}M${xb - dir * 13},${y - 4}L${xb - dir * 9},${y}L${xb - dir * 13},${y + 4}"/>`;
-      g += `<path class="mk" d="${shapePath(p.a.m.stack, xa, y, 4.5)}" fill="var(--${p.a.m.stack})"/><path class="mk" d="${shapePath("pi", xb, y, 4.5)}" fill="var(--pi)"/>`;
-      g += `<text class="rt" x="${px0 + panW}" y="${y + 3.5}" text-anchor="end">×${(vb / va).toFixed(2)}</text>`;
+      const dir = xb >= xa ? 1 : -1, ok = Math.abs(xb - xa) > 12, fd = isHL(p.a.m.name) || isHL(p.b.m.name) ? "" : " fade";
+      if (ok) g += `<path class="arw${fd}" d="M${xa + dir * 7},${y}L${xb - dir * 9},${y}M${xb - dir * 13},${y - 4}L${xb - dir * 9},${y}L${xb - dir * 13},${y + 4}"/>`;
+      g += `<path class="mk${fd}" d="${shapePath(p.a.m.stack, xa, y, 4.5)}" fill="var(--${p.a.m.stack})"/><path class="mk${fd}" d="${shapePath("pi", xb, y, 4.5)}" fill="var(--pi)"/>`;
+      g += `<text class="rt${fd}" x="${px0 + panW}" y="${y + 3.5}" text-anchor="end">×${(vb / va).toFixed(2)}</text>`;
     });
   });
   pairs.forEach((p, i) => {
-    const yb = top + i * rowH;
-    g += narrow ? `<text class="lbl" x="0" y="${yb + 15}">${esc(p.base)} <tspan class="lbl sm">${esc(short(p.a.m))} → pi</tspan></text>`
-                : `<text class="lbl" x="0" y="${yb + rowH / 2 - 1}">${esc(p.base)}</text><text class="lbl sm" x="0" y="${yb + rowH / 2 + 11}" style="font-size:10px">${esc(short(p.a.m))} → pi</text>`;
+    const yb = top + i * rowH, fd = isHL(p.a.m.name) || isHL(p.b.m.name) ? "" : " fade";
+    g += narrow ? `<text class="lbl${fd}" x="0" y="${yb + 15}">${esc(p.base)} <tspan class="lbl sm">${esc(short(p.a.m))} → pi</tspan></text>`
+                : `<text class="lbl${fd}" x="0" y="${yb + rowH / 2 - 1}">${esc(p.base)}</text><text class="lbl sm${fd}" x="0" y="${yb + rowH / 2 + 11}" style="font-size:10px">${esc(short(p.a.m))} → pi</text>`;
   });
   box.innerHTML = g + "</svg>";
   const svg = box.querySelector("svg");
@@ -1579,7 +1643,23 @@ document.querySelectorAll("#scmode button").forEach(b => {
     if (svg && svg.animateTo) svg.animateTo(scMode === "lin" ? 1 : 0);
   });
 });
+document.getElementById("hlbar").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-hl]");
+  if (!b) return;
+  if (b.dataset.hl === "all") clearHL();
+  else copyText(hlUrl([...HL]), b, "hlCopy");
+});
+document.getElementById("mxbody").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-link]");
+  if (b) copyText(hlUrl([b.dataset.link]), b, "dtLink");
+});
+HL = parseHL();
 setLang(detectLang(), false);
+renderHLBar();
+if (HL && HL.size) {
+  const first = M.find(m => HL.has(m.name) && stats(m[plang]) && expsFor(m).length);
+  if (first) openInMatrix(first.name);
+}
 </script>
 
 </body></html>

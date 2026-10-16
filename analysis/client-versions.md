@@ -1,6 +1,6 @@
 # 실험별 에이전트 클라이언트·버전
 
-- 작성일: 2026-10-03. 방법: 실험 문서(README·report·phase0)에 적힌 버전을 먼저 찾고, 세션 원자료(Claude Code jsonl의 `version` 필드, Codex rollout·로그 머리말의 `cli_version`/`OpenAI Codex vX`)와 대조했다. 어디에도 기록이 없으면 추정하지 않고 "미기록"으로 둔다.
+- 작성일: 2026-10-03. 갱신: 2026-10-16(EXP-037–047 추가, report.md 헤더·phase0.md 기준). 방법: 실험 문서(README·report·phase0)에 적힌 버전을 먼저 찾고, 세션 원자료(Claude Code jsonl의 `version` 필드, Codex rollout·로그 머리말의 `cli_version`/`OpenAI Codex vX`)와 대조했다. 어디에도 기록이 없으면 추정하지 않고 "미기록"으로 둔다.
 - 근거 파일 중 `~/ralph-expNNN/`, `~/.claude/projects/`로 시작하는 경로는 실험 머신의 로컬 하네스 원자료이며 이 리포에는 포함되어 있지 않다(2026-10-03 확인 시점에 존재. 2026-10-08에 `~/experiments/ralph-expNNN/`으로 이동). 리포 상대 경로는 이 리포에 있는 파일이다.
 - pi 세션 jsonl의 `"version":3`은 세션 스키마 버전이지 pi 버전이 아니다. pi 버전은 문서·phase0 기록에서만 얻었다.
 - 각 report.md 헤더의 `- 클라이언트:` 줄은 이 표의 "클라이언트·버전" 열과 같다.
@@ -43,9 +43,19 @@
 | EXP-034 | pi 0.87.1 | `experiments/034-pi-gpt61-sol/runs/phase0.md`, `README.md` |
 | EXP-035 | Antigravity CLI (agy) 1.3.1 | `experiments/035-agy-gemini38-flash/runs/phase0.md` (사전 조사 중 1.2.16→1.3.1 자동 업데이트, 실행 중 `AGY_CLI_DISABLE_AUTO_UPDATE=1`) |
 | EXP-036 | pi 0.87.1 | `experiments/036-pi-gemini38-flash/runs/phase0.md` |
+| EXP-037 | Claude Code 2.1.293 | `experiments/037-haiku55-ralph/runs/phase0.md` |
+| EXP-038 | pi 0.87.1 | `experiments/038-pi-haiku55/runs/phase0.md` |
+| EXP-040 | 결과 미보고. 설계 문서의 계획 클라이언트는 Antigravity CLI (agy) 1.3.1 | `experiments/040-agy-gemini31-pro/README.md` (report.md 없음, catalog M-33 진행중) |
+| EXP-041 | 결과 미보고. 설계 문서의 계획 클라이언트는 pi 0.87.1 | `experiments/041-pi-gemini31-pro/README.md` (report.md 없음, catalog M-34 진행중) |
+| EXP-042 | Claude Code 2.1.296 | `experiments/042-spark-qwen-direct/runs/phase0.md` |
+| EXP-043 | pi 0.87.1 | `experiments/043-pi-gptoss120b-bedrock/runs/phase0.md` |
+| EXP-044 | pi 0.87.1 | `experiments/044-pi-spark-qwen/runs/phase0.md` |
+| EXP-045 | pi 0.87.1 | `experiments/045-pi-qwen38-27b/runs/phase0.md` |
+| EXP-046 | pi 0.87.1 | `experiments/046-pi-glm53-flash/runs/phase0.md` |
+| EXP-047 | pi 0.87.1 (agy 1.3.2·1.3.6은 smoke에서 모델 미지원으로 실행 불가) | `experiments/047-pi-gemini4-argon/runs/phase0.md` |
 
 ## 읽는 법
 
-- 같은 Claude Code 계열이라도 2.1.215부터 2.1.284까지 여러 버전에 걸쳐 있고, Codex CLI는 0.144.0·0.153.4·0.155.1·0.156.1·0.160.0이 섞여 있다. 실험 간 시간 비교에는 클라이언트 버전 차이가 모델 차이와 함께 들어 있다.
+- 같은 Claude Code 계열이라도 2.1.215부터 2.1.296까지 여러 버전에 걸쳐 있고, Codex CLI는 0.144.0·0.153.4·0.155.1·0.156.1·0.160.0이 섞여 있다. 실험 간 시간 비교에는 클라이언트 버전 차이가 모델 차이와 함께 들어 있다.
 - "미기록"은 문서와 세션 원자료 어디에서도 버전을 확인하지 못했다는 뜻이다. 현재 해당하는 곳은 EXP-019의 Claude Code(Opus run)뿐이다.
 - EXP-025(문서 2.1.273 vs 세션 2.1.278)와 EXP-027(문서 0.155.1 vs 세션 일부 0.156.1)의 불일치는 원 문서를 수정하지 않았다. 이 표는 세션 원자료를 우선했다.

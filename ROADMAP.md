@@ -66,6 +66,7 @@
 - [x] EXP-044: pi × DGX Spark 탑재 가능 Qwen 3종 DashScope OpenAI 호환 (M-37, EN n=3) — 보류(첫 run에서 중단), [보고서](experiments/044-pi-spark-qwen/report.md)
 - [x] EXP-045: pi × qwen3.8-27b DashScope OpenAI 호환 (M-38, EN n=3, 30분 상한) — 검증(3/3 iter 1 완주, 세션 8.8–12.1분, 환산 $0.22–0.24, 비용 가드 결함 D-1 수정), [보고서](experiments/045-pi-qwen38-27b/report.md)
 - [x] EXP-046: pi × glm-5.3-flash Z.ai 내장 provider (M-39, EN n=3, 20분 상한) — 검증(3/3 iter 1 완주, 세션 7.1–11.0분, 환산 $0.04–0.07), [보고서](experiments/046-pi-glm53-flash/report.md)
+- [x] EXP-047: pi × gemini-4-argon Gemini API, 사용자 정의 모델 항목 (M-40, EN n=3, 20분 상한, 1 run 비용 측정 선행) — 검증(3/3 iter 1 완주, 세션 12.2–16.2분, 환산 $0.85–0.89). agy는 구독 전용이라 미측정, [보고서](experiments/047-pi-gemini4-argon/report.md)
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검
 - [ ] driver가 iteration마다 `bench.env`의 상한(`MAX_SEC`)을 다시 읽도록 개선 — 실행 중 상한 변경 적용 실패 사례(EXP-043 D-3)
 - [ ] DGX Spark 등급 후속: Qwen pi 재측정 중 flash·coder 남음(27b는 EXP-045 완료), Nemotron-3.5-Lightning(HF 크레딧 필요). 256GB·512GB 등급 중 GLM-5.3-Flash는 Z.ai API로 EXP-046 완료(로컬 실행은 미측정), MiniMax-M3는 키 확보 후 — [후보 조사](docs/2026-10-10-local-runnable-open-weight-models.md)

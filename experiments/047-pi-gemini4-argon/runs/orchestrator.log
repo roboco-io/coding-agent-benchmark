@@ -1,0 +1,11 @@
+=== starting sequential runs (pi: argon:google/gemini-4-argon / en / n=1) : 2026-10-16 10:32:02 ===
+=== start argon-en-1 : 2026-10-16 10:32:02 ===
+=== end argon-en-1 | 1,2026-10-16 10:48:25,0,13,154,1,pass : 2026-10-16 10:48:25 ===
+=== ALL RUNS FINISHED : 2026-10-16 10:48:25 ===
+=== starting sequential runs (pi: argon:google/gemini-4-argon / en / n=3) : 2026-10-16 10:54:59 ===
+=== skip argon-en-1 : 2026-10-16 10:54:59 ===
+=== start argon-en-2 : 2026-10-16 10:54:59 ===
+=== end argon-en-2 | 1,2026-10-16 11:08:13,0,13,154,1,pass : 2026-10-16 11:08:13 ===
+=== start argon-en-3 : 2026-10-16 11:08:13 ===
+=== end argon-en-3 | 1,2026-10-16 11:20:40,0,13,154,1,pass : 2026-10-16 11:20:40 ===
+=== ALL RUNS FINISHED : 2026-10-16 11:20:40 ===

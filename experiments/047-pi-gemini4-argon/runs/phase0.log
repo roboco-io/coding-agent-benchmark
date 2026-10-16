@@ -1,0 +1,8 @@
+=== google/gemini-4-argon (pi) 2026-10-16 10:31:30 ===
+No API key found for google.
+
+Use /login to log into a provider via OAuth or API key. See:
+  /Users/dohyunjung/.asdf/installs/nodejs/24.14.0/lib/node_modules/@earendil-works/pi-coding-agent/docs/providers.md
+  /Users/dohyunjung/.asdf/installs/nodejs/24.14.0/lib/node_modules/@earendil-works/pi-coding-agent/docs/models.md
+=== google/gemini-4-argon (pi) 2026-10-16 10:31:49 ===
+SMOKE-OK

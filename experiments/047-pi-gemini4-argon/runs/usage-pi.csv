@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+argon-en-1,1,60,0,0,0,188600,30453,1782653,0,14431,219053
+argon-en-2,1,46,0,0,0,149680,38174,2093513,0,18741,187854
+argon-en-3,1,66,0,0,0,184316,28948,1880722,0,13377,213264

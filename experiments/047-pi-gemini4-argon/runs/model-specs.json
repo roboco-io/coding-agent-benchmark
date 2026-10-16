@@ -1,0 +1,10 @@
+{
+  "google/gemini-4-argon": {
+    "provider": "Google Gemini API (generativelanguage.googleapis.com), paid tier standard, via pi google provider (사용자 정의 models.json)",
+    "context_window": 1048576, "max_output": 32768,
+    "context_source": "Gemini API GET /v1beta/models/gemini-4-argon (inputTokenLimit 1048576, outputTokenLimit 32768), 2026-10-16. 모델 문서는 동기 요청 최대 출력 65,536으로 적어 API 값과 다르다 — 보수적으로 API 값을 기록",
+    "billing": "api",
+    "pricing": {"input": 2.00, "output": 10.00, "cache_read": 0.10, "tiers": [],
+                "source": "https://ai.google.dev/gemini-api/docs/pricing (standard, output은 thinking 포함, 암시적 캐시만 지원, 구간 단가 없음, 2026-12-01부터 2배 인상 예정)", "checked_at": "2026-10-16"}
+  }
+}

@@ -1,0 +1,4 @@
+approved_at=2026-10-16 10:31:49
+preflight_exit=0
+answer=진행 (2026-10-16, pi × gemini-4-argon 1 run, 상한 run·실험 $5) — 승인 범위(모델·run 수·상한) 변경 없이 키 환경변수 이름만 GEMINI_API_KEY로 수정
+hash=b0848ffab9e0ae18032f0d93c608bc617af8407cd7b7ad9b416079046615eca2

@@ -864,6 +864,26 @@
         "verdict": "已验证",
         "summary": "3/3 个 run 均在 iteration 1 完成（会话 7.1–11.0 分钟，API 调用 30–54 次，按按量计费公开单价折算每 run 约 $0.04–0.07）。本仓库首次测量 GLM。"
       }
+    },
+    "EXP-047": {
+      "en": {
+        "name": "pi × Gemini 4 Argon (Gemini API, custom model entry) completion check (EN n=3)",
+        "hypothesis": "pi coding agent (`pi -p` 0.87.1) running `google/gemini-4-argon` via the Gemini API (custom models.json, thinking high) can complete the RealWorld backend (Hurl 13/13·154/154) in an isolated, unattended Ralph loop within 30 iterations·20 minutes (EN, 1 cost-measurement run first, then n=3; completion rate, billing excluded)",
+        "verdict": "Verified",
+        "summary": "All 3 EN runs finished in iteration 1; gate and two independent re-checks all 13/13·154/154 with no intervention. Sessions 12.2–16.2 min, 46–66 API calls, about $0.85–0.89 per run at public prices."
+      },
+      "ja": {
+        "name": "pi × Gemini 4 Argon（Gemini API、ユーザー定義モデル項目）完走検証（EN n=3）",
+        "hypothesis": "pi coding agent（`pi -p` 0.87.1）でGemini APIの`google/gemini-4-argon`（ユーザー定義models.json、thinking high）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13·154/154）を上限30 iteration·20分以内に完走できる（EN、コスト測定1 run先行後n=3、完走率判定・課金除外）",
+        "verdict": "検証",
+        "summary": "EN 3/3がすべてiteration 1で完走。ゲート通過と独立再検証2回がすべて13/13·154/154で一致し、介入なし。セッション12.2–16.2分、API呼び出し46–66回、公開単価換算でrunあたり約$0.85–0.89。"
+      },
+      "zh-CN": {
+        "name": "pi × Gemini 4 Argon（Gemini API，自定义模型条目）完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent（`pi -p` 0.87.1）通过 Gemini API 运行 `google/gemini-4-argon`（自定义 models.json，thinking high），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN，先跑 1 次测成本后 n=3，按完成率判定，不含计费）",
+        "verdict": "已验证",
+        "summary": "EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 12.2–16.2 分钟，API 调用 46–66 次，按公开单价折算每次 run 约 $0.85–0.89。"
+      }
     }
   }
 }

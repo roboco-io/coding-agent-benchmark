@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-046 (2026-10-11)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-047 (2026-10-16)
 
 **💬 이의 제기·벤치마크 의뢰**: 결과(판정·측정값·비용·실험 조건)에 이의가 있으면 [결과 이의 제기](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=result-dispute.yml) 이슈에 실험 번호와 근거를 적어 주세요. 새 모델이나 에이전트의 측정을 원하면 [벤치마크 의뢰](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=benchmark-request.yml) 이슈를 남겨 주세요.
 
@@ -72,6 +72,7 @@
 | [EXP-044](experiments/044-pi-spark-qwen/report.md) pi × DGX Spark 탑재 가능 Qwen 3종 (중단) | M-37: pi coding agent(`pi -p` 0.87.1)로 DashScope OpenAI 호환 엔드포인트의 Qwen 3종(`dashscope/qwen3.8-flash`·`dashscope/qwen3-coder-next`·`dashscope/qwen3.8-27b`, thinking pi 기본값, 사용자 정의 `models.json`)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **보류(실험 중단)** | pi 0.87.1 |
 | [EXP-045](experiments/045-pi-qwen38-27b/report.md) pi × Qwen 3.8 27B (DashScope OpenAI 호환 직결) 완주 검증 (EN n=3) | M-38: pi coding agent(`pi -p` 0.87.1)로 DashScope OpenAI 호환 엔드포인트의 `dashscope/qwen3.8-27b`(thinking pi 기본값, 사용자 정의 models.json)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·30분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 | [EXP-046](experiments/046-pi-glm53-flash/report.md) pi × GLM-5.3-Flash (Z.ai 내장 provider) 완주 검증 (EN n=3) | M-39: pi coding agent(`pi -p` 0.87.1)로 Z.ai의 `zai/glm-5.3-flash`(pi 내장 provider, Coding Plan 엔드포인트, thinking pi 기본값)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
+| [EXP-047](experiments/047-pi-gemini4-argon/report.md) pi × Gemini 4 Argon (Gemini API, 사용자 정의 모델 항목) 완주 검증 (EN n=3) | M-40: pi coding agent(`pi -p` 0.87.1)로 Gemini API의 `google/gemini-4-argon`(사용자 정의 models.json, thinking high)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN, 1 run 비용 측정 선행 후 n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -195,6 +196,9 @@ EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검�
 
 **EXP-046 — pi × GLM-5.3-Flash (Z.ai 내장 provider) 완주 검증 (EN n=3)** (검증)  
 EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었다. 세션 시간은 7.1–11.0분, API 호출은 30–54회, 공개 종량제 단가 환산 비용은 run당 $0.04–0.07다. → [보고서](experiments/046-pi-glm53-flash/report.md)
+
+**EXP-047 — pi × Gemini 4 Argon (Gemini API, 사용자 정의 모델 항목) 완주 검증 (EN n=3)** (검증)  
+EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었다. 세션 시간은 12.2–16.2분, API 호출은 46–66회, 공개 단가 환산 비용은 run당 $0.85–0.89다. → [보고서](experiments/047-pi-gemini4-argon/report.md)
 
 <!-- RESULTS:END -->
 

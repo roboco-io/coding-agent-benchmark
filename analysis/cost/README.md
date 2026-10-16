@@ -1,10 +1,10 @@
 # run당 비용 환산 (공개 단가 기준 추정)
 
-작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가), 2026-10-11(EXP-045 pi × qwen3.8-27b, EXP-046 pi × GLM-5.3-Flash 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
+작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가), 2026-10-11(EXP-045 pi × qwen3.8-27b, EXP-046 pi × GLM-5.3-Flash 추가), 2026-10-16(EXP-047 pi × gemini-4-argon 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
 
 ## 이 수치가 뜻하는 것
 
-각 run이 사용한 토큰을 네 항목(비캐시 입력·캐시 읽기·캐시 쓰기·출력)으로 나누고, 항목마다 2026-09-23(gpt-6-sol·gpt-6-luna는 2026-09-24, Sonnet 5.5는 2026-09-29, gpt-6.1-sol은 2026-10-03, gemini-3.8-flash는 2026-10-07, Haiku 5.5는 2026-10-08)에 확인한 공개 API 단가를 곱해 더한 값이다. **실제로 지출한 금액이 아니다.** 네이티브 Claude run은 구독(OAuth), pi × Opus 5.5(EXP-030)·pi × Sonnet 5.5(EXP-032)는 Anthropic API 키(실제 과금, 청구액 미확인), gpt-5.6-sol·gpt-6-astra·gpt-6-sol·gpt-6-luna·gpt-6.1-sol(pi × gpt-6-sol·pi × gpt-6.1-sol 포함)는 ChatGPT 플랜 OAuth로 실행했고, Solar 두 모델은 무료·프로모션 프리뷰 기간에 실행했다. gemini-3.8-flash(EXP-035/036)는 Gemini API 키로 실행해 실제 과금이 있었으나 청구액은 확인하지 않았다. 따라서 이 값은 "같은 사용량을 지금 공개 API 단가로 과금하면 얼마인가"에 대한 추정이다. 실험 품질 규칙([docs/experiment-quality-rules.md](../../docs/experiment-quality-rules.md) 4절)에 따라 구독 지출과 API 단가 환산을 구분하고, 단가 출처와 확인 시점을 남긴다.
+각 run이 사용한 토큰을 네 항목(비캐시 입력·캐시 읽기·캐시 쓰기·출력)으로 나누고, 항목마다 2026-09-23(gpt-6-sol·gpt-6-luna는 2026-09-24, Sonnet 5.5는 2026-09-29, gpt-6.1-sol은 2026-10-03, gemini-3.8-flash는 2026-10-07, Haiku 5.5는 2026-10-08, gemini-4-argon은 2026-10-16)에 확인한 공개 API 단가를 곱해 더한 값이다. **실제로 지출한 금액이 아니다.** 네이티브 Claude run은 구독(OAuth), pi × Opus 5.5(EXP-030)·pi × Sonnet 5.5(EXP-032)는 Anthropic API 키(실제 과금, 청구액 미확인), gpt-5.6-sol·gpt-6-astra·gpt-6-sol·gpt-6-luna·gpt-6.1-sol(pi × gpt-6-sol·pi × gpt-6.1-sol 포함)는 ChatGPT 플랜 OAuth로 실행했고, Solar 두 모델은 무료·프로모션 프리뷰 기간에 실행했다. gemini-3.8-flash(EXP-035/036)·gemini-4-argon(EXP-047)은 Gemini API 키로 실행해 실제 과금이 있었으나 청구액은 확인하지 않았다. 따라서 이 값은 "같은 사용량을 지금 공개 API 단가로 과금하면 얼마인가"에 대한 추정이다. 실험 품질 규칙([docs/experiment-quality-rules.md](../../docs/experiment-quality-rules.md) 4절)에 따라 구독 지출과 API 단가 환산을 구분하고, 단가 출처와 확인 시점을 남긴다.
 
 ## 결과 (run당 추정 비용 중앙값, USD)
 
@@ -23,6 +23,7 @@
 | pi × gpt-6.1-sol | 0.30 | — | 단문맥 단가(캐시 입력 $0.10), pi 하네스(구독 OAuth, 실제 지출 없음) |
 | gpt-6.1-sol | 0.36 | — | 단문맥 단가(캐시 입력 $0.10) |
 | gpt-6-sol | 0.43 | — | 단문맥 단가 |
+| pi × gemini-4-argon | 0.86 | — | 2026-11-30까지 단가(2026-12-01부터 2배), pi 하네스, API 키 실행(실제 과금) |
 | pi × gemini-3.8-flash | 1.11 | — | 2026년 단가(2027-01-01부터 2배), pi 하네스 |
 | agy × gemini-3.8-flash | 1.47 | — | 2026년 단가(2027-01-01부터 2배), Antigravity CLI 하네스 |
 | pi × kimi-k3 | 0.65 | — | pi 하네스, 캐시 쓰기는 입력 단가 |
@@ -64,6 +65,7 @@ run별 값은 [cost_all_runs.csv](cost_all_runs.csv)의 `est_cost_usd` 열에 �
 - **pi × Haiku 5.5(EXP-038)**: 단가·장문맥 처리는 위 Haiku 5.5 항목과 같다. pi의 `cacheWrite`는 `cacheWrite1h`가 전 응답 0이어서 `cache_write_5m`에 넣었다. pi 세션 기록의 자체 비용은 장문맥 단가를 반영하지 않으므로 쓰지 않았다. 100K 초과 요청은 en-1 3건뿐이다.
 - **pi × qwen3.8-27b(EXP-045)**: 모델 사양 파일(`experiments/045-pi-qwen38-27b/runs/model-specs.json`)에 기록된 2026-10-10 확인 단가(싱가포르 리전, 1M 토큰당 입력 $0.50·출력 $3.00, <https://www.alibabacloud.com/help/en/model-studio/model-pricing>)를 실험 당일 재확인 없이 적용했다. 캐시 읽기 단가는 공개 표에 없어 EXP-042·045 보고서와 같이 입력 단가의 10%($0.05)로 가정했다. pi 세션 기록의 `cacheWrite`는 전 응답 0이다. DashScope API 키로 실행해 실제 과금이 있었으나 청구액은 대조하지 않았다. 결과(run당 $0.2432·0.2328·0.2215)는 보고서 값과 같다.
 - **pi × GLM-5.3-Flash(EXP-046)**: 2026-10-11에 Z.ai 가격 페이지(<https://docs.z.ai/guides/overview/pricing>)의 종량제 단가를 확인해 적용했다(1M 토큰당 입력 $0.15·캐시 읽기 $0.03·출력 $0.50, 구간 단가 없음). pi 세션 기록의 `cacheWrite`는 전 응답 0이다. 실제 호출은 GLM Coding Plan 엔드포인트(`https://api.z.ai/api/coding/paas/v4`)로 보내져 구독 쿼터에서 차감됐고 토큰 단위 청구가 없으므로, 이 값은 같은 토큰을 종량제 API로 보냈을 때의 추정이며 청구액과 대조하지 않았다. 결과(run당 $0.0468·0.0393·0.0683)는 보고서 값과 같다.
+- **pi × gemini-4-argon(EXP-047)**: 2026-10-16에 Gemini API 가격 페이지(<https://ai.google.dev/gemini-api/docs/pricing>)의 유료 티어 Standard 단가를 확인해 적용했다(1M 토큰당 입력 $2.00·캐시 입력 $0.10·출력 $10.00, thinking 포함). 2026-12-01부터 전 항목이 두 배가 되므로 그 이후 같은 사용량은 run당 약 $1.7–1.8이다. 명시 캐시 저장비는 암묵 캐시 읽기만 기록돼 넣지 않았고, pi 세션 기록의 `cacheWrite`는 전 응답 0이다. Gemini API 키로 실행해 실제 과금이 있었으나 청구액은 대조하지 않았다. 결과(run당 $0.8600·0.8905·0.8462)는 보고서 값($0.860·0.891·0.846)과 반올림 범위에서 같다.
 - **Solar Pro 4**: 정가로 환산했다. 실험 당시(2026-08)는 무료 또는 프로모션 기간이었다. 이 엔드포인트는 캐시를 계상하지 않아 입력 전량이 비캐시 단가로 계산된다. 이 때문에 값이 크다.
 - **범위**: run 안의 재시도·추가 세션·서브에이전트 호출을 포함한다(실험 품질 규칙 5절 — 실패·재시도 포함). Opus 4.8 run 48-1은 재검증 세션을, Solar Pro 4 run 1은 게이트 오검으로 이어진 세션 12개를 포함한다.
 

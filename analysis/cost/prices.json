@@ -195,5 +195,15 @@
     "src": "https://docs.z.ai/guides/overview/pricing",
     "accessed": "2026-10-11",
     "caveat": "Z.ai 종량제 API 단가(구간 단가 없음). EXP-046 실제 호출은 GLM Coding Plan 엔드포인트(https://api.z.ai/api/coding/paas/v4)로 구독 쿼터에서 차감돼 토큰 단위 청구가 없으므로 환산값은 종량제 단가 추정이다(청구 미대조). pi 경로는 cacheWrite 0"
+  },
+  "gemini-4-argon": {
+    "input": 2.0,
+    "cache_read": 0.1,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 10.0,
+    "src": "https://ai.google.dev/gemini-api/docs/pricing",
+    "accessed": "2026-10-16",
+    "caveat": "Gemini API 유료 티어 Standard, 2026-11-30까지 단가(2026-12-01부터 전 항목 2배). 출력 단가는 thinking 토큰 포함. 명시 캐시 저장비는 암묵 캐시 읽기만 관측돼 미포함. pi 경로는 cacheWrite 0. Gemini API 키 실행(실제 과금, 청구 미대조)"
   }
 }

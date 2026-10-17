@@ -22,6 +22,8 @@ Model–harness combinations and task types are the priority. Strategy (S), toke
 
 **📊 Live dashboard**: [Ralph loop completion by model](https://roboco.io/coding-agent-benchmark/) — latest experiment included: EXP-047 (2026-10-16)
 
+**🔤 Sister repo — language comparison**: [language-benchmark](https://github.com/roboco-io/language-benchmark) ([dashboard](https://roboco.io/language-benchmark/)) fixes the model–harness and compares implementation languages (TypeScript, Python, Go, Rust, C++) on the same RealWorld backend.
+
 **💬 Disputes and benchmark requests**: If you disagree with a result (verdict, measurement, cost or setup), open a [Result dispute](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=result-dispute.yml) issue with the experiment number and your evidence. To have a new model or agent measured, open a [Benchmark request](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=benchmark-request.yml) issue.
 
 > The external dashboard does not yet include the 2026-09-21 corrections. Use the reports and correction record below for numerical conclusions.

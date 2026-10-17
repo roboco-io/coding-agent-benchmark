@@ -22,6 +22,8 @@
 
 **📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-047（2026-10-16）
 
+**🔤 姉妹リポジトリ — 言語比較**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([ダッシュボード](https://roboco.io/language-benchmark/))は、モデル・ハーネスを固定し、同じ RealWorld バックエンドを実装言語(TypeScript、Python、Go、Rust、C++)別に比較する。
+
 **💬 異議・ベンチマーク依頼**: 結果（判定・測定値・コスト・実験条件）に異議がある場合は、[結果への異議](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=result-dispute.yml) issueに実験番号と根拠を書いてください。新しいモデルやエージェントの測定を希望する場合は、[ベンチマーク依頼](https://github.com/roboco-io/coding-agent-benchmark/issues/new?template=benchmark-request.yml) issueを作成してください。
 
 > 外部ダッシュボードには2026-09-21の訂正が未反映。数値の判断は以下の報告書と訂正記録を参照。

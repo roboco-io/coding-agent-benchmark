@@ -1,0 +1,4 @@
+run,messages,input_tokens,output_tokens,cache_creation_input_tokens,cache_read_input_tokens,max_prompt,session_min,commits,usd_peak
+flash1017-en-1,51,49772,37251,0,2860160,81344,4.07,4,0.0768
+flash1017-en-2,36,44151,30164,0,1801984,69508,2.97,2,0.0603
+flash1017-en-3,39,52178,31468,0,2057472,76117,4.88,5,0.0658

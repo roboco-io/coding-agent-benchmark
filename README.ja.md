@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-047（2026-10-16）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-048（2026-10-18）
 
 **🔤 姉妹リポジトリ — 言語比較**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([ダッシュボード](https://roboco.io/language-benchmark/))は、モデル・ハーネスを固定し、同じ RealWorld バックエンドを実装言語(TypeScript、Python、Go、Rust、C++)別に比較する。
 
@@ -75,6 +75,7 @@
 | [EXP-045](experiments/045-pi-qwen38-27b/report.md) pi × Qwen 3.8 27B（DashScope） | M-38: piをDashScopeのOpenAI互換エンドポイントに接続すると、qwen3.8-27bでrun 30分以内にRealWorldバックエンドを完走できる | **検証** | pi 0.87.1 |
 | [EXP-046](experiments/046-pi-glm53-flash/report.md) pi × GLM-5.3-Flash（Z.ai） | M-39: pi内蔵のZ.aiプロバイダー（Coding Planエンドポイント）を使うと、glm-5.3-flashでrun 20分以内にRealWorldバックエンドを完走できる | **検証** | pi 0.87.1 |
 | [EXP-047](experiments/047-pi-gemini4-argon/report.md) pi × Gemini 4 Argon（Gemini API、ユーザー定義モデル項目）完走検証（EN n=3） | M-40: pi coding agent（`pi -p` 0.87.1）でGemini APIの`google/gemini-4-argon`（ユーザー定義models.json、thinking high）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13·154/154）を上限30 iteration·20分以内に完走できる（EN、コスト測定1 run先行後n=3、完走率判定・課金除外） | **検証** | pi 0.87.1 |
+| [EXP-048](experiments/048-deepseek-flash-1017/report.md) Claude Code × DeepSeek V4.1-Flash-1017 直結 完走検証（EN n=3） | M-41: Claude CodeをDeepSeekのAnthropic互換エンドポイントで`deepseek-flash`（2026-10-17からDeepSeek-V4.1-Flash-1017、thinkingは既定値）に直結すると、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13·154/154）を上限30 iteration·20分以内に完走できる（EN n=3、完走率判定・課金除外） | **検証** | Claude Code 2.1.302 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -201,6 +202,9 @@ solar-1未完走（テスト実行0回・コミット0回、6/15 iteration時点
 
 **EXP-047 — pi × Gemini 4 Argon（Gemini API、ユーザー定義モデル項目）完走検証（EN n=3）** (検証)  
 EN 3/3がすべてiteration 1で完走。ゲート通過と独立再検証2回がすべて13/13·154/154で一致し、介入なし。セッション12.2–16.2分、API呼び出し46–66回、公開単価換算でrunあたり約$0.85–0.89。 → [レポート](experiments/047-pi-gemini4-argon/report.md)
+
+**EXP-048 — Claude Code × DeepSeek V4.1-Flash-1017 直結 完走検証（EN n=3）** (検証)  
+EN 3/3がすべてiteration 1で完走。ゲート通過と独立再検証2回がすべて13/13·154/154で一致し、介入なし。セッション3.0–4.9分、公開ピーク単価換算でrunあたり約$0.06–0.08。outputとコストはEXP-025（9月の重み）の範囲下端以下だったが、クライアント版と実行時期も異なる。 → [レポート](experiments/048-deepseek-flash-1017/report.md)
 
 <!-- RESULTS:END -->
 

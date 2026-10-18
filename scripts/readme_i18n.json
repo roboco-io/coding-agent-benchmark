@@ -884,6 +884,26 @@
         "verdict": "已验证",
         "summary": "EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 12.2–16.2 分钟，API 调用 46–66 次，按公开单价折算每次 run 约 $0.85–0.89。"
       }
+    },
+    "EXP-048": {
+      "en": {
+        "name": "Claude Code × DeepSeek V4.1-Flash-1017 direct connection completion check (EN n=3)",
+        "hypothesis": "Claude Code connected directly to DeepSeek's Anthropic-compatible endpoint with `deepseek-flash` (DeepSeek-V4.1-Flash-1017 since 2026-10-17, default thinking) can complete the RealWorld backend (Hurl 13/13·154/154) in an isolated, unattended Ralph loop within 30 iterations·20 minutes (EN n=3; completion rate, billing excluded)",
+        "verdict": "Verified",
+        "summary": "All 3 EN runs finished in iteration 1; gate and two independent re-checks all 13/13·154/154 with no intervention. Sessions 3.0–4.9 min, about $0.06–0.08 per run at public peak prices. Output and cost were at or below the low end of EXP-025 (September weights), but client version and timing also differ."
+      },
+      "ja": {
+        "name": "Claude Code × DeepSeek V4.1-Flash-1017 直結 完走検証（EN n=3）",
+        "hypothesis": "Claude CodeをDeepSeekのAnthropic互換エンドポイントで`deepseek-flash`（2026-10-17からDeepSeek-V4.1-Flash-1017、thinkingは既定値）に直結すると、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13·154/154）を上限30 iteration·20分以内に完走できる（EN n=3、完走率判定・課金除外）",
+        "verdict": "検証",
+        "summary": "EN 3/3がすべてiteration 1で完走。ゲート通過と独立再検証2回がすべて13/13·154/154で一致し、介入なし。セッション3.0–4.9分、公開ピーク単価換算でrunあたり約$0.06–0.08。outputとコストはEXP-025（9月の重み）の範囲下端以下だったが、クライアント版と実行時期も異なる。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × DeepSeek V4.1-Flash-1017 直连完成验证（EN n=3）",
+        "hypothesis": "将 Claude Code 通过 DeepSeek 的 Anthropic 兼容端点直连 `deepseek-flash`（自 2026-10-17 起为 DeepSeek-V4.1-Flash-1017，thinking 默认值），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）",
+        "verdict": "已验证",
+        "summary": "EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 3.0–4.9 分钟，按公开高峰单价折算每次 run 约 $0.06–0.08。output 与成本处于或低于 EXP-025（9 月权重）范围的下端，但客户端版本与运行时间也不同。"
+      }
     }
   }
 }

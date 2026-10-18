@@ -198,6 +198,8 @@ table.mx tbody tr.fade td, #rawbody tr.fade td{opacity:.3;}
 .agt .ac{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--muted); letter-spacing:.02em; white-space:normal;}
 .pv{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.06em; color:var(--flag);
   border:1px solid color-mix(in srgb,var(--flag) 40%,transparent); border-radius:2px; padding:0 4px; white-space:nowrap;}
+.ow{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.04em; color:var(--ink-2); font-weight:500;
+  border:1px solid var(--faint); border-radius:2px; padding:0 4px; white-space:nowrap; cursor:help;}
 .done{font-family:"IBM Plex Mono",monospace; font-size:.8rem; white-space:nowrap;}
 .done small{display:block; font-size:.64rem; color:var(--muted); letter-spacing:.02em; font-family:"IBM Plex Mono",monospace;}
 
@@ -700,7 +702,7 @@ en: {
   colModel:"Model", colAgent:"Agent", connNative:"native", colDone:"Completed", colTime:"Wall-clock", colSpread:"Run-to-run spread", colCommits:"Commit discipline", colOutput:"Output tokens", colCost:"Est. cost / run", costNa:"no public price", costNaUnc:"price unconfirmed (2026-10-03)",
   min:" min", minTick:"min", commitsScale:"filled dots = median · scale 1–8",
   iterAll1:"all iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
-  stNative:"Claude Code native", stDirect:"Direct", stCodex:"Codex CLI",
+  owTag:"OPEN WEIGHTS", owTitle:"Model weights are publicly released (checked on Hugging Face, 2026-10-18), so it can also run self-hosted, e.g. on an air-gapped network. Results here were measured through the provider API, not a self-hosted deployment.", stNative:"Claude Code native", stDirect:"Direct", stCodex:"Codex CLI",
   koMissing:"KO condition not tested — ", noteAstra:"new GPT-6 generation", noteFable:"new Claude 5 top-tier model", notePreview:"endpoint withdrawn / new model",
   n1na:"n=1 · not assessable", span:"span {x} min", n1:"n=1", singleRun:"single run", sameAll:"same in every run",
   colWait:"Observed wait per call (median of runs)", colShare:"Model-wait share of session", sec:" s", latNaTitle:"Not measured: session logs were analysed for the EN-prompt runs only",
@@ -798,7 +800,7 @@ ko: {
   colModel:"모델", colAgent:"에이전트", connNative:"네이티브", colDone:"완주", colTime:"소요 시간", colSpread:"run 간 변동", colCommits:"커밋 규율", colOutput:"output 토큰", colCost:"run당 환산 비용", costNa:"공개 단가 없음", costNaUnc:"단가 미확인(2026-10-03)",
   min:"분", minTick:"분", commitsScale:"채운 점 = 중앙값 · 눈금 1–8",
   iterAll1:"전부 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
-  stNative:"Claude Code 네이티브", stDirect:"직결", stCodex:"Codex CLI",
+  owTag:"오픈웨이트", owTitle:"모델 가중치가 공개되어 있어(Hugging Face 확인, 2026-10-18) 폐쇄망 등 자체 서버에서도 운용할 수 있습니다. 이 대시보드의 결과는 자체 서버가 아니라 제공자 API로 측정했습니다.", stNative:"Claude Code 네이티브", stDirect:"직결", stCodex:"Codex CLI",
   koMissing:"KO 조건 미실험 — ", noteAstra:"GPT-6 세대 신규", noteFable:"Claude 5 상위 모델 신규", notePreview:"엔드포인트 회수/신규 모델",
   n1na:"n=1 · 판단 불가", span:"폭 {x}분", n1:"n=1", singleRun:"단일 run", sameAll:"전 run 동일",
   colWait:"호출당 관측 대기(run 중앙값)", colShare:"세션 중 모델 대기 비중", sec:"초", latNaTitle:"미계측: 세션 로그는 영어 프롬프트 run만 분석했습니다",
@@ -896,7 +898,7 @@ ja: {
   colModel:"モデル", colAgent:"エージェント", connNative:"ネイティブ", colDone:"完走", colTime:"所要時間", colSpread:"run間変動", colCommits:"コミット規律", colOutput:"outputトークン", colCost:"runあたり換算コスト", costNa:"公開単価なし", costNaUnc:"単価未確認（2026-10-03）",
   min:"分", minTick:"分", commitsScale:"塗りつぶし点 = 中央値 · 目盛 1–8",
   iterAll1:"全run iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
-  stNative:"Claude Code ネイティブ", stDirect:"直結", stCodex:"Codex CLI",
+  owTag:"オープンウェイト", owTitle:"モデルの重みが公開されており(Hugging Faceで確認、2026-10-18)、閉域網などの自前サーバーでも運用できます。このダッシュボードの結果は自前サーバーではなく提供者APIで測定しました。", stNative:"Claude Code ネイティブ", stDirect:"直結", stCodex:"Codex CLI",
   koMissing:"KO条件は未実験——", noteAstra:"GPT-6世代の新モデル", noteFable:"Claude 5上位モデルの新規", notePreview:"エンドポイント終了/新モデル",
   n1na:"n=1 · 判断不可", span:"幅 {x}分", n1:"n=1", singleRun:"単一run", sameAll:"全run同一",
   colWait:"呼び出しあたりの観測待ち時間（run中央値）", colShare:"セッション中のモデル待ち比率", sec:"秒", latNaTitle:"未計測: セッションログは英語プロンプトのrunのみ分析しました",
@@ -994,7 +996,7 @@ zh: {
   colModel:"模型", colAgent:"代理", connNative:"原生", colDone:"完成", colTime:"耗时", colSpread:"run 间波动", colCommits:"提交纪律", colOutput:"output token", colCost:"每 run 折算成本", costNa:"无公开单价", costNaUnc:"单价未确认（2026-10-03）",
   min:"分钟", minTick:"分钟", commitsScale:"实心点 = 中位数 · 刻度 1–8",
   iterAll1:"全部 iter 1", iterMixed:"iter 1 ×2 · 2 ×1", iter2:"iter 2", iter123:"iter 1·2·3", iter311:"iter 3·1·1",
-  stNative:"Claude Code 原生", stDirect:"直连", stCodex:"Codex CLI",
+  owTag:"开放权重", owTitle:"模型权重已公开（2026-10-18 在 Hugging Face 确认），也可在内网等自建服务器上运行。本看板的结果通过提供方 API 测得，而非自建部署。", stNative:"Claude Code 原生", stDirect:"直连", stCodex:"Codex CLI",
   koMissing:"KO 条件未测试——", noteAstra:"GPT-6 世代新模型", noteFable:"Claude 5 高阶新模型", notePreview:"端点已下线/新模型",
   n1na:"n=1 · 无法判断", span:"跨度 {x} 分钟", n1:"n=1", singleRun:"单个 run", sameAll:"所有 run 相同",
   colWait:"每次调用的观测等待（run 中位数）", colShare:"会话中模型等待占比", sec:"秒", latNaTitle:"未测量：仅分析了英文提示词 run 的会话日志",
@@ -1266,7 +1268,7 @@ function render() {
     const hasDt = !!(s && expsFor(m).length), isOpen = hasDt && openRows.has(m.name);
     const nmTag = hasDt ? `<button type="button" class="xp nm" aria-expanded="${isOpen}" title="${t("dtOpen")}"><span class="chev" aria-hidden="true"></span>` : `<span class="nm">`;
     const nameCell = `<td><div class="mdl">${nmTag}<span class="swatch" style="background:${color}"></span>${m.base || m.name}`
-      + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + (hasDt ? `</button>` : `</span>`)
+      + (m.preview ? ` <span class="pv">PREVIEW</span>` : "") + (isOpenW(m) ? ` <span class="ow" title="${esc(t("owTitle"))}">${t("owTag")}</span>` : "") + (hasDt ? `</button>` : `</span>`)
       + `<span class="st">${s ? s.exp : ""}${s && m[plang].iter !== "iterAll1" ? " · " + s.iter : ""}</span></div></td>`
       + `<td><div class="agt"><span class="an">${agentName(m)}</span><span class="ac">${connLabel(m)}</span>`
       + (s ? `<span class="av" title="${esc(t("clientTitle"))}">${esc(clientText(s.exp, m.stack, t))}</span>` : "") + `</div></td>`;
@@ -1381,6 +1383,9 @@ const money = v => "$" + (v < 0.1 ? v.toFixed(2) : usd(v));
 const short = m => agentName(m) + (m.stack === "direct" ? " · " + t("stDirect") : "");
 /* overview filters: excluded agents / model makers (empty = show all) */
 const ovEx = { agent: new Set(), vendor: new Set() };
+/* models whose weights are publicly released (Hugging Face, checked 2026-10-18; qwen3.8-max excluded: only its base model Qwen3.8-2.4T-A95B is public, not the API version). Runs here used the provider API, not self-hosting. */
+const OPEN_W = new Set(["DeepSeek V4.1-Flash", "DeepSeek V4-Pro", "kimi-k3", "qwen3.8-27b", "glm-5.3-flash"]);
+const isOpenW = m => OPEN_W.has(m.base || m.name);
 function vendorOf(m) {
   const b = m.base || m.name;
   return /^(Opus|Sonnet|Haiku|Fable)/.test(b) ? "Anthropic" : /^gpt/.test(b) ? "OpenAI" : /^gemini/.test(b) ? "Google"
@@ -1402,7 +1407,7 @@ function chartRows() {
     .map(({ m, s }) => ({ m, t: s.tMed, tLo: s.tLo, tHi: s.tHi, u: med(s.usd), uLo: lo(s.usd), uHi: hi(s.usd), n: s.n, exp: s.exp }));
 }
 function tipHtml(r) {
-  return `<b>${esc(r.m.name)}</b><br><span class="k">${esc(short(r.m))} · ${esc(r.exp)} · ${r.n} ${t("ttRuns")}</span><br>`
+  return `<b>${esc(r.m.name)}</b>${isOpenW(r.m) ? ` <span class="k">· ${t("owTag")}</span>` : ""}<br><span class="k">${esc(short(r.m))} · ${esc(r.exp)} · ${r.n} ${t("ttRuns")}</span><br>`
     + `${t("ttTime")} <b>${f1(r.t)}${t("min")}</b> <span class="k">(${f1(r.tLo)}–${f1(r.tHi)})</span><br>`
     + `${t("ttCost")} <b>${money(r.u)}</b> <span class="k">(${money(r.uLo)}–${money(r.uHi)})</span>`;
 }

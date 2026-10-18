@@ -1,0 +1,10 @@
+{
+  "openrouter/meta/muse-spark-open": {
+    "provider": "OpenRouter (https://openrouter.ai/api/v1), 제공자 Together 고정(openRouterRouting only=[together], allow_fallbacks=false), pi 사용자 정의 models.json",
+    "context_window": 1048576, "max_output": 943718,
+    "context_source": "OpenRouter GET /api/v1/models/meta/muse-spark-open/endpoints — Together 엔드포인트 context_length 1048576, max_completion_tokens 943718, 2026-10-18. 모델 등록 2026-10-16",
+    "billing": "api",
+    "pricing": {"input": 1.25, "output": 4.25, "cache_read": 0.15, "tiers": [],
+                "source": "OpenRouter endpoints API, Together 엔드포인트 pricing (prompt 1.25, completion 4.25, input_cache_read 0.15 / 100만 토큰, 5개 제공자 동일, 구간 단가 없음)", "checked_at": "2026-10-18"}
+  }
+}

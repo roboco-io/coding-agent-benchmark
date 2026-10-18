@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+musespark-en-1,1,58,0,0,0,53558,25907,1829328,0,10076,79465
+musespark-en-2,1,49,0,0,0,100750,33831,2698928,0,23921,134581
+musespark-en-3,1,61,0,0,0,62552,25262,2114624,0,14483,87814

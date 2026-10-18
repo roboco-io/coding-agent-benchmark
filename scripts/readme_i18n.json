@@ -904,6 +904,26 @@
         "verdict": "已验证",
         "summary": "EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 3.0–4.9 分钟，按公开高峰单价折算每次 run 约 $0.06–0.08。output 与成本处于或低于 EXP-025（9 月权重）范围的下端，但客户端版本与运行时间也不同。"
       }
+    },
+    "EXP-049": {
+      "en": {
+        "name": "pi × Muse Spark Open (OpenRouter, pinned to Together) completion check (EN n=3)",
+        "hypothesis": "pi coding agent (`pi -p` 0.87.1) running OpenRouter's `meta/muse-spark-open` (provider pinned to Together, custom models.json, thinking high) can complete the RealWorld backend (Hurl 13/13·154/154) in an isolated, unattended Ralph loop within 30 iterations·20 minutes (EN n=3; completion rate, billing excluded)",
+        "verdict": "Verified",
+        "summary": "All 3 EN runs finished in iteration 1; gate and two independent re-checks all 13/13·154/154 with no intervention. Sessions 5.2–6.7 min, $0.45–0.67 per run per OpenRouter generation records (matching the public-price conversion). All 168 calls were served by Together."
+      },
+      "ja": {
+        "name": "pi × Muse Spark Open（OpenRouter、Together固定）完走検証（EN n=3）",
+        "hypothesis": "pi coding agent（`pi -p` 0.87.1）でOpenRouterの`meta/muse-spark-open`（プロバイダーTogether固定、ユーザー定義models.json、thinking high）を動かすと、隔離・無介入のRalphループでRealWorldバックエンド（Hurl 13/13·154/154）を上限30 iteration·20分以内に完走できる（EN n=3、完走率判定・課金除外）",
+        "verdict": "検証",
+        "summary": "EN 3/3がすべてiteration 1で完走。ゲート通過と独立再検証2回がすべて13/13·154/154で一致し、介入なし。セッション5.2–6.7分、OpenRouterの生成記録でrunあたり$0.45–0.67（公開単価換算と一致）。168回の呼び出しはすべてTogetherが処理。"
+      },
+      "zh-CN": {
+        "name": "pi × Muse Spark Open（OpenRouter，固定 Together）完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent（`pi -p` 0.87.1）运行 OpenRouter 的 `meta/muse-spark-open`（提供方固定为 Together，自定义 models.json，thinking high），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费）",
+        "verdict": "已验证",
+        "summary": "EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 5.2–6.7 分钟，按 OpenRouter 生成记录每次 run $0.45–0.67（与公开单价折算一致）。168 次调用全部由 Together 处理。"
+      }
     }
   }
 }

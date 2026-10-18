@@ -54,6 +54,7 @@
 | EXP-046 | pi 0.87.1 | `experiments/046-pi-glm53-flash/runs/phase0.md` |
 | EXP-047 | pi 0.87.1 (agy 1.3.2·1.3.6은 smoke에서 모델 미지원으로 실행 불가) | `experiments/047-pi-gemini4-argon/runs/phase0.md` |
 | EXP-048 | Claude Code 2.1.302 (세션 jsonl `version` 전수 일치) | `experiments/048-deepseek-flash-1017/runs/phase0.md` |
+| EXP-049 | pi 0.87.1 | `experiments/049-pi-muse-spark-open/runs/phase0.md` |
 
 ## 읽는 법
 

@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-048（2026-10-18）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-049（2026-10-19）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -76,6 +76,7 @@
 | [EXP-046](experiments/046-pi-glm53-flash/report.md) pi × GLM-5.3-Flash（Z.ai） | M-39: 使用 pi 内置的 Z.ai provider（Coding Plan 端点），可用 glm-5.3-flash 在每 run 20 分钟内完成 RealWorld 后端 | **已验证** | pi 0.87.1 |
 | [EXP-047](experiments/047-pi-gemini4-argon/report.md) pi × Gemini 4 Argon（Gemini API，自定义模型条目）完成验证（EN n=3） | M-40: 用 pi coding agent（`pi -p` 0.87.1）通过 Gemini API 运行 `google/gemini-4-argon`（自定义 models.json，thinking high），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN，先跑 1 次测成本后 n=3，按完成率判定，不含计费） | **已验证** | pi 0.87.1 |
 | [EXP-048](experiments/048-deepseek-flash-1017/report.md) Claude Code × DeepSeek V4.1-Flash-1017 直连完成验证（EN n=3） | M-41: 将 Claude Code 通过 DeepSeek 的 Anthropic 兼容端点直连 `deepseek-flash`（自 2026-10-17 起为 DeepSeek-V4.1-Flash-1017，thinking 默认值），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费） | **已验证** | Claude Code 2.1.302 |
+| [EXP-049](experiments/049-pi-muse-spark-open/report.md) pi × Muse Spark Open（OpenRouter，固定 Together）完成验证（EN n=3） | M-42: 用 pi coding agent（`pi -p` 0.87.1）运行 OpenRouter 的 `meta/muse-spark-open`（提供方固定为 Together，自定义 models.json，thinking high），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费） | **已验证** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -205,6 +206,9 @@ EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/
 
 **EXP-048 — Claude Code × DeepSeek V4.1-Flash-1017 直连完成验证（EN n=3）** (已验证)  
 EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 3.0–4.9 分钟，按公开高峰单价折算每次 run 约 $0.06–0.08。output 与成本处于或低于 EXP-025（9 月权重）范围的下端，但客户端版本与运行时间也不同。 → [报告](experiments/048-deepseek-flash-1017/report.md)
+
+**EXP-049 — pi × Muse Spark Open（OpenRouter，固定 Together）完成验证（EN n=3）** (已验证)  
+EN 3/3 均在 iteration 1 完成；门禁与两次独立复检均为 13/13·154/154，无人干预。会话 5.2–6.7 分钟，按 OpenRouter 生成记录每次 run $0.45–0.67（与公开单价折算一致）。168 次调用全部由 Together 处理。 → [报告](experiments/049-pi-muse-spark-open/report.md)
 
 <!-- RESULTS:END -->
 

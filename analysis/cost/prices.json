@@ -215,5 +215,15 @@
     "src": "https://api-docs.deepseek.com/quick_start/pricing",
     "accessed": "2026-10-18",
     "caveat": "피크 단가(상한). 오프피크는 절반. 캐시 쓰기 요금 없음. 가격 페이지 Version 칸이 DeepSeek-V4.1-Flash-1017(별칭 deepseek-flash, 2026-10-17 갱신)이며 단가는 9월 가중치와 같다. 구간 단가 없음"
+  },
+  "muse-spark-open": {
+    "input": 1.25,
+    "cache_read": 0.15,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 4.25,
+    "src": "https://openrouter.ai/api/v1/models/meta/muse-spark-open/endpoints",
+    "accessed": "2026-10-18",
+    "caveat": "OpenRouter endpoints API의 Together 엔드포인트 단가(5개 제공자 동일, 구간 단가 없음). 출력 단가는 reasoning 포함. pi 경로는 cacheWrite 0. OpenRouter API 키 실행(실제 과금). run별 환산값이 OpenRouter generation 기록(GET /api/v1/generation)의 total_cost 합과 소수 넷째 자리까지 일치(이 리포 최초의 제공자 청구 기록 대조, 월별 청구서 대조는 아님)"
   }
 }

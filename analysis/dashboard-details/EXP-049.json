@@ -1,0 +1,222 @@
+{
+  "exp": "EXP-049",
+  "date": "2026-10-18",
+  "report": "experiments/049-pi-muse-spark-open/report.md",
+  "client": "pi 0.87.1",
+  "runs": {
+    "musespark-en-1": {
+      "iter": 1,
+      "commits": 2
+    },
+    "musespark-en-2": {
+      "iter": 1,
+      "commits": 1
+    },
+    "musespark-en-3": {
+      "iter": 1,
+      "commits": 2
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"
+      ],
+      [
+        "연결",
+        "OpenRouter(`https://openrouter.ai/api/v1`, OpenRouter API 키) 경유, 제공자 Together 고정(`openRouterRouting {only: [\"together\"], allow_fallbacks: false}`). pi 0.87.1 내장 목록에 이 모델이 없어 내장 openrouter/meta/muse-spark-1.3 항목을 따른 사용자 정의 models.json 항목으로 실행(contextWindow 1,048,576 / maxTokens 943,718)"
+      ],
+      [
+        "모델 ID",
+        "openrouter/meta/muse-spark-open — 응답 스냅샷 meta/muse-spark-open-20261015(168 호출 전부 Together). 이 리포의 첫 Meta Muse 계열·첫 OpenRouter 경로 측정"
+      ],
+      [
+        "가중치",
+        "Hugging Face meta-models/Muse-Spark-Open-816B-A42B(Muse Model License, 수동 승인 gated, 2026-10-18 확인). Together 서빙이 이 가중치와 같은지·양자화 여부는 미확인"
+      ],
+      [
+        "thinking",
+        "high"
+      ],
+      [
+        "격리",
+        "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, 에이전트 환경 비밀값은 OPENROUTER_API_KEY만(PI_KEEP_ENV)"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 20분 · 비용 상한 run당 $3·실험 $6"
+      ],
+      [
+        "프롬프트",
+        "정본 EN, n=3, 단일 오케스트레이터 순차 실행"
+      ],
+      [
+        "포트",
+        "하네스가 빈 포트를 PORT로 주입"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`)"
+      ],
+      [
+        "Connection",
+        "Through OpenRouter (`https://openrouter.ai/api/v1`, OpenRouter API key), provider pinned to Together (`openRouterRouting {only: [\"together\"], allow_fallbacks: false}`). pi 0.87.1's built-in list lacks this model, so it ran as a custom models.json entry modelled on the built-in openrouter/meta/muse-spark-1.3 entry (contextWindow 1,048,576 / maxTokens 943,718)"
+      ],
+      [
+        "Model ID",
+        "openrouter/meta/muse-spark-open — responses from snapshot meta/muse-spark-open-20261015 (all 168 calls served by Together). The first Meta Muse-family model and the first OpenRouter route measured in this repo"
+      ],
+      [
+        "Weights",
+        "Hugging Face meta-models/Muse-Spark-Open-816B-A42B (Muse Model License, gated with manual approval, checked 2026-10-18). Whether Together serves these weights unchanged, and whether it quantizes them, was not checked"
+      ],
+      [
+        "Thinking",
+        "high"
+      ],
+      [
+        "Isolation",
+        "Dedicated PI_CODING_AGENT_DIR; parent AGENTS.md/CLAUDE.md, skills and extensions hidden; the only secret in the agent environment is OPENROUTER_API_KEY (PI_KEEP_ENV)"
+      ],
+      [
+        "Cap",
+        "30 iterations · 20 min per run · cost cap $3 per run and $6 per experiment"
+      ],
+      [
+        "Prompt",
+        "Canonical EN, n=3, run sequentially by a single orchestrator"
+      ],
+      [
+        "Port",
+        "The harness injects a free port as PORT"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"
+      ],
+      [
+        "接続",
+        "OpenRouter（`https://openrouter.ai/api/v1`、OpenRouter APIキー）経由、プロバイダはTogetherに固定（`openRouterRouting {only: [\"together\"], allow_fallbacks: false}`）。pi 0.87.1の内蔵リストにこのモデルがないため、内蔵openrouter/meta/muse-spark-1.3項目に倣ったユーザー定義models.json項目で実行（contextWindow 1,048,576 / maxTokens 943,718）"
+      ],
+      [
+        "モデルID",
+        "openrouter/meta/muse-spark-open — 応答のスナップショットはmeta/muse-spark-open-20261015（168回の呼び出しすべてTogether）。このリポで初めてのMeta Muse系・初めてのOpenRouter経路の測定"
+      ],
+      [
+        "重み",
+        "Hugging Face meta-models/Muse-Spark-Open-816B-A42B（Muse Model License、手動承認のgated、2026-10-18確認）。Togetherがこの重みをそのまま提供しているか、量子化の有無は未確認"
+      ],
+      [
+        "thinking",
+        "high"
+      ],
+      [
+        "隔離",
+        "専用PI_CODING_AGENT_DIR、上位のAGENTS.md/CLAUDE.md・スキル・拡張は非公開、エージェント環境の秘密値はOPENROUTER_API_KEYのみ（PI_KEEP_ENV）"
+      ],
+      [
+        "上限",
+        "30 iteration · runあたり20分 · コスト上限はrunあたり$3・実験全体$6"
+      ],
+      [
+        "プロンプト",
+        "正本EN、n=3、単一のオーケストレータで順次実行"
+      ],
+      [
+        "ポート",
+        "ハーネスが空きポートをPORTとして注入"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`）"
+      ],
+      [
+        "连接",
+        "经 OpenRouter（`https://openrouter.ai/api/v1`，OpenRouter API 密钥），提供方固定为 Together（`openRouterRouting {only: [\"together\"], allow_fallbacks: false}`）。pi 0.87.1 内置列表中没有该模型，因此参照内置 openrouter/meta/muse-spark-1.3 条目，以自定义 models.json 条目运行（contextWindow 1,048,576 / maxTokens 943,718）"
+      ],
+      [
+        "模型 ID",
+        "openrouter/meta/muse-spark-open — 响应快照为 meta/muse-spark-open-20261015（全部 168 次调用由 Together 提供）。本仓库首次测量 Meta Muse 系列，也是首次使用 OpenRouter 路径"
+      ],
+      [
+        "权重",
+        "Hugging Face meta-models/Muse-Spark-Open-816B-A42B（Muse Model License，需人工审批的 gated，2026-10-18 确认）。未确认 Together 是否原样提供这些权重及是否量化"
+      ],
+      [
+        "thinking",
+        "high"
+      ],
+      [
+        "隔离",
+        "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md、技能和扩展，代理环境中的密钥只有 OPENROUTER_API_KEY（PI_KEEP_ENV）"
+      ],
+      [
+        "上限",
+        "30 iteration · 每 run 20 分钟 · 成本上限每 run $3、整个实验 $6"
+      ],
+      [
+        "提示词",
+        "标准 EN，n=3，由单个编排器顺序执行"
+      ],
+      [
+        "端口",
+        "框架把空闲端口作为 PORT 注入"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 반려·재실행·보류·시간 초과·실패·비용 상한 도달 없음. 비용 가드 추정 최대는 $0.92(run 2)였다.",
+      "D-1: run 2에서 에이전트가 환경 변수를 출력하는 명령을 실행해 OPENROUTER_API_KEY 값이 로컬 세션 기록 1줄에 남았다. 리포 보관본은 마스킹했고 키 값 직접 대조 0건을 확인했다. 세션 기록에서 하네스 경로나 다른 run을 참조한 건수는 0이다.",
+      "비용은 OpenRouter generation 기록(`GET /api/v1/generation`)의 total_cost를 run의 모든 responseId에 대해 합한 값이며, 공개 단가 환산값과 소수 넷째 자리까지 같다. 이 리포에서 처음으로 제공자 측 청구 기록과 대조했지만 월별 청구서와 대조한 것은 아니다."
+    ],
+    "en": [
+      "No gate rejections, reruns, holds, timeouts, failures or cost-cap hits. The cost guard's highest estimate was $0.92 (run 2).",
+      "D-1: in run 2 the agent ran a command that printed environment variables, leaving the OPENROUTER_API_KEY value on one line of the local session log. The archived copy in the repo is masked, and a direct check found no key value in it. The session logs contain no reference to harness paths or other runs.",
+      "The cost is the sum of total_cost in OpenRouter's generation records (`GET /api/v1/generation`) over every responseId of the run, and it matches the public-price estimate to four decimal places. This is the first time this repo checked a cost against the provider's billing records, but it was not reconciled against a monthly invoice."
+    ],
+    "ja": [
+      "ゲート差し戻し・再実行・保留・タイムアウト・失敗・コスト上限到達なし。コストガードの推定の最大は$0.92（run 2）でした。",
+      "D-1：run 2でエージェントが環境変数を出力するコマンドを実行し、OPENROUTER_API_KEYの値がローカルのセッション記録の1行に残りました。リポの保管版はマスキング済みで、キー値の直接照合0件を確認しました。セッション記録にハーネスのパスや他のrunへの参照はありません。",
+      "コストはOpenRouterのgeneration記録（`GET /api/v1/generation`）のtotal_costをrunのすべてのresponseIdについて合計した値で、公開単価による換算値と小数第4位まで一致します。このリポで初めてプロバイダ側の請求記録と照合しましたが、月次請求書との照合ではありません。"
+    ],
+    "zh": [
+      "没有门控驳回、重跑、搁置、超时、失败或触及成本上限。成本守卫的最高估算为 $0.92（run 2）。",
+      "D-1：run 2 中代理执行了输出环境变量的命令，OPENROUTER_API_KEY 的值在本地会话记录中留下 1 行。仓库存档版已脱敏，直接比对确认其中没有密钥值。会话记录中没有引用框架路径或其他 run。",
+      "成本是 OpenRouter generation 记录（`GET /api/v1/generation`）中该 run 所有 responseId 的 total_cost 之和，与公开单价折算值在小数点后第四位一致。这是本仓库首次与提供商侧计费记录核对，但并非与月度账单核对。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "3 run 모두 Fastify를 골랐고, run 2·3은 Prisma를 함께 썼다.",
+      "포트는 3 run 모두 하네스가 주입한 PORT를 따랐다.",
+      "run당 API 호출 49–61회, output 25.3–33.8K(reasoning 10.1–23.9K 포함), 최대 프롬프트 53.7–101.0K.",
+      "pi로 측정한 오픈웨이트 모델 중 세션 시간은 DeepSeek V4.1-Flash(EXP-029, 중앙값 3.3분)보다 길고 glm-5.3-flash(EXP-046, 9.0분)보다 짧았다. 실행 시점·제공자 부하·pi 버전이 달라 우열로 단정하지 않는다."
+    ],
+    "en": [
+      "All 3 runs chose Fastify; runs 2 and 3 also used Prisma.",
+      "For the port, all 3 runs followed the PORT injected by the harness.",
+      "49–61 API calls and 25.3–33.8K output per run (including 10.1–23.9K reasoning); the largest prompt was 53.7–101.0K.",
+      "Among open-weight models measured on pi, its sessions were longer than DeepSeek V4.1-Flash (EXP-029, median 3.3 min) and shorter than glm-5.3-flash (EXP-046, 9.0 min). Run time, provider load and pi version differ, so this is not a ranking."
+    ],
+    "ja": [
+      "3 runすべてがFastifyを選び、run 2・3はPrismaも併用しました。",
+      "ポートは3 runすべてがハーネスの注入したPORTに従いました。",
+      "runあたりAPI呼び出し49–61回、output 25.3–33.8K（reasoning 10.1–23.9Kを含む）、最大プロンプト53.7–101.0K。",
+      "piで測定したオープンウェイトモデルの中で、セッション時間はDeepSeek V4.1-Flash（EXP-029、中央値3.3分）より長く、glm-5.3-flash（EXP-046、9.0分）より短くなりました。実行時点・プロバイダの負荷・piのバージョンが異なるため、優劣とは見なしません。"
+    ],
+    "zh": [
+      "3 个 run 都选择了 Fastify，run 2·3 同时使用了 Prisma。",
+      "端口方面，3 个 run 都使用了框架注入的 PORT。",
+      "每 run API 调用 49–61 次，output 25.3–33.8K（含 reasoning 10.1–23.9K），最大提示 53.7–101.0K。",
+      "在用 pi 测量的开放权重模型中，会话时间比 DeepSeek V4.1-Flash（EXP-029，中位数 3.3 分钟）长，比 glm-5.3-flash（EXP-046，9.0 分钟）短。运行时间、提供方负载和 pi 版本都不同，因此不判定优劣。"
+    ]
+  }
+}

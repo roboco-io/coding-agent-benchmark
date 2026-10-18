@@ -8,7 +8,7 @@ Claude Code는 이 보고값으로 컨텍스트 크기를 판단해 자동 압�
 컨텍스트가 입력 한도까지 커지고 비용이 급증한다(EXP-042 coder: 2 run 약 $92).
 종료 코드 0 = 통과, 1 = 과소 보고 또는 오류. 요청 비용은 약 6K 입력 토큰 1회분이다.
 """
-import json, os, sys, urllib.request
+import json, os, sys, urllib.error, urllib.request
 
 base, model, key_env = sys.argv[1].rstrip("/"), sys.argv[2], sys.argv[3]
 key = os.environ.get(key_env, "")
@@ -23,12 +23,29 @@ body = {
         {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "toolu_probe1", "content": blob}]},
     ],
 }
-req = urllib.request.Request(base + "/v1/messages", data=json.dumps(body).encode(), method="POST", headers={
-    "content-type": "application/json", "anthropic-version": "2023-06-01",
-    "x-api-key": key, "authorization": "Bearer " + key})
+def make_req(b):
+    return urllib.request.Request(base + "/v1/messages", data=json.dumps(b).encode(), method="POST", headers={
+        "content-type": "application/json", "anthropic-version": "2023-06-01",
+        "x-api-key": key, "authorization": "Bearer " + key})
+
+
+def open_stream(b):
+    """thinking 모드에서 이전 턴의 thinking 반송을 요구하는 제공자(DeepSeek V4.1-Flash-1017, EXP-048)는
+    400을 돌려준다. 그 경우에만 assistant 턴에 thinking 블록을 넣어 1회 재요청한다."""
+    try:
+        return urllib.request.urlopen(make_req(b), timeout=120)
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode(errors="replace")
+        if e.code != 400 or "thinking" not in detail:
+            raise urllib.error.HTTPError(e.url, e.code, f"{e.msg} {detail[:300]}", e.headers, None) from None
+        b["messages"][1]["content"].insert(0, {"type": "thinking", "thinking": "I should read notes.txt first.", "signature": ""})
+        print("INFO usage probe: 제공자가 thinking 반송을 요구해 thinking 블록을 넣어 재요청")
+        return urllib.request.urlopen(make_req(b), timeout=120)
+
+
 start = delta = None
 try:
-    with urllib.request.urlopen(req, timeout=120) as r:
+    with open_stream(body) as r:
         for raw in r:
             line = raw.decode(errors="replace").strip()
             if not line.startswith("data:"):

@@ -205,5 +205,15 @@
     "src": "https://ai.google.dev/gemini-api/docs/pricing",
     "accessed": "2026-10-16",
     "caveat": "Gemini API 유료 티어 Standard, 2026-11-30까지 단가(2026-12-01부터 전 항목 2배). 출력 단가는 thinking 토큰 포함. 명시 캐시 저장비는 암묵 캐시 읽기만 관측돼 미포함. pi 경로는 cacheWrite 0. Gemini API 키 실행(실제 과금, 청구 미대조)"
+  },
+  "DeepSeek V4.1-Flash-1017": {
+    "input": 0.3,
+    "cache_read": 0.006,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 1.2,
+    "src": "https://api-docs.deepseek.com/quick_start/pricing",
+    "accessed": "2026-10-18",
+    "caveat": "피크 단가(상한). 오프피크는 절반. 캐시 쓰기 요금 없음. 가격 페이지 Version 칸이 DeepSeek-V4.1-Flash-1017(별칭 deepseek-flash, 2026-10-17 갱신)이며 단가는 9월 가중치와 같다. 구간 단가 없음"
   }
 }

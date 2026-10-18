@@ -22,6 +22,7 @@
 - **2026-10-11 추가 (EXP-045 pi × qwen3.8-27b)**: 3 run을 `runs.csv`에 덧붙였다. 같은 날 `collect.py`가 2026-10-08 하네스 이동(`~/ralph-expNNN` → `~/experiments/ralph-expNNN`) 뒤 원자료를 찾지 못해 전체 실행이 실패하던 문제를 경로 대체로 고쳤다. 단 전체 재생성은 agy 행(EXP-035)을 다루지 못하므로, 이번에는 EXP-045 행만 계산해 덧붙였다.
 - **2026-10-11 추가 (EXP-046 pi × GLM-5.3-Flash)**: 3 run을 `runs.csv`에 덧붙였다. EXP-045와 같은 이유(전체 재생성은 agy 행을 다루지 못함)로 `collect.py`의 `runfiles`·`select`를 EXP-046 행에만 적용해 계산했다. 세션 시간 합(537·425·661초)은 기록된 소요 시간(8.97·7.08·11.03분)과 0.1분 이내로 맞는다.
 - **2026-10-16 추가 (EXP-047 pi × gemini-4-argon)**: 3 run을 `runs.csv`에 덧붙였다. EXP-045·046과 같은 이유로 EXP-047 행만 계산했다. 원자료는 리포에 보관된 마스킹본 `experiments/047-pi-gemini4-argon/runs/sessions.tar.gz`를 임시 디렉터리에 풀어 `timeline.py`의 pi 파서(`analyze`)로 읽었다(로컬 원본 세션에는 키가 남아 있어 쓰지 않았다). 세션 시간 합(968·778·730초)은 기록된 소요 시간(16.15·12.97·12.17분)과 0.1분 이내로 맞는다.
+- **2026-10-18 추가 (EXP-048 DeepSeek V4.1-Flash-1017)**: 3 run을 `runs.csv`에 덧붙였다. EXP-045–047과 같은 이유로 `collect.py`의 `runfiles`·`select`를 EXP-048 행에만 적용했다. 원자료는 리포 보관본 `experiments/048-deepseek-flash-1017/runs/sessions.tar.gz`를 임시 디렉터리에 풀어 `timeline.py`의 Claude Code 파서로 읽었다. 세션 시간 합(242·178·292초)은 기록된 소요 시간(4.07·2.97·4.88분)과 0.1분 이내로 맞는다.
 - 검증: Codex EXP-033은 기존 분석(587/557/31초, 31호출, 16.2K)과 일치했다. 전체 73 run에서 `wall_s`가 대시보드 소요 시간과 거의 일치했다(대부분 -0.2분 이내). Claude Code는 EXP-026 en-1이 494초(기록 8.35분), output 28,166으로 대시보드의 28.2K와 일치했고 EXP-023 fable-1은 408초(6.9분), 31,102 토큰이었다.
 
 ## 범위

@@ -1156,6 +1156,8 @@ function clearHL() {
   try { const u = new URL(location.href); u.searchParams.delete("model"); history.replaceState(null, "", u.toString()); } catch (e) {}
   renderHLBar(); render(); renderRaw(); renderCharts();
 }
+/* Clicking a model outside the shared highlight means the visitor moved on: drop the highlight. */
+function dropHLFor(name) { if (HL && HL.size && !HL.has(name)) clearHL(); }
 
 /* ───────────────────────── matrix accordion (data: details.js) ───────────────────────── */
 const openRows = new Set();
@@ -1577,7 +1579,7 @@ function renderScatter() {
     const hide = () => { hideTip(fig); el.classList.remove("on"); };
     el.addEventListener("mouseenter", show); el.addEventListener("focus", show);
     el.addEventListener("mouseleave", hide); el.addEventListener("blur", hide);
-    el.addEventListener("click", () => openInMatrix(r.m.name));
+    el.addEventListener("click", () => { dropHLFor(r.m.name); openInMatrix(r.m.name); });
     el.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); openInMatrix(r.m.name); } });
   });
 }
@@ -1638,6 +1640,7 @@ document.getElementById("mxbody").addEventListener("click", ev => {
   if (!tr || ev.target.closest("tr.dt")) return;
   const k = tr.dataset.key;
   if (openRows.has(k)) openRows.delete(k); else openRows.add(k);
+  dropHLFor(k);
   render();
 });
 window.addEventListener("resize", fitDetails);

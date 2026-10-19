@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-049 (2026-10-19)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-050 (2026-10-19)
 
 **🔤 자매 리포 — 언어 비교**: [language-benchmark](https://github.com/roboco-io/language-benchmark) ([대시보드](https://roboco.io/language-benchmark/))는 모델·하네스를 고정하고 같은 RealWorld 백엔드를 구현 언어(TypeScript, Python, Go, Rust, C++)별로 비교한다.
 
@@ -77,6 +77,7 @@
 | [EXP-047](experiments/047-pi-gemini4-argon/report.md) pi × Gemini 4 Argon (Gemini API, 사용자 정의 모델 항목) 완주 검증 (EN n=3) | M-40: pi coding agent(`pi -p` 0.87.1)로 Gemini API의 `google/gemini-4-argon`(사용자 정의 models.json, thinking high)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN, 1 run 비용 측정 선행 후 n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 | [EXP-048](experiments/048-deepseek-flash-1017/report.md) Claude Code × DeepSeek V4.1-Flash-1017 직결 완주 검증 (EN n=3) | M-41: Claude Code를 DeepSeek Anthropic 호환 엔드포인트로 `deepseek-flash`(2026-10-17부터 DeepSeek-V4.1-Flash-1017)에 직결하면(thinking 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | Claude Code 2.1.302 |
 | [EXP-049](experiments/049-pi-muse-spark-open/report.md) pi × Muse Spark Open (OpenRouter, Together 고정) 완주 검증 (EN n=3) | M-42: pi coding agent(`pi -p` 0.87.1)로 OpenRouter의 `meta/muse-spark-open`(제공자 Together 고정, 사용자 정의 models.json, thinking high)을 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
+| [EXP-050](experiments/050-pi-deepseek-flash-1017/report.md) pi × DeepSeek V4.1-Flash-1017 완주 검증 (EN n=3) | M-43: pi coding agent(`pi -p` 0.87.1)로 DeepSeek OpenAI 호환 엔드포인트의 `deepseek-flash`(2026-10-17부터 DeepSeek-V4.1-Flash-1017, pi 내장 provider, thinking high)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -209,6 +210,9 @@ EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검�
 
 **EXP-049 — pi × Muse Spark Open (OpenRouter, Together 고정) 완주 검증 (EN n=3)** (검증)  
 EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었다. 세션 시간은 5.2–6.7분, OpenRouter 청구 기록 기준 비용은 run당 $0.45–0.67이다. → [보고서](experiments/049-pi-muse-spark-open/report.md)
+
+**EXP-050 — pi × DeepSeek V4.1-Flash-1017 완주 검증 (EN n=3)** (검증)  
+EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입은 없었다. 세션 시간은 4.4–4.9분, 공개 단가(피크) 환산 비용은 run당 $0.05–0.07이다. → [보고서](experiments/050-pi-deepseek-flash-1017/report.md)
 
 <!-- RESULTS:END -->
 

@@ -1,0 +1,17 @@
+{
+  "deepseek/deepseek-flash": {
+    "provider": "DeepSeek API OpenAI 호환 엔드포인트 (https://api.deepseek.com), pi 0.87.1 내장 deepseek provider, 별칭 deepseek-flash = DeepSeek-V4.1-Flash-1017 (2026-10-17 갱신)",
+    "context_window": 1048576,
+    "max_output": 393216,
+    "context_source": "DeepSeek GET /models (context_window 1048576, max_output_tokens 393216), 2026-10-18. 날짜 붙은 ID(deepseek-flash-1017 등)는 API가 거부 — 별칭만 존재 (EXP-048 확인값 재사용, pi 내장 카탈로그 contextWindow 1000000·maxTokens 384000)",
+    "billing": "api",
+    "pricing": {
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.006,
+      "tiers": [],
+      "source": "https://api-docs.deepseek.com/quick_start/pricing (Version 칸 DeepSeek-V4.1-Flash-1017, 피크 단가로 보수 기록 — 오프피크는 절반, 구간 단가 없음)",
+      "checked_at": "2026-10-18"
+    }
+  }
+}

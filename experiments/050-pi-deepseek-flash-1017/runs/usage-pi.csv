@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+flash1017-en-1,1,43,0,0,0,28203,29709,1505536,0,12550,57912
+flash1017-en-2,1,44,0,0,0,29534,38391,1747840,0,19118,67925
+flash1017-en-3,1,46,0,0,0,33332,31354,1560704,0,14739,64686

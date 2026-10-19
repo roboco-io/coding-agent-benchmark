@@ -99,3 +99,6 @@ EXP-048,DeepSeek V4.1-Flash-1017,flash1017-en-3,292,151,142,39,31468,3.9,208.7,0
 EXP-049,pi × muse-spark-open,musespark-en-1,371,258,113,58,25907,4.4,100.5,0.695,1,0,6.18,pi
 EXP-049,pi × muse-spark-open,musespark-en-2,402,317,85,49,33831,6.5,106.8,0.787,1,0,6.70,pi
 EXP-049,pi × muse-spark-open,musespark-en-3,313,261,53,61,25262,4.3,96.8,0.832,1,0,5.22,pi
+EXP-050,pi × DeepSeek V4.1-Flash-1017,flash1017-en-1,266,154,112,43,29709,3.6,192.5,0.579,1,0,4.43,pi
+EXP-050,pi × DeepSeek V4.1-Flash-1017,flash1017-en-2,293,185,108,44,38391,4.2,207.1,0.632,1,0,4.88,pi
+EXP-050,pi × DeepSeek V4.1-Flash-1017,flash1017-en-3,268,162,106,46,31354,3.5,193.7,0.604,1,0,4.47,pi

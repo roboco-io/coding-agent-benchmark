@@ -19,15 +19,16 @@ const html = fs.readFileSync(`${root}/dashboard/index.html`, "utf8");
 const js = html.split("<script>")[1].split("/* raw table")[0];
 const M = new Function(js + "; return M;")();
 const med = a => { const s = [...a].sort((x, y) => x - y), k = s.length >> 1; return s.length % 2 ? s[k] : (s[k - 1] + s[k]) / 2; };
-let runs = 0, latest = 0;
+let runs = 0, fails = 0, latest = 0;  // runs = finished runs (t arrays); fails = runs that did not finish (M[...].fail)
 for (const m of M) for (const k of ["en", "ko"]) if (m[k]) {
   runs += m[k].t.length;
+  fails += m[k].fail || 0;
   for (const n of m[k].exp.match(/\d+/g)) latest = Math.max(latest, +n);
 }
 const rows = M.map(m => [m.name, m.stack, +med(m.en.t).toFixed(1), !!m.preview]).sort((a, b) => a[2] - b[2]);
-const data = { runs, models: new Set(M.map(m => m.base || m.name)).size, latest: "EXP-" + String(latest).padStart(3, "0"), rows };
+const data = { runs, total: runs + fails, models: new Set(M.map(m => m.base || m.name)).size, latest: "EXP-" + String(latest).padStart(3, "0"), rows };
 fs.writeFileSync(out, fs.readFileSync(`${root}/scripts/og/og-card.html`, "utf8").replace("const D = __DATA__;", "const D = " + JSON.stringify(data) + ";"));
-console.log(`runs ${runs} · models ${data.models} · ${data.latest}`);
+console.log(`runs ${runs}/${runs + fails} · models ${data.models} · ${data.latest}`);
 JS
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
   --window-size=1200,630 --virtual-time-budget=8000 ${EXTRA[@]+"${EXTRA[@]}"} \

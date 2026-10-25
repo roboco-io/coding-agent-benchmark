@@ -45,7 +45,7 @@ h1{font-size:50px;line-height:1.1;font-weight:700;letter-spacing:-.03em}
 <script>
 const D = __DATA__;
 const lg = v => Math.max(3, (Math.log10(v) - Math.log10(3)) / (Math.log10(200) - Math.log10(3)) * 100);
-document.getElementById("runs").textContent = D.runs + "/" + D.runs;
+document.getElementById("runs").textContent = D.runs + "/" + (D.total || D.runs);
 document.getElementById("models").textContent = D.models;
 document.getElementById("latest").textContent = D.latest;
 document.getElementById("rows").innerHTML = D.rows.map(([n, s, t, pv]) =>

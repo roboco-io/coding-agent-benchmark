@@ -1,0 +1,32 @@
+{
+ "moonshotai/kimi-k3.1-pro": {
+  "provider": "Moonshot OpenAI 호환 엔드포인트 (https://api.moonshot.ai/v1), pi 0.87.1 내장 moonshotai provider + 사용자 정의 models.json 항목(내장 kimi-k3 정의 복제, 단가만 변경)",
+  "context_window": 1048576,
+  "max_output": 131072,
+  "context_source": "Moonshot GET https://api.moonshot.ai/v1/models context_length 1048576 (2026-10-25). max_completion_tokens 기본 131072(quickstart); highspeed 별도 한도 문서 없음 — 미확인",
+  "billing": "api",
+  "pricing": {
+   "input": 2,
+   "output": 10,
+   "cache_read": 0.2,
+   "tiers": [],
+   "source": "https://platform.kimi.ai/docs/pricing/chat (구 platform.moonshot.ai, 301), https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart.md — 구간 단가 없음(\"no tiering by context length\"). 캐시 쓰기 별도 과금(5m $2/1h $4) — 추정에는 입력 단가로 포함",
+   "checked_at": "2026-10-25"
+  }
+ },
+ "moonshotai/kimi-k3.1-pro-highspeed": {
+  "provider": "Moonshot OpenAI 호환 엔드포인트 (https://api.moonshot.ai/v1), pi 0.87.1 내장 moonshotai provider + 사용자 정의 models.json 항목(내장 kimi-k3 정의 복제, 단가만 변경)",
+  "context_window": 1048576,
+  "max_output": 131072,
+  "context_source": "Moonshot GET https://api.moonshot.ai/v1/models context_length 1048576 (2026-10-25). max_completion_tokens 기본 131072(quickstart); highspeed 별도 한도 문서 없음 — 미확인",
+  "billing": "api",
+  "pricing": {
+   "input": 4,
+   "output": 20,
+   "cache_read": 0.2,
+   "tiers": [],
+   "source": "https://platform.kimi.ai/docs/pricing/chat (구 platform.moonshot.ai, 301), https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart.md — 구간 단가 없음(\"no tiering by context length\"). 캐시 쓰기 별도 과금(5m $4/1h $8) — 추정에는 입력 단가로 포함",
+   "checked_at": "2026-10-25"
+  }
+ }
+}

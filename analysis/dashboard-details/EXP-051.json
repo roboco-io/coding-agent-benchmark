@@ -1,0 +1,222 @@
+{
+  "exp": "EXP-051",
+  "date": "2026-10-25",
+  "report": "experiments/051-pi-kimi-k31/report.md",
+  "client": "pi 0.87.1",
+  "runs": {
+    "k31pro-en-1": {
+      "iter": 1,
+      "commits": 5
+    },
+    "k31pro-en-2": {
+      "iter": 1,
+      "commits": 4
+    },
+    "k31pro-en-3": {
+      "iter": 1,
+      "commits": 2
+    },
+    "k31hs-en-1": {
+      "iter": 1,
+      "commits": 2
+    },
+    "k31hs-en-2": {
+      "iter": 1,
+      "commits": 3
+    },
+    "k31hs-en-3": {
+      "iter": 1,
+      "commits": 5
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, `ralph-model-benchmark` 스킬 pi 하네스)"
+      ],
+      [
+        "연결",
+        "Moonshot OpenAI 호환 엔드포인트(https://api.moonshot.ai/v1) 직결. pi 0.87.1 내장 카탈로그에 K3.1이 없어 내장 `kimi-k3` 정의(api `openai-completions`, thinkingFormat `openai`)를 복제하고 id·이름·단가만 바꾼 사용자 정의 models.json 항목을 썼다. 종량 과금 API 키"
+      ],
+      [
+        "모델 ID",
+        "`moonshotai/kimi-k3.1-pro`, `moonshotai/kimi-k3.1-pro-highspeed` (2026-10-25 Moonshot GET /v1/models로 확인). 응답의 model 필드가 전수 요청 ID와 일치"
+      ],
+      [
+        "thinking",
+        "high (EXP-029 kimi-k3 세션에서 실제 적용된 수준과 같게 명시. 제공자 기본값은 max)"
+      ],
+      [
+        "격리",
+        "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, 에이전트 환경 비밀값은 MOONSHOT_API_KEY만 (PI_KEYMAP)"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 20분 · 비용 상한 run당 $3·실험 $15"
+      ],
+      [
+        "프롬프트",
+        "정본 EN, 조건별 n=3, 단일 오케스트레이터 순차 실행·조건 교차 (KO 미실험)"
+      ],
+      [
+        "포트",
+        "하네스가 빈 포트를 PORT로 주입"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, pi harness of the `ralph-model-benchmark` skill)"
+      ],
+      [
+        "Connection",
+        "Direct to Moonshot's OpenAI-compatible endpoint (https://api.moonshot.ai/v1). K3.1 is not in pi 0.87.1's built-in catalog, so a custom models.json entry cloned from the built-in `kimi-k3` definition (api `openai-completions`, thinkingFormat `openai`) with only id, name and prices changed was used. Pay-as-you-go API key"
+      ],
+      [
+        "Model ID",
+        "`moonshotai/kimi-k3.1-pro`, `moonshotai/kimi-k3.1-pro-highspeed` (checked with Moonshot GET /v1/models on 2026-10-25). The model field in every response matched the requested ID"
+      ],
+      [
+        "Thinking",
+        "high (set explicitly to match the level actually applied in the EXP-029 kimi-k3 sessions; the provider default is max)"
+      ],
+      [
+        "Isolation",
+        "Dedicated PI_CODING_AGENT_DIR; parent AGENTS.md/CLAUDE.md, skills and extensions hidden; the only secret in the agent environment is MOONSHOT_API_KEY (PI_KEYMAP)"
+      ],
+      [
+        "Cap",
+        "30 iterations · 20 min per run · cost cap $3 per run and $15 per experiment"
+      ],
+      [
+        "Prompt",
+        "Canonical EN, n=3 per condition, run sequentially by a single orchestrator with conditions interleaved (KO not tested)"
+      ],
+      [
+        "Port",
+        "The harness injects a free port as PORT"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`、`ralph-model-benchmark`スキルのpiハーネス）"
+      ],
+      [
+        "接続",
+        "MoonshotのOpenAI互換エンドポイント（https://api.moonshot.ai/v1）に直結。pi 0.87.1の内蔵カタログにK3.1がないため、内蔵`kimi-k3`定義（api `openai-completions`、thinkingFormat `openai`）を複製してid・名前・単価だけを変えたユーザー定義models.json項目を使った。従量課金APIキー"
+      ],
+      [
+        "モデルID",
+        "`moonshotai/kimi-k3.1-pro`、`moonshotai/kimi-k3.1-pro-highspeed`（2026-10-25にMoonshot GET /v1/modelsで確認）。応答のmodelフィールドはすべて要求IDと一致"
+      ],
+      [
+        "thinking",
+        "high（EXP-029 kimi-k3のセッションで実際に適用された水準に合わせて明示。プロバイダの既定値はmax）"
+      ],
+      [
+        "隔離",
+        "専用PI_CODING_AGENT_DIR、上位AGENTS.md/CLAUDE.md・スキル・拡張は非公開、エージェント環境の秘密値はMOONSHOT_API_KEYのみ（PI_KEYMAP）"
+      ],
+      [
+        "上限",
+        "30イテレーション・runあたり20分・コスト上限runあたり$3・実験$15"
+      ],
+      [
+        "プロンプト",
+        "正本EN、条件別n=3、単一オーケストレータで順次実行・条件交互（KOは未実施）"
+      ],
+      [
+        "ポート",
+        "ハーネスが空きポートをPORTとして注入"
+      ]
+    ],
+    "zh": [
+      [
+        "智能体",
+        "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`，`ralph-model-benchmark` 技能的 pi 测试框架）"
+      ],
+      [
+        "连接",
+        "直连 Moonshot 的 OpenAI 兼容端点（https://api.moonshot.ai/v1）。pi 0.87.1 内置目录中没有 K3.1，因此使用了复制内置 `kimi-k3` 定义（api `openai-completions`，thinkingFormat `openai`）、只修改 id、名称和单价的用户自定义 models.json 条目。按量计费 API 密钥"
+      ],
+      [
+        "模型 ID",
+        "`moonshotai/kimi-k3.1-pro`、`moonshotai/kimi-k3.1-pro-highspeed`（2026-10-25 通过 Moonshot GET /v1/models 确认）。所有响应的 model 字段都与请求 ID 一致"
+      ],
+      [
+        "thinking",
+        "high（与 EXP-029 kimi-k3 会话中实际采用的级别一致并显式指定；提供商默认值为 max）"
+      ],
+      [
+        "隔离",
+        "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md、技能和扩展，智能体环境中的密钥仅有 MOONSHOT_API_KEY（PI_KEYMAP）"
+      ],
+      [
+        "上限",
+        "30 次迭代 · 每 run 20 分钟 · 成本上限每 run $3、整个实验 $15"
+      ],
+      [
+        "提示词",
+        "标准 EN，每个条件 n=3，由单一编排器顺序运行、条件交替（未测试 KO）"
+      ],
+      [
+        "端口",
+        "测试框架将空闲端口作为 PORT 注入"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 반려·재실행·보류·시간 초과·실패·비용 상한 도달 없음. 사람 개입 0. smoke는 첫 시도에 두 조건 모두 통과했다.",
+      "설계 문서는 실행 순서를 \"k31pro 3 run → k31hs 3 run\"으로 적었으나 run-all은 조건을 교차해 실행했다. 기동 직후 문서를 실제 순서로 고쳤고 판정 기준과 조건은 바뀌지 않았다.",
+      "비용 가드의 추정 최대값은 $1.24(k31hs-en-1)였다. 가드는 제공자 usage와 대화 기록 바이트 하한 중 큰 값을 쓰는 보수적 추정이라 환산 비용보다 크다.",
+      "`KIMI_API_KEY` 값이 세션·실행 로그·산출 리포에 나타난 건수는 0이다(직접 대조). 세션 기록에서 하네스 경로나 다른 run을 참조한 건수도 0이다."
+    ],
+    "en": [
+      "No gate rejections, reruns, holds, timeouts, failures or cost-cap hits. No human intervention. The smoke test passed for both conditions on the first attempt.",
+      "The design document listed the run order as \"k31pro 3 runs → k31hs 3 runs\", but run-all interleaved the conditions. The document was corrected to the actual order right after launch; the verdict criteria and conditions did not change.",
+      "The cost guard's highest estimate was $1.24 (k31hs-en-1). The guard takes the larger of the provider's usage and a lower bound from the conversation-log size, so it reads higher than the estimated cost.",
+      "The KIMI_API_KEY value appears 0 times in the sessions, run logs and output repos (checked directly). The session logs contain no reference to harness paths or other runs."
+    ],
+    "ja": [
+      "ゲート差し戻し・再実行・保留・時間超過・失敗・コスト上限到達なし。人の介入0。smokeは両条件とも初回で通過した。",
+      "設計文書は実行順を「k31pro 3 run → k31hs 3 run」と記載したが、run-allは条件を交互に実行した。起動直後に文書を実際の順序に直し、判定基準と条件は変わっていない。",
+      "コストガードの推定最大値は$1.24（k31hs-en-1）だった。ガードはプロバイダのusageと会話ログのバイト下限のうち大きい方を使う保守的な推定なので、換算コストより大きい。",
+      "`KIMI_API_KEY`の値がセッション・実行ログ・成果物リポに現れた件数は0（直接照合）。セッション記録でハーネスのパスや他のrunを参照した件数も0。"
+    ],
+    "zh": [
+      "没有门控驳回、重跑、搁置、超时、失败或触及成本上限。人工干预 0。smoke 测试两个条件均首次通过。",
+      "设计文档把运行顺序写为“k31pro 3 个 run → k31hs 3 个 run”，但 run-all 实际交替运行两个条件。启动后立即把文档改为实际顺序，判定标准和条件未变。",
+      "成本守卫的最高估算为 $1.24（k31hs-en-1）。守卫取提供商 usage 与对话记录字节下限中的较大值，属于保守估算，因此高于折算成本。",
+      "`KIMI_API_KEY` 的值在会话、运行日志和产出仓库中出现 0 次（直接比对）。会话记录中引用测试框架路径或其他 run 的次数也为 0。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "6 run 모두 TypeScript + Fastify + Prisma를 골랐고, `src/server.ts`에서 하네스가 주입한 PORT를 읽었다.",
+      "Pro: run당 API 호출 32–51회, output 16.5–19.3K(reasoning 3.3–3.9K 포함), 최대 프롬프트 45.4–48.4K, 세션 7.3–10.2분.",
+      "Highspeed: run당 API 호출 30–43회, output 12.3–21.1K(reasoning 1.8–6.3K 포함), 최대 프롬프트 33.1–66.5K, 세션 3.7–5.2분.",
+      "같은 시점에 교차 실행한 두 조건에서 Highspeed의 세션 시간이 모든 run에서 Pro보다 짧았다. n=3의 방향성 기록이며, 제공자가 밝힌 \"2–3배 속도\"를 이 과제에서 검증한 것으로 서술하지 않는다. Pro는 같은 pi 0.87.1·thinking high의 kimi-k3(EXP-029)와 세션 시간·output·비용 범위가 겹친다."
+    ],
+    "en": [
+      "All 6 runs chose TypeScript + Fastify + Prisma and read the PORT injected by the harness in `src/server.ts`.",
+      "Pro: 32–51 API calls and 16.5–19.3K output per run (including 3.3–3.9K reasoning); the largest prompt was 45.4–48.4K; sessions 7.3–10.2 min.",
+      "Highspeed: 30–43 API calls and 12.3–21.1K output per run (including 1.8–6.3K reasoning); the largest prompt was 33.1–66.5K; sessions 3.7–5.2 min.",
+      "With the two conditions interleaved at the same time, every Highspeed session was shorter than every Pro session. This is a directional note from n=3, not a check of the provider's \"2–3× speed\" claim on this task. Pro overlaps kimi-k3 on the same pi 0.87.1 with thinking high (EXP-029) in session time, output and cost."
+    ],
+    "ja": [
+      "6 runすべてがTypeScript + Fastify + Prismaを選び、`src/server.ts`でハーネスが注入したPORTを読んだ。",
+      "Pro: runあたりAPI呼び出し32–51回、output 16.5–19.3K（reasoning 3.3–3.9Kを含む）、最大プロンプト45.4–48.4K、セッション7.3–10.2分。",
+      "Highspeed: runあたりAPI呼び出し30–43回、output 12.3–21.1K（reasoning 1.8–6.3Kを含む）、最大プロンプト33.1–66.5K、セッション3.7–5.2分。",
+      "同じ時間帯に交互実行した2条件で、Highspeedのセッション時間はすべてのrunでProより短かった。n=3の方向性の記録であり、プロバイダが示す「2–3倍の速度」をこの課題で検証したものとしては扱わない。Proは同じpi 0.87.1・thinking highのkimi-k3（EXP-029）とセッション時間・output・コストの範囲が重なる。"
+    ],
+    "zh": [
+      "6 个 run 都选择了 TypeScript + Fastify + Prisma，并在 `src/server.ts` 中读取测试框架注入的 PORT。",
+      "Pro：每 run API 调用 32–51 次，output 16.5–19.3K（含 reasoning 3.3–3.9K），最大提示词 45.4–48.4K，会话 7.3–10.2 分钟。",
+      "Highspeed：每 run API 调用 30–43 次，output 12.3–21.1K（含 reasoning 1.8–6.3K），最大提示词 33.1–66.5K，会话 3.7–5.2 分钟。",
+      "两个条件在同一时段交替运行，Highspeed 的每个会话都比 Pro 的每个会话短。这是 n=3 的方向性记录，不视为在本任务上验证了提供商宣称的“2–3 倍速度”。Pro 与同为 pi 0.87.1、thinking high 的 kimi-k3（EXP-029）在会话时间、output 和成本上范围重叠。"
+    ]
+  }
+}

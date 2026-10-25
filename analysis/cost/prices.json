@@ -225,5 +225,25 @@
     "src": "https://openrouter.ai/api/v1/models/meta/muse-spark-open/endpoints",
     "accessed": "2026-10-18",
     "caveat": "OpenRouter endpoints API의 Together 엔드포인트 단가(5개 제공자 동일, 구간 단가 없음). 출력 단가는 reasoning 포함. pi 경로는 cacheWrite 0. OpenRouter API 키 실행(실제 과금). run별 환산값이 OpenRouter generation 기록(GET /api/v1/generation)의 total_cost 합과 소수 넷째 자리까지 일치(이 리포 최초의 제공자 청구 기록 대조, 월별 청구서 대조는 아님)"
+  },
+  "kimi-k3.1-pro": {
+    "input": 2,
+    "cache_read": 0.2,
+    "cache_write_5m": 2,
+    "cache_write_1h": 4,
+    "output": 10,
+    "src": "https://platform.kimi.ai/docs/pricing/chat",
+    "accessed": "2026-10-25",
+    "caveat": "구간 단가 없음(K3.1 Pro quickstart: no tiering by context length). 캐시 쓰기는 캐시 읽기와 별도 과금(5m=입력 단가, 1h=입력 2배). highspeed는 pro의 2배 단가"
+  },
+  "kimi-k3.1-pro-highspeed": {
+    "input": 4,
+    "cache_read": 0.2,
+    "cache_write_5m": 4,
+    "cache_write_1h": 8,
+    "output": 20,
+    "src": "https://platform.kimi.ai/docs/pricing/chat",
+    "accessed": "2026-10-25",
+    "caveat": "구간 단가 없음(K3.1 Pro quickstart: no tiering by context length). 캐시 쓰기는 캐시 읽기와 별도 과금(5m=입력 단가, 1h=입력 2배). highspeed는 pro의 2배 단가"
   }
 }

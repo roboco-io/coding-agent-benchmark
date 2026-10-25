@@ -944,6 +944,26 @@
         "verdict": "已验证",
         "summary": "EN 3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预。会话 4.4–4.9 分钟，按公开(高峰)单价折算每 run $0.05–0.07。"
       }
+    },
+    "EXP-051": {
+      "en": {
+        "name": "pi × Kimi K3.1 Pro · Pro Highspeed completion check (EN n=3)",
+        "hypothesis": "pi coding agent (pi -p 0.87.1) running kimi-k3.1-pro and kimi-k3.1-pro-highspeed (user-defined models.json entries, thinking high) on Moonshot's OpenAI-compatible endpoint completes the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, unattended Ralph loop within 30 iterations and 20 min (EN n=3 per condition, completion only, billing excluded)",
+        "verdict": "Verified",
+        "summary": "Both conditions 3/3, all 6 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, no intervention. Sessions: Pro 7.3–10.2 min, Highspeed 3.7–5.2 min; about $0.45–0.60 (Pro) and $0.57–0.98 (Highspeed) per run at public prices."
+      },
+      "ja": {
+        "name": "pi × Kimi K3.1 Pro・Pro Highspeed 完走検証（EN n=3）",
+        "hypothesis": "pi coding agent(pi -p 0.87.1)でMoonshotのOpenAI互換エンドポイントのkimi-k3.1-pro・kimi-k3.1-pro-highspeed(ユーザー定義models.json項目、thinking high)を動かせば、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (条件別EN n=3、完走率判定・課金除外)",
+        "verdict": "検証",
+        "summary": "両条件とも3/3、6 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、介入なし。セッションはPro 7.3–10.2分、Highspeed 3.7–5.2分、公開単価換算でrunあたりPro $0.45–0.60・Highspeed $0.57–0.98。"
+      },
+      "zh-CN": {
+        "name": "pi × Kimi K3.1 Pro・Pro Highspeed 完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent(pi -p 0.87.1)在 Moonshot 的 OpenAI 兼容端点上运行 kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed(用户自定义 models.json 条目，thinking high)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费)",
+        "verdict": "已验证",
+        "summary": "两个条件均为 3/3，6 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预。会话 Pro 7.3–10.2 分钟、Highspeed 3.7–5.2 分钟，按公开单价折算每 run Pro $0.45–0.60、Highspeed $0.57–0.98。"
+      }
     }
   }
 }

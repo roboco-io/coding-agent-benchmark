@@ -25,11 +25,12 @@
 - **2026-10-18 추가 (EXP-048 DeepSeek V4.1-Flash-1017)**: 3 run을 `runs.csv`에 덧붙였다. EXP-045–047과 같은 이유로 `collect.py`의 `runfiles`·`select`를 EXP-048 행에만 적용했다. 원자료는 리포 보관본 `experiments/048-deepseek-flash-1017/runs/sessions.tar.gz`를 임시 디렉터리에 풀어 `timeline.py`의 Claude Code 파서로 읽었다. 세션 시간 합(242·178·292초)은 기록된 소요 시간(4.07·2.97·4.88분)과 0.1분 이내로 맞는다.
 - **2026-10-19 추가 (EXP-049 pi × Muse Spark Open)**: 3 run을 `runs.csv`에 덧붙였다. EXP-045–048과 같은 이유로 `collect.py`의 `runfiles`·`select`를 EXP-049 행에만 적용했다. 원자료는 리포 보관 마스킹본 `experiments/049-pi-muse-spark-open/runs/sessions.tar.gz`를 임시 디렉터리에 풀어 `timeline.py`의 pi 파서로 읽었다(로컬 원본 run 2 세션에는 키가 남아 있어 쓰지 않았다). 세션 시간 합(371·402·313초)은 기록된 소요 시간(6.18·6.70·5.22분)과 0.1분 이내로 맞는다.
 - **2026-10-19 추가 (EXP-050 pi × DeepSeek V4.1-Flash-1017)**: 3 run을 `runs.csv`에 덧붙였다. EXP-045–049와 같은 이유로 `collect.py`의 `runfiles`·`select`를 EXP-050 행에만 적용했다. 원자료는 리포 보관본 `experiments/050-pi-deepseek-flash-1017/runs/sessions.tar.gz`를 임시 디렉터리에 풀어 `timeline.py`의 pi 파서로 읽었다. 세션 시간 합(266·293·268초)은 기록된 소요 시간(4.43·4.88·4.47분)과 0.1분 이내로 맞는다.
+- **2026-10-25 추가 (EXP-051 pi × Kimi K3.1 Pro·Pro Highspeed)**: 6 run을 `runs.csv`에 덧붙였다. 행 이름은 `pi × kimi-k3.1-pro`·`pi × kimi-k3.1-pro-highspeed`다. 보관본 `experiments/051-pi-kimi-k31/runs/sessions.tar.gz` 하나에 두 조건이 함께 들어 있어, `collect.py`의 `runfiles`가 쓰는 `en-<번호>` 필터로는 k31pro-en-N과 k31hs-en-N이 섞인다. 그래서 EXP-051 행에만 `sessions-<run_id>/` 디렉터리 이름으로 파일을 거른 뒤 `select`와 `timeline.py`의 pi 파서를 적용했다(run마다 세션 1개). 세션 시간 합(611·438·546·313·224·256초)은 기록된 소요 시간(10.18·7.29·9.09·5.21·3.74·4.26분)과 0.1분 이내로 맞는다.
 - 검증: Codex EXP-033은 기존 분석(587/557/31초, 31호출, 16.2K)과 일치했다. 전체 73 run에서 `wall_s`가 대시보드 소요 시간과 거의 일치했다(대부분 -0.2분 이내). Claude Code는 EXP-026 en-1이 494초(기록 8.35분), output 28,166으로 대시보드의 28.2K와 일치했고 EXP-023 fable-1은 408초(6.9분), 31,102 토큰이었다.
 
 ## 범위
 
-- 영어 프롬프트(EN) run만 분석했다. 대시보드의 EN 중앙값에 쓰인 24개 행, 73개 run 모두 원자료를 찾았다. 이 수는 최초 분석 시점 기준이며, 이후 실험을 덧붙여 2026-10-19 현재 `runs.csv`는 34개 행·103 run이다(대시보드에서 제외한 Solar 2개 행·4 run을 빼면 32개 행·99 run). 한국어(KO) 행은 분석하지 않아 대시보드에서 "—"로 표시한다.
+- 영어 프롬프트(EN) run만 분석했다. 대시보드의 EN 중앙값에 쓰인 24개 행, 73개 run 모두 원자료를 찾았다. 이 수는 최초 분석 시점 기준이며, 이후 실험을 덧붙여 2026-10-25 현재 `runs.csv`는 36개 행·109 run이다(대시보드에서 제외한 Solar 2개 행·4 run을 빼면 34개 행·105 run). 한국어(KO) 행은 분석하지 않아 대시보드에서 "—"로 표시한다.
 - 원자료 위치: 홈 디렉터리의 `ralph-exp0NN/…`(Codex rollout, Claude Code 프로젝트 jsonl), 리포의 `experiments/*/runs`(logs 디렉터리, `sessions.tar.gz`). 사용한 파일 경로는 `usage_all_runs.csv`의 `source_path`와 같다.
 
 ## 결과 요약 (EN, 호출당 대기 run 중앙값 순)

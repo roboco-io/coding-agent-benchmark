@@ -15,5 +15,6 @@ Working instructions:
 
 - First inspect the current repo state (files, git log), then pick the single most important remaining piece of work toward the completion criteria and do it.
 - Make a git commit for each unit of work.
+- The harness sets the `PORT` environment variable: the server must listen on `$PORT`, and every local check you run (curl, Hurl) must target that same port.
 - Only after directly running and verifying all completion criteria, create a `.ralph-done` file at the repo root. Never create it without verification.
 - Do not modify PROMPT.md or ralph.sh.

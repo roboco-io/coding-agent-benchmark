@@ -29,6 +29,7 @@
 3. Anthropic 호환 엔드포인트가 없는 모델은 벤치마크 대상에서 제외하거나, 부득이 변환 계층을 쓸 경우 설계 문서에 **사유와 계측 한계를 사전 등록**하고 결과 비교에서 별도 스택으로 표기한다.
 4. 격리(`CLAUDE_CONFIG_DIR` 전용 + `hasCompletedOnboarding` 우회)·PROMPT 정본 byte-identical·세션 jsonl usage(message.id dedup) 계측은 기존 원칙(EXP-007/008) 그대로 유지한다.
 5. **새 모델·에이전트 벤치마크는 `ralph-model-benchmark` 스킬(`.claude/skills/ralph-model-benchmark/`)로 수행한다.** 정본 PROMPT(EN/KO)·Hurl 13파일·공통 driver/measure/usage 스크립트가 스킬에 들어 있어, `bench.env` 하나로 codex / claude-native / claude-direct / pi 하네스를 같은 절차로 재현한다 (EXP-027 첫 적용, pi는 EXP-029 추가).
+6. **정본 PROMPT는 2026-10-25부터 v2다.** v1에 `PORT` 안내 한 줄(서버와 로컬 확인 모두 하네스가 지정한 `$PORT` 사용)을 추가했다(근거: EXP-052 포트 8000 가정 정체). v1 원문은 스킬 `assets/PROMPT-*.v1.md`. EXP-001–052는 v1이므로, 그 결과와 v2 실험을 비교할 때는 PROMPT 차이를 교란 변수로 적는다.
 
 ## 환경 주의
 

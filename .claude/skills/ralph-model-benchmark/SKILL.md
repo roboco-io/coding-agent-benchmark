@@ -9,6 +9,8 @@ description: Use when a new LLM model, model variant, or coding agent/harness is
 
 새 모델·에이전트를 **기존 실험과 같은 과제·프롬프트·채점기·루프 규칙**으로 돌려 비교 가능한 결과를 만든다. 정본(EN/KO PROMPT, Hurl 13파일)과 공통 스크립트는 이 스킬의 `assets/`·`scripts/`에 있으며, 실행 시 `$HOME/experiments/ralph-expNNN`으로 복사·해시 검증되어 고정된다. 실험 품질 규칙은 `docs/experiment-quality-rules.md`가 정본이며 이 스킬은 그 절차를 실행 가능한 형태로 묶은 것이다.
 
+**PROMPT 정본 버전 (2026-10-25)**: 현재 `assets/PROMPT-{en,ko}.md`는 **v2**다. v1(EXP-001–052)에 작업 지침 한 줄 — 하네스가 `PORT`를 지정하며 서버와 모든 로컬 확인(curl, Hurl)이 그 포트를 써야 한다 — 을 추가했다(사용자 지시, 근거: EXP-052 포트 8000 가정 대기 루프로 정체 4회·미완주 1). v1 원문은 `assets/PROMPT-{en,ko}.v1.md`에 보존한다. v2 실험은 설계 문서·보고서에 PROMPT 버전을 적고, v1 실험과 비교할 때는 PROMPT 차이를 교란 변수로 명시한다. 과거 조건을 v1으로 재현할 때만 v1을 쓴다.
+
 ## 하네스 선택
 
 | 모델 제공 형태 | HARNESS | 근거 실험 |

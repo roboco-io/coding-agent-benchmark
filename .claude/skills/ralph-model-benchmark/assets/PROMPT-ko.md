@@ -14,5 +14,6 @@ RealWorld App (https://realworld-docs.netlify.app/specifications/backend/endpoin
 
 - 먼저 현재 리포 상태(파일, git log)를 파악한 뒤, 완료 기준을 향해 남은 작업 중 가장 중요한 한 조각을 골라 수행하라.
 - 작업 단위마다 git 커밋을 남겨라.
+- 하네스가 `PORT` 환경변수를 지정한다: 서버는 `$PORT`에서 listen해야 하며, 직접 실행하는 모든 확인(curl, Hurl)도 같은 포트를 대상으로 하라.
 - 완료 기준 전체를 직접 실행·검증한 뒤에만 리포 루트에 `.ralph-done` 파일을 생성하라. 검증 없이 절대 생성하지 마라.
 - PROMPT.md와 ralph.sh는 수정하지 마라.

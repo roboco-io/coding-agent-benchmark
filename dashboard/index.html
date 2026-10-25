@@ -1731,8 +1731,9 @@ HL = parseHL();
 setLang(detectLang(), false);
 renderHLBar();
 if (HL && HL.size) {
-  const first = M.find(m => HL.has(m.name) && stats(m[plang]) && expsFor(m).length);
-  if (first) openInMatrix(first.name);
+  const hits = M.filter(m => HL.has(m.name) && stats(m[plang]) && expsFor(m).length);
+  hits.slice(1).forEach(m => openRows.add(m.name));
+  if (hits.length) openInMatrix(hits[0].name);
 }
 </script>
 

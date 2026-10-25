@@ -1,0 +1,4 @@
+PASS usage probe kimi-k3.1-pro: 기대 입력 약 8625 / message_start 6998 / message_delta 6998
+PASS kimi-k3.1-pro
+PASS usage probe kimi-k3.1-pro-highspeed: 기대 입력 약 8625 / message_start 6998 / message_delta 6998
+PASS kimi-k3.1-pro-highspeed

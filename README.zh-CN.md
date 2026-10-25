@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-051（2026-10-25）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-052（2026-10-25）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -79,6 +79,7 @@
 | [EXP-049](experiments/049-pi-muse-spark-open/report.md) pi × Muse Spark Open（OpenRouter，固定 Together）完成验证（EN n=3） | M-42: 用 pi coding agent（`pi -p` 0.87.1）运行 OpenRouter 的 `meta/muse-spark-open`（提供方固定为 Together，自定义 models.json，thinking high），可在隔离、无人干预的 Ralph 循环中于 30 次 iteration·20 分钟上限内完成 RealWorld 后端（Hurl 13/13·154/154）（EN n=3，按完成率判定，不含计费） | **已验证** | pi 0.87.1 |
 | [EXP-050](experiments/050-pi-deepseek-flash-1017/report.md) pi × DeepSeek V4.1-Flash-1017 完成验证（EN n=3） | M-43: 用 pi coding agent(pi -p 0.87.1)在 DeepSeek 的 OpenAI 兼容端点上运行 deepseek-flash(2026-10-17 起为 DeepSeek-V4.1-Flash-1017，内置 provider，thinking high)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
 | [EXP-051](experiments/051-pi-kimi-k31/report.md) pi × Kimi K3.1 Pro・Pro Highspeed 完成验证（EN n=3） | M-44: 用 pi coding agent(pi -p 0.87.1)在 Moonshot 的 OpenAI 兼容端点上运行 kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed(用户自定义 models.json 条目，thinking high)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
+| [EXP-052](experiments/052-kimi-k31-direct/report.md) Claude Code × Kimi K3.1 Pro・Pro Highspeed 直连完成验证（EN n=3） | M-45: 将 Claude Code 通过 Moonshot 的 Anthropic 兼容端点直连 kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed(thinking 默认值)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **部分验证** | Claude Code 2.1.310 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -217,6 +218,9 @@ EN 3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・1
 
 **EXP-051 — pi × Kimi K3.1 Pro・Pro Highspeed 完成验证（EN n=3）** (已验证)  
 两个条件均为 3/3，6 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预。会话 Pro 7.3–10.2 分钟、Highspeed 3.7–5.2 分钟，按公开单价折算每 run Pro $0.45–0.60、Highspeed $0.57–0.98。 → [报告](experiments/051-pi-kimi-k31/report.md)
+
+**EXP-052 — Claude Code × Kimi K3.1 Pro・Pro Highspeed 直连完成验证（EN n=3）** (部分验证)  
+Highspeed 3/3(已验证)，Pro 2/3(部分验证)。Pro 的第 3 个 run 代码已通过 13/13・154/154，但有两次迭代卡在等待硬编码端口 8000 的循环中，未能在 20 分钟上限内声明完成。6 个 run 中有 3 个出现停滞监控终止。按公开单价折算每 run Pro $0.67–0.93、Highspeed $1.00–1.40。 → [报告](experiments/052-kimi-k31-direct/report.md)
 
 <!-- RESULTS:END -->
 

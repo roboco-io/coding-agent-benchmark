@@ -1,0 +1,13 @@
+=== RUN k31pro-en-1 (claude-direct kimi-k3.1-pro, PROMPT-en.md, PORT=42730) start: 2026-10-25 14:37:37 ===
+=== RUN k31pro-en-1 (claude-direct kimi-k3.1-pro, PROMPT-en.md, PORT=49200) start: 2026-10-25 15:41:53 ===
+=== RUN k31pro-en-1 finished: 2026-10-25 16:01:33 | 1,2026-10-25 16:01:33,124,13,154,1,pass ===
+=== RUN k31hs-en-1 (claude-direct kimi-k3.1-pro-highspeed, PROMPT-en.md, PORT=40467) start: 2026-10-25 16:01:33 ===
+=== RUN k31hs-en-1 finished: 2026-10-25 16:09:53 | 1,2026-10-25 16:09:53,0,13,154,1,pass ===
+=== RUN k31pro-en-2 (claude-direct kimi-k3.1-pro, PROMPT-en.md, PORT=42110) start: 2026-10-25 16:09:53 ===
+=== RUN k31pro-en-2 finished: 2026-10-25 16:23:31 | 1,2026-10-25 16:23:31,0,13,154,1,pass ===
+=== RUN k31hs-en-2 (claude-direct kimi-k3.1-pro-highspeed, PROMPT-en.md, PORT=45809) start: 2026-10-25 16:23:31 ===
+=== RUN k31hs-en-2 finished: 2026-10-25 16:33:47 | 1,2026-10-25 16:33:47,124,13,154,1,pass ===
+=== RUN k31pro-en-3 (claude-direct kimi-k3.1-pro, PROMPT-en.md, PORT=48763) start: 2026-10-25 16:33:47 ===
+=== RUN k31pro-en-3 finished: 2026-10-25 16:53:57 | timeout,2026-10-25 16:53:57 ===
+=== RUN k31hs-en-3 (claude-direct kimi-k3.1-pro-highspeed, PROMPT-en.md, PORT=43483) start: 2026-10-25 16:53:57 ===
+=== RUN k31hs-en-3 finished: 2026-10-25 17:04:46 | 2,2026-10-25 17:04:46,0,13,154,1,pass ===

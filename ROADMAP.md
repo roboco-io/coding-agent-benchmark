@@ -71,6 +71,7 @@
 - [x] EXP-049: pi × Muse Spark Open OpenRouter, Together 고정 (M-42, EN n=3, 20분 상한) — 검증(3/3 iter 1 완주, 세션 5.2–6.7분, 청구 기록 $0.45–0.67), [보고서](experiments/049-pi-muse-spark-open/report.md)
 - [x] EXP-050: pi × DeepSeek V4.1-Flash-1017 (M-43, EN n=3, 20분 상한) — 검증(3/3 iter 1 완주, 세션 4.4–4.9분, 환산 $0.05–0.07), [보고서](experiments/050-pi-deepseek-flash-1017/report.md)
 - [x] EXP-051: pi × Kimi K3.1 Pro·Pro Highspeed (M-44, 조건별 EN n=3, 20분 상한) — 검증(두 조건 각 3/3 iter 1 완주, 세션 pro 7.3–10.2분·highspeed 3.7–5.2분, 환산 pro $0.45–0.60·highspeed $0.57–0.98), [보고서](experiments/051-pi-kimi-k31/report.md)
+- [x] EXP-052: Claude Code × Kimi K3.1 Pro·Pro Highspeed 직결 (M-45, 조건별 EN n=3, 20분 상한) — 부분 검증(highspeed 3/3, pro 2/3 — 포트 8000 가정 대기·완료 후 백그라운드 서버 잔존으로 정체 종료 3/6 run, 환산 pro $0.67–0.93·highspeed $1.00–1.40), [보고서](experiments/052-kimi-k31-direct/report.md)
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검
 - [ ] driver가 iteration마다 `bench.env`의 상한(`MAX_SEC`)을 다시 읽도록 개선 — 실행 중 상한 변경 적용 실패 사례(EXP-043 D-3)
 - [ ] DGX Spark 등급 후속: Qwen pi 재측정 중 flash·coder 남음(27b는 EXP-045 완료), Nemotron-3.5-Lightning(HF 크레딧 필요). 256GB·512GB 등급 중 GLM-5.3-Flash는 Z.ai API로 EXP-046 완료(로컬 실행은 미측정), MiniMax-M3는 키 확보 후 — [후보 조사](docs/2026-10-10-local-runnable-open-weight-models.md)

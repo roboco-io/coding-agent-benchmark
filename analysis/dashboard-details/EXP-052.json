@@ -1,0 +1,226 @@
+{
+ "exp": "EXP-052",
+ "date": "2026-10-25",
+ "report": "experiments/052-kimi-k31-direct/report.md",
+ "client": "Claude Code 2.1.310",
+ "runs": {
+  "k31pro-en-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "k31pro-en-2": {
+   "iter": 1,
+   "commits": 6
+  },
+  "k31pro-en-3": {
+   "iter": "3 ✗",
+   "commits": 1
+  },
+  "k31hs-en-1": {
+   "iter": 1,
+   "commits": 6
+  },
+  "k31hs-en-2": {
+   "iter": 1,
+   "commits": 3
+  },
+  "k31hs-en-3": {
+   "iter": 2,
+   "commits": 3
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Claude Code 2.1.310 (`claude -p`, `ralph-model-benchmark` 스킬 claude-direct 하네스)"
+   ],
+   [
+    "연결",
+    "Moonshot Anthropic 호환 엔드포인트(https://api.moonshot.ai/anthropic) 직결. `ANTHROPIC_BASE_URL`·`ANTHROPIC_AUTH_TOKEN`·`ANTHROPIC_MODEL` 3요소, 변환 계층 없음, 미인식 모델 200k 창 제한 해제 env 포함. 종량 과금 API 키"
+   ],
+   [
+    "모델 ID",
+    "`kimi-k3.1-pro`, `kimi-k3.1-pro-highspeed`. 응답의 model 필드가 전수 요청 ID와 일치"
+   ],
+   [
+    "thinking",
+    "Claude Code 기본값"
+   ],
+   [
+    "격리",
+    "전용 CLAUDE_CONFIG_DIR, run별 세션 보관"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 20분 · 정체 감시 300초 · 비용 상한 run당 $4·실험 $20"
+   ],
+   [
+    "프롬프트",
+    "정본 EN, 조건별 n=3, 단일 오케스트레이터 순차 실행·조건 교차 (KO 미실험)"
+   ],
+   [
+    "포트",
+    "하네스가 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Claude Code 2.1.310 (`claude -p`, claude-direct harness of the `ralph-model-benchmark` skill)"
+   ],
+   [
+    "Connection",
+    "Direct to Moonshot's Anthropic-compatible endpoint (https://api.moonshot.ai/anthropic) via `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN` and `ANTHROPIC_MODEL`, with no translation layer and the env that lifts the 200k window limit for unrecognized models. Pay-as-you-go API key"
+   ],
+   [
+    "Model ID",
+    "`kimi-k3.1-pro`, `kimi-k3.1-pro-highspeed`. The model field in every response matched the requested ID"
+   ],
+   [
+    "Thinking",
+    "Claude Code default"
+   ],
+   [
+    "Isolation",
+    "Dedicated CLAUDE_CONFIG_DIR; sessions kept per run"
+   ],
+   [
+    "Cap",
+    "30 iterations · 20 min per run · 300-s stall watchdog · cost cap $4 per run and $20 per experiment"
+   ],
+   [
+    "Prompt",
+    "Canonical EN, n=3 per condition, run sequentially by a single orchestrator with conditions interleaved (KO not tested)"
+   ],
+   [
+    "Port",
+    "The harness injects a free port as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Claude Code 2.1.310（`claude -p`、`ralph-model-benchmark`スキルのclaude-directハーネス）"
+   ],
+   [
+    "接続",
+    "MoonshotのAnthropic互換エンドポイント（https://api.moonshot.ai/anthropic）に直結。`ANTHROPIC_BASE_URL`・`ANTHROPIC_AUTH_TOKEN`・`ANTHROPIC_MODEL`の3要素、変換層なし、未認識モデルの200kウィンドウ制限を解除するenvを含む。従量課金APIキー"
+   ],
+   [
+    "モデルID",
+    "`kimi-k3.1-pro`、`kimi-k3.1-pro-highspeed`。応答のmodelフィールドはすべて要求IDと一致"
+   ],
+   [
+    "thinking",
+    "Claude Codeの既定値"
+   ],
+   [
+    "隔離",
+    "専用CLAUDE_CONFIG_DIR、runごとにセッションを保管"
+   ],
+   [
+    "上限",
+    "30イテレーション · runあたり20分 · 停滞監視300秒 · コスト上限runあたり$4・実験$20"
+   ],
+   [
+    "プロンプト",
+    "正本EN、条件別n=3、単一オーケストレータで順次実行・条件を交互に実行（KO未実験）"
+   ],
+   [
+    "ポート",
+    "ハーネスが空きポートをPORTとして注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Claude Code 2.1.310（`claude -p`，`ralph-model-benchmark` 技能的 claude-direct 框架）"
+   ],
+   [
+    "连接",
+    "直连 Moonshot 的 Anthropic 兼容端点（https://api.moonshot.ai/anthropic），使用 `ANTHROPIC_BASE_URL`、`ANTHROPIC_AUTH_TOKEN`、`ANTHROPIC_MODEL` 三项，无转换层，并包含解除未识别模型 200k 窗口限制的环境变量。按量计费 API 密钥"
+   ],
+   [
+    "模型 ID",
+    "`kimi-k3.1-pro`、`kimi-k3.1-pro-highspeed`。所有响应的 model 字段都与请求 ID 一致"
+   ],
+   [
+    "thinking",
+    "Claude Code 默认值"
+   ],
+   [
+    "隔离",
+    "专用 CLAUDE_CONFIG_DIR，按 run 保存会话"
+   ],
+   [
+    "上限",
+    "30 次迭代 · 每 run 20 分钟 · 停滞监控 300 秒 · 成本上限每 run $4、每实验 $20"
+   ],
+   [
+    "提示",
+    "标准 EN，每个条件 n=3，由单个编排器顺序运行、条件交替（未测试 KO）"
+   ],
+   [
+    "端口",
+    "框架将空闲端口作为 PORT 注入"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "Pro 1 run 미완주: k31pro-en-3은 코드가 13/13·154/154를 통과했지만 iteration 1·2가 정체 종료되고 iteration 3이 run 상한(20분)에 닿아 완료를 선언하지 못했다. 에이전트가 `PORT` 없이 서버를 백그라운드로 띄워 서버는 하네스가 주입한 포트에서 떴는데, 포그라운드로 `until curl … localhost:8000 …` 대기 루프를 실행해 끝나지 않았다. 산출물 쪽 결함으로 판정에 반영했다.",
+   "정체 감시 종료 4회(3 run): 위 포트 8000 대기(k31pro-en-3 iter 1·2, k31hs-en-3 iter 1)와, 완료를 선언·커밋한 뒤 `run_in_background`로 띄운 서버를 끄지 않아 `claude -p`가 반환되지 않은 경우(k31pro-en-1, k31hs-en-2)다. 뒤의 두 run은 작업이 끝난 상태라 판정에 영향이 없고 실행 시간만 약 5분 늘었다. 같은 모델의 pi run(EXP-051)에서는 정체가 없었다.",
+   "첫 기동 중단·재실행: 14:37 기동한 k31pro-en-1을 14:43 사용자의 과금 문의로 중단·폐기하고(API 오류 0), 잔액 대조로 공개 단가 환산과 맞음을 확인한 뒤 15:41 처음부터 재실행했다. 첫 smoke는 계정 잔액 부족(HTTP 429)으로 실패했고 충전 후 통과했다.",
+   "비용 가드 과대 추정: 대화 기록 바이트 하한(3바이트=1토큰)이 Kimi의 보고 프롬프트보다 약 50% 커서, 재실행 6 run 가드 누계 약 $13.5가 잔액 실제 차감 $5.77의 약 2.3배였다. 상한에 닿은 run은 없었다.",
+   "`KIMI_API_KEY` 값이 세션·실행 로그·산출 리포에 나타난 건수는 0이다. 에이전트 도구 호출에서 하네스 경로를 참조한 건수도 0이다."
+  ],
+  "en": [
+   "One Pro run did not finish: k31pro-en-3's code passed 13/13 · 154/154, but iterations 1 and 2 ended on the stall watchdog and iteration 3 hit the 20-min run cap before the agent declared completion. The agent started the server in the background without `PORT`, so it came up on the port the harness injected, then ran a foreground `until curl … localhost:8000 …` wait loop that never ended. This is a flaw in the agent's output and counts in the verdict.",
+   "4 stall-watchdog stops in 3 runs: the port-8000 wait above (k31pro-en-3 iterations 1–2, k31hs-en-3 iteration 1), and cases where the agent declared completion and committed but left the server it started with `run_in_background` running, so `claude -p` did not return (k31pro-en-1, k31hs-en-2). Those two runs were already done, so the verdict is unaffected; only their wall-clock grew by about 5 min. The pi runs of the same models (EXP-051) had no stalls.",
+   "First launch stopped and rerun: k31pro-en-1, started at 14:37, was stopped and discarded at 14:43 after the user asked about billing (no API errors). After a balance check matched the public-price estimate, the experiment was rerun from scratch at 15:41. The first smoke test failed on a low account balance (HTTP 429) and passed after a top-up.",
+   "Cost guard over-estimate: the guard's lower bound from conversation-log size (3 bytes = 1 token) ran about 50% above Kimi's reported prompt size, so its total for the 6 rerun runs (about $13.5) was about 2.3× the actual balance drop ($5.77). No run hit the cap.",
+   "The KIMI_API_KEY value appears 0 times in the sessions, run logs and output repos. No agent tool call referenced harness paths."
+  ],
+  "ja": [
+   "Proの1 runは未完走: k31pro-en-3はコードが13/13・154/154を通過したが、イテレーション1・2が停滞監視で終了し、イテレーション3がrun上限（20分）に達して完了を宣言できなかった。エージェントが`PORT`なしでサーバーをバックグラウンド起動したためサーバーはハーネスが注入したポートで起動したが、フォアグラウンドで`until curl … localhost:8000 …`の待機ループを実行して終わらなかった。成果物側の欠陥として判定に反映した。",
+   "停滞監視による終了4回（3 run）: 上記のポート8000待ち（k31pro-en-3 iter 1・2、k31hs-en-3 iter 1）と、完了宣言・コミットの後に`run_in_background`で起動したサーバーを止めず`claude -p`が戻らなかったケース（k31pro-en-1、k31hs-en-2）。後者2 runは作業が終わっていたため判定に影響はなく、実行時間が約5分延びただけ。同じモデルのpi run（EXP-051）では停滞はなかった。",
+   "初回起動の中断・再実行: 14:37に起動したk31pro-en-1を14:43、ユーザーの課金に関する問い合わせを受けて中断・破棄し（APIエラー0）、残高照合で公開単価換算と一致することを確認したうえで15:41に最初から再実行した。最初のsmokeはアカウント残高不足（HTTP 429）で失敗し、チャージ後に通過した。",
+   "コストガードの過大推定: 会話ログのバイト下限（3バイト=1トークン）がKimiの報告プロンプトより約50%大きく、再実行6 runのガード累計約$13.5が残高の実減少$5.77の約2.3倍だった。上限に達したrunはなかった。",
+   "`KIMI_API_KEY`の値がセッション・実行ログ・成果物リポに現れた件数は0。エージェントのツール呼び出しでハーネスのパスを参照した件数も0。"
+  ],
+  "zh": [
+   "Pro 有 1 个 run 未完成：k31pro-en-3 的代码通过了 13/13・154/154，但迭代 1・2 因停滞监控终止，迭代 3 达到 run 上限（20 分钟），代理未能声明完成。代理在没有 `PORT` 的情况下后台启动服务器，服务器因此运行在框架注入的端口上，而代理又在前台执行 `until curl … localhost:8000 …` 等待循环，永远不会结束。这属于产出物缺陷，计入判定。",
+   "停滞监控终止 4 次（3 个 run）：上述端口 8000 等待（k31pro-en-3 迭代 1・2、k31hs-en-3 迭代 1），以及代理在声明完成并提交后没有关闭用 `run_in_background` 启动的服务器，导致 `claude -p` 不返回的情况（k31pro-en-1、k31hs-en-2）。后两个 run 工作已完成，不影响判定，只是运行时间多了约 5 分钟。同一模型的 pi run（EXP-051）没有出现停滞。",
+   "首次启动中断并重跑：14:37 启动的 k31pro-en-1 在 14:43 因用户询问计费而中断并作废（API 错误 0）。通过余额核对确认与公开单价折算一致后，于 15:41 从头重跑。第一次 smoke 因账户余额不足（HTTP 429）失败，充值后通过。",
+   "成本守护高估：守护根据会话记录字节数估算的下限（3 字节=1 token）比 Kimi 报告的提示大约 50%，重跑 6 个 run 的守护累计约 $13.5，是余额实际减少额 $5.77 的约 2.3 倍。没有 run 触及上限。",
+   "`KIMI_API_KEY` 的值在会话、运行日志和产出仓库中出现 0 次。代理的工具调用也没有引用框架路径。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "6 run 모두 TypeScript + Fastify + Prisma를 골랐다. 서브에이전트 호출은 0건이다.",
+   "Pro: 완주 2 run의 API 호출 44–48회, output 23.0–28.5K, 최대 프롬프트 76.6–76.7K, 활성 세션 13.4–14.1분. 미완주 run은 36회·18.1K·57.4K·9.0분.",
+   "Highspeed: run당 API 호출 40–48회, output 16.2–26.0K, 최대 프롬프트 61.5–79.1K, 활성 세션 4.5–8.1분.",
+   "같은 두 모델의 pi run(EXP-051)보다 캐시 읽기가 많고(완주 run 1.8–2.7M 대 0.8–1.5M) 환산 비용이 높았다. 에이전트·API 형식·thinking 설정이 함께 달라 하네스 단독 효과로 단정하지 않는다. 두 하네스 모두에서 Highspeed의 세션이 Pro보다 짧은 방향은 같았다."
+  ],
+  "en": [
+   "All 6 runs chose TypeScript + Fastify + Prisma. No subagents were used.",
+   "Pro: the 2 finished runs made 44–48 API calls with 23.0–28.5K output; the largest prompt was 76.6–76.7K; active session 13.4–14.1 min. The unfinished run: 36 calls, 18.1K, 57.4K, 9.0 min.",
+   "Highspeed: 40–48 API calls and 16.2–26.0K output per run; the largest prompt was 61.5–79.1K; active session 4.5–8.1 min.",
+   "Compared with the pi runs of the same two models (EXP-051), cache reads were higher (finished runs 1.8–2.7M vs 0.8–1.5M) and so was the estimated cost. Agent, API format and thinking setting all differ, so this is not attributed to the harness alone. On both harnesses Highspeed sessions were shorter than Pro."
+  ],
+  "ja": [
+   "6 runすべてがTypeScript + Fastify + Prismaを選んだ。サブエージェントの呼び出しは0件。",
+   "Pro: 完走2 runのAPI呼び出し44–48回、output 23.0–28.5K、最大プロンプト76.6–76.7K、アクティブセッション13.4–14.1分。未完走runは36回・18.1K・57.4K・9.0分。",
+   "Highspeed: runあたりAPI呼び出し40–48回、output 16.2–26.0K、最大プロンプト61.5–79.1K、アクティブセッション4.5–8.1分。",
+   "同じ2モデルのpi run（EXP-051）よりキャッシュ読み取りが多く（完走run 1.8–2.7M 対 0.8–1.5M）、換算コストも高かった。エージェント・API形式・thinking設定が同時に異なるため、ハーネス単独の効果とは断定しない。両ハーネスでHighspeedのセッションがProより短い方向は同じだった。"
+  ],
+  "zh": [
+   "6 个 run 都选择了 TypeScript + Fastify + Prisma。未调用子代理。",
+   "Pro：完成的 2 个 run 调用 API 44–48 次，output 23.0–28.5K，最大提示 76.6–76.7K，活跃会话 13.4–14.1 分钟。未完成的 run：36 次、18.1K、57.4K、9.0 分钟。",
+   "Highspeed：每 run 调用 API 40–48 次，output 16.2–26.0K，最大提示 61.5–79.1K，活跃会话 4.5–8.1 分钟。",
+   "与同两款模型的 pi run（EXP-051）相比，缓存读取更多（完成 run 1.8–2.7M 对 0.8–1.5M），折算成本也更高。代理、API 格式和 thinking 设置同时不同，因此不归因于框架本身。两种框架下 Highspeed 的会话都比 Pro 短。"
+  ]
+ }
+}

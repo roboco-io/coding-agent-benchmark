@@ -1,6 +1,6 @@
 # run당 비용 환산 (공개 단가 기준 추정)
 
-작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가), 2026-10-11(EXP-045 pi × qwen3.8-27b, EXP-046 pi × GLM-5.3-Flash 추가), 2026-10-16(EXP-047 pi × gemini-4-argon 추가), 2026-10-18(EXP-048 DeepSeek V4.1-Flash-1017 추가), 2026-10-19(EXP-049 pi × Muse Spark Open, EXP-050 pi × DeepSeek V4.1-Flash-1017 추가), 2026-10-25(EXP-051 pi × Kimi K3.1 Pro·Pro Highspeed 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
+작성일: 2026-09-23. 갱신: 2026-09-24(EXP-027 gpt-6-sol·gpt-6-luna, EXP-028 Sonnet 5, EXP-029 pi 하네스 3조건, EXP-030 pi × Opus 5.5·gpt-6-sol 추가), 2026-09-29(EXP-031 Sonnet 5.5, EXP-032 pi × Sonnet 5.5 추가), 2026-10-07(EXP-035 agy × gemini-3.8-flash, EXP-036 pi × gemini-3.8-flash 추가), 2026-10-08(EXP-037 Haiku 5.5, EXP-038 pi × Haiku 5.5 추가), 2026-10-11(EXP-045 pi × qwen3.8-27b, EXP-046 pi × GLM-5.3-Flash 추가), 2026-10-16(EXP-047 pi × gemini-4-argon 추가), 2026-10-18(EXP-048 DeepSeek V4.1-Flash-1017 추가), 2026-10-19(EXP-049 pi × Muse Spark Open, EXP-050 pi × DeepSeek V4.1-Flash-1017 추가), 2026-10-25(EXP-051 pi × Kimi K3.1 Pro·Pro Highspeed, EXP-052 Claude Code × Kimi K3.1 Pro·Pro Highspeed 직결 추가). 대시보드(<https://roboco.io/coding-agent-benchmark/>)의 "run당 환산 비용" 열의 근거 자료다.
 
 ## 이 수치가 뜻하는 것
 
@@ -32,6 +32,8 @@
 | pi × kimi-k3 | 0.65 | — | pi 하네스, 캐시 쓰기는 입력 단가 |
 | pi × kimi-k3.1-pro | 0.46 | — | pi 하네스, 캐시 쓰기는 입력 단가, API 키 실행(실제 과금) |
 | pi × kimi-k3.1-pro-highspeed | 0.76 | — | pi 하네스, pro의 2배 단가, 캐시 쓰기는 입력 단가, API 키 실행(실제 과금) |
+| kimi-k3.1-pro | 0.92 | — | Claude Code 직결, 완주 2 run 중앙값(미완주 1 run $0.67 제외), 캐시 쓰기는 입력 단가, API 키 실행(실제 과금) |
+| kimi-k3.1-pro-highspeed | 1.28 | — | Claude Code 직결, pro의 2배 단가, 캐시 쓰기는 입력 단가, API 키 실행(실제 과금) |
 | Sonnet 5.5 | 0.68 | 0.70 | Sonnet 5와 같은 단가($2/$10), 캐시 쓰기 단가는 미확인 가정(아래) |
 | kimi-k3 | 0.78 | 0.92 | |
 | gpt-5.6-sol | 1.05 | 1.16 | 프로모션 단가 |
@@ -75,6 +77,7 @@ run별 값은 [cost_all_runs.csv](cost_all_runs.csv)의 `est_cost_usd` 열에 �
 - **pi × Muse Spark Open(EXP-049)**: 2026-10-18에 OpenRouter endpoints API(<https://openrouter.ai/api/v1/models/meta/muse-spark-open/endpoints>)로 Together 엔드포인트 단가를 확인해 적용했다(1M 토큰당 입력 $1.25·캐시 읽기 $0.15·출력 $4.25, reasoning 포함, 구간 단가 없음, 5개 제공자 동일). pi 세션 기록의 `cacheWrite`는 전 응답 0이다. OpenRouter API 키로 실행해 실제 과금이 있었다. 결과(run당 $0.4515·0.6746·0.5027)는 OpenRouter generation 기록(`GET /api/v1/generation`)의 `total_cost`를 run의 모든 responseId에 대해 합한 값과 소수 넷째 자리까지 같다. **이 리포에서 환산 비용을 제공자 측 청구 기록과 대조한 첫 사례**다. 다만 호출별 기록과의 대조이며 월별 청구서와 대조한 것은 아니다. 다른 조건의 환산값은 여전히 청구액과 대조하지 않은 추정이다.
 - **pi × DeepSeek V4.1-Flash-1017(EXP-050)**: EXP-048과 같은 `prices.json` 항목(`DeepSeek V4.1-Flash-1017`, 2026-10-18 확인 피크 단가: 1M 토큰당 입력 $0.30·캐시 읽기 $0.006·출력 $1.20)을 그대로 적용했다. 실행 시각(월요일 07:11–07:26 UTC)은 피크 시간대라 이 단가가 실제 적용 단가와 같은 구간이다. pi 세션 기록의 `cacheWrite`는 전 응답 0이다. DeepSeek API 키로 실행해 실제 과금이 있었으나 청구액은 대조하지 않았다. 결과(run당 $0.0531·0.0654·0.0570)는 보고서 값($0.053·0.065·0.057)과 반올림 범위에서 같고, 보고서에 따르면 pi가 세션에 기록한 비용(내장 단가표)과도 같다.
 - **pi × Kimi K3.1 Pro·Pro Highspeed(EXP-051)**: 2026-10-25에 Moonshot 가격 페이지(<https://platform.kimi.ai/docs/pricing/chat>)의 단가를 확인해 적용했다(1M 토큰당 pro 입력 $2·캐시 읽기 $0.20·출력 $10, highspeed 입력 $4·캐시 읽기 $0.20·출력 $20, 구간 단가 없음). 대응 방식은 EXP-029 kimi-k3와 같고, Moonshot이 기록한 `cacheWrite`는 TTL 구분이 없어 `cache_write_5m`(입력 단가와 같음)에 넣었다. pi 0.87.1 내장 목록에 두 모델이 없어 내장 kimi-k3 정의를 복제한 사용자 정의 항목으로 실행했다. Moonshot API 키로 실행해 실제 과금이 있었으나 청구액은 대조하지 않았다.
+- **Claude Code × Kimi K3.1 Pro·Pro Highspeed(EXP-052)**: 단가는 위 EXP-051 항목과 같다. Moonshot Anthropic 호환 엔드포인트의 usage `cache_creation`에 TTL 구분이 없어 `cache_write_5m`(입력 단가)에 넣었다. 계정 잔액 조회로 실제 차감액을 대조했다 — 재실행 6 run 환산 합계 $6.19 대 잔액 차감 $5.77(2026-10-25 17:08 기준, 정산 지연 가능). 캐시 읽기를 할인 없이 계산하면 약 $20이라, 이 엔드포인트에서는 캐시 읽기 할인이 적용된 것으로 본다. k31pro-en-3(미완주)은 run별 값에는 있고 결과 표 중앙값에서는 뺐다.
 - **Solar Pro 4**: 정가로 환산했다. 실험 당시(2026-08)는 무료 또는 프로모션 기간이었다. 이 엔드포인트는 캐시를 계상하지 않아 입력 전량이 비캐시 단가로 계산된다. 이 때문에 값이 크다.
 - **범위**: run 안의 재시도·추가 세션·서브에이전트 호출을 포함한다(실험 품질 규칙 5절 — 실패·재시도 포함). Opus 4.8 run 48-1은 재검증 세션을, Solar Pro 4 run 1은 게이트 오검으로 이어진 세션 12개를 포함한다.
 

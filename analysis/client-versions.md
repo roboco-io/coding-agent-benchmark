@@ -58,6 +58,7 @@
 | EXP-050 | pi 0.87.1 | `experiments/050-pi-deepseek-flash-1017/runs/phase0.md` |
 | EXP-051 | pi 0.87.1 | `experiments/051-pi-kimi-k31/runs/phase0.md` |
 | EXP-052 | Claude Code 2.1.310 | `experiments/052-kimi-k31-direct/runs/phase0.md`, 세션 jsonl `version` 2.1.310 전수 |
+| EXP-053 | pi 0.87.1 | `experiments/053-pi-glm53/runs/phase0.md` |
 
 ## 읽는 법
 

@@ -245,5 +245,25 @@
     "src": "https://platform.kimi.ai/docs/pricing/chat",
     "accessed": "2026-10-25",
     "caveat": "구간 단가 없음(K3.1 Pro quickstart: no tiering by context length). 캐시 쓰기는 캐시 읽기와 별도 과금(5m=입력 단가, 1h=입력 2배). highspeed는 pro의 2배 단가"
+  },
+  "glm-5.3": {
+    "input": 1.4,
+    "cache_read": 0.26,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 4.4,
+    "src": "OpenRouter GET /api/v1/models/<id>/endpoints (z-ai/glm-5.3, Z.AI fp8 엔드포인트)",
+    "accessed": "2026-10-25",
+    "caveat": "OpenRouter 경유, 제공자 Z.AI 고정. 캐시 쓰기 요금 0, 구간 단가 없음. OpenRouter generation 청구 기록 합과 일치(EXP-053)"
+  },
+  "glm-5.3-prime": {
+    "input": 2.8,
+    "cache_read": 0.56,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 8.8,
+    "src": "OpenRouter GET /api/v1/models/<id>/endpoints (z-ai/glm-5.3-prime, Alibaba 엔드포인트 — 유일 제공자)",
+    "accessed": "2026-10-25",
+    "caveat": "OpenRouter 경유, 제공자 Alibaba 고정. 캐시 쓰기 요금 0, 구간 단가 없음. OpenRouter generation 청구 기록 합과 일치(EXP-053)"
   }
 }

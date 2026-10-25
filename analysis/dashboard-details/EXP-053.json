@@ -1,0 +1,222 @@
+{
+ "exp": "EXP-053",
+ "date": "2026-10-25",
+ "report": "experiments/053-pi-glm53/report.md",
+ "client": "pi 0.87.1",
+ "runs": {
+  "glm53-en-1": {
+   "iter": 1,
+   "commits": 4
+  },
+  "glm53-en-2": {
+   "iter": 1,
+   "commits": 2
+  },
+  "glm53-en-3": {
+   "iter": 1,
+   "commits": 2
+  },
+  "glm53prime-en-1": {
+   "iter": 1,
+   "commits": 1
+  },
+  "glm53prime-en-2": {
+   "iter": 1,
+   "commits": 4
+  },
+  "glm53prime-en-3": {
+   "iter": 1,
+   "commits": 3
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, `ralph-model-benchmark` 스킬 pi 하네스)"
+   ],
+   [
+    "연결",
+    "OpenRouter(https://openrouter.ai/api/v1, OpenAI 호환). 제공자 고정 `openRouterRouting`(only, allow_fallbacks=false): glm-5.3은 Z.AI(fp8), prime은 Alibaba(유일 제공자, 양자화 미공개). pi 내장 `z-ai/glm-5.3` 정의에 라우팅을 넣은 사용자 정의 models.json, prime은 같은 정의를 복제. 종량 과금 OpenRouter API 키"
+   ],
+   [
+    "모델 ID",
+    "`z-ai/glm-5.3`, `z-ai/glm-5.3-prime` (2026-10-25 OpenRouter endpoints API로 확인). OpenRouter generation 기록 316건 전수: served `z-ai/glm-5.3-20260816`(Z.AI), `z-ai/glm-5.3-prime-20260921`(Alibaba)"
+   ],
+   [
+    "thinking",
+    "high (EXP-049와 같음, 세션 thinking_level_change 전수 high)"
+   ],
+   [
+    "프롬프트",
+    "정본 EN **v2**(PORT 안내 한 줄 추가, 2026-10-25) 첫 적용, 조건별 n=3, 단일 오케스트레이터 순차 실행·조건 교차 (KO 미실험). v1 실험과 비교 시 PROMPT 차이가 섞임"
+   ],
+   [
+    "격리",
+    "전용 PI_CODING_AGENT_DIR, 상위 AGENTS.md/CLAUDE.md·스킬·확장 비노출, 에이전트 환경 비밀값은 OPENROUTER_API_KEY만 (PI_KEEP_ENV)"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 20분 · 비용 상한 run당 $4·실험 $20"
+   ],
+   [
+    "포트",
+    "하네스가 빈 포트를 PORT로 주입(PROMPT v2가 이를 안내)"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, pi harness of the `ralph-model-benchmark` skill)"
+   ],
+   [
+    "Connection",
+    "OpenRouter (https://openrouter.ai/api/v1, OpenAI-compatible). Provider pinned with `openRouterRouting` (only, allow_fallbacks=false): glm-5.3 to Z.AI (fp8), prime to Alibaba (the only provider; quantization not disclosed). Custom models.json adding the routing to pi's built-in `z-ai/glm-5.3` definition; prime clones the same definition. Pay-as-you-go OpenRouter API key"
+   ],
+   [
+    "Model ID",
+    "`z-ai/glm-5.3`, `z-ai/glm-5.3-prime` (checked with the OpenRouter endpoints API on 2026-10-25). All 316 OpenRouter generation records: served `z-ai/glm-5.3-20260816` (Z.AI) and `z-ai/glm-5.3-prime-20260921` (Alibaba)"
+   ],
+   [
+    "Thinking",
+    "high (same as EXP-049; every thinking_level_change in the sessions was high)"
+   ],
+   [
+    "Prompt",
+    "Canonical EN **v2** (one PORT line added on 2026-10-25), first use; n=3 per condition, run sequentially by a single orchestrator with conditions interleaved (KO not tested). Comparisons with v1 experiments include the prompt change"
+   ],
+   [
+    "Isolation",
+    "Dedicated PI_CODING_AGENT_DIR; parent AGENTS.md/CLAUDE.md, skills and extensions hidden; the only secret in the agent environment is OPENROUTER_API_KEY (PI_KEEP_ENV)"
+   ],
+   [
+    "Cap",
+    "30 iterations · 20 min per run · cost cap $4 per run and $20 per experiment"
+   ],
+   [
+    "Port",
+    "The harness injects a free port as PORT (PROMPT v2 now says so)"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`、`ralph-model-benchmark`スキルのpiハーネス）"
+   ],
+   [
+    "接続",
+    "OpenRouter（https://openrouter.ai/api/v1、OpenAI互換）。`openRouterRouting`（only、allow_fallbacks=false）でプロバイダを固定：glm-5.3はZ.AI（fp8）、primeはAlibaba（唯一のプロバイダ、量子化は非公開）。piの内蔵`z-ai/glm-5.3`定義にルーティングを加えたユーザー定義models.json、primeは同じ定義を複製。従量課金のOpenRouter APIキー"
+   ],
+   [
+    "モデルID",
+    "`z-ai/glm-5.3`、`z-ai/glm-5.3-prime`（2026-10-25にOpenRouter endpoints APIで確認）。OpenRouter generation記録316件すべて：served `z-ai/glm-5.3-20260816`（Z.AI）、`z-ai/glm-5.3-prime-20260921`（Alibaba）"
+   ],
+   [
+    "thinking",
+    "high（EXP-049と同じ、セッションのthinking_level_changeはすべてhigh）"
+   ],
+   [
+    "プロンプト",
+    "正本EN **v2**（2026-10-25にPORT案内を1行追加）の初適用、条件別n=3、単一オーケストレータで順次実行・条件交互（KOは未実施）。v1の実験との比較にはプロンプトの違いが含まれる"
+   ],
+   [
+    "隔離",
+    "専用PI_CODING_AGENT_DIR、上位AGENTS.md/CLAUDE.md・スキル・拡張は非公開、エージェント環境の秘密値はOPENROUTER_API_KEYのみ（PI_KEEP_ENV）"
+   ],
+   [
+    "上限",
+    "30イテレーション・runあたり20分・コスト上限runあたり$4・実験$20"
+   ],
+   [
+    "ポート",
+    "ハーネスが空きポートをPORTとして注入（PROMPT v2がこれを案内）"
+   ]
+  ],
+  "zh": [
+   [
+    "智能体",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`，`ralph-model-benchmark` 技能的 pi 测试框架）"
+   ],
+   [
+    "连接",
+    "OpenRouter（https://openrouter.ai/api/v1，OpenAI 兼容）。用 `openRouterRouting`（only，allow_fallbacks=false）固定提供方：glm-5.3 为 Z.AI（fp8），prime 为 Alibaba（唯一提供方，未公开量化方式）。在 pi 内置 `z-ai/glm-5.3` 定义上加入路由的用户自定义 models.json，prime 复制同一定义。按量计费 OpenRouter API 密钥"
+   ],
+   [
+    "模型 ID",
+    "`z-ai/glm-5.3`、`z-ai/glm-5.3-prime`（2026-10-25 用 OpenRouter endpoints API 核实）。全部 316 条 OpenRouter generation 记录：served `z-ai/glm-5.3-20260816`（Z.AI）、`z-ai/glm-5.3-prime-20260921`（Alibaba）"
+   ],
+   [
+    "thinking",
+    "high（与 EXP-049 相同，会话中的 thinking_level_change 全部为 high）"
+   ],
+   [
+    "提示词",
+    "标准 EN **v2**（2026-10-25 新增一行 PORT 说明）首次使用，每个条件 n=3，由单一编排器顺序运行、条件交替（未测 KO）。与 v1 实验比较时包含提示词差异"
+   ],
+   [
+    "隔离",
+    "专用 PI_CODING_AGENT_DIR，不暴露上层 AGENTS.md/CLAUDE.md、技能和扩展，代理环境中的密钥只有 OPENROUTER_API_KEY（PI_KEEP_ENV）"
+   ],
+   [
+    "上限",
+    "30 次迭代 · 每 run 20 分钟 · 成本上限每 run $4、每实验 $20"
+   ],
+   [
+    "端口",
+    "框架把空闲端口注入为 PORT（PROMPT v2 现已说明）"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류·시간 초과·정체 종료·실패·비용 상한 도달 없음. 사람 개입 0. smoke는 첫 시도에 두 조건 모두 통과했다(smoke 임시 세션은 정리돼 smoke 단계의 제공자는 미확인, 본 run 전 호출로 확인).",
+   "비용 가드 추정은 최대 $2.64(glm53prime-en-3), 누계 약 $7.29로 청구 합계 $5.25의 약 1.4배였다(보수적 추정).",
+   "`OPENROUTER_API_KEY` 값이 세션·실행 로그·산출 리포에 나타난 건수는 0이다(직접 대조). 세션 기록에서 하네스 경로나 다른 run을 참조한 건수도 0이다."
+  ],
+  "en": [
+   "No gate rejections, reruns, holds, timeouts, stalls, failures or cost-cap hits. No human intervention. The smoke test passed for both conditions on the first attempt (its temporary sessions were cleaned up, so the smoke-stage provider was not checked; every call of the real runs was).",
+   "The cost guard peaked at $2.64 (glm53prime-en-3) and totalled about $7.29, about 1.4× the $5.25 billed (a conservative estimate).",
+   "The OPENROUTER_API_KEY value appears 0 times in the sessions, run logs and output repos (checked directly). The session logs contain no reference to harness paths or other runs."
+  ],
+  "ja": [
+   "ゲート差し戻し・再実行・保留・時間超過・停滞終了・失敗・コスト上限到達なし。人の介入0。smokeは両条件とも初回で通過した（smokeの一時セッションは削除済みのためsmoke段階のプロバイダは未確認、本runの全呼び出しで確認）。",
+   "コストガードの推定は最大$2.64（glm53prime-en-3）、累計約$7.29で、請求合計$5.25の約1.4倍だった（保守的な推定）。",
+   "`OPENROUTER_API_KEY`の値がセッション・実行ログ・成果物リポに現れた件数は0（直接照合）。セッション記録にハーネスのパスや他のrunへの参照もなかった。"
+  ],
+  "zh": [
+   "无门控驳回、重跑、搁置、超时、停滞终止、失败或成本上限触发。人工干预为 0。smoke 两个条件均一次通过（smoke 临时会话已被清理，未核实 smoke 阶段的提供方；正式 run 的全部调用已核实）。",
+   "成本守卫估算最高 $2.64（glm53prime-en-3），累计约 $7.29，约为计费合计 $5.25 的 1.4 倍（保守估算）。",
+   "OPENROUTER_API_KEY 的值在会话、运行日志和产出仓库中出现 0 次（直接比对）。会话记录中也没有引用框架路径或其他 run。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "6 run 모두 TypeScript + Fastify + Prisma를 골랐다. 세션 기록에 `$PORT` 참조가 run당 29–55회 나타났고 정체 종료는 0이었다.",
+   "glm-5.3: run당 API 호출 43–46회, output 20.3–24.3K(reasoning 6.6–11.5K 포함), 최대 프롬프트 38.0–43.2K, 세션 6.1–7.6분.",
+   "glm-5.3-prime: run당 API 호출 45–90회, output 18.6–25.5K(reasoning 6.5–10.1K 포함), 최대 프롬프트 38.7–50.6K, 세션 5.8–8.1분. run 3은 짧은 Bash·편집 호출을 몇 초 간격으로 반복해 호출 수·캐시 읽기·비용이 다른 run의 약 2배였다.",
+   "prime은 OpenRouter 설명상 출력 처리량 1.5–2배의 고속 변형이지만, 세션 시간은 glm-5.3과 범위가 겹쳐 이 과제에서 빠르다는 관측은 없었다. 두 조건은 제공자(Z.AI / Alibaba)도 다르다.",
+   "환산 비용은 run마다 OpenRouter 호출별 total_cost 합과 같다."
+  ],
+  "en": [
+   "All 6 runs chose TypeScript + Fastify + Prisma. The session logs reference `$PORT` 29–55 times per run, and no iteration stalled.",
+   "glm-5.3: 43–46 API calls and 20.3–24.3K output per run (including 6.6–11.5K reasoning); the largest prompt was 38.0–43.2K; sessions 6.1–7.6 min.",
+   "glm-5.3-prime: 45–90 API calls and 18.6–25.5K output per run (including 6.5–10.1K reasoning); the largest prompt was 38.7–50.6K; sessions 5.8–8.1 min. Run 3 made short Bash and edit calls a few seconds apart, so its calls, cache reads and cost were about twice the other runs'.",
+   "OpenRouter describes prime as a high-speed variant with 1.5–2× output throughput, but its session times overlap glm-5.3's, so it was not observed to be faster on this task. The two conditions also used different providers (Z.AI / Alibaba).",
+   "The estimated cost of every run equals the sum of OpenRouter's per-call total_cost."
+  ],
+  "ja": [
+   "6 runすべてがTypeScript + Fastify + Prismaを選んだ。セッション記録に`$PORT`の参照がrunあたり29–55回現れ、停滞終了は0だった。",
+   "glm-5.3: runあたりAPI呼び出し43–46回、output 20.3–24.3K（reasoning 6.6–11.5Kを含む）、最大プロンプト38.0–43.2K、セッション6.1–7.6分。",
+   "glm-5.3-prime: runあたりAPI呼び出し45–90回、output 18.6–25.5K（reasoning 6.5–10.1Kを含む）、最大プロンプト38.7–50.6K、セッション5.8–8.1分。run 3は短いBash・編集呼び出しを数秒おきに繰り返したため、呼び出し数・キャッシュ読み取り・コストが他のrunの約2倍だった。",
+   "primeはOpenRouterの説明では出力スループット1.5–2倍の高速版だが、セッション時間はglm-5.3と範囲が重なり、この課題で速いという観測はなかった。2条件はプロバイダ（Z.AI / Alibaba）も異なる。",
+   "換算コストはrunごとにOpenRouterの呼び出し別total_costの合計と一致する。"
+  ],
+  "zh": [
+   "6 个 run 都选择了 TypeScript + Fastify + Prisma。会话记录中每个 run 引用 `$PORT` 29–55 次，没有停滞终止。",
+   "glm-5.3：每 run API 调用 43–46 次，output 20.3–24.3K（含 reasoning 6.6–11.5K），最大提示 38.0–43.2K，会话 6.1–7.6 分钟。",
+   "glm-5.3-prime：每 run API 调用 45–90 次，output 18.6–25.5K（含 reasoning 6.5–10.1K），最大提示 38.7–50.6K，会话 5.8–8.1 分钟。run 3 每隔几秒反复发出简短的 Bash 和编辑调用，调用次数、缓存读取和成本约为其他 run 的 2 倍。",
+   "OpenRouter 将 prime 描述为输出吞吐量 1.5–2 倍的高速版本，但其会话时间与 glm-5.3 重叠，本任务中未观察到更快。两个条件的提供方（Z.AI / Alibaba）也不同。",
+   "每个 run 的折算成本都等于 OpenRouter 逐次调用 total_cost 之和。"
+  ]
+ }
+}

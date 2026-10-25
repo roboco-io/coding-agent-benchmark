@@ -1,0 +1,32 @@
+{
+ "openrouter/z-ai/glm-5.3": {
+  "provider": "OpenRouter (https://openrouter.ai/api/v1), 제공자 Z.AI 고정(openRouterRouting only=[z-ai], allow_fallbacks=false, 엔드포인트 태그 z-ai/fp8), pi 사용자 정의 models.json(내장 z-ai/glm-5.3 정의 + 라우팅)",
+  "context_window": 1048576,
+  "max_output": 131072,
+  "context_source": "OpenRouter GET /api/v1/models/<id>/endpoints, 2026-10-25 — Z.AI 엔드포인트 context_length 1048576, max_completion_tokens 131072, quantization fp8. 모델 등록 2026-08-18",
+  "billing": "api",
+  "pricing": {
+   "input": 1.4,
+   "output": 4.4,
+   "cache_read": 0.26,
+   "tiers": [],
+   "source": "OpenRouter GET /api/v1/models/<id>/endpoints, 2026-10-25 — Z.AI 엔드포인트 pricing(prompt 1.40, completion 4.40, input_cache_read 0.26, input_cache_write 0 / 100만 토큰, 구간 단가 없음)",
+   "checked_at": "2026-10-25"
+  }
+ },
+ "openrouter/z-ai/glm-5.3-prime": {
+  "provider": "OpenRouter (https://openrouter.ai/api/v1), 제공자 Alibaba 고정(openRouterRouting only=[alibaba], allow_fallbacks=false, 엔드포인트 태그 alibaba — 유일 제공자), pi 사용자 정의 models.json(내장 z-ai/glm-5.3 정의 복제)",
+  "context_window": 1000000,
+  "max_output": 131072,
+  "context_source": "OpenRouter GET /api/v1/models/<id>/endpoints, 2026-10-25 — Alibaba 엔드포인트 context_length 1000000, max_completion_tokens 131072, quantization unknown. 모델 등록 2026-09-23(OpenRouter 설명: GLM-5.3 고속 변형, 출력 처리량 1.5–2배)",
+  "billing": "api",
+  "pricing": {
+   "input": 2.8,
+   "output": 8.8,
+   "cache_read": 0.56,
+   "tiers": [],
+   "source": "OpenRouter GET /api/v1/models/<id>/endpoints, 2026-10-25 — Alibaba 엔드포인트 pricing(prompt 2.80, completion 8.80, input_cache_read 0.56, input_cache_write 0 / 100만 토큰, 구간 단가 없음)",
+   "checked_at": "2026-10-25"
+  }
+ }
+}

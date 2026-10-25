@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-052 (2026-10-25)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-053 (2026-10-25)
 
 **🔤 자매 리포 — 언어 비교**: [language-benchmark](https://github.com/roboco-io/language-benchmark) ([대시보드](https://roboco.io/language-benchmark/))는 모델·하네스를 고정하고 같은 RealWorld 백엔드를 구현 언어(TypeScript, Python, Go, Rust, C++)별로 비교한다.
 
@@ -80,6 +80,7 @@
 | [EXP-050](experiments/050-pi-deepseek-flash-1017/report.md) pi × DeepSeek V4.1-Flash-1017 완주 검증 (EN n=3) | M-43: pi coding agent(`pi -p` 0.87.1)로 DeepSeek OpenAI 호환 엔드포인트의 `deepseek-flash`(2026-10-17부터 DeepSeek-V4.1-Flash-1017, pi 내장 provider, thinking high)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 | [EXP-051](experiments/051-pi-kimi-k31/report.md) pi × Kimi K3.1 Pro·Pro Highspeed 완주 검증 (EN n=3) | M-44: pi coding agent(`pi -p` 0.87.1)로 Moonshot OpenAI 호환 엔드포인트의 `kimi-k3.1-pro`·`kimi-k3.1-pro-highspeed`(사용자 정의 models.json 항목, thinking high)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (조건별 EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 | [EXP-052](experiments/052-kimi-k31-direct/report.md) Claude Code × Kimi K3.1 Pro·Pro Highspeed 직결 완주 검증 (EN n=3) | M-45: Claude Code를 Moonshot Anthropic 호환 엔드포인트로 `kimi-k3.1-pro`·`kimi-k3.1-pro-highspeed`에 직결하면(thinking 기본값) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (조건별 EN n=3, 완주율 판정·과금 배제). | **부분 검증** | Claude Code 2.1.310 |
+| [EXP-053](experiments/053-pi-glm53/report.md) pi × GLM-5.3·GLM-5.3-Prime (OpenRouter) 완주 검증 (EN n=3) | M-46: pi coding agent(`pi -p` 0.87.1)로 OpenRouter를 거쳐 `z-ai/glm-5.3`(Z.AI 고정)·`z-ai/glm-5.3-prime`(Alibaba 고정)을 돌리면(thinking high, PROMPT v2) 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (조건별 EN n=3, 완주율 판정·과금 배제). | **검증** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -221,6 +222,9 @@ EN 3/3 모두 iteration 1에서 완주했다. 게이트 통과와 독립 재검�
 
 **EXP-052 — Claude Code × Kimi K3.1 Pro·Pro Highspeed 직결 완주 검증 (EN n=3)** (부분 검증)  
 highspeed는 3/3 완주(검증), pro는 2/3 완주(부분 검증)다. pro 3번째 run은 코드가 13/13·154/154를 통과했지만, 에이전트가 하드코딩한 포트 8000을 기다리는 대기 루프로 두 iteration이 정체 종료되어 20분 상한 안에 완료를 선언하지 못했다. 6 run 중 3 run에서 정체 감시 종료가 있었다. 공개 단가 환산 비용은 run당 pro $0.67–0.93, highspeed $1.00–1.40이다. → [보고서](experiments/052-kimi-k31-direct/report.md)
+
+**EXP-053 — pi × GLM-5.3·GLM-5.3-Prime (OpenRouter) 완주 검증 (EN n=3)** (검증)  
+두 조건 모두 3/3, 6 run 전부 iteration 1에서 완주했다. 게이트 통과와 독립 재검증 2회가 모두 13/13·154/154로 일치했고 개입·정체 종료는 없었다. 세션 시간은 glm-5.3 6.1–7.6분, prime 5.8–8.1분이며, 공개 단가 환산 비용은 run당 glm-5.3 $0.41–0.50, prime $0.92–1.95로 OpenRouter 호출별 청구 기록 합과 일치했다. → [보고서](experiments/053-pi-glm53/report.md)
 
 <!-- RESULTS:END -->
 

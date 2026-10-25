@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-052（2026-10-25）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-053（2026-10-25）
 
 **🔤 姉妹リポジトリ — 言語比較**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([ダッシュボード](https://roboco.io/language-benchmark/))は、モデル・ハーネスを固定し、同じ RealWorld バックエンドを実装言語(TypeScript、Python、Go、Rust、C++)別に比較する。
 
@@ -80,6 +80,7 @@
 | [EXP-050](experiments/050-pi-deepseek-flash-1017/report.md) pi × DeepSeek V4.1-Flash-1017 完走検証（EN n=3） | M-43: pi coding agent(pi -p 0.87.1)でDeepSeekのOpenAI互換エンドポイントのdeepseek-flash(2026-10-17以降DeepSeek-V4.1-Flash-1017、内蔵provider、thinking high)を動かせば、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (EN n=3、完走率判定・課金除外) | **検証** | pi 0.87.1 |
 | [EXP-051](experiments/051-pi-kimi-k31/report.md) pi × Kimi K3.1 Pro・Pro Highspeed 完走検証（EN n=3） | M-44: pi coding agent(pi -p 0.87.1)でMoonshotのOpenAI互換エンドポイントのkimi-k3.1-pro・kimi-k3.1-pro-highspeed(ユーザー定義models.json項目、thinking high)を動かせば、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (条件別EN n=3、完走率判定・課金除外) | **検証** | pi 0.87.1 |
 | [EXP-052](experiments/052-kimi-k31-direct/report.md) Claude Code × Kimi K3.1 Pro・Pro Highspeed 直結 完走検証（EN n=3） | M-45: Claude CodeをMoonshotのAnthropic互換エンドポイントでkimi-k3.1-pro・kimi-k3.1-pro-highspeedに直結すれば(thinkingは既定値)、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (条件別EN n=3、完走率判定・課金除外) | **部分検証** | Claude Code 2.1.310 |
+| [EXP-053](experiments/053-pi-glm53/report.md) pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完走検証（EN n=3） | M-46: pi coding agent(pi -p 0.87.1)でOpenRouter経由のz-ai/glm-5.3(Z.AI固定)・z-ai/glm-5.3-prime(Alibaba固定)を動かせば(thinking high、PROMPT v2)、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (条件別EN n=3、完走率判定・課金除外) | **検証** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -221,6 +222,9 @@ EN 3/3がすべてイテレーション1で完走。ゲートと独立再検証2
 
 **EXP-052 — Claude Code × Kimi K3.1 Pro・Pro Highspeed 直結 完走検証（EN n=3）** (部分検証)  
 Highspeedは3/3(検証)、Proは2/3(部分検証)。Proの3番目のrunはコード上13/13・154/154を通過したが、ハードコードしたポート8000を待つループで2イテレーションが停滞し、20分の上限内に完了を宣言できなかった。停滞監視による終了は6 run中3 runで発生。公開単価換算でrunあたりPro $0.67–0.93・Highspeed $1.00–1.40。 → [レポート](experiments/052-kimi-k31-direct/report.md)
+
+**EXP-053 — pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完走検証（EN n=3）** (検証)  
+両条件とも3/3、6 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、介入・停滞なし。セッションはGLM-5.3 6.1–7.6分、Prime 5.8–8.1分、公開単価換算でrunあたりGLM-5.3 $0.41–0.50・Prime $0.92–1.95で、OpenRouterの呼び出し別請求記録と一致。PROMPT v2の最初の実験。 → [レポート](experiments/053-pi-glm53/report.md)
 
 <!-- RESULTS:END -->
 

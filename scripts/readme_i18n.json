@@ -984,6 +984,26 @@
         "verdict": "部分验证",
         "summary": "Highspeed 3/3(已验证)，Pro 2/3(部分验证)。Pro 的第 3 个 run 代码已通过 13/13・154/154，但有两次迭代卡在等待硬编码端口 8000 的循环中，未能在 20 分钟上限内声明完成。6 个 run 中有 3 个出现停滞监控终止。按公开单价折算每 run Pro $0.67–0.93、Highspeed $1.00–1.40。"
       }
+    },
+    "EXP-053": {
+      "en": {
+        "name": "pi × GLM-5.3 · GLM-5.3-Prime (OpenRouter) completion check (EN n=3)",
+        "hypothesis": "pi coding agent (pi -p 0.87.1) running z-ai/glm-5.3 (pinned to Z.AI) and z-ai/glm-5.3-prime (pinned to Alibaba) via OpenRouter (thinking high, PROMPT v2) completes the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, unattended Ralph loop within 30 iterations and 20 min (EN n=3 per condition, completion only, billing excluded)",
+        "verdict": "Verified",
+        "summary": "Both conditions 3/3, all 6 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, no intervention or stalls. Sessions: GLM-5.3 6.1–7.6 min, Prime 5.8–8.1 min; about $0.41–0.50 (GLM-5.3) and $0.92–1.95 (Prime) per run at public prices, matching OpenRouter's per-call billing records. First experiment with PROMPT v2."
+      },
+      "ja": {
+        "name": "pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完走検証（EN n=3）",
+        "hypothesis": "pi coding agent(pi -p 0.87.1)でOpenRouter経由のz-ai/glm-5.3(Z.AI固定)・z-ai/glm-5.3-prime(Alibaba固定)を動かせば(thinking high、PROMPT v2)、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (条件別EN n=3、完走率判定・課金除外)",
+        "verdict": "検証",
+        "summary": "両条件とも3/3、6 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、介入・停滞なし。セッションはGLM-5.3 6.1–7.6分、Prime 5.8–8.1分、公開単価換算でrunあたりGLM-5.3 $0.41–0.50・Prime $0.92–1.95で、OpenRouterの呼び出し別請求記録と一致。PROMPT v2の最初の実験。"
+      },
+      "zh-CN": {
+        "name": "pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent(pi -p 0.87.1)经 OpenRouter 运行 z-ai/glm-5.3(固定 Z.AI)与 z-ai/glm-5.3-prime(固定 Alibaba)(thinking high，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费)",
+        "verdict": "已验证",
+        "summary": "两个条件均为 3/3，6 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 GLM-5.3 6.1–7.6 分钟、Prime 5.8–8.1 分钟，按公开单价折算每 run GLM-5.3 $0.41–0.50、Prime $0.92–1.95，与 OpenRouter 逐次调用计费记录一致。首个使用 PROMPT v2 的实验。"
+      }
     }
   }
 }

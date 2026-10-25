@@ -1,0 +1,7 @@
+run,calls,provider,served_model,billed_usd_sum,lookup_errors
+glm53-en-1,46,Z.AI:46,z-ai/glm-5.3-20260816,0.4965,0
+glm53-en-2,43,Z.AI:43,z-ai/glm-5.3-20260816,0.4137,0
+glm53-en-3,43,Z.AI:43,z-ai/glm-5.3-20260816,0.4434,0
+glm53prime-en-1,45,Alibaba:45,z-ai/glm-5.3-prime-20260921,1.0339,0
+glm53prime-en-2,49,Alibaba:49,z-ai/glm-5.3-prime-20260921,0.918,0
+glm53prime-en-3,90,Alibaba:90,z-ai/glm-5.3-prime-20260921,1.9456,0

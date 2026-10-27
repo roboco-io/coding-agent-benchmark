@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-053（2026-10-25）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-054（2026-10-27）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -81,6 +81,7 @@
 | [EXP-051](experiments/051-pi-kimi-k31/report.md) pi × Kimi K3.1 Pro・Pro Highspeed 完成验证（EN n=3） | M-44: 用 pi coding agent(pi -p 0.87.1)在 Moonshot 的 OpenAI 兼容端点上运行 kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed(用户自定义 models.json 条目，thinking high)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
 | [EXP-052](experiments/052-kimi-k31-direct/report.md) Claude Code × Kimi K3.1 Pro・Pro Highspeed 直连完成验证（EN n=3） | M-45: 将 Claude Code 通过 Moonshot 的 Anthropic 兼容端点直连 kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed(thinking 默认值)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **部分验证** | Claude Code 2.1.310 |
 | [EXP-053](experiments/053-pi-glm53/report.md) pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完成验证（EN n=3） | M-46: 用 pi coding agent(pi -p 0.87.1)经 OpenRouter 运行 z-ai/glm-5.3(固定 Z.AI)与 z-ai/glm-5.3-prime(固定 Alibaba)(thinking high，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
+| [EXP-054](experiments/054-gpt61-terra-codex/report.md) Codex × gpt-6.1-terra 完成验证（EN n=3） | M-47: 在 Codex CLI(codex exec 0.164.0，ChatGPT 订阅 OAuth)中运行 gpt-6.1-terra(effort medium，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费) | **已验证** | Codex CLI 0.164.0 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -226,6 +227,9 @@ Highspeed 3/3(已验证)，Pro 2/3(部分验证)。Pro 的第 3 个 run 代码�
 **EXP-053 — pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完成验证（EN n=3）** (已验证)  
 两个条件均为 3/3，6 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 GLM-5.3 6.1–7.6 分钟、Prime 5.8–8.1 分钟，按公开单价折算每 run GLM-5.3 $0.41–0.50、Prime $0.92–1.95，与 OpenRouter 逐次调用计费记录一致。首个使用 PROMPT v2 的实验。 → [报告](experiments/053-pi-glm53/report.md)
 
+**EXP-054 — Codex × gpt-6.1-terra 完成验证（EN n=3）** (已验证)  
+3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 1 分 40 秒–2 分 10 秒，为本仓库最短区间；按公开 API 单价折算每 run 约 $0.09–0.12(订阅 OAuth，无实际计费)。与 gpt-6.1-sol(EXP-033)的差异混有 Codex 版本与 PROMPT v1→v2 的干扰。 → [报告](experiments/054-gpt61-terra-codex/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -242,11 +246,12 @@ Highspeed 3/3(已验证)，Pro 2/3(部分验证)。Pro 的第 3 个 run 代码�
 13. **第三种框架 pi 也在无转换层的情况下用 3 个开放权重系模型完成（EXP-029）。** 将 pi coding agent 直连各提供方的 OpenAI 兼容端点，kimi-k3·qwen3.8-max·deepseek-flash 各 EN 3/3，共 9/9 完成（响应 model 字段全部一致，框架故障排查 0 次）。8 个 run 在 iteration 1 完成；qwen-en-1 因评分端口被外部进程占用而记录为 iteration 5（其 iteration 1 代码复评也通过）。会话时长：flash 1.9–4.1 分钟（已反映 D-3 重跑），kimi 9.5–9.9 分钟，qwen 15.6–29.0 分钟。与同一模型此前的 Claude Code 直连 run（EXP-013·014·025）相比，框架与 API 格式（Anthropic 兼容 vs OpenAI 兼容）同时不同，因此不把差异归因于 pi。至此 Ralph 循环基准可在 Claude Code·Codex·pi 三种框架上按同一流程复现。
 14. **pi 在厂商的基准模型上也完成了任务（EXP-030）。** 用 pi 运行 Opus 5.5（Anthropic API 密钥直连）和 gpt-6-sol（ChatGPT OAuth），各 EN 3/3，6 个 run 全部在 iteration 1 完成。会话时长 Opus 5.5 为 3.1–4.9 分钟、gpt-6-sol 为 4.2–5.6 分钟，与原生代理基线（EXP-026 Claude Code 4.0–8.4 分钟，EXP-027 Codex 4.8–5.2 分钟）范围重叠；output 则 pi 一侧更低（Opus 5.5 16.6–19.8K 对 18.6–28.2K，gpt-6-sol 7.0–8.6K 对 10.4–11.0K）。代理与 API 路径（系统提示、工具、thinking 传递方式、缓存 TTL）同时不同，因此这些差异是整个组合的差异，不归因于 pi。
 15. **Sonnet 5.5 在原生框架中以迄今所有 Claude 条件中最短的路径完成（EXP-031）。** EN 3/3·KO 3/3，6 个 run 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 2.5–4.2 分钟、output 15.2–20.9K、API 调用 16–24 次，低于同一原生框架的 Opus 5.5（4.0–8.4 分钟·22–41 次）、Fable 5.1 和 Sonnet 5（11.2–16.8 分钟·82–140 次）的分布，且 6 个 run 均未使用 Read/Write/Edit，仅用 Bash 编写文件。与上一代 Sonnet 5 差距很大，但测量日期、Claude Code 版本和框架端口注入（自本实验起以 `PORT` 注入空闲端口）同时不同，因此不归因于模型本身。
-16. **pi × Sonnet 5.5 创下本仓库最短的完成会话（EXP-032）。** 通过 pi 运行 Sonnet 5.5（Anthropic API 密钥直连），EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟（最短 1 分 49 秒）、output 10.9–14.7K，比同日原生 Claude Code × Sonnet 5.5（EN 2.9–4.2 分钟·15.2–20.0K）更短更少。pi 0.87.1 内置列表中没有该模型，因此以复制内置 Sonnet 5 定义的自定义条目调用；代理、thinking 传递方式和缓存 TTL 也同时不同，因此不将差异归因于 pi 本身。
+16. **pi × Sonnet 5.5 创下本仓库最短的完成会话（EXP-032）。**（最短记录已由 EXP-054 刷新 — 见第 21 条） 通过 pi 运行 Sonnet 5.5（Anthropic API 密钥直连），EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `claude-sonnet-5-5`）。会话 1.8–3.2 分钟（最短 1 分 49 秒）、output 10.9–14.7K，比同日原生 Claude Code × Sonnet 5.5（EN 2.9–4.2 分钟·15.2–20.0K）更短更少。pi 0.87.1 内置列表中没有该模型，因此以复制内置 Sonnet 5 定义的自定义条目调用；代理、thinking 传递方式和缓存 TTL 也同时不同，因此不将差异归因于 pi 本身。
 17. **Gemini（gemini-3.8-flash）也在 Antigravity CLI 和 pi 两个框架中完成，但会话比其他 Flash 级模型更长（EXP-035·036）。** 使用 Gemini API 密钥，Antigravity CLI（agy 1.3.1，effort high）和 pi（thinking high）各 EN 3/3，共 6/6 完成。agy 的 run 1·2 在 iteration 1 完成；run 3 因代理自行运行的框架评分器终止了 agy 进程，在 iteration 2 完成。会话 agy 15.5–22.4 分钟、pi 13.1–15.6 分钟，每个 run 的模型响应为 100–192 次，远多于 pi × deepseek-flash（EXP-029，25–40 次·1.9–4.1 分钟）。两项实验暴露了一个结构问题：run 目录位于框架目录内，代理可以访问评分器和之前 run 的记录（EXP-029 的 3 个会话中也有发现），后续需要将两者分离。
 18. **Haiku 5.5 在原生框架中完成，按公开单价折算的成本是 Claude 系列条件中最低的（EXP-037）。** EN 3/3 完成（run 2、3 在 iteration 1；run 1 的 iteration 1 搭建脚手架后未声明完成即结束，于 iteration 2 完成）。复验各 2 次一致，响应 model 字段全部为 `claude-haiku-5-5`。会话 5.1–7.9 分钟、output 49.0–57.6K、API 调用 38–59 次，比 Sonnet 5.5（EXP-031）更长更多，但单价为 Sonnet 5.5 的 1/20，每 run 折算 $0.06–0.16（中位数 $0.09）。该值包含提示超过 100K 请求的 5 倍单价。由于 shell 中导出了 API 密钥，本实验使用 API 密钥而非订阅运行（D-1），因此实际产生了费用，缓存为 5 分钟 TTL，与使用订阅运行的其他原生条件认证方式不同。因未隔离，run 1 调用了暴露的 context7 MCP。存在日期与 CLI 版本混杂，不据此确定优劣。
 19. **pi × Haiku 5.5 也 3/3、全部在 iteration 1 完成（EXP-038）。** 与同日的 Claude Code × Haiku 5.5（EXP-037）相比，output（50.0–55.4K）和 API 调用（38–46 次）处于相近范围，会话 5.4–5.9 分钟，波动小。起始提示约 3K，小于 Claude Code（约 32K），因此超过 100K 的请求只有 3 次，每 run 折算 $0.05–0.09。run 1 中代理运行 `pgrep -fl` 输出了同一台机器上其他进程的命令行，其中的密钥留在了会话记录中（D-1，存档已脱敏）。仅移除环境变量并不能阻止代理读取其他进程的信息。
 20. **能装进一台 DGX Spark 的开放权重模型首次出现了未完成和提供方计量缺陷（EXP-042、043、044）。** pi × Bedrock gpt-oss-120b 在 20 分钟上限下为 0/3（EXP-043）。它反复在前台运行开发服务器导致停滞，并提交无法启动的代码，超出上限再运行约 120 分钟也未通过。Claude Code 直连 DashScope 的三款 Qwen（EXP-042）在 flash 2/2、q27 1/1、coder 1/2 完成后中止。DashScope 的 Anthropic 兼容端点在 usage 中漏报 tool_result token，导致自动压缩从未触发；输入上限最小的 qwen3-coder-next 反复出现 400 错误，两个 run 折算成本下限约 $89。使用同一端点的早期实验（EXP-013、016、017）的 token 数据需要复查。EXP-044（pi × Qwen 三款）在第一个 run 中止。从这一批起每 run 上限由 4 小时改为 20 分钟，因此完成率不与早期实验直接比较。之后，pi × qwen3.8-27b（EXP-045，30 分钟上限）3/3 在 iteration 1 完成（会话 8.8–12.1 分钟，按公开单价折算每 run 约 $0.22–0.24）。比同一 27b 在 Claude Code 直连下（EXP-042：25.3 分钟、$1.29）更短更便宜，但 harness、API 格式和时间同时不同，且 n 较小。
+21. **Codex × gpt-6.1-terra 的完成会话比 pi × Sonnet 5.5 的最短记录更短（EXP-054）。** 通过 Codex CLI 0.164.0（ChatGPT 订阅 OAuth，effort medium，PROMPT v2）运行 gpt-6.1-terra，EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `gpt-6.1-terra`）。会话 1 分 40 秒–2 分 10 秒、output 6.3–7.2K，短于第 16 条的 EXP-032（最短 1 分 49 秒），按公开 API 单价折算每 run $0.09–0.12（订阅，无实际计费）。它明显短于同一 Codex 测试框架下的 gpt-6.1-sol（EXP-033，6–10 分钟），但 Codex 版本（0.160.0→0.164.0）、客户端模型元数据（fallback→注册值）与 PROMPT（v1→v2）同时变化，因此不把差异归因于模型本身。与测试框架和模型都不同的 EXP-032 的先后也只是 n=3 的观测值，不解读为排名。
 
 ## 实验生命周期
 

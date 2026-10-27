@@ -1,0 +1,214 @@
+{
+ "exp": "EXP-054",
+ "date": "2026-10-27",
+ "report": "experiments/054-gpt61-terra-codex/report.md",
+ "client": "Codex CLI 0.164.0",
+ "runs": {
+  "terra61-en-1": {
+   "iter": 1,
+   "commits": 1
+  },
+  "terra61-en-2": {
+   "iter": 1,
+   "commits": 1
+  },
+  "terra61-en-3": {
+   "iter": 1,
+   "commits": 2
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "Codex CLI 0.164.0 (`codex exec`, iteration마다 새 세션)"
+   ],
+   [
+    "연결",
+    "ChatGPT 플랜 OAuth, 청구 없음"
+   ],
+   [
+    "모델 ID",
+    "gpt-6.1-terra"
+   ],
+   [
+    "추론",
+    "effort medium"
+   ],
+   [
+    "격리",
+    "전용 CODEX_HOME, 빈 config.toml, AGENTS.md·스킬·MCP·플러그인 훅 비노출"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 20분, 무개입"
+   ],
+   [
+    "프롬프트",
+    "정본 EN v2, n=3, 순차 실행"
+   ],
+   [
+    "포트",
+    "하네스가 run별 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "Codex CLI 0.164.0 (`codex exec`, new session per iteration)"
+   ],
+   [
+    "Connection",
+    "ChatGPT plan OAuth, nothing billed"
+   ],
+   [
+    "Model ID",
+    "gpt-6.1-terra"
+   ],
+   [
+    "Reasoning",
+    "effort medium"
+   ],
+   [
+    "Isolation",
+    "dedicated CODEX_HOME, empty config.toml, no AGENTS.md, skills, MCP or plugin hooks"
+   ],
+   [
+    "Cap",
+    "30 iterations · 20 min per run, no human intervention"
+   ],
+   [
+    "Prompt",
+    "canonical EN v2, n=3, sequential"
+   ],
+   [
+    "Port",
+    "harness injects a free port per run as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "Codex CLI 0.164.0（`codex exec`、iterationごとに新セッション）"
+   ],
+   [
+    "接続",
+    "ChatGPTプランOAuth、課金なし"
+   ],
+   [
+    "モデルID",
+    "gpt-6.1-terra"
+   ],
+   [
+    "推論",
+    "effort medium"
+   ],
+   [
+    "分離",
+    "専用CODEX_HOME、空のconfig.toml、AGENTS.md・スキル・MCP・プラグインフック非公開"
+   ],
+   [
+    "上限",
+    "30 iteration · run当たり20分、介入なし"
+   ],
+   [
+    "プロンプト",
+    "正本EN v2、n=3、逐次実行"
+   ],
+   [
+    "ポート",
+    "ハーネスがrunごとに空きポートをPORTで注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "Codex CLI 0.164.0（`codex exec`，每个 iteration 新会话）"
+   ],
+   [
+    "连接",
+    "ChatGPT 套餐 OAuth，无计费"
+   ],
+   [
+    "模型 ID",
+    "gpt-6.1-terra"
+   ],
+   [
+    "推理",
+    "effort medium"
+   ],
+   [
+    "隔离",
+    "专用 CODEX_HOME，空 config.toml，不暴露 AGENTS.md、技能、MCP 和插件钩子"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 20 分钟，无人干预"
+   ],
+   [
+    "提示",
+    "标准 EN v2，n=3，顺序执行"
+   ],
+   [
+    "端口",
+    "框架为每个 run 以 PORT 注入空闲端口"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "게이트 반려·재실행·보류 없음.",
+   "Codex 0.164.0의 로컬 모델 캐시에 gpt-6.1-terra가 등록되어 있어 클라이언트는 fallback이 아니라 등록 메타데이터(컨텍스트 창 500,000)로 동작했다. EXP-033(sol, 0.160.0)은 fallback이었다.",
+   "VS Code가 3000·3001을 점유했으나 하네스가 빈 포트를 PORT로 주입했고 3 run 모두 첫 채점에서 13/13이어서 거짓 음성은 없었다.",
+   "gpt-6.1-sol(EXP-033)과는 날짜·Codex CLI 버전·모델 메타데이터·PROMPT 버전(v1에서 v2)이 함께 달라 시간 차이를 모델 차이로 단정하지 않는다.",
+   "공개 API 단가는 하위 에이전트가 요약 도구로 읽은 값이며 원문 대조는 하지 않았다."
+  ],
+  "en": [
+   "No gate rejections, reruns or holds.",
+   "Codex 0.164.0 had a local entry for gpt-6.1-terra, so the client ran on registered metadata (context window 500,000), not fallback. EXP-033 (sol, 0.160.0) ran on fallback.",
+   "VS Code held ports 3000 and 3001, but the harness injected a free port as PORT and all 3 runs scored 13/13 on the first grading, so no false negatives occurred.",
+   "Compared with gpt-6.1-sol (EXP-033), date, Codex CLI version, model metadata and PROMPT version (v1 to v2) all differ, so the time difference is not attributed to the model.",
+   "The public API price was read by a sub-agent through a summarizing tool and was not checked against the original page."
+  ],
+  "ja": [
+   "ゲート却下・再実行・保留なし。",
+   "Codex 0.164.0のローカルモデルキャッシュにgpt-6.1-terraが登録されており、クライアントはfallbackではなく登録メタデータ（コンテキストウィンドウ500,000）で動作した。EXP-033（sol、0.160.0）はfallbackだった。",
+   "VS Codeが3000・3001を占有していたが、ハーネスが空きポートをPORTで注入し、3 runとも最初の採点で13/13だったため偽陰性は発生しなかった。",
+   "gpt-6.1-sol（EXP-033）とは日付・Codex CLIバージョン・モデルメタデータ・PROMPTバージョン（v1からv2）が同時に異なるため、時間差をモデル差とは断定しない。",
+   "公開API単価はサブエージェントが要約ツールで読んだ値で、原文との照合はしていない。"
+  ],
+  "zh": [
+   "无门控驳回、重跑或保留。",
+   "Codex 0.164.0 本地模型缓存中已登记 gpt-6.1-terra，客户端按登记元数据（上下文窗口 500,000）运行，而非 fallback。EXP-033（sol，0.160.0）为 fallback。",
+   "VS Code 占用了 3000 和 3001，但框架以 PORT 注入空闲端口，3 个 run 首次评分均为 13/13，没有出现假阴性。",
+   "与 gpt-6.1-sol（EXP-033）相比，日期、Codex CLI 版本、模型元数据和 PROMPT 版本（v1 到 v2）同时不同，因此不将耗时差异归因于模型。",
+   "公开 API 单价由子代理通过摘要工具读取，未与原文核对。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "3 run 모두 iteration 1에서 합격했고 커밋은 각 1·1·2개였다.",
+   "세션 1분 40초–2분 10초, output 6.3–7.2K, 캐시 히트 91–94%, 요청별 최대 프롬프트 33.7–39.1K.",
+   "rollout 응답 모델 필드 21건이 전부 gpt-6.1-terra였다.",
+   "3 run 모두 첫 iteration에서 합격해 루프의 복구 기여는 관측되지 않았다."
+  ],
+  "en": [
+   "All 3 runs passed at iteration 1 with 1, 1 and 2 commits.",
+   "Sessions 1 min 40 s to 2 min 10 s, output 6.3–7.2K, cache hit 91–94%, max per-request prompt 33.7–39.1K.",
+   "The rollout model field was gpt-6.1-terra on all 21 records.",
+   "All 3 runs passed at the first iteration, so no recovery contribution from the loop was observed."
+  ],
+  "ja": [
+   "3 runすべてiteration 1で合格し、コミットは1・1・2。",
+   "セッション1分40秒–2分10秒、output 6.3–7.2K、キャッシュヒット91–94%、リクエスト別最大プロンプト33.7–39.1K。",
+   "rollout応答modelフィールド21件すべてがgpt-6.1-terraだった。",
+   "3 runとも最初のiterationで合格したため、ループの復旧寄与は観測されなかった。"
+  ],
+  "zh": [
+   "3 个 run 均在 iteration 1 通过，提交数分别为 1、1、2。",
+   "会话 1 分 40 秒–2 分 10 秒，output 6.3–7.2K，缓存命中 91–94%，单次请求最大提示 33.7–39.1K。",
+   "rollout 响应 model 字段 21 条全部为 gpt-6.1-terra。",
+   "3 个 run 均在第一个 iteration 通过，未观察到循环的恢复贡献。"
+  ]
+ }
+}

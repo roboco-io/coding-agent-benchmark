@@ -1,0 +1,4 @@
+run,sessions,missing,input_tokens,cached_input_tokens,output_tokens,reasoning_output_tokens,total_tokens
+terra61-en-1,1,0,511360,481664,6349,214,517709
+terra61-en-2,1,0,751491,701696,7223,173,758714
+terra61-en-3,1,0,617783,562560,6771,223,624554

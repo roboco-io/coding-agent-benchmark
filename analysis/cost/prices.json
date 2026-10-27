@@ -265,5 +265,15 @@
     "src": "OpenRouter GET /api/v1/models/<id>/endpoints (z-ai/glm-5.3-prime, Alibaba 엔드포인트 — 유일 제공자)",
     "accessed": "2026-10-25",
     "caveat": "OpenRouter 경유, 제공자 Alibaba 고정. 캐시 쓰기 요금 0, 구간 단가 없음. OpenRouter generation 청구 기록 합과 일치(EXP-053)"
+  },
+  "gpt-6.1-terra": {
+    "input": 1.0,
+    "cache_read": 0.05,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 5.0,
+    "src": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+    "accessed": "2026-10-27",
+    "caveat": "Standard 272K 이하 단가. 272K 초과 요청은 입력 $2·캐시 $0.10·출력 $7.50(EXP-054 요청별 최대 프롬프트 39.1K로 미해당). ChatGPT 구독 OAuth 실행이라 실제 청구 없음"
   }
 }

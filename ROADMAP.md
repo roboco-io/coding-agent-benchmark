@@ -73,6 +73,7 @@
 - [x] EXP-051: pi × Kimi K3.1 Pro·Pro Highspeed (M-44, 조건별 EN n=3, 20분 상한) — 검증(두 조건 각 3/3 iter 1 완주, 세션 pro 7.3–10.2분·highspeed 3.7–5.2분, 환산 pro $0.45–0.60·highspeed $0.57–0.98), [보고서](experiments/051-pi-kimi-k31/report.md)
 - [x] EXP-052: Claude Code × Kimi K3.1 Pro·Pro Highspeed 직결 (M-45, 조건별 EN n=3, 20분 상한) — 부분 검증(highspeed 3/3, pro 2/3 — 포트 8000 가정 대기·완료 후 백그라운드 서버 잔존으로 정체 종료 3/6 run, 환산 pro $0.67–0.93·highspeed $1.00–1.40), [보고서](experiments/052-kimi-k31-direct/report.md)
 - [x] EXP-053: pi × GLM-5.3·GLM-5.3-Prime via OpenRouter (M-46, 조건별 EN n=3, 20분 상한, PROMPT v2 첫 적용) — 검증(두 조건 각 3/3 iter 1, 세션 glm-5.3 6.1–7.6분·prime 5.8–8.1분, 환산=청구 glm-5.3 $0.41–0.50·prime $0.92–1.95), [보고서](experiments/053-pi-glm53/report.md)
+- [x] EXP-054: Codex × gpt-6.1-terra (M-47, EN n=3, 20분 상한, PROMPT v2) — 검증(3/3 iter 1 완주, 세션 1분 40초–2분 10초, 환산 $0.09–0.12·구독 OAuth로 청구 없음), [보고서](experiments/054-gpt61-terra-codex/report.md)
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검
 - [ ] driver가 iteration마다 `bench.env`의 상한(`MAX_SEC`)을 다시 읽도록 개선 — 실행 중 상한 변경 적용 실패 사례(EXP-043 D-3)
 - [ ] DGX Spark 등급 후속: Qwen pi 재측정 중 flash·coder 남음(27b는 EXP-045 완료), Nemotron-3.5-Lightning(HF 크레딧 필요). 256GB·512GB 등급 중 GLM-5.3-Flash는 Z.ai API로 EXP-046 완료(로컬 실행은 미측정), MiniMax-M3는 키 확보 후 — [후보 조사](docs/2026-10-10-local-runnable-open-weight-models.md)

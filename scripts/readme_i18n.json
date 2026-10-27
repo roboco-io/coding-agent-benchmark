@@ -1004,6 +1004,26 @@
         "verdict": "已验证",
         "summary": "两个条件均为 3/3，6 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 GLM-5.3 6.1–7.6 分钟、Prime 5.8–8.1 分钟，按公开单价折算每 run GLM-5.3 $0.41–0.50、Prime $0.92–1.95，与 OpenRouter 逐次调用计费记录一致。首个使用 PROMPT v2 的实验。"
       }
+    },
+    "EXP-054": {
+      "en": {
+        "name": "Codex × gpt-6.1-terra completion check (EN n=3)",
+        "hypothesis": "Codex CLI (codex exec 0.164.0, ChatGPT subscription OAuth) running gpt-6.1-terra (effort medium, PROMPT v2) completes the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, unattended Ralph loop within 30 iterations and 20 min (EN n=3, completion only, billing excluded)",
+        "verdict": "Verified",
+        "summary": "3/3 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, no intervention or stalls. Sessions 1 min 40 s – 2 min 10 s, the shortest band in this repo; about $0.09–0.12 per run at public API prices (not billed — subscription OAuth). Differences from gpt-6.1-sol (EXP-033) are confounded by Codex version and PROMPT v1→v2."
+      },
+      "ja": {
+        "name": "Codex × gpt-6.1-terra 完走検証（EN n=3）",
+        "hypothesis": "Codex CLI(codex exec 0.164.0、ChatGPTサブスクリプションOAuth)でgpt-6.1-terra(effort medium、PROMPT v2)を動かせば、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (EN n=3、完走率判定・課金除外)",
+        "verdict": "検証",
+        "summary": "3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、介入・停滞なし。セッションは1分40秒–2分10秒でこのリポ最短帯、公開API単価換算でrunあたり約$0.09–0.12(サブスクリプションOAuthのため請求なし)。gpt-6.1-sol(EXP-033)との差はCodexバージョンとPROMPT v1→v2の交絡を含む。"
+      },
+      "zh-CN": {
+        "name": "Codex × gpt-6.1-terra 完成验证（EN n=3）",
+        "hypothesis": "在 Codex CLI(codex exec 0.164.0，ChatGPT 订阅 OAuth)中运行 gpt-6.1-terra(effort medium，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费)",
+        "verdict": "已验证",
+        "summary": "3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 1 分 40 秒–2 分 10 秒，为本仓库最短区间；按公开 API 单价折算每 run 约 $0.09–0.12(订阅 OAuth，无实际计费)。与 gpt-6.1-sol(EXP-033)的差异混有 Codex 版本与 PROMPT v1→v2 的干扰。"
+      }
     }
   }
 }

@@ -1,0 +1,17 @@
+{
+  "openai-codex/gpt-6.1-terra": {
+    "provider": "OpenAI via pi openai-codex provider (ChatGPT 구독 OAuth, 사용자 정의 models.json 항목)",
+    "context_window": 272000,
+    "max_output": 128000,
+    "context_source": "pi 사용자 정의 항목 contextWindow 272000(EXP-034 sol 항목과 동일, pi 내장 openai-codex/gpt-5.6-terra 272K와 같은 값). API 문서 https://developers.openai.com/api/docs/models/gpt-6.1-terra: 컨텍스트 1,050,000·출력 최대 128,000 (2026-10-27 확인)",
+    "billing": "subscription",
+    "pricing": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0,
+      "tiers": [],
+      "source": "ChatGPT 구독 OAuth 실행 — run별 실제 지출 없음. API 환산 단가(보고용, 하네스 상한 미적용): 입력 $1·캐시 $0.05·출력 $5, 272K 초과 요청 입력 $2·캐시 $0.10·출력 $7.50 (https://developers.openai.com/api/docs/models/gpt-6.1-terra, 2026-10-27)",
+      "checked_at": "2026-10-27"
+    }
+  }
+}

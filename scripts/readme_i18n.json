@@ -1024,6 +1024,66 @@
         "verdict": "已验证",
         "summary": "3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 1 分 40 秒–2 分 10 秒，为本仓库最短区间；按公开 API 单价折算每 run 约 $0.09–0.12(订阅 OAuth，无实际计费)。与 gpt-6.1-sol(EXP-033)的差异混有 Codex 版本与 PROMPT v1→v2 的干扰。"
       }
+    },
+    "EXP-055": {
+      "en": {
+        "name": "pi × gpt-6.1-terra completion check (EN n=3)",
+        "hypothesis": "pi coding agent (pi -p 0.87.1) running openai-codex/gpt-6.1-terra (ChatGPT subscription OAuth, thinking medium, custom model entry, PROMPT v2) completes the RealWorld backend (Hurl 13/13 · 154/154) in an isolated, unattended Ralph loop within 30 iterations and 20 min (EN n=3, completion only, billing excluded)",
+        "verdict": "Verified",
+        "summary": "3/3 completed, but at iterations 6, 5 and 7: each iteration the model implemented and committed one feature group, then ended its turn on its own (stopReason stop, no errors). Sessions 4 min 3 s – 4 min 44 s; about $0.11–0.15 per run at public API prices (not billed). The same model finished at iteration 1 in Codex (EXP-054), whose base instructions include an 'Autonomy and persistence' section that pi's default system prompt lacks."
+      },
+      "ja": {
+        "name": "pi × gpt-6.1-terra 完走検証（EN n=3）",
+        "hypothesis": "pi coding agent(pi -p 0.87.1)でopenai-codex/gpt-6.1-terra(ChatGPTサブスクリプションOAuth、thinking medium、ユーザー定義モデル項目、PROMPT v2)を動かせば、隔離・無介入のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を上限30イテレーション・20分以内に完走できる (EN n=3、完走率判定・課金除外)",
+        "verdict": "検証",
+        "summary": "3/3完走。ただし完走はイテレーション6・5・7。モデルは各イテレーションで機能群を1つ実装・コミットし、自らターンを終えた(stopReason stop、エラーなし)。セッション4分3秒–4分44秒、公開API単価換算でrunあたり約$0.11–0.15(請求なし)。同じモデルはCodex(EXP-054)ではイテレーション1で完走した。Codexの基本指示には「Autonomy and persistence」節があり、piの既定システムプロンプトにはない。"
+      },
+      "zh-CN": {
+        "name": "pi × gpt-6.1-terra 完成验证（EN n=3）",
+        "hypothesis": "用 pi coding agent(pi -p 0.87.1)运行 openai-codex/gpt-6.1-terra(ChatGPT 订阅 OAuth，thinking medium，自定义模型条目，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费)",
+        "verdict": "已验证",
+        "summary": "3/3 完成，但分别在第 6、5、7 次迭代完成：模型每次迭代只实现并提交一个功能组，然后自行结束回合(stopReason stop，无错误)。会话 4 分 3 秒–4 分 44 秒，按公开 API 单价折算每 run 约 $0.11–0.15(无实际计费)。同一模型在 Codex(EXP-054)中第 1 次迭代即完成；Codex 基础指令含“Autonomy and persistence”一节，pi 默认系统提示没有。"
+      }
+    },
+    "EXP-056": {
+      "en": {
+        "name": "pi × gpt-6.1-terra rerun with PROMPT v1 (halted)",
+        "hypothesis": "Reverting to PROMPT v1 (identical to EXP-032 and EXP-034) makes pi × gpt-6.1-terra finish at iteration 1, i.e. EXP-055's multiple iterations came from PROMPT v2",
+        "verdict": "On hold",
+        "summary": "Run 1 did not finish at iteration 1 (0/13 → 3 → 10 files over iterations 1–3), repeating EXP-055's one-feature-group-per-iteration pattern. Halted at the user's request; runs 2 and 3 were not executed. Observation points against the hypothesis (n=1)."
+      },
+      "ja": {
+        "name": "pi × gpt-6.1-terra PROMPT v1 再実験（中断）",
+        "hypothesis": "PROMPTをv1(EXP-032・034と同一)に戻せばpi × gpt-6.1-terraもイテレーション1で完走する。すなわちEXP-055の複数イテレーションはPROMPT v2の差による",
+        "verdict": "保留",
+        "summary": "run 1はイテレーション1で完走しなかった(イテレーション1–3で0/13→3→10ファイル)。EXP-055と同じく1イテレーションに機能群1つずつ進めた。ユーザーの指示で中断し、run 2・3は実行していない。観測は仮説に反する方向(n=1)。"
+      },
+      "zh-CN": {
+        "name": "pi × gpt-6.1-terra 使用 PROMPT v1 重做（已中止）",
+        "hypothesis": "将 PROMPT 恢复为 v1(与 EXP-032、034 相同)后，pi × gpt-6.1-terra 也会在第 1 次迭代完成，即 EXP-055 的多次迭代源于 PROMPT v2",
+        "verdict": "暂缓",
+        "summary": "run 1 未在第 1 次迭代完成(第 1–3 次迭代通过 0/13→3→10 个文件)，重复了 EXP-055 每次迭代一个功能组的模式。按用户指示中止，未执行 run 2、3。观测结果与假设方向相反(n=1)。"
+      }
+    },
+    "EXP-057": {
+      "en": {
+        "name": "pi × gpt-6.1-terra + persistence instruction (EN n=3, non-canonical)",
+        "hypothesis": "Appending a persistence instruction (the gist of Codex's 'Autonomy and persistence' section, 113 words) to pi's system prompt via --append-system-prompt makes pi × gpt-6.1-terra (EXP-055 conditions, PROMPT v2) finish at iteration 1",
+        "verdict": "Verified",
+        "summary": "3/3 finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154. Sessions 1 min 38 s – 1 min 47 s and about $0.05–0.07 per run at public API prices (not billed), versus 5–7 iterations and 4–5 min without the instruction (EXP-055, same day). Non-canonical stack because the agent saw an extra instruction; reported separately from canonical results."
+      },
+      "ja": {
+        "name": "pi × gpt-6.1-terra + 持続実行指示（EN n=3、非正本）",
+        "hypothesis": "--append-system-promptでpiのシステムプロンプトに持続実行指示(Codexの「Autonomy and persistence」節の要旨、113語)を追加すれば、pi × gpt-6.1-terra(EXP-055の条件、PROMPT v2)はイテレーション1で完走する",
+        "verdict": "検証",
+        "summary": "3/3がイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154。セッション1分38秒–1分47秒、公開API単価換算でrunあたり約$0.05–0.07(請求なし)。指示なし(EXP-055、同日)は5–7イテレーション・4–5分だった。エージェントに追加指示を見せたため非正本スタックとして正本結果と分けて表記する。"
+      },
+      "zh-CN": {
+        "name": "pi × gpt-6.1-terra + 持续执行指令（EN n=3，非正本）",
+        "hypothesis": "通过 --append-system-prompt 在 pi 系统提示后追加持续执行指令(Codex“Autonomy and persistence”一节的要点，113 词)，pi × gpt-6.1-terra(EXP-055 条件，PROMPT v2)将在第 1 次迭代完成",
+        "verdict": "已验证",
+        "summary": "3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154。会话 1 分 38 秒–1 分 47 秒，按公开 API 单价折算每 run 约 $0.05–0.07(无实际计费)；同日无该指令(EXP-055)需 5–7 次迭代、4–5 分钟。因向代理展示了额外指令，属非正本组合，与正本结果分开标注。"
+      }
     }
   }
 }

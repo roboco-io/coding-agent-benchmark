@@ -60,6 +60,9 @@
 | EXP-052 | Claude Code 2.1.310 | `experiments/052-kimi-k31-direct/runs/phase0.md`, 세션 jsonl `version` 2.1.310 전수 |
 | EXP-053 | pi 0.87.1 | `experiments/053-pi-glm53/runs/phase0.md` |
 | EXP-054 | Codex CLI 0.164.0 | `experiments/054-gpt61-terra-codex/runs/phase0.md`, rollout `cli_version` 0.164.0 전수 |
+| EXP-055 | pi 0.87.1 | `experiments/055-pi-gpt61-terra/runs/phase0.md` |
+| EXP-056 | pi 0.87.1 | `experiments/056-pi-gpt61-terra-v1/runs/phase0.md` |
+| EXP-057 | pi 0.87.1 | `experiments/057-pi-gpt61-terra-persist/runs/phase0.md` |
 
 ## 읽는 법
 

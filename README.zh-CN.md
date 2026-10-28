@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-054（2026-10-27）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-057（2026-10-28）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -82,6 +82,9 @@
 | [EXP-052](experiments/052-kimi-k31-direct/report.md) Claude Code × Kimi K3.1 Pro・Pro Highspeed 直连完成验证（EN n=3） | M-45: 将 Claude Code 通过 Moonshot 的 Anthropic 兼容端点直连 kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed(thinking 默认值)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **部分验证** | Claude Code 2.1.310 |
 | [EXP-053](experiments/053-pi-glm53/report.md) pi × GLM-5.3・GLM-5.3-Prime（OpenRouter）完成验证（EN n=3） | M-46: 用 pi coding agent(pi -p 0.87.1)经 OpenRouter 运行 z-ai/glm-5.3(固定 Z.AI)与 z-ai/glm-5.3-prime(固定 Alibaba)(thinking high，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (每个条件 EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
 | [EXP-054](experiments/054-gpt61-terra-codex/report.md) Codex × gpt-6.1-terra 完成验证（EN n=3） | M-47: 在 Codex CLI(codex exec 0.164.0，ChatGPT 订阅 OAuth)中运行 gpt-6.1-terra(effort medium，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费) | **已验证** | Codex CLI 0.164.0 |
+| [EXP-055](experiments/055-pi-gpt61-terra/report.md) pi × gpt-6.1-terra 完成验证（EN n=3） | M-48: 用 pi coding agent(pi -p 0.87.1)运行 openai-codex/gpt-6.1-terra(ChatGPT 订阅 OAuth，thinking medium，自定义模型条目，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
+| [EXP-056](experiments/056-pi-gpt61-terra-v1/report.md) pi × gpt-6.1-terra 使用 PROMPT v1 重做（已中止） | M-49: 将 PROMPT 恢复为 v1(与 EXP-032、034 相同)后，pi × gpt-6.1-terra 也会在第 1 次迭代完成，即 EXP-055 的多次迭代源于 PROMPT v2 | **暂缓** | pi 0.87.1 |
+| [EXP-057](experiments/057-pi-gpt61-terra-persist/report.md) pi × gpt-6.1-terra + 持续执行指令（EN n=3，非正本） | M-50: 通过 --append-system-prompt 在 pi 系统提示后追加持续执行指令(Codex“Autonomy and persistence”一节的要点，113 词)，pi × gpt-6.1-terra(EXP-055 条件，PROMPT v2)将在第 1 次迭代完成 | **已验证** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -230,6 +233,15 @@ Highspeed 3/3(已验证)，Pro 2/3(部分验证)。Pro 的第 3 个 run 代码�
 **EXP-054 — Codex × gpt-6.1-terra 完成验证（EN n=3）** (已验证)  
 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，无人工干预或停滞。会话 1 分 40 秒–2 分 10 秒，为本仓库最短区间；按公开 API 单价折算每 run 约 $0.09–0.12(订阅 OAuth，无实际计费)。与 gpt-6.1-sol(EXP-033)的差异混有 Codex 版本与 PROMPT v1→v2 的干扰。 → [报告](experiments/054-gpt61-terra-codex/report.md)
 
+**EXP-055 — pi × gpt-6.1-terra 完成验证（EN n=3）** (已验证)  
+3/3 完成，但分别在第 6、5、7 次迭代完成：模型每次迭代只实现并提交一个功能组，然后自行结束回合(stopReason stop，无错误)。会话 4 分 3 秒–4 分 44 秒，按公开 API 单价折算每 run 约 $0.11–0.15(无实际计费)。同一模型在 Codex(EXP-054)中第 1 次迭代即完成；Codex 基础指令含“Autonomy and persistence”一节，pi 默认系统提示没有。 → [报告](experiments/055-pi-gpt61-terra/report.md)
+
+**EXP-056 — pi × gpt-6.1-terra 使用 PROMPT v1 重做（已中止）** (暂缓)  
+run 1 未在第 1 次迭代完成(第 1–3 次迭代通过 0/13→3→10 个文件)，重复了 EXP-055 每次迭代一个功能组的模式。按用户指示中止，未执行 run 2、3。观测结果与假设方向相反(n=1)。 → [报告](experiments/056-pi-gpt61-terra-v1/report.md)
+
+**EXP-057 — pi × gpt-6.1-terra + 持续执行指令（EN n=3，非正本）** (已验证)  
+3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154。会话 1 分 38 秒–1 分 47 秒，按公开 API 单价折算每 run 约 $0.05–0.07(无实际计费)；同日无该指令(EXP-055)需 5–7 次迭代、4–5 分钟。因向代理展示了额外指令，属非正本组合，与正本结果分开标注。 → [报告](experiments/057-pi-gpt61-terra-persist/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -252,6 +264,7 @@ Highspeed 3/3(已验证)，Pro 2/3(部分验证)。Pro 的第 3 个 run 代码�
 19. **pi × Haiku 5.5 也 3/3、全部在 iteration 1 完成（EXP-038）。** 与同日的 Claude Code × Haiku 5.5（EXP-037）相比，output（50.0–55.4K）和 API 调用（38–46 次）处于相近范围，会话 5.4–5.9 分钟，波动小。起始提示约 3K，小于 Claude Code（约 32K），因此超过 100K 的请求只有 3 次，每 run 折算 $0.05–0.09。run 1 中代理运行 `pgrep -fl` 输出了同一台机器上其他进程的命令行，其中的密钥留在了会话记录中（D-1，存档已脱敏）。仅移除环境变量并不能阻止代理读取其他进程的信息。
 20. **能装进一台 DGX Spark 的开放权重模型首次出现了未完成和提供方计量缺陷（EXP-042、043、044）。** pi × Bedrock gpt-oss-120b 在 20 分钟上限下为 0/3（EXP-043）。它反复在前台运行开发服务器导致停滞，并提交无法启动的代码，超出上限再运行约 120 分钟也未通过。Claude Code 直连 DashScope 的三款 Qwen（EXP-042）在 flash 2/2、q27 1/1、coder 1/2 完成后中止。DashScope 的 Anthropic 兼容端点在 usage 中漏报 tool_result token，导致自动压缩从未触发；输入上限最小的 qwen3-coder-next 反复出现 400 错误，两个 run 折算成本下限约 $89。使用同一端点的早期实验（EXP-013、016、017）的 token 数据需要复查。EXP-044（pi × Qwen 三款）在第一个 run 中止。从这一批起每 run 上限由 4 小时改为 20 分钟，因此完成率不与早期实验直接比较。之后，pi × qwen3.8-27b（EXP-045，30 分钟上限）3/3 在 iteration 1 完成（会话 8.8–12.1 分钟，按公开单价折算每 run 约 $0.22–0.24）。比同一 27b 在 Claude Code 直连下（EXP-042：25.3 分钟、$1.29）更短更便宜，但 harness、API 格式和时间同时不同，且 n 较小。
 21. **Codex × gpt-6.1-terra 的完成会话比 pi × Sonnet 5.5 的最短记录更短（EXP-054）。** 通过 Codex CLI 0.164.0（ChatGPT 订阅 OAuth，effort medium，PROMPT v2）运行 gpt-6.1-terra，EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `gpt-6.1-terra`）。会话 1 分 40 秒–2 分 10 秒、output 6.3–7.2K，短于第 16 条的 EXP-032（最短 1 分 49 秒），按公开 API 单价折算每 run $0.09–0.12（订阅，无实际计费）。它明显短于同一 Codex 测试框架下的 gpt-6.1-sol（EXP-033，6–10 分钟），但 Codex 版本（0.160.0→0.164.0）、客户端模型元数据（fallback→注册值）与 PROMPT（v1→v2）同时变化，因此不把差异归因于模型本身。与测试框架和模型都不同的 EXP-032 的先后也只是 n=3 的观测值，不解读为排名。
+22. **同一模型会因测试框架的系统指令不同，而“一次完成”或“分多次循环完成”（EXP-054–057）。** gpt-6.1-terra 在 Codex（EXP-054）中 3/3 于第 1 次迭代完成，但在 pi 正本条件（EXP-055）下每次迭代只实现并提交一个功能组便自行结束回合，分别在第 6、5、7 次迭代（4–5 分钟）完成。它似乎把正本 PROMPT 中的“pick the single most important remaining piece of work … and do it”理解为每次调用只做一件事；恢复为 PROMPT v1 也未改变（EXP-056，n=1，已中止）。Codex 基础指令有“Autonomy and persistence”一节，pi 默认系统提示没有。用 `--append-system-prompt` 追加概括该节的 113 词指令后（EXP-057），同日同条件下变为 3/3 第 1 次迭代完成、1 分 38 秒–1 分 47 秒。Sonnet 5.5 与 gpt-6.1-sol 在同一 pi 中无此指令也在第 1 次迭代完成，因此该行为来自模型与框架指令的组合。Ralph 循环仍能接续每次迭代的进展使该模型完成（观测到循环贡献）。EXP-057 向代理展示了额外指令，作为非正本组合单独标注。
 
 ## 实验生命周期
 

@@ -1,0 +1,6 @@
+=== RUN terra61-en-1 (pi openai-codex/gpt-6.1-terra, PROMPT-en.md, PORT=42178) start: 2026-10-28 08:45:28 ===
+=== RUN terra61-en-1 finished: 2026-10-28 08:49:59 | 6,2026-10-28 08:49:59,0,13,154,1,pass ===
+=== RUN terra61-en-2 (pi openai-codex/gpt-6.1-terra, PROMPT-en.md, PORT=49267) start: 2026-10-28 08:49:59 ===
+=== RUN terra61-en-2 finished: 2026-10-28 08:54:17 | 5,2026-10-28 08:54:17,0,13,154,1,pass ===
+=== RUN terra61-en-3 (pi openai-codex/gpt-6.1-terra, PROMPT-en.md, PORT=46583) start: 2026-10-28 08:54:18 ===
+=== RUN terra61-en-3 finished: 2026-10-28 08:59:12 | 7,2026-10-28 08:59:12,0,13,154,1,pass ===

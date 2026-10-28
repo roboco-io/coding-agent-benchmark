@@ -275,5 +275,15 @@
     "src": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
     "accessed": "2026-10-27",
     "caveat": "Standard 272K 이하 단가. 272K 초과 요청은 입력 $2·캐시 $0.10·출력 $7.50(EXP-054 요청별 최대 프롬프트 39.1K로 미해당). ChatGPT 구독 OAuth 실행이라 실제 청구 없음"
+  },
+  "gpt-6.1-terra + persistence": {
+    "input": 1.0,
+    "cache_read": 0.05,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 5.0,
+    "src": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+    "accessed": "2026-10-27",
+    "caveat": "EXP-055와 같은 gpt-6.1-terra 단가·가정. EXP-057은 비정본 스택(pi 시스템 프롬프트에 지속 실행 지침 추가) 구분을 위해 별도 항목으로 둔다. ChatGPT 구독 OAuth 실행이라 실제 청구 없음"
   }
 }

@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+terra61-en-1,6,57,0,0,0,73065,10960,276352,0,373,84025
+terra61-en-2,5,48,0,0,0,50581,9050,255488,0,345,59631
+terra61-en-3,7,63,0,0,0,77660,11427,311168,0,355,89087

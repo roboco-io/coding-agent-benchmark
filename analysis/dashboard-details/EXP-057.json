@@ -1,0 +1,222 @@
+{
+ "exp": "EXP-057",
+ "date": "2026-10-28",
+ "report": "experiments/057-pi-gpt61-terra-persist/report.md",
+ "client": "pi 0.87.1",
+ "runs": {
+  "terra61-en-1": {
+   "iter": 1,
+   "commits": 3
+  },
+  "terra61-en-2": {
+   "iter": 1,
+   "commits": 2
+  },
+  "terra61-en-3": {
+   "iter": 1,
+   "commits": 1
+  }
+ },
+ "conditions": {
+  "ko": [
+   [
+    "에이전트",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, iteration마다 새 프로세스)"
+   ],
+   [
+    "연결",
+    "ChatGPT 구독 OAuth(Codex 백엔드), 청구 없음"
+   ],
+   [
+    "모델 ID",
+    "openai-codex/gpt-6.1-terra — pi 내장 목록에 없어 EXP-034 sol 항목과 같은 형식의 사용자 정의 항목(contextWindow 272K)"
+   ],
+   [
+    "thinking",
+    "medium (EXP-054 Codex effort medium과 맞춤)"
+   ],
+   [
+    "격리",
+    "전용 PI_CODING_AGENT_DIR(auth.json·models.json만), 상위 지침·스킬·확장 비노출"
+   ],
+   [
+    "상한",
+    "30 iteration · run당 20분 · 정체 300초, 무개입"
+   ],
+   [
+    "변경(비정본)",
+    "`--append-system-prompt`로 지속 실행 지침 113단어(`persistence.md`)를 pi 시스템 프롬프트에 덧붙임. 과제 정보는 넣지 않음. 에이전트 노출 지침이 정본과 다르므로 비정본 스택"
+   ],
+   [
+    "프롬프트",
+    "정본 EN v2, n=3, 순차 실행"
+   ],
+   [
+    "포트",
+    "하네스가 run별 빈 포트를 PORT로 주입"
+   ]
+  ],
+  "en": [
+   [
+    "Agent",
+    "pi coding agent 0.87.1 (`pi -p -nc -ns -ne -np -na`, new process per iteration)"
+   ],
+   [
+    "Connection",
+    "ChatGPT subscription OAuth (Codex backend), nothing billed"
+   ],
+   [
+    "Model ID",
+    "openai-codex/gpt-6.1-terra — not in pi's built-in list, so a custom entry in the same format as the EXP-034 sol entry (contextWindow 272K)"
+   ],
+   [
+    "Thinking",
+    "medium (matched to EXP-054 Codex effort medium)"
+   ],
+   [
+    "Isolation",
+    "dedicated PI_CODING_AGENT_DIR (auth.json and models.json only), parent instructions, skills and extensions hidden"
+   ],
+   [
+    "Cap",
+    "30 iterations · 20 min per run · 300 s stall, no human intervention"
+   ],
+   [
+    "Change (non-canonical)",
+    "a 113-word persistence instruction (`persistence.md`) appended to pi's system prompt via `--append-system-prompt`; no task information included. The instructions exposed to the agent differ from the canonical ones, so this is a non-canonical stack"
+   ],
+   [
+    "Prompt",
+    "canonical EN v2, n=3, sequential"
+   ],
+   [
+    "Port",
+    "harness injects a free port per run as PORT"
+   ]
+  ],
+  "ja": [
+   [
+    "エージェント",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`、iterationごとに新プロセス）"
+   ],
+   [
+    "接続",
+    "ChatGPTサブスクリプションOAuth（Codexバックエンド）、課金なし"
+   ],
+   [
+    "モデルID",
+    "openai-codex/gpt-6.1-terra — pi内蔵リストにないためEXP-034のsol項目と同じ形式のユーザー定義項目（contextWindow 272K）"
+   ],
+   [
+    "thinking",
+    "medium（EXP-054のCodex effort mediumに合わせた）"
+   ],
+   [
+    "隔離",
+    "専用PI_CODING_AGENT_DIR（auth.jsonとmodels.jsonのみ）、上位の指示・スキル・拡張は非露出"
+   ],
+   [
+    "上限",
+    "30 iteration・runあたり20分・停滞300秒、無介入"
+   ],
+   [
+    "変更（非正本）",
+    "`--append-system-prompt`で持続実行の指示113語（`persistence.md`）をpiのシステムプロンプトに追加。課題情報は含めない。エージェントに露出する指示が正本と異なるため非正本スタック"
+   ],
+   [
+    "プロンプト",
+    "正本EN v2、n=3、順次実行"
+   ],
+   [
+    "ポート",
+    "ハーネスがrunごとに空きポートをPORTで注入"
+   ]
+  ],
+  "zh": [
+   [
+    "代理",
+    "pi coding agent 0.87.1（`pi -p -nc -ns -ne -np -na`，每个 iteration 新进程）"
+   ],
+   [
+    "连接",
+    "ChatGPT 订阅 OAuth（Codex 后端），无计费"
+   ],
+   [
+    "模型 ID",
+    "openai-codex/gpt-6.1-terra — pi 内置列表中没有，因此使用与 EXP-034 sol 条目相同格式的自定义条目（contextWindow 272K）"
+   ],
+   [
+    "thinking",
+    "medium（与 EXP-054 的 Codex effort medium 对齐）"
+   ],
+   [
+    "隔离",
+    "专用 PI_CODING_AGENT_DIR（仅 auth.json 和 models.json），不暴露上层指示、技能、扩展"
+   ],
+   [
+    "上限",
+    "30 iteration · 每 run 20 分钟 · 停滞 300 秒，无人干预"
+   ],
+   [
+    "变更（非标准）",
+    "通过 `--append-system-prompt` 将 113 词的持续执行指示（`persistence.md`）追加到 pi 的系统提示；不含任务信息。暴露给代理的指示与标准条件不同，因此是非标准栈"
+   ],
+   [
+    "提示",
+    "标准 EN v2，n=3，顺序执行"
+   ],
+   [
+    "端口",
+    "框架为每个 run 以 PORT 注入空闲端口"
+   ]
+  ]
+ },
+ "deviations": {
+  "ko": [
+   "**비정본 스택**: 에이전트 노출 지침이 EXP-055와 다르다. 기존 pi 결과(EXP-029–053, 055)와 같은 표에서 순위로 비교하지 않는다. 세션 1분 38초는 리포 최단이지만 정본 조건의 최단(EXP-054 Codex 1분 40초)과 별도로 표기한다.",
+   "게이트 반려·재실행·보류 없음. 지침 주입은 Phase 0에서 확인했다(지침에만 있는 문장의 완성 요청에 원문 그대로 답함). 모델의 자기보고 질문 답은 주입 확인 근거로 쓰지 않았다.",
+   "지침에 \"일부를 마치면 다음 부분을 계속하라\"는 문장이 있어 PROMPT의 \"작업 하나\" 지시를 사실상 덮어쓴다. Codex 기본 지침과 방향은 같지만 문구는 다르다.",
+   "과제 1개·n=3이며 이 지침이 다른 모델·과제에서 같은 효과를 내는지는 시험하지 않았다."
+  ],
+  "en": [
+   "**Non-canonical stack**: the instructions exposed to the agent differ from EXP-055. It is not ranked against existing pi results (EXP-029-053, 055) in the same table. The 1 min 38 s session is the shortest in this repo, but it is reported separately from the canonical record (EXP-054 Codex, 1 min 40 s).",
+   "No gate rejections, reruns or holds. Injection of the instruction was confirmed in Phase 0 (the model completed a sentence that exists only in the instruction, word for word). The model's self-report answer was not used as evidence of injection.",
+   "The instruction contains a sentence saying to continue with the next part after finishing one, which in effect overrides the PROMPT's \"one piece of work\" wording. It points the same way as Codex's default instructions but the wording differs.",
+   "One task, n=3; whether this instruction has the same effect on other models or tasks was not tested."
+  ],
+  "ja": [
+   "**非正本スタック**：エージェントに露出する指示がEXP-055と異なる。既存のpi結果（EXP-029–053、055）と同じ表で順位比較しない。セッション1分38秒はこのリポで最短だが、正本条件の最短（EXP-054 Codex 1分40秒）とは別に表記する。",
+   "ゲート却下・再実行・保留なし。指示の注入はPhase 0で確認した（指示にだけある文の補完要求に原文どおり答えた）。モデルの自己申告の答えは注入確認の根拠にしなかった。",
+   "指示には「一部を終えたら次の部分を続けよ」という文があり、PROMPTの「作業1つ」という指示を事実上上書きする。Codexの既定指示と方向は同じだが文言は異なる。",
+   "課題1つ・n=3で、この指示が他のモデル・課題で同じ効果を出すかは試していない。"
+  ],
+  "zh": [
+   "**非标准栈**：暴露给代理的指示与 EXP-055 不同。不与现有 pi 结果（EXP-029–053、055）在同一张表中比较排名。1 分 38 秒的会话是本仓库最短，但与标准条件的最短记录（EXP-054 Codex 1 分 40 秒）分开标注。",
+   "无门控驳回、重跑或保留。指示的注入在 Phase 0 中确认（模型对仅存在于指示中的句子补全请求原文作答）。模型自我报告的回答未作为注入证据。",
+   "指示中有“完成一部分后继续下一部分”的句子，实际上覆盖了 PROMPT 中的“一件工作”表述。方向与 Codex 默认指示相同，但措辞不同。",
+   "仅一个任务、n=3；未测试该指示在其他模型或任务上是否有同样效果。"
+  ]
+ },
+ "behavior": {
+  "ko": [
+   "**지침 하나로 iteration 1 완주로 바뀜**: 3 run 모두 iteration 1에 게이트 pass했다(커밋 3·2·1개). EXP-055(같은 날 같은 하네스·모델·PROMPT v2)의 iteration 5–7회가 1회가 됐다. 두 실험의 차이는 덧붙인 지침 하나이므로 이 차이는 지침의 효과로 볼 근거가 있다(n=3 대 n=3).",
+   "세션 1분 38초–1분 47초(EXP-055: 4분 3초–4분 44초), 응답 22–24회(48–63회), output 5.4–5.7K(9.1–11.4K), 환산 비용 $0.05–0.07($0.11–0.15). 세션 시간·토큰이 줄어든 이유는 iteration마다 저장소 상태를 다시 읽고 채점을 기다리는 비용이 사라졌기 때문으로 보인다.",
+   "응답 model 필드 68건이 전부 gpt-6.1-terra였고 thinking은 medium이었다."
+  ],
+  "en": [
+   "**One instruction changed it to iteration 1**: all 3 runs passed the gate at iteration 1 (3, 2 and 1 commits). EXP-055 (same day, same harness, model and PROMPT v2) had needed 5-7 iterations. The only difference between the two is the appended instruction, so there is a basis to read the gap as the instruction's effect (n=3 vs n=3).",
+   "Sessions 1 min 38 s to 1 min 47 s (EXP-055: 4 min 3 s to 4 min 44 s), 22-24 responses (48-63), output 5.4-5.7K (9.1-11.4K), est. cost $0.05-0.07 ($0.11-0.15). The drop in session time and tokens seems to come from no longer re-reading the repository state and waiting for grading at every iteration.",
+   "The model field was gpt-6.1-terra on all 68 responses and thinking was medium."
+  ],
+  "ja": [
+   "**指示1つでiteration 1完走に変わった**：3 runすべてiteration 1でゲートに合格（コミット3・2・1個）。EXP-055（同じ日、同じハーネス・モデル・PROMPT v2）のiteration 5–7回が1回になった。2つの実験の違いは追加した指示1つだけなので、この差は指示の効果とみる根拠がある（n=3対n=3）。",
+   "セッション1分38秒–1分47秒（EXP-055：4分3秒–4分44秒）、応答22–24回（48–63回）、output 5.4–5.7K（9.1–11.4K）、換算コスト$0.05–0.07（$0.11–0.15）。セッション時間とトークンが減ったのは、iterationごとにリポジトリの状態を読み直して採点を待つコストがなくなったためとみられる。",
+   "応答modelフィールド68件すべてがgpt-6.1-terraで、thinkingはmediumだった。"
+  ],
+  "zh": [
+   "**一条指示使其变为 iteration 1 完成**：3 个 run 均在 iteration 1 通过门控（提交 3、2、1 个）。EXP-055（同一天、同一框架、模型与 PROMPT v2）需要 5–7 个 iteration，现在变为 1 个。两个实验的差别仅是追加的一条指示，因此有依据将该差异视为指示的效果（n=3 对 n=3）。",
+   "会话 1 分 38 秒–1 分 47 秒（EXP-055：4 分 3 秒–4 分 44 秒），响应 22–24 次（48–63 次），output 5.4–5.7K（9.1–11.4K），折算成本 $0.05–0.07（$0.11–0.15）。会话时间和 token 减少，似乎是因为不再需要在每个 iteration 重新读取仓库状态并等待评分。",
+   "68 条响应的 model 字段全部为 gpt-6.1-terra，thinking 为 medium。"
+  ]
+ }
+}

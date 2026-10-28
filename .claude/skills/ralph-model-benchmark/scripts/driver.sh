@@ -75,7 +75,8 @@ invoke_agent() {
     pi)
       source "$BASE/pi_env.sh"
       "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/sessions-$RUN" \
-        --model "$MODEL" ${THINKING:+--thinking "$THINKING"} "$(cat "$REPO/PROMPT.md")" ;;
+        --model "$MODEL" ${THINKING:+--thinking "$THINKING"} \
+        ${PI_APPEND_SYSTEM_PROMPT:+--append-system-prompt "$PI_APPEND_SYSTEM_PROMPT"} "$(cat "$REPO/PROMPT.md")" ;;
     agy)
       source "$BASE/agy_env.sh"
       agy_run -p "$(cat "$REPO/PROMPT.md")" --model "$MODEL" ${EFFORT:+--effort "$EFFORT"} \

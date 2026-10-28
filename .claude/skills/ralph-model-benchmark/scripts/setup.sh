@@ -18,9 +18,9 @@ cp "$CFG" "$BASE/bench.env"
 cp "$MODEL_SPECS" "$BASE/model-specs.json"
 cp "$SKILL/assets/reference-profile.json" "$BASE/"
 rm -f "$BASE/preflight-approved"   # 설정을 다시 만들면 승인도 다시 받는다
-cp "$SKILL"/assets/PROMPT-en.md "$SKILL"/assets/PROMPT-ko.md "$BASE/"
+cp "$SKILL"/assets/PROMPT-en.md "$SKILL"/assets/PROMPT-ko.md "$SKILL"/assets/pi-persistence.md "$BASE/"
 rm -rf "$BASE/harness-hurl"; cp -r "$SKILL/assets/harness-hurl" "$BASE/"
-(cd "$SKILL/assets" && md5 -r PROMPT-en.md PROMPT-ko.md harness-hurl/*.hurl | diff - checksums.md5) \
+(cd "$SKILL/assets" && md5 -r PROMPT-en.md PROMPT-ko.md harness-hurl/*.hurl pi-persistence.md | diff - checksums.md5) \
   || { echo "정본 해시 불일치 — assets 변경 여부 확인" >&2; exit 1; }
 for f in driver.sh watchdog.sh measure.sh run-all.sh smoke.sh usage_codex.py usage_pi.py usage_agy.py cost_guard.py usage_probe.py preflight.py approve.sh gate.sh pi_env.sh agy_env.sh key_env.sh cleanup.sh; do cp "$SKILL/scripts/$f" "$BASE/"; done
 

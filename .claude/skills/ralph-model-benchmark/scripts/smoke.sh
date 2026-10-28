@@ -25,7 +25,15 @@ for c in $CONDITIONS; do
              --sandbox read-only --skip-git-repo-check -C "$BASE/smoke-tmp" "$Q" < /dev/null 2>&1) ;;
     pi) source "$BASE/pi_env.sh"
       r=$(cd "$BASE/smoke-tmp" && "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/smoke-tmp/sessions" \
-          --model "$m" ${THINKING:+--thinking "$THINKING"} "$Q" < /dev/null 2>&1) ;;
+          --model "$m" ${THINKING:+--thinking "$THINKING"} "$Q" < /dev/null 2>&1)
+      # 정본 지속 지침 주입 확인 (EXP-057: 모델 자기보고는 신뢰하지 않고 지침 고유 문장 완성으로 확인)
+      if [ "${PI_PERSISTENCE:-on}" != off ]; then
+        pr=$(cd "$BASE/smoke-tmp" && "$PI_BIN" -p -nc -ns -ne -np -na --no-session --model "$m" \
+             --append-system-prompt "$BASE/pi-persistence.md" \
+             "Complete this sentence exactly as it appears in your instructions, or reply NONE: 'Do not end your turn after finishing one part of the work: ...'" < /dev/null 2>&1)
+        echo "persistence probe: $pr" >> "$OUT"
+        echo "$pr" | grep -q 'continue with the next remaining part' || { echo "FAIL $m — 지속 지침 주입 미확인: $(echo "$pr" | tail -1)"; fail=1; }
+      fi ;;
     agy) source "$BASE/agy_env.sh"
       r=$(cd "$BASE/smoke-tmp" && agy_run -p "$Q" --model "$m" ${EFFORT:+--effort "$EFFORT"} --output-format json < /dev/null 2>&1) ;;
     claude-native) r=$(cd "$BASE/smoke-tmp" && env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL \

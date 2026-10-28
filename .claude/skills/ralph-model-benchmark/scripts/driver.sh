@@ -10,6 +10,9 @@ MODEL=""
 for c in $CONDITIONS; do [ "${c%%:*}" = "$COND" ] && MODEL="${c#*:}"; done
 [ -n "$MODEL" ] || { echo "unknown condition $COND ($RUN)" >> "$BASE/driver.log"; exit 1; }
 PROMPT="$BASE/PROMPT-$LANG_.md"
+# pi 정본 지속 실행 지침 (2026-10-28 사용자 지시, 근거 EXP-055–057). off는 그 이전 pi 조건 재현용
+PI_PERSIST_ARGS=()
+[ "${PI_PERSISTENCE:-on}" != off ] && PI_PERSIST_ARGS=(--append-system-prompt "$BASE/pi-persistence.md")
 [ -f "$PROMPT" ] || { echo "unknown lang $LANG_ ($RUN)" >> "$BASE/driver.log"; exit 1; }
 
 REPO="$BASE/app-$RUN"; MET="$BASE/metrics-$RUN.csv"; LOG="$BASE/ralph-run-$RUN.log"
@@ -76,6 +79,7 @@ invoke_agent() {
       source "$BASE/pi_env.sh"
       "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/sessions-$RUN" \
         --model "$MODEL" ${THINKING:+--thinking "$THINKING"} \
+        "${PI_PERSIST_ARGS[@]}" \
         ${PI_APPEND_SYSTEM_PROMPT:+--append-system-prompt "$PI_APPEND_SYSTEM_PROMPT"} "$(cat "$REPO/PROMPT.md")" ;;
     agy)
       source "$BASE/agy_env.sh"

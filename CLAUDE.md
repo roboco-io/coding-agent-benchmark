@@ -30,6 +30,7 @@
 4. 격리(`CLAUDE_CONFIG_DIR` 전용 + `hasCompletedOnboarding` 우회)·PROMPT 정본 byte-identical·세션 jsonl usage(message.id dedup) 계측은 기존 원칙(EXP-007/008) 그대로 유지한다.
 5. **새 모델·에이전트 벤치마크는 `ralph-model-benchmark` 스킬(`.claude/skills/ralph-model-benchmark/`)로 수행한다.** 정본 PROMPT(EN/KO)·Hurl 13파일·공통 driver/measure/usage 스크립트가 스킬에 들어 있어, `bench.env` 하나로 codex / claude-native / claude-direct / pi 하네스를 같은 절차로 재현한다 (EXP-027 첫 적용, pi는 EXP-029 추가).
 6. **정본 PROMPT는 2026-10-25부터 v2다.** v1에 `PORT` 안내 한 줄(서버와 로컬 확인 모두 하네스가 지정한 `$PORT` 사용)을 추가했다(근거: EXP-052 포트 8000 가정 정체). v1 원문은 스킬 `assets/PROMPT-*.v1.md`. EXP-001–052는 v1이므로, 그 결과와 v2 실험을 비교할 때는 PROMPT 차이를 교란 변수로 적는다.
+7. **pi 하네스 정본에는 2026-10-28부터 지속 실행 지침이 들어간다.** 스킬 `assets/pi-persistence.md`(113단어, Codex 기본 지침의 "Autonomy and persistence" 요지, 과제 정보 없음)를 `--append-system-prompt`로 덧붙인다(`bench.env`의 `PI_PERSISTENCE=on` 기본, smoke가 지침 고유 문장 완성으로 주입을 확인). 근거: pi 기본 시스템 프롬프트에는 지속 지침이 없어 gpt-6.1-terra가 iteration마다 기능 하나씩만 하고 턴을 끝냈다(EXP-055 iteration 5–7회), 지침 추가 시 3/3 iteration 1(EXP-057). EXP-029–056의 pi 결과는 지침 없는 조건이므로, 그 결과와 비교할 때 지침 유무를 교란 변수로 적는다. 과거 pi 조건 재현은 `PI_PERSISTENCE=off`. 다른 하네스(Claude Code·Codex·agy)에는 적용하지 않는다.
 
 ## 환경 주의
 

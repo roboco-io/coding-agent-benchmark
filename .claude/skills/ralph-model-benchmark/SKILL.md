@@ -11,6 +11,8 @@ description: Use when a new LLM model, model variant, or coding agent/harness is
 
 **PROMPT 정본 버전 (2026-10-25)**: 현재 `assets/PROMPT-{en,ko}.md`는 **v2**다. v1(EXP-001–052)에 작업 지침 한 줄 — 하네스가 `PORT`를 지정하며 서버와 모든 로컬 확인(curl, Hurl)이 그 포트를 써야 한다 — 을 추가했다(사용자 지시, 근거: EXP-052 포트 8000 가정 대기 루프로 정체 4회·미완주 1). v1 원문은 `assets/PROMPT-{en,ko}.v1.md`에 보존한다. v2 실험은 설계 문서·보고서에 PROMPT 버전을 적고, v1 실험과 비교할 때는 PROMPT 차이를 교란 변수로 명시한다. 과거 조건을 v1으로 재현할 때만 v1을 쓴다.
 
+**pi 정본 지속 실행 지침 (2026-10-28)**: `HARNESS=pi`는 `assets/pi-persistence.md`를 `--append-system-prompt`로 덧붙이는 것이 정본이다(`PI_PERSISTENCE=on` 기본, 해시는 `checksums.md5`로 검증). pi 기본 시스템 프롬프트에 지속 지침이 없어, 정본 PROMPT의 "pick the single most important remaining piece of work … and do it"을 한 번 실행에 작업 하나로 읽는 모델(gpt-6.1-terra)이 iteration마다 턴을 끝냈다(EXP-055, 사용자 지시로 정본화, 근거 EXP-057). smoke.sh가 지침 고유 문장 완성 탐침으로 주입을 확인한다(모델 자기보고는 신뢰하지 않음). `PI_PERSISTENCE=off`는 EXP-029–056 pi 조건 재현용이며, 그 결과와 비교할 때 지침 유무를 교란 변수로 적는다. 추가 지침이 필요하면 `PI_APPEND_SYSTEM_PROMPT`를 쓰되 비정본으로 사전 등록한다.
+
 ## 하네스 선택
 
 | 모델 제공 형태 | HARNESS | 근거 실험 |

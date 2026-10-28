@@ -738,7 +738,7 @@ en: {
   scX:"Median time to finish (min, log scale)",
   scY:"Est. cost per run (USD, log scale)",
   dbTitle:"Same model, different agent",
-  dbSub:"Models that ran under two agents. Each arrow goes from the original agent to pi; the figure on the right is pi's value divided by the original's. The two runs also differ in date and client version, so each change mixes the agent effect with those differences.",
+  dbSub:"Models that ran under two agents. Each arrow goes from the original agent to pi; the figure on the right is pi's value divided by the original's. The two runs also differ in date and client version, so each change mixes the agent effect with those differences. For gpt-6.1-terra the pi side is the pi canonical condition with the persistence instruction (EXP-057); for the other models the pi side ran without it.",
   dbTime:"Median time (min)",
   dbCost:"Est. cost per run (USD)",
   dbEmpty:"No model ran under two agents with the Korean prompt (the pi conditions ran English only).",
@@ -848,7 +848,7 @@ ko: {
   scX:"완주 시간 중앙값(분, 로그 스케일)",
   scY:"run당 환산 비용(USD, 로그 스케일)",
   dbTitle:"같은 모델, 다른 에이전트",
-  dbSub:"두 에이전트로 실행한 모델입니다. 화살표는 원래 에이전트에서 pi로 바꿨을 때의 변화이고, 오른쪽 숫자는 pi 값을 원래 값으로 나눈 배율입니다. 두 실행은 날짜와 클라이언트 버전도 달라서, 변화에는 에이전트 차이와 이 차이가 함께 섞여 있습니다.",
+  dbSub:"두 에이전트로 실행한 모델입니다. 화살표는 원래 에이전트에서 pi로 바꿨을 때의 변화이고, 오른쪽 숫자는 pi 값을 원래 값으로 나눈 배율입니다. 두 실행은 날짜와 클라이언트 버전도 달라서, 변화에는 에이전트 차이와 이 차이가 함께 섞여 있습니다. gpt-6.1-terra의 pi 쪽은 지속 실행 지침을 포함한 pi 정본 조건(EXP-057)이고, 다른 모델의 pi 쪽은 지침 없는 조건입니다.",
   dbTime:"소요 시간 중앙값(분)",
   dbCost:"run당 환산 비용(USD)",
   dbEmpty:"한국어 프롬프트로 같은 모델을 두 에이전트에서 실행한 쌍은 없습니다(pi 조건은 영어만 실행).",
@@ -958,7 +958,7 @@ ja: {
   scX:"完走時間の中央値（分、対数スケール）",
   scY:"runあたり換算コスト（USD、対数スケール）",
   dbTitle:"同じモデル、異なるエージェント",
-  dbSub:"2つのエージェントで実行したモデルです。矢印は元のエージェントからpiに変えたときの変化で、右の数字はpiの値を元の値で割った倍率です。2つの実行は日付とクライアントのバージョンも異なるため、変化にはエージェントの違いとこれらの違いが混ざっています。",
+  dbSub:"2つのエージェントで実行したモデルです。矢印は元のエージェントからpiに変えたときの変化で、右の数字はpiの値を元の値で割った倍率です。2つの実行は日付とクライアントのバージョンも異なるため、変化にはエージェントの違いとこれらの違いが混ざっています。gpt-6.1-terraのpi側は持続実行指示を含むpi正本条件（EXP-057）で、他のモデルのpi側は指示なしの条件です。",
   dbTime:"所要時間の中央値（分）",
   dbCost:"runあたり換算コスト（USD）",
   dbEmpty:"韓国語プロンプトで同じモデルを2つのエージェントで実行した組はありません（pi条件は英語のみ実行）。",
@@ -1068,7 +1068,7 @@ zh: {
   scX:"完成耗时中位数（分钟，对数刻度）",
   scY:"每 run 折算成本（USD，对数刻度）",
   dbTitle:"同一模型，不同代理",
-  dbSub:"用两个代理运行过的模型。箭头表示从原代理换成 pi 后的变化，右侧数字是 pi 的值除以原值的倍率。两次运行的日期和客户端版本也不同，因此变化中混有代理差异和这些差异。",
+  dbSub:"用两个代理运行过的模型。箭头表示从原代理换成 pi 后的变化，右侧数字是 pi 的值除以原值的倍率。两次运行的日期和客户端版本也不同，因此变化中混有代理差异和这些差异。gpt-6.1-terra 的 pi 一侧是包含持续执行指令的 pi 标准条件（EXP-057），其他模型的 pi 一侧未包含该指令。",
   dbTime:"耗时中位数（分钟）",
   dbCost:"每 run 折算成本（USD）",
   dbEmpty:"在韩文提示词条件下，没有同一模型用两个代理运行的组合（pi 条件只运行了英文）。",
@@ -1686,7 +1686,8 @@ function renderDumbbell() {
   const box = document.getElementById("dumbbell"), fig = document.getElementById("dbfig");
   const rows = chartRows(), groups = {};
   rows.forEach(r => { (groups[r.m.base || r.m.name] = groups[r.m.base || r.m.name] || []).push(r); });
-  const pairs = Object.entries(groups).map(([base, rs]) => ({ base, a: rs.find(r => r.m.stack !== "pi"), b: rs.find(r => r.m.stack === "pi") }))
+  /* pi side: prefer the row under the current pi canonical (persistence instruction) when one exists — EXP-057 over EXP-055 */
+  const pairs = Object.entries(groups).map(([base, rs]) => ({ base, a: rs.find(r => r.m.stack !== "pi"), b: rs.find(r => r.m.stack === "pi" && r.m.pers) || rs.find(r => r.m.stack === "pi") }))
     .filter(p => p.a && p.b).sort((p, q) => p.a.t - q.a.t);
   if (!pairs.length) { box.innerHTML = `<p class="empty">${t(ovEx.agent.size || ovEx.vendor.size ? "dbEmptyF" : "dbEmpty")}</p>`; return; }
   const W = Math.max(300, box.clientWidth), narrow = W < 620;

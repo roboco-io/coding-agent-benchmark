@@ -122,9 +122,9 @@ EXP-053,pi × glm-5.3-prime,glm53prime-en-3,488,371,117,90,25470,4.1,68.6,0.76,1
 EXP-054,gpt-6.1-terra,terra61-en-1,97,82,15,18,6349,4.6,77.2,0.846,1,0,1.67,codex
 EXP-054,gpt-6.1-terra,terra61-en-2,128,108,20,26,7223,4.2,66.7,0.843,1,0,2.17,codex
 EXP-054,gpt-6.1-terra,terra61-en-3,120,101,19,25,6771,4.0,67.1,0.839,1,0,2.03,codex
-EXP-055,pi × gpt-6.1-terra,terra61-en-1,187,150,37,57,10960,2.6,72.9,0.803,6,0,4.35,pi
-EXP-055,pi × gpt-6.1-terra,terra61-en-2,169,122,47,48,9050,2.5,74.1,0.724,5,0,4.05,pi
-EXP-055,pi × gpt-6.1-terra,terra61-en-3,196,160,37,63,11427,2.5,71.6,0.813,7,0,4.73,pi
-EXP-057,pi × gpt-6.1-terra + persistence,terra61-en-1,103,64,39,22,5611,2.9,87.7,0.624,1,0,1.78,pi
-EXP-057,pi × gpt-6.1-terra + persistence,terra61-en-2,95,63,32,22,5703,2.9,90.0,0.667,1,0,1.63,pi
-EXP-057,pi × gpt-6.1-terra + persistence,terra61-en-3,100,69,32,24,5382,2.9,78.2,0.684,1,0,1.73,pi
+EXP-055,pi × gpt-6.1-terra (no persistence),terra61-en-1,187,150,37,57,10960,2.6,72.9,0.803,6,0,4.35,pi
+EXP-055,pi × gpt-6.1-terra (no persistence),terra61-en-2,169,122,47,48,9050,2.5,74.1,0.724,5,0,4.05,pi
+EXP-055,pi × gpt-6.1-terra (no persistence),terra61-en-3,196,160,37,63,11427,2.5,71.6,0.813,7,0,4.73,pi
+EXP-057,pi × gpt-6.1-terra,terra61-en-1,103,64,39,22,5611,2.9,87.7,0.624,1,0,1.78,pi
+EXP-057,pi × gpt-6.1-terra,terra61-en-2,95,63,32,22,5703,2.9,90.0,0.667,1,0,1.63,pi
+EXP-057,pi × gpt-6.1-terra,terra61-en-3,100,69,32,24,5382,2.9,78.2,0.684,1,0,1.73,pi

@@ -4,7 +4,7 @@ import csv, json, os, re
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 lat = {}
 # 대시보드에서 제외한 행(2026-10-09: Solar 두 모델은 프리뷰 API 측정이라 비교 의미가 없어 목록에서 제거). runs.csv 원자료는 유지한다.
-EXCLUDE = {'Solar Open 2', 'Solar Pro 4'}
+EXCLUDE = {'Solar Open 2', 'Solar Pro 4', 'pi × gpt-6.1-terra (no persistence)'}  # EXP-055(지속 지침 없는 pi 조건): 2026-10-28 대시보드에서 제거, 원자료(CSV)는 유지
 for r in csv.DictReader(open(os.path.join(ROOT, 'analysis/latency/runs.csv'))):
     if r['row'] in EXCLUDE: continue
     lat.setdefault(r['row'], []).append([r['exp'], int(r['model_s']), int(r['tool_s']), int(r['model_calls']),

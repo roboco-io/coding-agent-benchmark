@@ -22,7 +22,7 @@ DETAIL_DIR = ROOT / "analysis/dashboard-details"
 
 
 # 대시보드에서 제외한 행(2026-10-09: Solar 두 모델은 프리뷰 API 측정이라 비교 의미가 없어 목록에서 제거). 원자료(JSON·CSV)는 유지한다.
-EXCLUDE = {"Solar Open 2", "Solar Pro 4"}
+EXCLUDE = {"Solar Open 2", "Solar Pro 4", "pi × gpt-6.1-terra (no persistence)"}  # EXP-055(지속 지침 없는 pi 조건): 2026-10-28 대시보드에서 제거, 원자료(CSV)는 유지
 
 
 def row_name(r: dict) -> str:

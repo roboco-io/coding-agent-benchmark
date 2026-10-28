@@ -1067,22 +1067,22 @@
     },
     "EXP-057": {
       "en": {
-        "name": "pi × gpt-6.1-terra + persistence instruction (EN n=3, non-canonical)",
+        "name": "pi × gpt-6.1-terra + persistence instruction (EN n=3, first pi canonical-with-persistence result)",
         "hypothesis": "Appending a persistence instruction (the gist of Codex's 'Autonomy and persistence' section, 113 words) to pi's system prompt via --append-system-prompt makes pi × gpt-6.1-terra (EXP-055 conditions, PROMPT v2) finish at iteration 1",
         "verdict": "Verified",
-        "summary": "3/3 finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154. Sessions 1 min 38 s – 1 min 47 s and about $0.05–0.07 per run at public API prices (not billed), versus 5–7 iterations and 4–5 min without the instruction (EXP-055, same day). Non-canonical stack because the agent saw an extra instruction; reported separately from canonical results."
+        "summary": "3/3 finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154. Sessions 1 min 38 s – 1 min 47 s and about $0.05–0.07 per run at public API prices (not billed), versus 5–7 iterations and 4–5 min without the instruction (EXP-055, same day). Run as a non-canonical stack; on 2026-10-28 the same instruction became part of the canonical pi harness, so this is the first result under the new pi canonical condition. Earlier pi results ran without it."
       },
       "ja": {
-        "name": "pi × gpt-6.1-terra + 持続実行指示（EN n=3、非正本）",
+        "name": "pi × gpt-6.1-terra + 持続実行指示（EN n=3、持続指示入りpi正本の最初の結果）",
         "hypothesis": "--append-system-promptでpiのシステムプロンプトに持続実行指示(Codexの「Autonomy and persistence」節の要旨、113語)を追加すれば、pi × gpt-6.1-terra(EXP-055の条件、PROMPT v2)はイテレーション1で完走する",
         "verdict": "検証",
-        "summary": "3/3がイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154。セッション1分38秒–1分47秒、公開API単価換算でrunあたり約$0.05–0.07(請求なし)。指示なし(EXP-055、同日)は5–7イテレーション・4–5分だった。エージェントに追加指示を見せたため非正本スタックとして正本結果と分けて表記する。"
+        "summary": "3/3がイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154。セッション1分38秒–1分47秒、公開API単価換算でrunあたり約$0.05–0.07(請求なし)。指示なし(EXP-055、同日)は5–7イテレーション・4–5分だった。実行時は非正本スタックだったが、2026-10-28に同じ指示がpiの正本に入り、新しいpi正本条件の最初の結果となった。それ以前のpi結果は指示なしで実行された。"
       },
       "zh-CN": {
-        "name": "pi × gpt-6.1-terra + 持续执行指令（EN n=3，非正本）",
+        "name": "pi × gpt-6.1-terra + 持续执行指令（EN n=3，含持续指令的 pi 正本首个结果）",
         "hypothesis": "通过 --append-system-prompt 在 pi 系统提示后追加持续执行指令(Codex“Autonomy and persistence”一节的要点，113 词)，pi × gpt-6.1-terra(EXP-055 条件，PROMPT v2)将在第 1 次迭代完成",
         "verdict": "已验证",
-        "summary": "3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154。会话 1 分 38 秒–1 分 47 秒，按公开 API 单价折算每 run 约 $0.05–0.07(无实际计费)；同日无该指令(EXP-055)需 5–7 次迭代、4–5 分钟。因向代理展示了额外指令，属非正本组合，与正本结果分开标注。"
+        "summary": "3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154。会话 1 分 38 秒–1 分 47 秒，按公开 API 单价折算每 run 约 $0.05–0.07(无实际计费)；同日无该指令(EXP-055)需 5–7 次迭代、4–5 分钟。运行时属非正本组合；2026-10-28 同一指令被纳入 pi 正本，因此这是新 pi 正本条件下的首个结果。此前的 pi 结果未包含该指令。"
       }
     }
   }

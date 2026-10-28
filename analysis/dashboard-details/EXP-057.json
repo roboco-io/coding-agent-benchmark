@@ -44,8 +44,8 @@
     "30 iteration · run당 20분 · 정체 300초, 무개입"
    ],
    [
-    "변경(비정본)",
-    "`--append-system-prompt`로 지속 실행 지침 113단어(`persistence.md`)를 pi 시스템 프롬프트에 덧붙임. 과제 정보는 넣지 않음. 에이전트 노출 지침이 정본과 다르므로 비정본 스택"
+    "변경(pi 정본 2026-10-28부터)",
+    "`--append-system-prompt`로 지속 실행 지침 113단어(스킬 자산 `pi-persistence.md`)를 pi 시스템 프롬프트에 덧붙임. 과제 정보는 넣지 않음. 이 지침은 2026-10-28부터 pi 정본 조건의 일부이며 EXP-057에서 처음 적용했다"
    ],
    [
     "프롬프트",
@@ -82,8 +82,8 @@
     "30 iterations · 20 min per run · 300 s stall, no human intervention"
    ],
    [
-    "Change (non-canonical)",
-    "a 113-word persistence instruction (`persistence.md`) appended to pi's system prompt via `--append-system-prompt`; no task information included. The instructions exposed to the agent differ from the canonical ones, so this is a non-canonical stack"
+    "Change (pi canonical from 2026-10-28)",
+    "a 113-word persistence instruction (skill asset `pi-persistence.md`) appended to pi's system prompt via `--append-system-prompt`; no task information included. From 2026-10-28 this instruction is part of the pi canonical condition, first applied in EXP-057"
    ],
    [
     "Prompt",
@@ -120,8 +120,8 @@
     "30 iteration・runあたり20分・停滞300秒、無介入"
    ],
    [
-    "変更（非正本）",
-    "`--append-system-prompt`で持続実行の指示113語（`persistence.md`）をpiのシステムプロンプトに追加。課題情報は含めない。エージェントに露出する指示が正本と異なるため非正本スタック"
+    "変更（pi正本、2026-10-28から）",
+    "`--append-system-prompt`で持続実行の指示113語（スキル資産`pi-persistence.md`）をpiのシステムプロンプトに追加。課題情報は含めない。この指示は2026-10-28からpi正本条件の一部で、EXP-057で初めて適用した"
    ],
    [
     "プロンプト",
@@ -158,8 +158,8 @@
     "30 iteration · 每 run 20 分钟 · 停滞 300 秒，无人干预"
    ],
    [
-    "变更（非标准）",
-    "通过 `--append-system-prompt` 将 113 词的持续执行指示（`persistence.md`）追加到 pi 的系统提示；不含任务信息。暴露给代理的指示与标准条件不同，因此是非标准栈"
+    "变更（pi 标准条件，自 2026-10-28 起）",
+    "通过 `--append-system-prompt` 将 113 词的持续执行指示（技能资产 `pi-persistence.md`）追加到 pi 的系统提示；不含任务信息。该指示自 2026-10-28 起属于 pi 标准条件，在 EXP-057 中首次应用"
    ],
    [
     "提示",
@@ -173,25 +173,25 @@
  },
  "deviations": {
   "ko": [
-   "**비정본 스택**: 에이전트 노출 지침이 EXP-055와 다르다. 기존 pi 결과(EXP-029–053, 055)와 같은 표에서 순위로 비교하지 않는다. 세션 1분 38초는 리포 최단이지만 정본 조건의 최단(EXP-054 Codex 1분 40초)과 별도로 표기한다.",
+   "**pi 정본(지속 지침 포함)의 첫 적용**: 2026-10-28부터 이 지침은 pi 정본 조건의 일부다. 이전 pi 결과(EXP-029–056)는 지침 없이 실행했으므로 같은 표에서 비교할 때 이 교란 변수를 적는다(PROMPT v1에서 v2로 바뀐 경우와 같은 취급). 세션 1분 38초는 리포 최단 완주 세션이며 종전은 EXP-054 Codex의 1분 40초다. 하네스·지침이 달라 모델 순위로 읽지 않는다.",
    "게이트 반려·재실행·보류 없음. 지침 주입은 Phase 0에서 확인했다(지침에만 있는 문장의 완성 요청에 원문 그대로 답함). 모델의 자기보고 질문 답은 주입 확인 근거로 쓰지 않았다.",
    "지침에 \"일부를 마치면 다음 부분을 계속하라\"는 문장이 있어 PROMPT의 \"작업 하나\" 지시를 사실상 덮어쓴다. Codex 기본 지침과 방향은 같지만 문구는 다르다.",
    "과제 1개·n=3이며 이 지침이 다른 모델·과제에서 같은 효과를 내는지는 시험하지 않았다."
   ],
   "en": [
-   "**Non-canonical stack**: the instructions exposed to the agent differ from EXP-055. It is not ranked against existing pi results (EXP-029-053, 055) in the same table. The 1 min 38 s session is the shortest in this repo, but it is reported separately from the canonical record (EXP-054 Codex, 1 min 40 s).",
+   "**First application of the pi canonical condition with the persistence instruction**: from 2026-10-28 this instruction is part of the pi canonical condition. Earlier pi results (EXP-029–056) ran without it, so this confounder is noted wherever they are compared (treated like the PROMPT v1 to v2 change). The 1 min 38 s session is the shortest completed session in this repo (previously EXP-054 Codex, 1 min 40 s). Harness and instructions differ, so it is not read as a ranking of models.",
    "No gate rejections, reruns or holds. Injection of the instruction was confirmed in Phase 0 (the model completed a sentence that exists only in the instruction, word for word). The model's self-report answer was not used as evidence of injection.",
    "The instruction contains a sentence saying to continue with the next part after finishing one, which in effect overrides the PROMPT's \"one piece of work\" wording. It points the same way as Codex's default instructions but the wording differs.",
    "One task, n=3; whether this instruction has the same effect on other models or tasks was not tested."
   ],
   "ja": [
-   "**非正本スタック**：エージェントに露出する指示がEXP-055と異なる。既存のpi結果（EXP-029–053、055）と同じ表で順位比較しない。セッション1分38秒はこのリポで最短だが、正本条件の最短（EXP-054 Codex 1分40秒）とは別に表記する。",
+   "**持続指示を含むpi正本の初適用**：2026-10-28からこの指示はpi正本条件の一部になった。以前のpi結果（EXP-029–056）は指示なしで実行したため、同じ表で比較するときはこの交絡を明記する（PROMPT v1からv2への変更と同じ扱い）。セッション1分38秒はリポ最短の完走セッションで、従来はEXP-054 Codexの1分40秒。ハーネスと指示が異なるため、モデルの順位とは見なさない。",
    "ゲート却下・再実行・保留なし。指示の注入はPhase 0で確認した（指示にだけある文の補完要求に原文どおり答えた）。モデルの自己申告の答えは注入確認の根拠にしなかった。",
    "指示には「一部を終えたら次の部分を続けよ」という文があり、PROMPTの「作業1つ」という指示を事実上上書きする。Codexの既定指示と方向は同じだが文言は異なる。",
    "課題1つ・n=3で、この指示が他のモデル・課題で同じ効果を出すかは試していない。"
   ],
   "zh": [
-   "**非标准栈**：暴露给代理的指示与 EXP-055 不同。不与现有 pi 结果（EXP-029–053、055）在同一张表中比较排名。1 分 38 秒的会话是本仓库最短，但与标准条件的最短记录（EXP-054 Codex 1 分 40 秒）分开标注。",
+   "**包含持续指示的 pi 标准条件的首次应用**：自 2026-10-28 起，该指示属于 pi 标准条件。此前的 pi 结果（EXP-029–056）未使用该指示，因此在同一张表中比较时注明这一混杂因素（与 PROMPT 从 v1 变为 v2 同样处理）。1 分 38 秒的会话是本仓库最短的完成会话（此前为 EXP-054 Codex 的 1 分 40 秒）。框架和指示不同，因此不视为模型排名。",
    "无门控驳回、重跑或保留。指示的注入在 Phase 0 中确认（模型对仅存在于指示中的句子补全请求原文作答）。模型自我报告的回答未作为注入证据。",
    "指示中有“完成一部分后继续下一部分”的句子，实际上覆盖了 PROMPT 中的“一件工作”表述。方向与 Codex 默认指示相同，但措辞不同。",
    "仅一个任务、n=3；未测试该指示在其他模型或任务上是否有同样效果。"

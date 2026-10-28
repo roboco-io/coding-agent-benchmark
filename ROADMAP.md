@@ -76,8 +76,9 @@
 - [x] EXP-054: Codex × gpt-6.1-terra (M-47, EN n=3, 20분 상한, PROMPT v2) — 검증(3/3 iter 1 완주, 세션 1분 40초–2분 10초, 환산 $0.09–0.12·구독 OAuth로 청구 없음), [보고서](experiments/054-gpt61-terra-codex/report.md)
 - [x] EXP-055: pi × gpt-6.1-terra (M-48, EN n=3, 20분 상한, PROMPT v2) — 검증(3/3 완주, iteration 6·5·7 — iteration마다 기능 묶음 하나, 세션 4분 3초–4분 44초, 환산 $0.11–0.15), [보고서](experiments/055-pi-gpt61-terra/report.md)
 - [x] EXP-056: pi × gpt-6.1-terra PROMPT v1 재실험 (M-49) — 보류(run 1 iteration 3까지 미완주 후 사용자 지시로 중단, 반증 방향 n=1), [보고서](experiments/056-pi-gpt61-terra-v1/report.md)
-- [x] EXP-057: pi × gpt-6.1-terra + 지속 실행 지침 (M-50, EN n=3, 비정본 스택) — 검증(3/3 iteration 1, 세션 1분 38초–1분 47초, 환산 $0.05–0.07), [보고서](experiments/057-pi-gpt61-terra-persist/report.md)
-- [ ] 지속 실행 지침(EXP-057 `persistence.md`)이 다른 pi 모델에서도 iteration 수를 줄이는지, 정본 조건에 넣을지 검토 (EXP-055–057)
+- [x] EXP-057: pi × gpt-6.1-terra + 지속 실행 지침 (M-50, EN n=3, 실행 시 비정본 → 같은 지침이 pi 정본이 되어 새 pi 정본 첫 결과) — 검증(3/3 iteration 1, 세션 1분 38초–1분 47초, 환산 $0.05–0.07), [보고서](experiments/057-pi-gpt61-terra-persist/report.md)
+- [x] 지속 실행 지침을 pi 정본에 포함 (2026-10-28 사용자 결정, 스킬 `assets/pi-persistence.md`·`PI_PERSISTENCE=on` 기본·smoke 주입 탐침)
+- [ ] 지침 추가 전 pi 결과(EXP-029–053)를 새 pi 정본으로 재측정할지 검토 — 지침 유무가 기존 pi 비교의 교란 변수
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검
 - [ ] driver가 iteration마다 `bench.env`의 상한(`MAX_SEC`)을 다시 읽도록 개선 — 실행 중 상한 변경 적용 실패 사례(EXP-043 D-3)
 - [ ] DGX Spark 등급 후속: Qwen pi 재측정 중 flash·coder 남음(27b는 EXP-045 완료), Nemotron-3.5-Lightning(HF 크레딧 필요). 256GB·512GB 등급 중 GLM-5.3-Flash는 Z.ai API로 EXP-046 완료(로컬 실행은 미측정), MiniMax-M3는 키 확보 후 — [후보 조사](docs/2026-10-10-local-runnable-open-weight-models.md)

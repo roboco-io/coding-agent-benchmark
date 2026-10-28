@@ -186,25 +186,25 @@
    "**iteration마다 기능 묶음 하나**: 세션 기록 18개 전부가 `stopReason: stop`으로 끝났다. 모델은 매 iteration에 기능 묶음 하나(인증, 프로필, 게시글·태그, 댓글, 즐겨찾기·피드, 전체 검증)를 구현하고 커밋한 뒤, 나머지가 미구현이므로 `.ralph-done`을 만들지 않았다고 보고하며 스스로 턴을 끝냈다.",
    "**루프를 통해서만 완주**: 완주 iteration은 6·5·7회, 커밋은 6·5·7개였다. 통과 파일 수는 iteration마다 2→4→7→10→13 안팎으로 늘었다. 정본 PROMPT의 \"가장 중요한 남은 작업 하나를 한다\" 문장을 한 번 실행에 작업 하나로 해석한 것으로 보이며, 랄프 루프가 진척을 이어 받아 20분 상한 안에 완주시켰다.",
    "세션 4분 3초–4분 44초, 응답 48–63회, output 9.1–11.4K. 응답 model 필드 168건이 전부 gpt-6.1-terra였고 thinking은 전 iteration medium이었다.",
-   "같은 모델이 Codex CLI(EXP-054)에서는 3/3 iteration 1 완주였다. Codex 기본 지침에는 지속 실행 절이 있고 pi 0.87.1 기본 시스템 프롬프트에는 없다. 지침 하나를 덧붙인 후속 EXP-057(비정본 스택)에서 iteration 1 완주로 바뀌었다."
+   "같은 모델이 Codex CLI(EXP-054)에서는 3/3 iteration 1 완주였다. Codex 기본 지침에는 지속 실행 절이 있고 pi 0.87.1 기본 시스템 프롬프트에는 없다. 지침 하나를 덧붙인 후속 EXP-057(지속 지침을 포함한 pi 정본 조건의 첫 결과)에서 iteration 1 완주로 바뀌었다."
   ],
   "en": [
    "**One feature group per iteration**: all 18 session logs ended with `stopReason: stop`. In each iteration the model implemented and committed one feature group (auth, profile, articles and tags, comments, favorites and feed, full verification), reported that the rest was unimplemented so it did not create `.ralph-done`, and ended its turn by itself.",
    "**Completed only through the loop**: it finished at iterations 6, 5 and 7 with 6, 5 and 7 commits. The number of passing files grew roughly 2→4→7→10→13 over the iterations. The model seems to have read the canonical PROMPT's \"pick the single most important remaining piece of work and do it\" as one task per execution; the Ralph loop carried the progress forward and finished within the 20-min cap.",
    "Sessions 4 min 3 s to 4 min 44 s, 48-63 responses, output 9.1-11.4K. The model field was gpt-6.1-terra on all 168 responses and thinking was medium in every iteration.",
-   "The same model finished 3/3 at iteration 1 on Codex CLI (EXP-054). Codex's default instructions contain a persistence section and pi 0.87.1's default system prompt does not. In the follow-up EXP-057 (non-canonical stack), appending one instruction changed this to iteration 1."
+   "The same model finished 3/3 at iteration 1 on Codex CLI (EXP-054). Codex's default instructions contain a persistence section and pi 0.87.1's default system prompt does not. In the follow-up EXP-057 (first result under the pi canonical condition with the persistence instruction), appending one instruction changed this to iteration 1."
   ],
   "ja": [
    "**iterationごとに機能のまとまりを1つ**：セッション記録18本すべてが`stopReason: stop`で終わった。モデルは毎iterationで機能のまとまり1つ（認証、プロフィール、記事・タグ、コメント、お気に入り・フィード、全体検証）を実装してコミットし、残りが未実装なので`.ralph-done`を作らなかったと報告して自分でターンを終えた。",
    "**ループを通してのみ完走**：完走iterationは6・5・7回、コミットは6・5・7個。合格ファイル数はiterationごとに2→4→7→10→13前後と増えた。正本PROMPTの「最も重要な残りの作業を1つ行う」という文を1回の実行で作業1つと解釈したとみられ、Ralphループが進捗を引き継いで20分の上限内に完走させた。",
    "セッション4分3秒–4分44秒、応答48–63回、output 9.1–11.4K。応答modelフィールド168件すべてがgpt-6.1-terraで、thinkingは全iterationでmediumだった。",
-   "同じモデルはCodex CLI（EXP-054）では3/3がiteration 1で完走した。Codexの既定指示には持続実行の節があり、pi 0.87.1の既定システムプロンプトにはない。指示を1つ追加した後続のEXP-057（非正本スタック）ではiteration 1完走に変わった。"
+   "同じモデルはCodex CLI（EXP-054）では3/3がiteration 1で完走した。Codexの既定指示には持続実行の節があり、pi 0.87.1の既定システムプロンプトにはない。指示を1つ追加した後続のEXP-057（持続指示を含むpi正本条件の最初の結果）ではiteration 1完走に変わった。"
   ],
   "zh": [
    "**每个 iteration 一个功能块**：18 份会话记录全部以 `stopReason: stop` 结束。模型每个 iteration 实现并提交一个功能块（认证、资料、文章与标签、评论、收藏与动态、整体验证），报告其余未实现因此没有创建 `.ralph-done`，然后自行结束回合。",
    "**仅通过循环完成**：完成的 iteration 为 6、5、7 次，提交为 6、5、7 个。通过的文件数随 iteration 大致按 2→4→7→10→13 增长。模型似乎把标准 PROMPT 中“选出最重要的剩余工作并完成”理解为一次执行只做一件事；Ralph 循环接续了进度，在 20 分钟上限内完成。",
    "会话 4 分 3 秒–4 分 44 秒，响应 48–63 次，output 9.1–11.4K。168 条响应的 model 字段全部为 gpt-6.1-terra，thinking 在所有 iteration 中均为 medium。",
-   "同一模型在 Codex CLI（EXP-054）中 3/3 在 iteration 1 完成。Codex 默认指示含有持续执行一节，而 pi 0.87.1 的默认系统提示没有。在追加一条指示的后续 EXP-057（非标准栈）中，变为 iteration 1 完成。"
+   "同一模型在 Codex CLI（EXP-054）中 3/3 在 iteration 1 完成。Codex 默认指示含有持续执行一节，而 pi 0.87.1 的默认系统提示没有。在追加一条指示的后续 EXP-057（包含持续指示的 pi 标准条件的首个结果）中，变为 iteration 1 完成。"
   ]
  }
 }

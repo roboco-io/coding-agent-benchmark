@@ -284,6 +284,6 @@
     "output": 5.0,
     "src": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
     "accessed": "2026-10-27",
-    "caveat": "EXP-055와 같은 gpt-6.1-terra 단가·가정. EXP-057은 비정본 스택(pi 시스템 프롬프트에 지속 실행 지침 추가) 구분을 위해 별도 항목으로 둔다. ChatGPT 구독 OAuth 실행이라 실제 청구 없음"
+    "caveat": "EXP-055와 같은 gpt-6.1-terra 단가·가정. EXP-057(pi 시스템 프롬프트에 지속 실행 지침 추가, 2026-10-28부터 pi 정본)을 행 이름으로 구분하기 위해 별도 항목으로 둔다. ChatGPT 구독 OAuth 실행이라 실제 청구 없음"
   }
 }

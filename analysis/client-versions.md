@@ -63,6 +63,7 @@
 | EXP-055 | pi 0.87.1 | `experiments/055-pi-gpt61-terra/runs/phase0.md` |
 | EXP-056 | pi 0.87.1 | `experiments/056-pi-gpt61-terra-v1/runs/phase0.md` |
 | EXP-057 | pi 0.87.1 | `experiments/057-pi-gpt61-terra-persist/runs/phase0.md` |
+| EXP-059 | Claude Code 2.1.321 | `experiments/059-fable52-ralph/runs/phase0.md`, 세션 jsonl `version` 2.1.321 전수 |
 
 ## 읽는 법
 

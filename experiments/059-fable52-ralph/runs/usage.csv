@@ -1,0 +1,4 @@
+run,part,sessions,messages,input_tokens,output_tokens,cache_creation_input_tokens,cache_read_input_tokens,models,tools,session_start_utc,session_end_utc,commits
+fable52-en-1,main,1,19,38,25673,75844,1129301,claude-fable-5-2=19,Bash=18,2026-11-10T01:06:34Z,2026-11-10T01:11:21Z,4
+fable52-en-2,main,1,19,38,23657,76178,1168593,claude-fable-5-2=19,Bash=18,2026-11-10T01:11:33Z,2026-11-10T01:16:11Z,5
+fable52-en-3,main,1,18,36,23300,75707,1126207,claude-fable-5-2=18,Bash=18,2026-11-10T01:16:24Z,2026-11-10T01:20:36Z,4

@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-057 (2026-10-28)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-059 (2026-11-10)
 
 **🔤 자매 리포 — 언어 비교**: [language-benchmark](https://github.com/roboco-io/language-benchmark) ([대시보드](https://roboco.io/language-benchmark/))는 모델·하네스를 고정하고 같은 RealWorld 백엔드를 구현 언어(TypeScript, Python, Go, Rust, C++)별로 비교한다.
 
@@ -85,6 +85,7 @@
 | [EXP-055](experiments/055-pi-gpt61-terra/report.md) pi × gpt-6.1-terra 랄프 루프 완주 검증 (EN n=3) | M-48: pi coding agent(`pi -p` 0.87.1)로 `openai-codex/gpt-6.1-terra`(ChatGPT 구독 OAuth, thinking medium, 사용자 정의 모델 항목, PROMPT v2)를 돌리면 격리·무개입 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration·20분 안에 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 | [EXP-056](experiments/056-pi-gpt61-terra-v1/report.md) pi × gpt-6.1-terra 재실험 — PROMPT v1 (중단) | M-49: PROMPT를 v1(EXP-032·034와 동일)로 되돌리면 pi × gpt-6.1-terra도 iteration 1에 완주한다 (EN n=3). | **보류** | pi 0.87.1 |
 | [EXP-057](experiments/057-pi-gpt61-terra-persist/report.md) pi × gpt-6.1-terra + 지속 실행 지침 (EN n=3) | M-50: pi × `openai-codex/gpt-6.1-terra`(EXP-055 조건, PROMPT v2)에 `--append-system-prompt`로 지속 실행 지침을 덧붙이면 iteration 1에 완주한다 (EN n=3). | **검증** | pi 0.87.1 |
+| [EXP-059](experiments/059-fable52-ralph/report.md) Claude Code × Fable 5.2 네이티브 랄프 루프 완주 검증 (EN n=3) | M-51: Claude Code 네이티브(`claude -p` 2.1.321)에서 Fable 5.2(`claude-fable-5-2`, thinking 기본값)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 20분·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **검증** | Claude Code 2.1.321 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -241,6 +242,9 @@ run 1이 iteration 1에 완주하지 못했고(0/13), iteration 2(3/13)·3(10/13
 
 **EXP-057 — pi × gpt-6.1-terra + 지속 실행 지침 (EN n=3)** (검증)  
 3/3 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 model 필드 68건 전부 `gpt-6.1-terra`, thinking `medium`). 세션 1분 38초–1분 47초. 지침 하나로 EXP-055의 iteration 5–7회가 1회로 바뀌었다. 실행 당시에는 비정본 스택이었으나, 2026-10-28 사용자 결정으로 이 지침이 pi 정본에 들어가, 새 pi 정본 조건의 첫 결과로 본다(아래 "정본 편입"). → [보고서](experiments/057-pi-gpt61-terra-persist/report.md)
+
+**EXP-059 — Claude Code × Fable 5.2 네이티브 랄프 루프 완주 검증 (EN n=3)** (검증)  
+3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 56건 전부 `claude-fable-5-2`). 세션 4분 12초–4분 47초, output 23.3–25.7K, API 단가 환산 run당 $2.37–2.47이다(구독 실행, 청구액 아님). → [보고서](experiments/059-fable52-ralph/report.md)
 
 <!-- RESULTS:END -->
 

@@ -1,0 +1,210 @@
+{
+  "exp": "EXP-059",
+  "date": "2026-11-10",
+  "report": "experiments/059-fable52-ralph/report.md",
+  "client": "Claude Code 2.1.321",
+  "runs": {
+    "fable52-en-1": {
+      "iter": 1,
+      "commits": 4
+    },
+    "fable52-en-2": {
+      "iter": 1,
+      "commits": 5
+    },
+    "fable52-en-3": {
+      "iter": 1,
+      "commits": 4
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "Claude Code 2.1.321 (`claude -p`, iteration마다 새 세션)"
+      ],
+      [
+        "연결",
+        "구독 OAuth(apiKeySource=none), 유료 추가 사용 비활성, 청구 없음"
+      ],
+      [
+        "모델 ID",
+        "claude-fable-5-2"
+      ],
+      [
+        "추론",
+        "thinking·effort 기본값"
+      ],
+      [
+        "격리",
+        "비격리 `~/.claude` (글로벌 CLAUDE.md·플러그인·MCP 노출)"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 20분, 무개입"
+      ],
+      [
+        "프롬프트",
+        "EN 정본 v2, n=3, 순차"
+      ],
+      [
+        "포트",
+        "하네스가 run마다 빈 포트를 PORT로 주입"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "Claude Code 2.1.321 (`claude -p`, new session per iteration)"
+      ],
+      [
+        "Connection",
+        "subscription OAuth (apiKeySource=none), paid overage disabled, nothing billed"
+      ],
+      [
+        "Model ID",
+        "claude-fable-5-2"
+      ],
+      [
+        "Reasoning",
+        "default thinking and effort"
+      ],
+      [
+        "Isolation",
+        "not isolated, `~/.claude` (global CLAUDE.md, plugins and MCP exposed)"
+      ],
+      [
+        "Cap",
+        "30 iterations · 20 min per run, no human intervention"
+      ],
+      [
+        "Prompt",
+        "canonical EN v2, n=3, sequential"
+      ],
+      [
+        "Port",
+        "harness injects a free port per run as PORT"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "Claude Code 2.1.321 (`claude -p`、イテレーションごとに新規セッション)"
+      ],
+      [
+        "接続",
+        "サブスクリプションOAuth(apiKeySource=none)、有料追加利用は無効、請求なし"
+      ],
+      [
+        "モデルID",
+        "claude-fable-5-2"
+      ],
+      [
+        "推論",
+        "thinking・effortは既定値"
+      ],
+      [
+        "隔離",
+        "非隔離 `~/.claude`(グローバルCLAUDE.md・プラグイン・MCPが露出)"
+      ],
+      [
+        "上限",
+        "30イテレーション・runあたり20分、無介入"
+      ],
+      [
+        "プロンプト",
+        "EN正本v2、n=3、順次"
+      ],
+      [
+        "ポート",
+        "ハーネスがrunごとに空きポートをPORTとして注入"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "Claude Code 2.1.321 (`claude -p`，每次迭代新会话)"
+      ],
+      [
+        "连接",
+        "订阅 OAuth(apiKeySource=none)，付费超额使用已禁用，无实际计费"
+      ],
+      [
+        "模型 ID",
+        "claude-fable-5-2"
+      ],
+      [
+        "推理",
+        "thinking 与 effort 为默认值"
+      ],
+      [
+        "隔离",
+        "未隔离 `~/.claude`(暴露全局 CLAUDE.md、插件与 MCP)"
+      ],
+      [
+        "上限",
+        "30 次迭代 · 每 run 20 分钟，无人干预"
+      ],
+      [
+        "提示词",
+        "EN 正本 v2，n=3，顺序执行"
+      ],
+      [
+        "端口",
+        "框架每个 run 注入空闲端口作为 PORT"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "게이트 반려·재실행·보류 없음.",
+      "외부 프로세스(DeepSRT)가 3003을 점유했으나 하네스가 빈 포트를 PORT로 주입했고 3 run 모두 첫 채점에서 13/13이어서 거짓 음성은 없었다.",
+      "Fable 5.1(EXP-023)과 비교할 때 날짜, Claude Code 버전, PROMPT 버전(v1→v2), 글로벌 설정 노출 내용이 모두 달라 시간·output 차이를 모델 차이로 단정하지 않는다.",
+      "공개 API 단가는 하위 에이전트가 pricing 페이지에서 읽은 값이다."
+    ],
+    "en": [
+      "No gate rejections, reruns or holds.",
+      "An external process (DeepSRT) held port 3003, but the harness injected a free port as PORT and all 3 runs scored 13/13 on the first grading, so no false negatives occurred.",
+      "Compared with Fable 5.1 (EXP-023), date, Claude Code version, PROMPT version (v1 to v2) and exposed global settings all differ, so time and output differences are not attributed to the model.",
+      "The public API price was read from the pricing page by a sub-agent."
+    ],
+    "ja": [
+      "ゲート差し戻し・再実行・保留なし。",
+      "外部プロセス(DeepSRT)が3003を占有していたが、ハーネスが空きポートをPORTとして注入し、3 runとも初回採点で13/13だったため偽陰性はなかった。",
+      "Fable 5.1(EXP-023)との比較では日付、Claude Codeバージョン、PROMPTバージョン(v1→v2)、露出したグローバル設定がすべて異なるため、時間・outputの差をモデル差と断定しない。",
+      "公開API単価はサブエージェントがpricingページから読んだ値である。"
+    ],
+    "zh": [
+      "无门控驳回、重跑或保留。",
+      "外部进程(DeepSRT)占用了 3003 端口，但框架注入空闲端口作为 PORT，3 个 run 首次评分均为 13/13，未出现假阴性。",
+      "与 Fable 5.1(EXP-023)相比，日期、Claude Code 版本、PROMPT 版本(v1→v2)与暴露的全局设置均不同，因此不把时间与 output 差异归因于模型。",
+      "公开 API 单价由子代理从 pricing 页面读取。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "3 run 모두 iteration 1에 합격, 커밋 4·5·4개.",
+      "세션 4.2–4.8분, API 호출 18–19회, output 23.3–25.7K, 요청별 최대 프롬프트 87.3–87.8K.",
+      "세 run 모두 Fastify + Prisma 스택을 골랐고 도구는 Bash만 18회 썼다. MCP·스킬·서브에이전트는 호출하지 않았다.",
+      "세 에이전트 모두 업스트림 Hurl 스위트가 현재 157 요청(PROMPT의 154와 다름)이라고 보고했다. 판정은 하네스 정본 154 요청으로만 했다."
+    ],
+    "en": [
+      "All 3 runs passed at iteration 1 with 4, 5 and 4 commits.",
+      "Sessions 4.2–4.8 min, 18–19 API calls, output 23.3–25.7K, max per-request prompt 87.3–87.8K.",
+      "All 3 runs chose a Fastify + Prisma stack and used only Bash (18 calls). No MCP, skill or sub-agent calls.",
+      "All 3 agents reported that the upstream Hurl suite now has 157 requests (not the 154 in the PROMPT). Grading used only the harness canonical 154 requests."
+    ],
+    "ja": [
+      "3 runすべてイテレーション1で合格、コミット4・5・4件。",
+      "セッション4.2–4.8分、API呼び出し18–19回、output 23.3–25.7K、リクエスト別最大プロンプト87.3–87.8K。",
+      "3 runともFastify + Prismaスタックを選び、ツールはBashのみ18回。MCP・スキル・サブエージェントは呼び出さなかった。",
+      "3エージェントとも上流Hurlスイートが現在157リクエスト(PROMPTの154と異なる)と報告した。判定はハーネス正本の154リクエストのみで行った。"
+    ],
+    "zh": [
+      "3 个 run 全部在第 1 次迭代通过，提交 4、5、4 次。",
+      "会话 4.2–4.8 分钟，API 调用 18–19 次，output 23.3–25.7K，单请求最大提示 87.3–87.8K。",
+      "3 个 run 都选择 Fastify + Prisma 栈，仅使用 Bash(18 次)。未调用 MCP、技能或子代理。",
+      "3 个代理都报告上游 Hurl 套件现为 157 个请求(与 PROMPT 的 154 不同)。判定仅使用框架正本的 154 个请求。"
+    ]
+  }
+}

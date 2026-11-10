@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-057（2026-10-28）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-059（2026-11-10）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -85,6 +85,7 @@
 | [EXP-055](experiments/055-pi-gpt61-terra/report.md) pi × gpt-6.1-terra 完成验证（EN n=3） | M-48: 用 pi coding agent(pi -p 0.87.1)运行 openai-codex/gpt-6.1-terra(ChatGPT 订阅 OAuth，thinking medium，自定义模型条目，PROMPT v2)，可在隔离、无人干预的 Ralph 循环中于 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，不含计费) | **已验证** | pi 0.87.1 |
 | [EXP-056](experiments/056-pi-gpt61-terra-v1/report.md) pi × gpt-6.1-terra 使用 PROMPT v1 重做（已中止） | M-49: 将 PROMPT 恢复为 v1(与 EXP-032、034 相同)后，pi × gpt-6.1-terra 也会在第 1 次迭代完成，即 EXP-055 的多次迭代源于 PROMPT v2 | **暂缓** | pi 0.87.1 |
 | [EXP-057](experiments/057-pi-gpt61-terra-persist/report.md) pi × gpt-6.1-terra + 持续执行指令（EN n=3，含持续指令的 pi 正本首个结果） | M-50: 通过 --append-system-prompt 在 pi 系统提示后追加持续执行指令(Codex“Autonomy and persistence”一节的要点，113 词)，pi × gpt-6.1-terra(EXP-055 条件，PROMPT v2)将在第 1 次迭代完成 | **已验证** | pi 0.87.1 |
+| [EXP-059](experiments/059-fable52-ralph/report.md) Claude Code × Fable 5.2 原生完成验证（EN n=3） | M-51: 在 Claude Code 原生(claude -p 2.1.321)中运行 Fable 5.2(claude-fable-5-2，默认 thinking)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，订阅运行) | **已验证** | Claude Code 2.1.321 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -241,6 +242,9 @@ run 1 未在第 1 次迭代完成(第 1–3 次迭代通过 0/13→3→10 个文
 
 **EXP-057 — pi × gpt-6.1-terra + 持续执行指令（EN n=3，含持续指令的 pi 正本首个结果）** (已验证)  
 3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154。会话 1 分 38 秒–1 分 47 秒，按公开 API 单价折算每 run 约 $0.05–0.07(无实际计费)；同日无该指令(EXP-055)需 5–7 次迭代、4–5 分钟。运行时属非正本组合；2026-10-28 同一指令被纳入 pi 正本，因此这是新 pi 正本条件下的首个结果。此前的 pi 结果未包含该指令。 → [报告](experiments/057-pi-gpt61-terra-persist/report.md)
+
+**EXP-059 — Claude Code × Fable 5.2 原生完成验证（EN n=3）** (已验证)  
+3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，56 条响应全部来自 claude-fable-5-2。会话 4.2–4.8 分钟，output 23.3–25.7K，按公开 API 单价折算每 run 约 $2.37–2.47(订阅运行，无实际计费)。比 Fable 5.1(EXP-023)更短、output 约少 20%，但混有 Claude Code 版本与 PROMPT v1→v2 的干扰。 → [报告](experiments/059-fable52-ralph/report.md)
 
 <!-- RESULTS:END -->
 

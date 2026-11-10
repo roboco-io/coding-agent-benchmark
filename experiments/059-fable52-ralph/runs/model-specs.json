@@ -1,0 +1,14 @@
+{
+  "claude-fable-5-2": {
+    "provider": "Anthropic via Claude Code native (구독 OAuth, apiKeySource=none)",
+    "context_window": 1000000,
+    "max_output": 128000,
+    "context_source": "GET https://api.anthropic.com/v1/models/claude-fable-5-2 (2026-11-10): max_input_tokens 1000000, max_tokens 128000, created_at 2026-11-09, thinking adaptive만 지원",
+    "billing": "subscription",
+    "pricing": {
+      "input": 0, "output": 0, "cache_read": 0, "tiers": [],
+      "source": "Claude 구독 OAuth 실행 — run별 실제 지출 없음. API 환산 단가(보고용, 하네스 상한 미적용): 입력 $8·출력 $40·캐시 읽기 $0.20·캐시 쓰기 5m $10·1h $16, 200K 초과 구간 단가 없음 (https://platform.claude.com/docs/en/about-claude/pricing, 2026-11-10)",
+      "checked_at": "2026-11-10"
+    }
+  }
+}

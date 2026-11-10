@@ -1084,6 +1084,26 @@
         "verdict": "已验证",
         "summary": "3/3 均在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154。会话 1 分 38 秒–1 分 47 秒，按公开 API 单价折算每 run 约 $0.05–0.07(无实际计费)；同日无该指令(EXP-055)需 5–7 次迭代、4–5 分钟。运行时属非正本组合；2026-10-28 同一指令被纳入 pi 正本，因此这是新 pi 正本条件下的首个结果。此前的 pi 结果未包含该指令。"
       }
+    },
+    "EXP-059": {
+      "en": {
+        "name": "Claude Code × Fable 5.2 native completion check (EN n=3)",
+        "hypothesis": "Claude Code native (claude -p 2.1.321) running Fable 5.2 (claude-fable-5-2, default thinking) completes the RealWorld backend (Hurl 13/13 · 154/154) with the EN canonical PROMPT v2 Ralph loop, unattended, within 30 iterations and 20 min per run (EN n=3, completion only, subscription run)",
+        "verdict": "Verified",
+        "summary": "3/3 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 56 responses from claude-fable-5-2. Sessions 4.2–4.8 min, output 23.3–25.7K, about $2.37–2.47 per run at public API prices (not billed — subscription). Shorter and about 20% less output than Fable 5.1 (EXP-023), but confounded by Claude Code version and PROMPT v1→v2."
+      },
+      "ja": {
+        "name": "Claude Code × Fable 5.2 ネイティブ完走検証（EN n=3）",
+        "hypothesis": "Claude Codeネイティブ(claude -p 2.1.321)でFable 5.2(claude-fable-5-2、thinking既定値)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3、完走率判定・サブスクリプション実行)",
+        "verdict": "検証",
+        "summary": "3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、応答56件すべてclaude-fable-5-2。セッション4.2–4.8分、output 23.3–25.7K、公開API単価換算でrunあたり約$2.37–2.47(サブスクリプションのため請求なし)。Fable 5.1(EXP-023)より短くoutputも約20%少ないが、Claude CodeバージョンとPROMPT v1→v2の交絡を含む。"
+      },
+      "zh-CN": {
+        "name": "Claude Code × Fable 5.2 原生完成验证（EN n=3）",
+        "hypothesis": "在 Claude Code 原生(claude -p 2.1.321)中运行 Fable 5.2(claude-fable-5-2，默认 thinking)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，订阅运行)",
+        "verdict": "已验证",
+        "summary": "3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，56 条响应全部来自 claude-fable-5-2。会话 4.2–4.8 分钟，output 23.3–25.7K，按公开 API 单价折算每 run 约 $2.37–2.47(订阅运行，无实际计费)。比 Fable 5.1(EXP-023)更短、output 约少 20%，但混有 Claude Code 版本与 PROMPT v1→v2 的干扰。"
+      }
     }
   }
 }

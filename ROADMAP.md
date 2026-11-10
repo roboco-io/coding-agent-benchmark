@@ -77,6 +77,7 @@
 - [x] EXP-055: pi × gpt-6.1-terra (M-48, EN n=3, 20분 상한, PROMPT v2) — 검증(3/3 완주, iteration 6·5·7 — iteration마다 기능 묶음 하나, 세션 4분 3초–4분 44초, 환산 $0.11–0.15), [보고서](experiments/055-pi-gpt61-terra/report.md)
 - [x] EXP-056: pi × gpt-6.1-terra PROMPT v1 재실험 (M-49) — 보류(run 1 iteration 3까지 미완주 후 사용자 지시로 중단, 반증 방향 n=1), [보고서](experiments/056-pi-gpt61-terra-v1/report.md)
 - [x] EXP-057: pi × gpt-6.1-terra + 지속 실행 지침 (M-50, EN n=3, 실행 시 비정본 → 같은 지침이 pi 정본이 되어 새 pi 정본 첫 결과) — 검증(3/3 iteration 1, 세션 1분 38초–1분 47초, 환산 $0.05–0.07), [보고서](experiments/057-pi-gpt61-terra-persist/report.md)
+- [x] EXP-059: Claude Code × Fable 5.2 네이티브 (M-51, EN n=3, 20분 상한, PROMPT v2) — 검증(3/3 iter 1 완주, 세션 4.2–4.8분, 환산 $2.37–2.47·구독 실행으로 청구 없음), [보고서](experiments/059-fable52-ralph/report.md)
 - [x] 지속 실행 지침을 pi 정본에 포함 (2026-10-28 사용자 결정, 스킬 `assets/pi-persistence.md`·`PI_PERSISTENCE=on` 기본·smoke 주입 탐침)
 - [ ] 지침 추가 전 pi 결과(EXP-029–053)를 새 pi 정본으로 재측정할지 검토 — 지침 유무가 기존 pi 비교의 교란 변수
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검

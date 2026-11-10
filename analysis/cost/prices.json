@@ -285,5 +285,14 @@
     "src": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
     "accessed": "2026-10-27",
     "caveat": "EXP-055(지속 지침 없는 pi 조건)용 항목. gpt-6.1-terra와 같은 단가·가정이며, 대시보드 행을 분리하려고 별도 항목으로 둔다. ChatGPT 구독 OAuth 실행이라 실제 청구 없음"
+  },
+  "Fable 5.2": {
+    "input": 8,
+    "cache_read": 0.2,
+    "cache_write_5m": 10,
+    "cache_write_1h": 16,
+    "output": 40,
+    "src": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "checked": "2026-11-10"
   }
 }

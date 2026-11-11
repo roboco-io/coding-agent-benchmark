@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-059（2026-11-10）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-060（2026-11-11）
 
 **🔤 姉妹リポジトリ — 言語比較**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([ダッシュボード](https://roboco.io/language-benchmark/))は、モデル・ハーネスを固定し、同じ RealWorld バックエンドを実装言語(TypeScript、Python、Go、Rust、C++)別に比較する。
 
@@ -86,6 +86,7 @@
 | [EXP-056](experiments/056-pi-gpt61-terra-v1/report.md) pi × gpt-6.1-terra PROMPT v1 再実験（中断） | M-49: PROMPTをv1(EXP-032・034と同一)に戻せばpi × gpt-6.1-terraもイテレーション1で完走する。すなわちEXP-055の複数イテレーションはPROMPT v2の差による | **保留** | pi 0.87.1 |
 | [EXP-057](experiments/057-pi-gpt61-terra-persist/report.md) pi × gpt-6.1-terra + 持続実行指示（EN n=3、持続指示入りpi正本の最初の結果） | M-50: --append-system-promptでpiのシステムプロンプトに持続実行指示(Codexの「Autonomy and persistence」節の要旨、113語)を追加すれば、pi × gpt-6.1-terra(EXP-055の条件、PROMPT v2)はイテレーション1で完走する | **検証** | pi 0.87.1 |
 | [EXP-059](experiments/059-fable52-ralph/report.md) Claude Code × Fable 5.2 ネイティブ完走検証（EN n=3） | M-51: Claude Codeネイティブ(claude -p 2.1.321)でFable 5.2(claude-fable-5-2、thinking既定値)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3、完走率判定・サブスクリプション実行) | **検証** | Claude Code 2.1.321 |
+| [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3） | M-52: pi 0.87.1でOpenRouterのmeta/muse-ember(Meta固定、thinking high、pi正本の継続指示あり)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3) | **検証** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -245,6 +246,9 @@ run 1はイテレーション1で完走しなかった(イテレーション1–
 
 **EXP-059 — Claude Code × Fable 5.2 ネイティブ完走検証（EN n=3）** (検証)  
 3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、応答56件すべてclaude-fable-5-2。セッション4.2–4.8分、output 23.3–25.7K、公開API単価換算でrunあたり約$2.37–2.47(サブスクリプションのため請求なし)。Fable 5.1(EXP-023)より短くoutputも約20%少ないが、Claude CodeバージョンとPROMPT v1→v2の交絡を含む。 → [レポート](experiments/059-fable52-ralph/report.md)
+
+**EXP-060 — pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3）** (検証)  
+3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 101件すべてMetaが提供(meta/muse-ember-20261109)。セッション2分52秒–3分19秒、請求はrunあたり$0.027–0.051(公開単価換算と一致)で、このリポの最低コスト帯。2026-11-10の初回smokeはプロバイダー404で失敗し、翌日に通過した。 → [レポート](experiments/060-pi-muse-ember/report.md)
 
 <!-- RESULTS:END -->
 

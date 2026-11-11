@@ -1104,6 +1104,26 @@
         "verdict": "已验证",
         "summary": "3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，56 条响应全部来自 claude-fable-5-2。会话 4.2–4.8 分钟，output 23.3–25.7K，按公开 API 单价折算每 run 约 $2.37–2.47(订阅运行，无实际计费)。比 Fable 5.1(EXP-023)更短、output 约少 20%，但混有 Claude Code 版本与 PROMPT v1→v2 的干扰。"
       }
+    },
+    "EXP-060": {
+      "en": {
+        "name": "pi × Meta Muse Ember (OpenRouter) completion check (EN n=3)",
+        "hypothesis": "pi 0.87.1 with OpenRouter meta/muse-ember (pinned to Meta, thinking high, canonical pi persistence prompt) completes the RealWorld backend (Hurl 13/13 · 154/154) with the EN canonical PROMPT v2 Ralph loop, unattended, within 30 iterations and 20 min per run (EN n=3)",
+        "verdict": "Verified",
+        "summary": "3/3 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 101 OpenRouter generations served by Meta (meta/muse-ember-20261109). Sessions 2 min 52 s – 3 min 19 s, billed $0.027–0.051 per run (matches public-price conversion), in the repo's lowest cost band. The first smoke on 2026-11-10 failed with a provider 404 and passed the next day."
+      },
+      "ja": {
+        "name": "pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3）",
+        "hypothesis": "pi 0.87.1でOpenRouterのmeta/muse-ember(Meta固定、thinking high、pi正本の継続指示あり)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3)",
+        "verdict": "検証",
+        "summary": "3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 101件すべてMetaが提供(meta/muse-ember-20261109)。セッション2分52秒–3分19秒、請求はrunあたり$0.027–0.051(公開単価換算と一致)で、このリポの最低コスト帯。2026-11-10の初回smokeはプロバイダー404で失敗し、翌日に通過した。"
+      },
+      "zh-CN": {
+        "name": "pi × Meta Muse Ember(OpenRouter)完成验证（EN n=3）",
+        "hypothesis": "在 pi 0.87.1 中通过 OpenRouter 运行 meta/muse-ember(固定 Meta，thinking high，含 pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3)",
+        "verdict": "已验证",
+        "summary": "3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，101 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 2 分 52 秒–3 分 19 秒，每 run 实际计费 $0.027–0.051(与公开单价折算一致)，处于本仓库最低成本区间。2026-11-10 首次 smoke 因提供商 404 失败，次日通过。"
+      }
     }
   }
 }

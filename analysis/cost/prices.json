@@ -294,5 +294,14 @@
     "output": 40,
     "src": "https://platform.claude.com/docs/en/about-claude/pricing",
     "checked": "2026-11-10"
+  },
+  "muse-ember": {
+    "input": 0.1,
+    "cache_read": 0.004,
+    "cache_write_5m": 0.125,
+    "cache_write_1h": 0.125,
+    "output": 0.5,
+    "src": "OpenRouter GET /api/v1/models/meta/muse-ember/endpoints (Meta endpoint)",
+    "checked": "2026-11-11"
   }
 }

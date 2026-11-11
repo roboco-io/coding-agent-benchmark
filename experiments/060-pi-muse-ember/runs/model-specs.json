@@ -1,0 +1,10 @@
+{
+  "openrouter/meta/muse-ember": {
+    "provider": "OpenRouter (https://openrouter.ai/api/v1), 제공자 Meta 고정(openRouterRouting only=[meta], allow_fallbacks=false, 등록 제공자 1곳), pi 사용자 정의 models.json",
+    "context_window": 1048576, "max_output": 943718,
+    "context_source": "OpenRouter GET /api/v1/models/meta/muse-ember/endpoints — Meta 엔드포인트 context_length 1048576, max_completion_tokens 943718, tools·reasoning 지원, 2026-11-10 확인. 모델 등록 2026-11-10 03:07 KST",
+    "billing": "api",
+    "pricing": {"input": 0.10, "output": 0.50, "cache_read": 0.004, "tiers": [],
+                "source": "OpenRouter endpoints API, Meta 엔드포인트 pricing (prompt 0.10, completion 0.50, input_cache_read 0.004, input_cache_write 0.125 / 100만 토큰, 구간 단가 없음)", "checked_at": "2026-11-10"}
+  }
+}

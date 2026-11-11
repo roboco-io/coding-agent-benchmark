@@ -248,7 +248,7 @@ run 1이 iteration 1에 완주하지 못했고(0/13), iteration 2(3/13)·3(10/13
 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 응답 모델 필드 56건 전부 `claude-fable-5-2`). 세션 4분 12초–4분 47초, output 23.3–25.7K, API 단가 환산 run당 $2.37–2.47이다(구독 실행, 청구액 아님). → [보고서](experiments/059-fable52-ralph/report.md)
 
 **EXP-060 — pi × Meta Muse Ember (OpenRouter) 랄프 루프 완주 검증 (EN n=3)** (검증)  
-3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, OpenRouter generation 101건 전부 제공자 Meta·served `meta/muse-ember-20261109`). 세션 2분 52초–3분 19초, 청구 run당 $0.027–0.051로 리포 최저 비용 대역(gpt-6-luna 환산 $0.02–0.03 등)과 같은 수준이다. → [보고서](experiments/060-pi-muse-ember/report.md)
+AC 전원 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, OpenRouter generation 114건 전부 제공자 Meta·served `meta/muse-ember-20261109`). 세션 1분 48초–3분 39초, 청구 run당 $0.028–0.056이다. 저전력 모드 3 run도 3/3 iteration 1 완주였다. → [보고서](experiments/060-pi-muse-ember/report.md)
 
 <!-- RESULTS:END -->
 

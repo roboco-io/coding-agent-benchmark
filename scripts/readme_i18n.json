@@ -1110,19 +1110,19 @@
         "name": "pi × Meta Muse Ember (OpenRouter) completion check (EN n=3)",
         "hypothesis": "pi 0.87.1 with OpenRouter meta/muse-ember (pinned to Meta, thinking high, canonical pi persistence prompt) completes the RealWorld backend (Hurl 13/13 · 154/154) with the EN canonical PROMPT v2 Ralph loop, unattended, within 30 iterations and 20 min per run (EN n=3)",
         "verdict": "Verified",
-        "summary": "3/3 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 101 OpenRouter generations served by Meta (meta/muse-ember-20261109). Sessions 2 min 52 s – 3 min 19 s, billed $0.027–0.051 per run (matches public-price conversion), in the repo's lowest cost band. The first smoke on 2026-11-10 failed with a provider 404 and passed the next day."
+        "summary": "3/3 runs on AC power finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 114 OpenRouter generations served by Meta (meta/muse-ember-20261109). Sessions 1 min 48 s – 3 min 39 s, billed $0.028–0.056 per run (matches public-price conversion). A first set of 3 runs on battery in low-power mode also went 3/3 at iteration 1 but had about twice the local tool time (median 62 s vs 30 s); it is kept as a comparison record."
       },
       "ja": {
         "name": "pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3）",
         "hypothesis": "pi 0.87.1でOpenRouterのmeta/muse-ember(Meta固定、thinking high、pi正本の継続指示あり)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3)",
         "verdict": "検証",
-        "summary": "3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 101件すべてMetaが提供(meta/muse-ember-20261109)。セッション2分52秒–3分19秒、請求はrunあたり$0.027–0.051(公開単価換算と一致)で、このリポの最低コスト帯。2026-11-10の初回smokeはプロバイダー404で失敗し、翌日に通過した。"
+        "summary": "AC電源の3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 114件すべてMetaが提供(meta/muse-ember-20261109)。セッション1分48秒–3分39秒、請求はrunあたり$0.028–0.056(公開単価換算と一致)。先にバッテリー・低電力モードで実行した3 runも3/3イテレーション1で完走したが、ローカルツール時間が約2倍(中央値62秒対30秒)で、比較記録として保管した。"
       },
       "zh-CN": {
         "name": "pi × Meta Muse Ember(OpenRouter)完成验证（EN n=3）",
         "hypothesis": "在 pi 0.87.1 中通过 OpenRouter 运行 meta/muse-ember(固定 Meta，thinking high，含 pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3)",
         "verdict": "已验证",
-        "summary": "3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，101 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 2 分 52 秒–3 分 19 秒，每 run 实际计费 $0.027–0.051(与公开单价折算一致)，处于本仓库最低成本区间。2026-11-10 首次 smoke 因提供商 404 失败，次日通过。"
+        "summary": "AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，114 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 1 分 48 秒–3 分 39 秒，每 run 实际计费 $0.028–0.056(与公开单价折算一致)。此前在电池低电量模式下运行的 3 个 run 同样 3/3 在第 1 次迭代完成，但本地工具时间约为两倍(中位数 62 秒对 30 秒)，作为对比记录保留。"
       }
     }
   }

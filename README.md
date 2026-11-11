@@ -248,7 +248,7 @@ Run 1 did not finish at iteration 1 (0/13 → 3 → 10 files over iterations 1�
 3/3 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 56 responses from claude-fable-5-2. Sessions 4.2–4.8 min, output 23.3–25.7K, about $2.37–2.47 per run at public API prices (not billed — subscription). Shorter and about 20% less output than Fable 5.1 (EXP-023), but confounded by Claude Code version and PROMPT v1→v2. → [report](experiments/059-fable52-ralph/report.md)
 
 **EXP-060 — pi × Meta Muse Ember (OpenRouter) completion check (EN n=3)** (Verified)  
-3/3 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 101 OpenRouter generations served by Meta (meta/muse-ember-20261109). Sessions 2 min 52 s – 3 min 19 s, billed $0.027–0.051 per run (matches public-price conversion), in the repo's lowest cost band. The first smoke on 2026-11-10 failed with a provider 404 and passed the next day. → [report](experiments/060-pi-muse-ember/report.md)
+3/3 runs on AC power finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, all 114 OpenRouter generations served by Meta (meta/muse-ember-20261109). Sessions 1 min 48 s – 3 min 39 s, billed $0.028–0.056 per run (matches public-price conversion). A first set of 3 runs on battery in low-power mode also went 3/3 at iteration 1 but had about twice the local tool time (median 62 s vs 30 s); it is kept as a comparison record. → [report](experiments/060-pi-muse-ember/report.md)
 
 <!-- RESULTS:END -->
 

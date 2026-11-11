@@ -1,0 +1,4 @@
+run,calls,provider,served_model,billed_usd_sum,lookup_errors
+museember-en-1,38,Meta:38,meta/muse-ember-20261109,0.0417,0
+museember-en-2,35,Meta:35,meta/muse-ember-20261109,0.0506,0
+museember-en-3,28,Meta:28,meta/muse-ember-20261109,0.0267,0

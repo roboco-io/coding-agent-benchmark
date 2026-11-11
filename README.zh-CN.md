@@ -248,7 +248,7 @@ run 1 未在第 1 次迭代完成(第 1–3 次迭代通过 0/13→3→10 个文
 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，56 条响应全部来自 claude-fable-5-2。会话 4.2–4.8 分钟，output 23.3–25.7K，按公开 API 单价折算每 run 约 $2.37–2.47(订阅运行，无实际计费)。比 Fable 5.1(EXP-023)更短、output 约少 20%，但混有 Claude Code 版本与 PROMPT v1→v2 的干扰。 → [报告](experiments/059-fable52-ralph/report.md)
 
 **EXP-060 — pi × Meta Muse Ember(OpenRouter)完成验证（EN n=3）** (已验证)  
-3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，101 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 2 分 52 秒–3 分 19 秒，每 run 实际计费 $0.027–0.051(与公开单价折算一致)，处于本仓库最低成本区间。2026-11-10 首次 smoke 因提供商 404 失败，次日通过。 → [报告](experiments/060-pi-muse-ember/report.md)
+AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，114 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 1 分 48 秒–3 分 39 秒，每 run 实际计费 $0.028–0.056(与公开单价折算一致)。此前在电池低电量模式下运行的 3 个 run 同样 3/3 在第 1 次迭代完成，但本地工具时间约为两倍(中位数 62 秒对 30 秒)，作为对比记录保留。 → [报告](experiments/060-pi-muse-ember/report.md)
 
 <!-- RESULTS:END -->
 

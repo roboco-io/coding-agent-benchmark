@@ -13,3 +13,8 @@
 - smoke.sh: `PASS openrouter/meta/muse-ember` — 지속 지침 탐침이 지침 고유 문장을 완성해 주입 확인.
 - 클라이언트: pi 0.87.1. hurl: `/opt/homebrew/bin/hurl`. 격리 플래그 `-nc -ns -ne -np -na`, `PI_KEEP_ENV=OPENROUTER_API_KEY`만 노출.
 - 외부 포트: DeepSRT 127.0.0.1:3003 LISTEN(종료하지 않음, 하네스는 빈 포트 주입).
+
+## 3차 (2026-11-11 13:48 KST) — AC 전원 재실행
+
+- 사용자가 2차 실행(11:20–11:30)이 배터리·저전력 모드였다고 알려 와 같은 하네스·승인으로 다시 실행했다. 직전 확인: `lowpowermode 0`, `Now drawing from 'AC Power'` (`power-check.txt`). smoke는 다시 하지 않았다(설정 변경 없음, 2차 smoke PASS 2시간 30분 뒤).
+- 2차 run 산출물은 하네스의 `lowpower/`로 옮겨 보관했다. 비용 가드 누계(`cost-guard.csv`)는 실험 상한 계산을 위해 그대로 이어 썼다.

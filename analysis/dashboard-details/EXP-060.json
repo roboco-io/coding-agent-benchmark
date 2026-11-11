@@ -6,15 +6,15 @@
   "runs": {
     "museember-en-1": {
       "iter": 1,
-      "commits": 3
+      "commits": 2
     },
     "museember-en-2": {
       "iter": 1,
-      "commits": 3
+      "commits": 2
     },
     "museember-en-3": {
       "iter": 1,
-      "commits": 3
+      "commits": 2
     }
   },
   "conditions": {
@@ -157,24 +157,28 @@
   },
   "deviations": {
     "ko": [
+      "첫 실행(11:20–11:30)은 배터리·저전력 모드였다. 사용자 지시로 AC 전원에서 같은 조건을 다시 실행했고(13:48–13:57) 이 결과로 교체했다. 저전력 3 run도 3/3 iteration 1이었지만 도구 시간 중앙값이 62초로 AC(30초)의 약 2배였다.",
       "2026-11-10 1차 smoke에서 OpenRouter → Meta 경로가 404 model_not_found를 반환해 기동하지 않았다. 2026-11-11 재확인 시 정상이어서 같은 설정·승인으로 실행했다. 원인은 확인하지 못했다.",
       "2026-11-11에 Google Vertex 제공자가 추가되었으나 다운 상태였고, 하네스는 Meta로 고정해 쓰지 않았다.",
       "외부 프로세스(DeepSRT)가 3003을 점유했으나 빈 포트 주입으로 3 run 모두 첫 채점에서 13/13이었다.",
       "Muse Spark Open(EXP-049)과 비교할 때 PROMPT 버전(v1→v2)과 pi 지속 지침 유무가 달라 세션 시간 차이를 모델 차이로 단정하지 않는다."
     ],
     "en": [
+      "The first set (11:20–11:30) ran on battery in low-power mode. At the user's request the same condition was rerun on AC power (13:48–13:57) and those results replace it. The low-power runs also went 3/3 at iteration 1, but their median tool time was 62 s, about twice the AC 30 s.",
       "On 2026-11-10 the first smoke got 404 model_not_found from the OpenRouter → Meta route, so nothing was started. A recheck on 2026-11-11 succeeded, and the runs used the same settings and approval. The cause was not identified.",
       "A Google Vertex provider appeared on 2026-11-11 but was down; the harness was pinned to Meta and did not use it.",
       "An external process (DeepSRT) held port 3003, but with free-port injection all 3 runs scored 13/13 on the first grading.",
       "Compared with Muse Spark Open (EXP-049), the PROMPT version (v1 to v2) and the pi persistence prompt differ, so the session-time difference is not attributed to the model."
     ],
     "ja": [
+      "最初の実行(11:20–11:30)はバッテリー・低電力モードだった。ユーザーの指示でAC電源にて同じ条件を再実行し(13:48–13:57)、その結果に置き換えた。低電力の3 runも3/3イテレーション1だったが、ツール時間の中央値は62秒でAC(30秒)の約2倍だった。",
       "2026-11-10の初回smokeでOpenRouter→Meta経路が404 model_not_foundを返したため起動しなかった。2026-11-11の再確認で正常だったため、同じ設定・承認で実行した。原因は確認できていない。",
       "2026-11-11にGoogle Vertexプロバイダーが追加されたがダウン状態で、ハーネスはMeta固定のため使わなかった。",
       "外部プロセス(DeepSRT)が3003を占有していたが、空きポート注入により3 runとも初回採点で13/13だった。",
       "Muse Spark Open(EXP-049)との比較ではPROMPTバージョン(v1→v2)とpi継続指示の有無が異なるため、セッション時間の差をモデル差と断定しない。"
     ],
     "zh": [
+      "首次运行(11:20–11:30)使用电池且处于低电量模式。按用户指示在 AC 电源下以相同条件重新运行(13:48–13:57)，并以该结果替换。低电量模式的 3 个 run 同样 3/3 在第 1 次迭代完成，但工具时间中位数为 62 秒，约为 AC(30 秒)的两倍。",
       "2026-11-10 首次 smoke 时 OpenRouter → Meta 路径返回 404 model_not_found，因此未启动。2026-11-11 复查正常，以相同设置与批准执行。原因未查明。",
       "2026-11-11 新增了 Google Vertex 提供商但处于宕机状态，框架固定为 Meta，未使用该路径。",
       "外部进程(DeepSRT)占用了 3003，但通过注入空闲端口，3 个 run 首次评分均为 13/13。",
@@ -183,28 +187,28 @@
   },
   "behavior": {
     "ko": [
-      "3 run 모두 iteration 1에 합격, 커밋 각 3개.",
-      "세션 2분 52초–3분 19초, 호출 28–38회, output 17.8–19.9K(reasoning 4.6–5.4K), 요청별 최대 프롬프트 44.3–68.7K.",
-      "세 run 모두 Fastify + Prisma 스택을 골랐고 도구는 bash 23–27회·write 9–18회·edit 0–4회를 썼다.",
-      "청구 run당 $0.027–0.051로 OpenRouter generation 합과 공개 단가 환산이 일치했다."
+      "3 run 모두 iteration 1에 합격, 커밋 각 2개.",
+      "세션 1분 48초–3분 39초, 호출 26–51회, output 15.1–22.1K(reasoning 4.2–6.6K), 요청별 최대 프롬프트 38.1–65.3K.",
+      "세 run 모두 Fastify + Prisma 스택을 골랐고 도구는 bash 20–32회·write 7–16회·edit 0–5회·read 0–2회를 썼다.",
+      "청구 run당 $0.028–0.056으로 OpenRouter generation 합과 공개 단가 환산이 일치했다."
     ],
     "en": [
-      "All 3 runs passed at iteration 1 with 3 commits each.",
-      "Sessions 2 min 52 s to 3 min 19 s, 28–38 calls, output 17.8–19.9K (reasoning 4.6–5.4K), max per-request prompt 44.3–68.7K.",
-      "All 3 runs chose a Fastify + Prisma stack and used bash 23–27 times, write 9–18 times and edit 0–4 times.",
-      "Billed $0.027–0.051 per run; the OpenRouter generation sum matched the public-price conversion."
+      "All 3 runs passed at iteration 1 with 2 commits each.",
+      "Sessions 1 min 48 s to 3 min 39 s, 26–51 calls, output 15.1–22.1K (reasoning 4.2–6.6K), max per-request prompt 38.1–65.3K.",
+      "All 3 runs chose a Fastify + Prisma stack and used bash 20–32 times, write 7–16 times, edit 0–5 times and read 0–2 times.",
+      "Billed $0.028–0.056 per run; the OpenRouter generation sum matched the public-price conversion."
     ],
     "ja": [
-      "3 runすべてイテレーション1で合格、コミット各3件。",
-      "セッション2分52秒–3分19秒、呼び出し28–38回、output 17.8–19.9K(reasoning 4.6–5.4K)、リクエスト別最大プロンプト44.3–68.7K。",
-      "3 runともFastify + Prismaスタックを選び、ツールはbash 23–27回・write 9–18回・edit 0–4回。",
-      "請求はrunあたり$0.027–0.051で、OpenRouter generationの合計と公開単価換算が一致した。"
+      "3 runすべてイテレーション1で合格、コミット各2件。",
+      "セッション1分48秒–3分39秒、呼び出し26–51回、output 15.1–22.1K(reasoning 4.2–6.6K)、リクエスト別最大プロンプト38.1–65.3K。",
+      "3 runともFastify + Prismaスタックを選び、ツールはbash 20–32回・write 7–16回・edit 0–5回・read 0–2回。",
+      "請求はrunあたり$0.028–0.056で、OpenRouter generationの合計と公開単価換算が一致した。"
     ],
     "zh": [
-      "3 个 run 全部在第 1 次迭代通过，各提交 3 次。",
-      "会话 2 分 52 秒–3 分 19 秒，调用 28–38 次，output 17.8–19.9K(reasoning 4.6–5.4K)，单请求最大提示 44.3–68.7K。",
-      "3 个 run 都选择 Fastify + Prisma 栈，工具使用 bash 23–27 次、write 9–18 次、edit 0–4 次。",
-      "每 run 实际计费 $0.027–0.051，OpenRouter generation 合计与公开单价折算一致。"
+      "3 个 run 全部在第 1 次迭代通过，各提交 2 次。",
+      "会话 1 分 48 秒–3 分 39 秒，调用 26–51 次，output 15.1–22.1K(reasoning 4.2–6.6K)，单请求最大提示 38.1–65.3K。",
+      "3 个 run 都选择 Fastify + Prisma 栈，工具使用 bash 20–32 次、write 7–16 次、edit 0–5 次、read 0–2 次。",
+      "每 run 实际计费 $0.028–0.056，OpenRouter generation 合计与公开单价折算一致。"
     ]
   }
 }

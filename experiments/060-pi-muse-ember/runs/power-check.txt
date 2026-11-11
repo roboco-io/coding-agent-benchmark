@@ -1,0 +1,1 @@
+power: AC, lowpowermode=0, 2026-11-11 13:48:45

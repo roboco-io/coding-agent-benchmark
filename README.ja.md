@@ -248,7 +248,7 @@ run 1はイテレーション1で完走しなかった(イテレーション1–
 3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、応答56件すべてclaude-fable-5-2。セッション4.2–4.8分、output 23.3–25.7K、公開API単価換算でrunあたり約$2.37–2.47(サブスクリプションのため請求なし)。Fable 5.1(EXP-023)より短くoutputも約20%少ないが、Claude CodeバージョンとPROMPT v1→v2の交絡を含む。 → [レポート](experiments/059-fable52-ralph/report.md)
 
 **EXP-060 — pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3）** (検証)  
-3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 101件すべてMetaが提供(meta/muse-ember-20261109)。セッション2分52秒–3分19秒、請求はrunあたり$0.027–0.051(公開単価換算と一致)で、このリポの最低コスト帯。2026-11-10の初回smokeはプロバイダー404で失敗し、翌日に通過した。 → [レポート](experiments/060-pi-muse-ember/report.md)
+AC電源の3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 114件すべてMetaが提供(meta/muse-ember-20261109)。セッション1分48秒–3分39秒、請求はrunあたり$0.028–0.056(公開単価換算と一致)。先にバッテリー・低電力モードで実行した3 runも3/3イテレーション1で完走したが、ローカルツール時間が約2倍(中央値62秒対30秒)で、比較記録として保管した。 → [レポート](experiments/060-pi-muse-ember/report.md)
 
 <!-- RESULTS:END -->
 

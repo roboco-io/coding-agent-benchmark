@@ -29,7 +29,7 @@
 | gpt-6.1-sol | 0.36 | — | 단문맥 단가(캐시 입력 $0.10) |
 | gpt-6-sol | 0.43 | — | 단문맥 단가 |
 | pi × Muse Spark Open | 0.50 | — | OpenRouter(Together 고정) 공개 단가, pi 하네스, API 키 실행(실제 과금), OpenRouter 호출별 청구 기록 합과 일치(아래) |
-| pi × Muse Ember | 0.04 | — | OpenRouter(Meta 고정) 공개 단가, pi 하네스(지속 지침 정본), API 키 실행(실제 과금), OpenRouter 호출별 청구 기록 합과 일치 |
+| pi × Muse Ember | 0.04 | — | OpenRouter(Meta 고정) 공개 단가, pi 하네스(지속 지침 정본), API 키 실행(실제 과금), OpenRouter 호출별 청구 기록 합과 일치, AC 전원 재실행 결과(저전력 모드 첫 실행은 제외) |
 | pi × gemini-4-argon | 0.86 | — | 2026-11-30까지 단가(2026-12-01부터 2배), pi 하네스, API 키 실행(실제 과금) |
 | pi × gemini-3.8-flash | 1.11 | — | 2026년 단가(2027-01-01부터 2배), pi 하네스 |
 | agy × gemini-3.8-flash | 1.47 | — | 2026년 단가(2027-01-01부터 2배), Antigravity CLI 하네스 |

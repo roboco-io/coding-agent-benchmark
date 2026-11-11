@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-060（2026-11-11）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-061（2026-11-11）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -87,6 +87,7 @@
 | [EXP-057](experiments/057-pi-gpt61-terra-persist/report.md) pi × gpt-6.1-terra + 持续执行指令（EN n=3，含持续指令的 pi 正本首个结果） | M-50: 通过 --append-system-prompt 在 pi 系统提示后追加持续执行指令(Codex“Autonomy and persistence”一节的要点，113 词)，pi × gpt-6.1-terra(EXP-055 条件，PROMPT v2)将在第 1 次迭代完成 | **已验证** | pi 0.87.1 |
 | [EXP-059](experiments/059-fable52-ralph/report.md) Claude Code × Fable 5.2 原生完成验证（EN n=3） | M-51: 在 Claude Code 原生(claude -p 2.1.321)中运行 Fable 5.2(claude-fable-5-2，默认 thinking)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3，仅判定完成率，订阅运行) | **已验证** | Claude Code 2.1.321 |
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember(OpenRouter)完成验证（EN n=3） | M-52: 在 pi 0.87.1 中通过 OpenRouter 运行 meta/muse-ember(固定 Meta，thinking high，含 pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3) | **已验证** | pi 0.87.1 |
+| [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × K-EXAONE 2.5（EXAONE API）完成验证 | M-53: pi 0.87.1 × EXAONE API k-exaone_v2.5（默认 max 推理、preserve_thinking、pi 持续指令）可用 EN 正本 PROMPT v2 在 60 分钟上限（非正本）和 30 次迭代内完成 RealWorld 后端（Hurl 13/13）（EN n=3） | **否定** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -250,6 +251,9 @@ run 1 未在第 1 次迭代完成(第 1–3 次迭代通过 0/13→3→10 个文
 **EXP-060 — pi × Meta Muse Ember(OpenRouter)完成验证（EN n=3）** (已验证)  
 AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，114 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 1 分 48 秒–3 分 39 秒，每 run 实际计费 $0.028–0.056(与公开单价折算一致)。此前在电池低电量模式下运行的 3 个 run 同样 3/3 在第 1 次迭代完成，但本地工具时间约为两倍(中位数 62 秒对 30 秒)，作为对比记录保留。 → [报告](experiments/060-pi-muse-ember/report.md)
 
+**EXP-061 — pi × K-EXAONE 2.5（EXAONE API）完成验证** (否定)  
+即使放宽到 60 分钟、停滞 900 秒仍为 0/3。约 20 tok/s 的输出速度使长响应反复触发停滞监视，最佳 run 在 60 分钟时仅通过 4/13 个文件。 → [报告](experiments/061-pi-k-exaone25/report.md)
+
 <!-- RESULTS:END -->
 
 ### 综合洞察（2026-09-21更正）
@@ -273,6 +277,7 @@ AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立�
 20. **能装进一台 DGX Spark 的开放权重模型首次出现了未完成和提供方计量缺陷（EXP-042、043、044）。** pi × Bedrock gpt-oss-120b 在 20 分钟上限下为 0/3（EXP-043）。它反复在前台运行开发服务器导致停滞，并提交无法启动的代码，超出上限再运行约 120 分钟也未通过。Claude Code 直连 DashScope 的三款 Qwen（EXP-042）在 flash 2/2、q27 1/1、coder 1/2 完成后中止。DashScope 的 Anthropic 兼容端点在 usage 中漏报 tool_result token，导致自动压缩从未触发；输入上限最小的 qwen3-coder-next 反复出现 400 错误，两个 run 折算成本下限约 $89。使用同一端点的早期实验（EXP-013、016、017）的 token 数据需要复查。EXP-044（pi × Qwen 三款）在第一个 run 中止。从这一批起每 run 上限由 4 小时改为 20 分钟，因此完成率不与早期实验直接比较。之后，pi × qwen3.8-27b（EXP-045，30 分钟上限）3/3 在 iteration 1 完成（会话 8.8–12.1 分钟，按公开单价折算每 run 约 $0.22–0.24）。比同一 27b 在 Claude Code 直连下（EXP-042：25.3 分钟、$1.29）更短更便宜，但 harness、API 格式和时间同时不同，且 n 较小。
 21. **Codex × gpt-6.1-terra 的完成会话比 pi × Sonnet 5.5 的最短记录更短（EXP-054）。** 通过 Codex CLI 0.164.0（ChatGPT 订阅 OAuth，effort medium，PROMPT v2）运行 gpt-6.1-terra，EN 3/3 全部在 iteration 1 完成（各 2 次复验一致，响应 model 字段全部为 `gpt-6.1-terra`）。会话 1 分 40 秒–2 分 10 秒、output 6.3–7.2K，短于第 16 条的 EXP-032（最短 1 分 49 秒），按公开 API 单价折算每 run $0.09–0.12（订阅，无实际计费）。它明显短于同一 Codex 测试框架下的 gpt-6.1-sol（EXP-033，6–10 分钟），但 Codex 版本（0.160.0→0.164.0）、客户端模型元数据（fallback→注册值）与 PROMPT（v1→v2）同时变化，因此不把差异归因于模型本身。与测试框架和模型都不同的 EXP-032 的先后也只是 n=3 的观测值，不解读为排名。
 22. **同一模型会因测试框架的系统指令不同，而“一次完成”或“分多次循环完成”（EXP-054–057）。** gpt-6.1-terra 在 Codex（EXP-054）中 3/3 于第 1 次迭代完成，但在 pi 正本条件（EXP-055）下每次迭代只实现并提交一个功能组便自行结束回合，分别在第 6、5、7 次迭代（4–5 分钟）完成。它似乎把正本 PROMPT 中的“pick the single most important remaining piece of work … and do it”理解为每次调用只做一件事；恢复为 PROMPT v1 也未改变（EXP-056，n=1，已中止）。Codex 基础指令有“Autonomy and persistence”一节，pi 默认系统提示没有。用 `--append-system-prompt` 追加概括该节的 113 词指令后（EXP-057），同日同条件下变为 3/3 第 1 次迭代完成、1 分 38 秒–1 分 47 秒。Sonnet 5.5 与 gpt-6.1-sol 在同一 pi 中无此指令也在第 1 次迭代完成，因此该行为来自模型与框架指令的组合。Ralph 循环仍能接续每次迭代的进展使该模型完成（观测到循环贡献）。EXP-057 运行时属非正本组合，但 2026-10-28 用户决定将同一指令纳入 pi 正本，使其成为新 pi 正本条件下的首个结果。与此前的 pi 结果（EXP-029–056）比较时，应将该指令的有无记为干扰变量。
+23. **首次出现提供方服务速度先于模型能力阻碍完成的案例 (EXP-061)。** pi × K-EXAONE 2.5（EXAONE API，免费，OpenAI 兼容直连）输出速度约 20 tok/s（reasoning_effort max 与 high 相同）。pi 在响应结束后才写入会话，因此单个长响应会触发停滞监视；在正本上限（20 分钟、300 秒）下第一个 run 的两次迭代均停滞终止并被中止。放宽到 60 分钟、900 秒后仍为 0/3，最佳 run 仅通过 4/13 个文件。429 为 0 次。停滞响应未留下内容，无法区分长生成与流停滞，因此这是当日服务条件下的观测，不能断定为模型能力上限。
 
 ## 实验生命周期
 

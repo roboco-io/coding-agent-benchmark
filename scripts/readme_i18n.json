@@ -1124,6 +1124,26 @@
         "verdict": "已验证",
         "summary": "AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，114 条 OpenRouter generation 全部由 Meta 提供(meta/muse-ember-20261109)。会话 1 分 48 秒–3 分 39 秒，每 run 实际计费 $0.028–0.056(与公开单价折算一致)。此前在电池低电量模式下运行的 3 个 run 同样 3/3 在第 1 次迭代完成，但本地工具时间约为两倍(中位数 62 秒对 30 秒)，作为对比记录保留。"
       }
+    },
+    "EXP-061": {
+      "en": {
+        "name": "pi × K-EXAONE 2.5 (EXAONE API) completion check",
+        "hypothesis": "pi 0.87.1 × EXAONE API k-exaone_v2.5 (default max reasoning, preserve_thinking, pi persistence prompt) completes the RealWorld backend (Hurl 13/13) with the canonical EN prompt v2 within a 60-minute run cap (non-canonical) and 30 iterations (EN n=3)",
+        "verdict": "Rejected",
+        "summary": "0/3 even with relaxed caps (60 min, 900 s stall). Output speed of about 20 tok/s made long responses trip the stall watchdog repeatedly; the best run reached 4/13 files at 60 minutes."
+      },
+      "ja": {
+        "name": "pi × K-EXAONE 2.5（EXAONE API）完走検証",
+        "hypothesis": "pi 0.87.1 × EXAONE API k-exaone_v2.5（推論既定max、preserve_thinking、pi持続指示）はEN正本PROMPT v2でRealWorldバックエンド（Hurl 13/13）を60分上限（非正本）・30イテレーション内に完走できる（EN n=3）",
+        "verdict": "棄却",
+        "summary": "上限を60分・停滞900秒に緩めても0/3。出力速度約20 tok/sで長い応答が停滞監視に繰り返し掛かり、最良runも60分で4/13ファイルに留まった。"
+      },
+      "zh-CN": {
+        "name": "pi × K-EXAONE 2.5（EXAONE API）完成验证",
+        "hypothesis": "pi 0.87.1 × EXAONE API k-exaone_v2.5（默认 max 推理、preserve_thinking、pi 持续指令）可用 EN 正本 PROMPT v2 在 60 分钟上限（非正本）和 30 次迭代内完成 RealWorld 后端（Hurl 13/13）（EN n=3）",
+        "verdict": "否定",
+        "summary": "即使放宽到 60 分钟、停滞 900 秒仍为 0/3。约 20 tok/s 的输出速度使长响应反复触发停滞监视，最佳 run 在 60 分钟时仅通过 4/13 个文件。"
+      }
     }
   }
 }

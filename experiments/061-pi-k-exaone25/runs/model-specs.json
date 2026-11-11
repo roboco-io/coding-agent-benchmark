@@ -1,0 +1,10 @@
+{
+  "exaone/k-exaone_v2.5": {
+    "provider": "LG AI연구원 EXAONE API (https://api.exaone.ai/v1, OpenAI 호환 chat/completions), pi 사용자 정의 models.json. Anthropic 호환 엔드포인트 없음(/v1/messages·/anthropic/v1/messages 404, 2026-11-11 확인)",
+    "context_window": 524288, "max_output": 65536,
+    "context_source": "https://docs.exaone.ai/ko/docs/k-exaone-2.5 — context length 524,288(입력+max_tokens 초과 시 400), models 페이지 최대 출력 512K, GET /v1/models에 k-exaone_v2.5 단일 등록, tool calling 실호출 확인(2026-11-11). max_output 65536은 하네스가 pi maxTokens로 지정한 값",
+    "billing": "api",
+    "pricing": {"input": 0, "output": 0, "cache_read": 0, "tiers": [],
+                "source": "제공자 문서에 단가 없음. 사용자 확인 '무료임'(2026-11-11). 요청 한도: 초당 1·분당 60·일 100(응답 헤더, 2026-11-11), 사용 이력 분석 동의 시 일일 한도 증설", "checked_at": "2026-11-11"}
+  }
+}

@@ -20,7 +20,7 @@
 
 > 以下の表と実験別要約は [`scripts/update_readme_results.py`](scripts/update_readme_results.py) が各実験の `report.md` から自動生成する（英・日・中の README は [`scripts/readme_i18n.json`](scripts/readme_i18n.json) の翻訳を使用）。実験が終わり `report.md` がコミットされる際に pre-commit フックが自動実行する（手動実行: `python3 scripts/update_readme_results.py`）。
 
-**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-060（2026-11-11）
+**📊 ライブダッシュボード**: [Ralphループ モデル別完走比較](https://roboco.io/coding-agent-benchmark/) —— 最新実験反映: EXP-061（2026-11-11）
 
 **🔤 姉妹リポジトリ — 言語比較**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([ダッシュボード](https://roboco.io/language-benchmark/))は、モデル・ハーネスを固定し、同じ RealWorld バックエンドを実装言語(TypeScript、Python、Go、Rust、C++)別に比較する。
 
@@ -87,6 +87,7 @@
 | [EXP-057](experiments/057-pi-gpt61-terra-persist/report.md) pi × gpt-6.1-terra + 持続実行指示（EN n=3、持続指示入りpi正本の最初の結果） | M-50: --append-system-promptでpiのシステムプロンプトに持続実行指示(Codexの「Autonomy and persistence」節の要旨、113語)を追加すれば、pi × gpt-6.1-terra(EXP-055の条件、PROMPT v2)はイテレーション1で完走する | **検証** | pi 0.87.1 |
 | [EXP-059](experiments/059-fable52-ralph/report.md) Claude Code × Fable 5.2 ネイティブ完走検証（EN n=3） | M-51: Claude Codeネイティブ(claude -p 2.1.321)でFable 5.2(claude-fable-5-2、thinking既定値)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3、完走率判定・サブスクリプション実行) | **検証** | Claude Code 2.1.321 |
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3） | M-52: pi 0.87.1でOpenRouterのmeta/muse-ember(Meta固定、thinking high、pi正本の継続指示あり)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3) | **検証** | pi 0.87.1 |
+| [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × K-EXAONE 2.5（EXAONE API）完走検証 | M-53: pi 0.87.1 × EXAONE API k-exaone_v2.5（推論既定max、preserve_thinking、pi持続指示）はEN正本PROMPT v2でRealWorldバックエンド（Hurl 13/13）を60分上限（非正本）・30イテレーション内に完走できる（EN n=3） | **棄却** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -250,6 +251,9 @@ run 1はイテレーション1で完走しなかった(イテレーション1–
 **EXP-060 — pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3）** (検証)  
 AC電源の3/3 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、OpenRouter generation 114件すべてMetaが提供(meta/muse-ember-20261109)。セッション1分48秒–3分39秒、請求はrunあたり$0.028–0.056(公開単価換算と一致)。先にバッテリー・低電力モードで実行した3 runも3/3イテレーション1で完走したが、ローカルツール時間が約2倍(中央値62秒対30秒)で、比較記録として保管した。 → [レポート](experiments/060-pi-muse-ember/report.md)
 
+**EXP-061 — pi × K-EXAONE 2.5（EXAONE API）完走検証** (棄却)  
+上限を60分・停滞900秒に緩めても0/3。出力速度約20 tok/sで長い応答が停滞監視に繰り返し掛かり、最良runも60分で4/13ファイルに留まった。 → [レポート](experiments/061-pi-k-exaone25/report.md)
+
 <!-- RESULTS:END -->
 
 ### 総合インサイト（2026-09-21訂正反映）
@@ -273,6 +277,7 @@ AC電源の3/3 runすべてイテレーション1で完走。ゲートと独立�
 20. **DGX Spark 1台に載るオープンウェイトモデルで、初めて完走失敗と提供者の計測欠陥が出た（EXP-042・043・044）。** pi × Bedrock gpt-oss-120bは20分上限で0/3だった（EXP-043）。開発サーバーをフォアグラウンドで実行して停滞する失敗と、起動しないコードのコミットが繰り返され、上限を超えて約120分実行しても合格しなかった。Claude Code × DashScope直結のQwen 3種（EXP-042）はflash 2/2・q27 1/1・coder 1/2の完走後に中断した。DashScopeのAnthropic互換エンドポイントがusageからtool_resultトークンを除外して報告するため自動圧縮が働かず、入力上限が小さいqwen3-coder-nextは400エラーを繰り返し、2 runの換算コストは下限で約$89だった。同じエンドポイントを使った過去の実験（EXP-013・016・017）のトークン数値は再点検が必要。EXP-044（pi × Qwen 3種）は最初のrunで中断した。このまとまりからrun上限を4時間から20分に短縮したため、完走率を以前の実験と直接比較しない。その後、pi × qwen3.8-27b（EXP-045、30分上限）は3/3をiteration 1で完走した（セッション8.8–12.1分、公開単価換算でrun当たり約$0.22–0.24）。同じ27bのClaude Code直結（EXP-042、25.3分・$1.29）より短く安価だったが、ハーネス・API形式・時期が同時に異なる組み合わせの差であり、nも小さい。
 21. **Codex × gpt-6.1-terraがpi × Sonnet 5.5の最短記録より短い完走セッションを出した（EXP-054）。** Codex CLI 0.164.0（ChatGPTサブスクリプションOAuth、effort medium、PROMPT v2）でgpt-6.1-terraを動かし、EN 3/3すべてiteration 1で完走した（再検証各2回一致、応答modelフィールドはすべて`gpt-6.1-terra`）。セッション1分40秒–2分10秒・output 6.3–7.2Kで16番のEXP-032（最短1分49秒）より短く、公開API単価換算でrunあたり$0.09–0.12（サブスクリプションのため請求なし）。同じCodexハーネスのgpt-6.1-sol（EXP-033、6–10分）より大幅に短いが、Codexバージョン（0.160.0→0.164.0）・クライアントのモデルメタデータ（fallback→登録値）・PROMPT（v1→v2）が同時に変わったため、この差をモデルの差と断定しない。ハーネス・モデルが異なるEXP-032との順序もn=3の観測値であり、順位として解釈しない。
 22. **同じモデルでも、ハーネスのシステム指示によって「一度で終える」か「ループで分けて終える」かが分かれた（EXP-054–057）。** gpt-6.1-terraはCodex（EXP-054）では3/3イテレーション1で完走したが、piの正本条件（EXP-055）では各イテレーションで機能群を1つだけ実装・コミットして自らターンを終え、イテレーション6・5・7（4–5分）で完走した。正本PROMPTの「pick the single most important remaining piece of work … and do it」を1回の実行に作業1つと読んだとみられ、PROMPT v1に戻しても同じだった（EXP-056、n=1で中断）。Codexの基本指示には「Autonomy and persistence」節があり、piの既定システムプロンプトにはない。その要旨を移した113語の指示を`--append-system-prompt`で追加すると（EXP-057）、同日・同条件で3/3イテレーション1・1分38秒–1分47秒に変わった。同じpiでSonnet 5.5・gpt-6.1-solは指示なしでもイテレーション1で終えたため、この行動はモデルとハーネス指示の組み合わせから生じる。ラルフループはこのモデルでも各イテレーションの進捗を引き継いで完走させた（ループ寄与を観測）。EXP-057は実行時は非正本スタックだったが、2026-10-28のユーザー決定で同じ指示がpiの正本に入り、新しいpi正本条件の最初の結果となった。指示追加前のpi結果（EXP-029–056）と比べるときは指示の有無を交絡変数として記す。
+23. **提供者のサービング速度がモデル能力より先に完走を阻んだ初の事例が出た (EXP-061)。** pi × K-EXAONE 2.5（EXAONE API、無料・OpenAI互換直結）の出力速度は約20 tok/s（reasoning_effort max・high同等）だった。piは応答完了後にセッションを記録するため長い応答1つが停滞監視に掛かり、正本上限（20分・300秒）では最初のrunの2イテレーションとも停滞終了して中断した。上限を60分・900秒に緩めても0/3で、最良runも4/13ファイルに留まった。429は0件。停滞応答の内容が残らず長い生成とストリーム停止を区別できなかったため、当日のサービング条件での観測であり、モデル能力の限界とは断定しない。
 
 ## 実験ライフサイクル
 

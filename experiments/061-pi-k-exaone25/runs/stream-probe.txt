@@ -1,0 +1,3 @@
+finish stop
+usage {"completion_tokens": 158, "prompt_tokens": 14729, "total_tokens": 14887, "reasoning_tokens": 9}
+END 5s first_chunk=1.3496172428131104 chunks=38 reasoning_chars=57 content_chars=507 maxgap=1.3

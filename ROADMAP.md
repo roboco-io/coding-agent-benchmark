@@ -80,6 +80,8 @@
 - [x] EXP-059: Claude Code × Fable 5.2 네이티브 (M-51, EN n=3, 20분 상한, PROMPT v2) — 검증(3/3 iter 1 완주, 세션 4.2–4.8분, 환산 $2.37–2.47·구독 실행으로 청구 없음), [보고서](experiments/059-fable52-ralph/report.md)
 - [ ] 하네스가 run 시작 시 전원 상태(`pmset -g batt`·`lowpowermode`)를 기록 — EXP-060에서 저전력 모드가 도구 시간을 약 2배로 늘린 관측
 - [x] EXP-060: pi × Meta Muse Ember via OpenRouter (M-52, EN n=3, 20분 상한, PROMPT v2, pi 정본 지속 지침) — 검증(AC 전원 3/3 iter 1 완주, 세션 1분 48초–3분 39초, 청구 $0.028–0.056 — 저전력 모드 3 run은 비교 기록으로 보관, 11-10 smoke 제공자 404 후 11-11 재개), [보고서](experiments/060-pi-muse-ember/report.md)
+- [x] EXP-061: pi × LG AI연구원 K-EXAONE 2.5 via EXAONE API (M-53, EN n=3, 60분·정체 900초 비정본 상한, PROMPT v2, pi 정본 지속 지침) — 기각(0/3, 최고 4/13, 출력 약 20 tok/s로 정체 종료 반복, 정본 상한 실행은 중단), [보고서](experiments/061-pi-k-exaone25/report.md)
+- [ ] pi 하네스 정체 감시가 스트리밍 수신을 활동으로 인정하거나 부분 응답을 기록 — EXP-061에서 느린 서빙(약 20 tok/s)의 긴 응답과 스트림 멈춤을 구분하지 못함
 - [x] 지속 실행 지침을 pi 정본에 포함 (2026-10-28 사용자 결정, 스킬 `assets/pi-persistence.md`·`PI_PERSISTENCE=on` 기본·smoke 주입 탐침)
 - [ ] 지침 추가 전 pi 결과(EXP-029–053)를 새 pi 정본으로 재측정할지 검토 — 지침 유무가 기존 pi 비교의 교란 변수
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검

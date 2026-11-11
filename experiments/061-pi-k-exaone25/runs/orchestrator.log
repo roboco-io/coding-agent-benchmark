@@ -1,0 +1,8 @@
+=== starting sequential runs (pi: kexaone:exaone/k-exaone_v2.5 / en / n=3) : 2026-11-11 14:45:48 ===
+=== start kexaone-en-1 : 2026-11-11 14:45:48 ===
+=== end kexaone-en-1 | timeout,2026-11-11 15:45:50 : 2026-11-11 15:45:50 ===
+=== start kexaone-en-2 : 2026-11-11 15:45:50 ===
+=== end kexaone-en-2 | timeout,2026-11-11 16:47:06 : 2026-11-11 16:47:06 ===
+=== start kexaone-en-3 : 2026-11-11 16:47:06 ===
+=== end kexaone-en-3 | timeout,2026-11-11 17:47:16 : 2026-11-11 17:47:16 ===
+=== ALL RUNS FINISHED : 2026-11-11 17:47:16 ===

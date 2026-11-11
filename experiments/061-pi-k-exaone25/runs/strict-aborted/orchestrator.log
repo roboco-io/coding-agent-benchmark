@@ -1,0 +1,3 @@
+=== starting sequential runs (pi: kexaone:exaone/k-exaone_v2.5 / en / n=3) : 2026-11-11 14:17:44 ===
+=== start kexaone-en-1 : 2026-11-11 14:17:44 ===
+manual-stop 2026-11-11 14:35:44 사유: 응답 지연(약 16 tok/s)로 정체 감시 반복 종료 — 사용자 확인 대기

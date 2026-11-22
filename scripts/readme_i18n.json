@@ -1144,6 +1144,26 @@
         "verdict": "否定",
         "summary": "即使放宽到 60 分钟、停滞 900 秒仍为 0/3。约 20 tok/s 的输出速度使长响应反复触发停滞监视，最佳 run 在 60 分钟时仅通过 4/13 个文件。"
       }
+    },
+    "EXP-063": {
+      "en": {
+        "name": "Antigravity CLI × Gemini 4 Carbon · Neon · Hydrogen (subscription auth) completion check (EN n=3 per model)",
+        "hypothesis": "agy 1.5.14 with gemini-4-carbon, gemini-4-neon and gemini-4-hydrogen (effort high, Google account subscription auth) completes the RealWorld backend (Hurl 13/13 · 154/154) with the EN canonical PROMPT v2 Ralph loop, unattended, within 30 iterations and 30 min per run (EN n=3 per model)",
+        "verdict": "Verified",
+        "summary": "All 9 runs finished at iteration 1; gate and two independent re-gradings all 13/13 · 154/154, every run authenticated as a subscription user (authMethod=consumer) and resolved to the requested -high model. Sessions: Hydrogen 4:04–4:39, Neon 6:22–6:58, Carbon 12:51–14:36. No API billing (subscription); public-price conversion about $0.5 (Hydrogen), $0.9 (Neon), $0.8–1.0 (Carbon) per run. One run failed to authenticate because the refreshed OAuth token was not copied into the isolated HOME; the harness now copies it and checks auth before each run, and the run was redone."
+      },
+      "ja": {
+        "name": "Antigravity CLI × Gemini 4 Carbon・Neon・Hydrogen(サブスクリプション認証)完走検証(モデルごとEN n=3)",
+        "hypothesis": "agy 1.5.14でgemini-4-carbon・gemini-4-neon・gemini-4-hydrogen(effort high、Googleアカウントのサブスクリプション認証)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・30分以内に完走できる(モデルごとEN n=3)",
+        "verdict": "検証",
+        "summary": "9 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、全runでサブスクリプション認証(authMethod=consumer)と要求した-highモデルへの解決を確認。セッションはHydrogen 4:04–4:39、Neon 6:22–6:58、Carbon 12:51–14:36。サブスクリプション実行のためAPI請求なし、公開単価換算はrunあたりHydrogen約$0.5、Neon約$0.9、Carbon $0.8–1.0。更新されたOAuthトークンが隔離HOMEにコピーされず1 runが認証に失敗したため、トークンのコピーとrun前の認証確認をハーネスに追加して再実行した。"
+      },
+      "zh-CN": {
+        "name": "Antigravity CLI × Gemini 4 Carbon・Neon・Hydrogen(订阅认证)完成验证(每个模型 EN n=3)",
+        "hypothesis": "在 agy 1.5.14 中运行 gemini-4-carbon、gemini-4-neon、gemini-4-hydrogen(effort high，Google 账号订阅认证)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、30 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154)(每个模型 EN n=3)",
+        "verdict": "已验证",
+        "summary": "9 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，所有 run 均确认为订阅认证(authMethod=consumer)并解析为所请求的 -high 模型。会话时长：Hydrogen 4:04–4:39、Neon 6:22–6:58、Carbon 12:51–14:36。订阅运行无 API 计费，按公开单价折算每 run 约 Hydrogen $0.5、Neon $0.9、Carbon $0.8–1.0。有 1 个 run 因刷新后的 OAuth token 未复制到隔离 HOME 而认证失败；已在 harness 中加入 token 复制与 run 前认证检查并重新运行。"
+      }
     }
   }
 }

@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-061 (2026-11-11)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-063 (2026-11-22)
 
 **🔤 자매 리포 — 언어 비교**: [language-benchmark](https://github.com/roboco-io/language-benchmark) ([대시보드](https://roboco.io/language-benchmark/))는 모델·하네스를 고정하고 같은 RealWorld 백엔드를 구현 언어(TypeScript, Python, Go, Rust, C++)별로 비교한다.
 
@@ -88,6 +88,7 @@
 | [EXP-059](experiments/059-fable52-ralph/report.md) Claude Code × Fable 5.2 네이티브 랄프 루프 완주 검증 (EN n=3) | M-51: Claude Code 네이티브(`claude -p` 2.1.321)에서 Fable 5.2(`claude-fable-5-2`, thinking 기본값)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 20분·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **검증** | Claude Code 2.1.321 |
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember (OpenRouter) 랄프 루프 완주 검증 (EN n=3) | M-52: pi 0.87.1 × OpenRouter `meta/muse-ember`(Meta 고정, thinking high, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 20분·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 | [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × LG AI연구원 K-EXAONE 2.5 (EXAONE API) 랄프 루프 완주 검증 (EN n=3) | M-53: pi 0.87.1 × EXAONE API `k-exaone_v2.5`(reasoning_effort 제공자 기본 max, preserve_thinking, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 60분(비정본)·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **기각** | pi 0.87.1 |
+| [EXP-063](experiments/063-agy-gemini4/report.md) Antigravity CLI × Gemini 4 Carbon·Neon·Hydrogen (구독 인증) 랄프 루프 완주 검증 (EN n=3) | M-54: agy 1.5.14 × `gemini-4-carbon`·`gemini-4-neon`·`gemini-4-hydrogen`(effort high, Google 계정 구독 인증)은 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 30분·30 iteration 안에 무개입 완주할 수 있다 (모델별 EN n=3). | **검증** | Antigravity CLI (agy) 1.5.14 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -254,6 +255,9 @@ AC 전원 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 
 **EXP-061 — pi × LG AI연구원 K-EXAONE 2.5 (EXAONE API) 랄프 루프 완주 검증 (EN n=3)** (기각)  
 상한을 60분·정체 900초로 완화해도 0/3 완주. 출력 속도가 약 20 tok/s로 느려 긴 응답 하나가 15분 정체 감시에 걸리는 일이 반복되었고, 가장 멀리 간 run 3도 60분에 4/13 파일(87 요청)에서 멈췄다. → [보고서](experiments/061-pi-k-exaone25/report.md)
 
+**EXP-063 — Antigravity CLI × Gemini 4 Carbon·Neon·Hydrogen (구독 인증) 랄프 루프 완주 검증 (EN n=3)** (검증)  
+세 모델 모두 3/3 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 전 run `authMethod=consumer`·요청 모델 해석 확인). 세션은 Hydrogen 4:04–4:39, Neon 6:22–6:58, Carbon 12:51–14:36이다. → [보고서](experiments/063-agy-gemini4/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (2026-09-21 정정 반영)
@@ -278,6 +282,7 @@ AC 전원 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 
 21. **Codex × gpt-6.1-terra가 pi × Sonnet 5.5의 최단 기록보다 짧은 완주 세션을 냈다 (EXP-054).** Codex CLI 0.164.0(ChatGPT 구독 OAuth, effort medium, PROMPT v2)으로 gpt-6.1-terra를 돌려 EN 3/3, 전부 iteration 1에 완주했다(재검증 각 2회 일치, 응답 model 필드 전수 `gpt-6.1-terra`). 세션 1분 40초–2분 10초·output 6.3–7.2K로 16번의 EXP-032(최단 1분 49초)보다 짧고, 공개 API 단가 환산 run당 $0.09–0.12다(구독이라 청구 없음). 같은 Codex 하네스의 gpt-6.1-sol(EXP-033, 6–10분)보다 크게 짧지만 Codex 버전(0.160.0→0.164.0)·클라이언트 모델 메타데이터(fallback→등록값)·PROMPT(v1→v2)가 함께 바뀌어, 이 차이를 모델 차이로 단정하지 않는다. 하네스·모델이 다른 EXP-032와의 순서도 n=3 관측값일 뿐 순위로 해석하지 않는다.
 22. **같은 모델도 하네스의 시스템 지침에 따라 "한 번에 끝내기"와 "루프로 나눠 끝내기"가 갈렸다 (EXP-054·055·056·057).** gpt-6.1-terra는 Codex(EXP-054)에서 3/3 iteration 1에 완주했지만, pi 정본 조건(EXP-055)에서는 iteration마다 기능 묶음 하나만 구현·커밋하고 스스로 턴을 끝내 iteration 6·5·7회(4–5분)에 완주했다. 정본 PROMPT의 "pick the single most important remaining piece of work … and do it"을 한 번 실행에 작업 하나로 읽은 것으로 보이며, PROMPT v1로 되돌려도(EXP-056, n=1 중단) 같았다. Codex 기본 지침에는 "Autonomy and persistence" 절이 있고 pi 기본 시스템 프롬프트에는 없다. pi에 그 요지를 옮긴 113단어 지침을 `--append-system-prompt`로 덧붙이자(EXP-057) 같은 날 같은 조건에서 3/3 iteration 1·1분 38초–1분 47초로 바뀌었다. 같은 pi에서 Sonnet 5.5·gpt-6.1-sol은 지침 없이도 iteration 1에 끝냈으므로, 이 행동은 모델과 하네스 지침의 조합에서 나온다. 랄프 루프는 이런 모델에서도 진척을 이어 받아 완주시켰다(루프 기여 관측). EXP-057은 실행 당시 비정본 스택이었으나, 2026-10-28 사용자 결정으로 같은 지침이 pi 정본이 되어 새 pi 정본 조건의 첫 결과가 되었다. 지침 추가 전 pi 결과(EXP-029–056)와 비교할 때는 지침 유무를 교란 변수로 적는다.
 23. **제공자 서빙 속도가 모델 능력보다 먼저 완주를 막은 첫 사례가 나왔다 (EXP-061).** pi × K-EXAONE 2.5(EXAONE API, 무료·OpenAI 호환 직결)는 출력 속도가 약 20 tok/s(reasoning_effort max·high 동일)였다. pi는 응답이 끝나야 세션을 기록하므로 긴 응답 하나가 정체 감시에 걸렸고, 정본 상한(20분·300초)에서는 첫 run의 두 iteration이 모두 정체 종료되어 중단했다. 상한을 60분·900초로 완화해도 0/3이었고 최고 run도 4/13 파일에 머물렀다. 429는 0건이었다. 정체 응답의 내용이 남지 않아 긴 생성과 스트림 멈춤을 구분하지 못했으므로, 이 결과는 해당 시점 서빙 조건에서의 관측이며 모델 능력의 한계로 단정하지 않는다.
+24. **Gemini 4 세 모델(Carbon·Neon·Hydrogen)은 Antigravity CLI의 구독 인증 경로로 모두 첫 iteration에 완주했고, 같은 세대 안에서도 소요 시간이 약 3배 차이 났다 (EXP-063).** agy 1.5.14(effort high, Google 계정 구독 인증)에서 세 모델이 각 EN 3/3, 총 9/9를 iteration 1에 완주했다. 세션은 Hydrogen 4:04–4:39, Neon 6:22–6:58, Carbon 12:51–14:36이었다. Carbon은 output·thinking 토큰이 다른 두 모델의 약 1.5–2배였고, 응답당 모델 대기도 28–41초로 Hydrogen(7–9초)보다 길었다. 모델 대기 1초당 output은 Carbon 약 70–76, Hydrogen 약 188–207토큰이었다. 구독 실행이라 청구는 없고, 공개 단가 환산은 run당 Hydrogen 약 $0.5, Neon·Carbon 약 $0.9다. EXP-035(agy × gemini-3.8-flash, 15.5–22.4분)보다 짧았지만 agy 버전·인증 경로·PROMPT 버전이 함께 달라 모델 차이로 단정하지 않는다.
 
 ## 실험 라이프사이클
 

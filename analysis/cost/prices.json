@@ -303,5 +303,35 @@
     "output": 0.5,
     "src": "OpenRouter GET /api/v1/models/meta/muse-ember/endpoints (Meta endpoint)",
     "checked": "2026-11-11"
+  },
+  "gemini-4-carbon": {
+    "input": 2.0,
+    "cache_read": 0.1,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 10.0,
+    "src": "https://aistudio.google.com/docs/pricing",
+    "accessed": "2026-11-22",
+    "caveat": "Gemini API 유료 티어 Standard, 2026-11-30까지 단가(2026-12-01부터 전 항목 2배). 출력 단가는 thinking 토큰 포함. 프롬프트 길이 구간 없음, 암묵 캐시만. EXP-063은 agy 구독 인증(authMethod=consumer) 실행이라 실제 지출 없음 — 환산값만"
+  },
+  "gemini-4-neon": {
+    "input": 3.0,
+    "cache_read": 0.15,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 15.0,
+    "src": "https://aistudio.google.com/docs/pricing",
+    "accessed": "2026-11-22",
+    "caveat": "Gemini API 유료 티어 Standard, 출력 단가는 thinking 토큰 포함. 프롬프트 길이 구간 없음, 암묵 캐시만. EXP-063은 agy 구독 인증(authMethod=consumer) 실행이라 실제 지출 없음 — 환산값만"
+  },
+  "gemini-4-hydrogen": {
+    "input": 1.5,
+    "cache_read": 0.075,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 7.5,
+    "src": "https://aistudio.google.com/docs/pricing",
+    "accessed": "2026-11-22",
+    "caveat": "Gemini API 유료 티어 Standard, 출력 단가는 thinking 토큰 포함. 프롬프트 길이 구간 없음, 암묵 캐시만. EXP-063은 agy 구독 인증(authMethod=consumer) 실행이라 실제 지출 없음 — 환산값만"
   }
 }

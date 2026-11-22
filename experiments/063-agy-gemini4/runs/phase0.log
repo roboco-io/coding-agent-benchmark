@@ -1,0 +1,9 @@
+=== gemini-4-carbon (agy) 2026-11-22 01:20:05 ===
+agy auth: authMethod=consumer  (기대 authMethod=consumer)
+{"conversation_id":"fc7f469b-a1d4-4bc6-a83b-11337244c221","status":"SUCCESS","response":"SMOKE-OK\n","duration_seconds":4.45739,"num_turns":1,"usage":{"input_tokens":9501,"output_tokens":49,"thinking_tokens":41,"cache_read_tokens":0,"total_tokens":9550}}
+=== gemini-4-neon (agy) 2026-11-22 01:20:15 ===
+agy auth: authMethod=consumer  (기대 authMethod=consumer)
+{"conversation_id":"094458c3-53ff-4ca2-b701-47d74367533c","status":"SUCCESS","response":"SMOKE-OK\n","duration_seconds":3.992772,"num_turns":1,"usage":{"input_tokens":9505,"output_tokens":35,"thinking_tokens":30,"cache_read_tokens":0,"total_tokens":9540}}
+=== gemini-4-hydrogen (agy) 2026-11-22 01:20:25 ===
+agy auth: authMethod=consumer  (기대 authMethod=consumer)
+{"conversation_id":"ff617096-8614-4f21-9f7e-d4757a10f3a8","status":"SUCCESS","response":"SMOKE-OK\n","duration_seconds":3.156351,"num_turns":1,"usage":{"input_tokens":10213,"output_tokens":38,"thinking_tokens":30,"cache_read_tokens":0,"total_tokens":10251}}

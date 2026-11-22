@@ -65,6 +65,8 @@
 | EXP-057 | pi 0.87.1 | `experiments/057-pi-gpt61-terra-persist/runs/phase0.md` |
 | EXP-059 | Claude Code 2.1.321 | `experiments/059-fable52-ralph/runs/phase0.md`, 세션 jsonl `version` 2.1.321 전수 |
 | EXP-060 | pi 0.87.1 | `experiments/060-pi-muse-ember/runs/phase0.md` |
+| EXP-061 | pi 0.87.1 | `experiments/061-pi-k-exaone25/runs/phase0.md` |
+| EXP-063 | Antigravity CLI (agy) 1.5.14 | `experiments/063-agy-gemini4/runs/phase0.md`, `agy --version` 1.5.14(`AGY_CLI_DISABLE_AUTO_UPDATE=1`) |
 
 ## 읽는 법
 

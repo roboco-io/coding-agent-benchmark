@@ -1,0 +1,28 @@
+=== starting sequential runs (agy: carbon:gemini-4-carbon neon:gemini-4-neon hydrogen:gemini-4-hydrogen / en / n=3) : 2026-11-22 01:21:09 ===
+=== start carbon-en-1 : 2026-11-22 01:21:09 ===
+=== end carbon-en-1 | 1,2026-11-22 01:34:15,0,13,154,1,pass : 2026-11-22 01:34:15 ===
+=== start neon-en-1 : 2026-11-22 01:34:15 ===
+=== end neon-en-1 | 1,2026-11-22 01:41:29,0,13,154,1,pass : 2026-11-22 01:41:29 ===
+=== start hydrogen-en-1 : 2026-11-22 01:41:29 ===
+=== starting sequential runs (agy: carbon:gemini-4-carbon neon:gemini-4-neon hydrogen:gemini-4-hydrogen / en / n=3) : 2026-11-22 08:17:45 ===
+=== skip carbon-en-1 : 2026-11-22 08:17:45 ===
+=== skip neon-en-1 : 2026-11-22 08:17:45 ===
+=== start hydrogen-en-1 : 2026-11-22 08:17:45 ===
+=== starting sequential runs (agy: carbon:gemini-4-carbon neon:gemini-4-neon hydrogen:gemini-4-hydrogen / en / n=3) : 2026-11-22 08:21:57 ===
+=== skip carbon-en-1 : 2026-11-22 08:21:57 ===
+=== skip neon-en-1 : 2026-11-22 08:21:57 ===
+=== start hydrogen-en-1 : 2026-11-22 08:22:00 ===
+=== end hydrogen-en-1 | 1,2026-11-22 08:26:20,0,13,154,1,pass : 2026-11-22 08:26:20 ===
+=== start carbon-en-2 : 2026-11-22 08:26:23 ===
+=== end carbon-en-2 | 1,2026-11-22 08:39:31,0,13,154,1,pass : 2026-11-22 08:39:31 ===
+=== start neon-en-2 : 2026-11-22 08:39:34 ===
+=== end neon-en-2 | 1,2026-11-22 08:46:20,0,13,154,1,pass : 2026-11-22 08:46:20 ===
+=== start hydrogen-en-2 : 2026-11-22 08:46:22 ===
+=== end hydrogen-en-2 | 1,2026-11-22 08:51:01,0,13,154,1,pass : 2026-11-22 08:51:02 ===
+=== start carbon-en-3 : 2026-11-22 08:51:04 ===
+=== end carbon-en-3 | 1,2026-11-22 09:05:57,0,13,154,1,pass : 2026-11-22 09:05:57 ===
+=== start neon-en-3 : 2026-11-22 09:06:00 ===
+=== end neon-en-3 | 1,2026-11-22 09:12:37,0,13,154,1,pass : 2026-11-22 09:12:37 ===
+=== start hydrogen-en-3 : 2026-11-22 09:12:39 ===
+=== end hydrogen-en-3 | 1,2026-11-22 09:17:18,0,13,154,1,pass : 2026-11-22 09:17:18 ===
+=== ALL RUNS FINISHED : 2026-11-22 09:17:18 ===

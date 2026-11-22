@@ -24,6 +24,11 @@ run_one(){
   [ -f "$BASE/done-$1" ] && { log "skip $1"; return; }
   # 비용 상한으로 멈춘 실험은 남은 run을 시작하지 않는다 (EXP-042 재발 방지)
   [ -f "$BASE/budget-stop" ] && { log "skip $1 (budget-stop)"; return; }
+  # agy 구독 인증은 run 사이에 끊길 수 있다 → 시작 전 확인, 실패 시 모델 호출 전에 전체 중단 (EXP-063 D-1)
+  if [ "$HARNESS" = agy ]; then
+    source "$BASE/agy_env.sh"
+    agy_auth_check || { log "auth-stop $1 (agy 구독 인증 실패 — 재로그인 후 재개)"; touch "$BASE/auth-stop"; exit 2; }
+  fi
   log "start $1"
   bash "$BASE/driver.sh" "$1"
   archive_sessions "$1"

@@ -22,6 +22,7 @@ description: Use when a new LLM model, model variant, or coding agent/harness is
 | OpenAI 계열(Responses API만 제공) | `codex` | EXP-011/021 |
 | pi coding agent (제공자 OpenAI 호환 등, pi 내장 또는 `models.json` provider) | `pi` | EXP-029 |
 | Google Gemini를 Antigravity CLI(`agy`)로, Gemini API 키 사용 | `agy` | EXP-035 |
+| Google Gemini를 Antigravity CLI(`agy`)로, Google 계정 구독 인증 | `agy` + `AGY_AUTH=subscription` | EXP-063 |
 | 위 어느 것도 아님 | 대상 제외 또는 설계에 변환 계층 사유·계측 한계 사전 등록 | CLAUDE.md 하네스 규칙 |
 
 ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실 사례).
@@ -63,6 +64,7 @@ ccr 등 변환 계층은 기본 금지다 (tool call 인자 훼손·usage 유실
 | `~/.zsh_secrets` 전체를 에이전트 환경에 export | 에이전트의 `env` 출력으로 키가 세션 로그·아카이브에 남음 (EXP-036 D-3, EXP-029 아카이브에서도 발견) | `key_env.sh`의 `load_secrets`로 필요한 키만 노출(pi: `PI_KEYMAP` 대상+`PI_KEEP_ENV`), 보관 전 `redact_keys.py` |
 | run 디렉터리가 하네스 디렉터리 안에 있음 | 에이전트가 `../measure.sh`·이전 run 로그를 읽거나 실행 → agy 강제 종료(EXP-035 D-1), run 간 정보 노출(EXP-036 D-2) | 세션 기록에서 하네스 경로 참조를 전수 검사해 이탈로 기록. 구조 분리는 ROADMAP 후속 과제 |
 | agy를 실 HOME에서 실행 | keyring의 Google 계정 OAuth가 선택돼 API 키 미사용 | setup이 만드는 격리 HOME(`modelProvider: "gemini"`) 사용, 로그에서 `authMethod=gemini_api_key` 확인 |
+| agy 구독 인증(`AGY_AUTH=subscription`)을 smoke 통과만 믿고 장시간 실행 | OAuth 토큰(약 1시간)이 만료돼 실 HOME에서 갱신되면 토큰이 키체인 대신 `~/.gemini/antigravity-cli/antigravity-oauth-token` 파일로 옮겨질 수 있어, 격리 HOME의 다음 run이 "Authentication required"로 즉시 실패 (EXP-063 D-1) | `agy_reset_home`이 격리 HOME에 키체인 링크를 두고 토큰 파일이 있으면 복사한다. run-all이 run마다 `agy_auth_check`(격리 HOME `agy models` + `authMethod=consumer`)로 확인하고 실패 시 `auth-stop`으로 전체 중단 → 사용자 재로그인(`agy` 대화형) 후 재개. 구독 실행은 `PRICE_*=0`·`billing: subscription`(EXP-054 방식), API 환산 단가는 보고용 |
 | `claude-native`를 `ANTHROPIC_API_KEY`가 export된 셸에서 실행 | API 키가 구독 로그인보다 우선해 API 과금·캐시 5분 TTL로 실행, "구독 인증"으로 오기록 (EXP-037) | driver·smoke가 `env -u ANTHROPIC_API_KEY`로 실행하고 smoke가 `"apiKeySource":"none"`을 확인. phase0.md에 인증 출처를 기록 |
 | 에이전트가 장기 실행 서버를 포그라운드로 실행(`npm run dev` 등) | 도구 호출이 반환되지 않아 iteration 정체. pi bash 도구는 기본 timeout이 없고, run 상한은 예전엔 iteration 사이에서만 검사 (EXP-039 luna-en-2: 에이전트가 붙인 `timeout: 1000`초로 약 17분 뒤 해제) | driver의 정체 감시(`STALL_SEC`)·iteration 중 run 상한이 종료. 정체 종료는 이탈로 기록 |
 | "3/3 완주 = 재현성 확정" 서술 | 관측 범위 초과 | 표본 수와 조건을 함께 적는다 |

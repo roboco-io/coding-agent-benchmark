@@ -35,7 +35,12 @@ for c in $CONDITIONS; do
         echo "$pr" | grep -q 'continue with the next remaining part' || { echo "FAIL $m — 지속 지침 주입 미확인: $(echo "$pr" | tail -1)"; fail=1; }
       fi ;;
     agy) source "$BASE/agy_env.sh"
-      r=$(cd "$BASE/smoke-tmp" && agy_run -p "$Q" --model "$m" ${EFFORT:+--effort "$EFFORT"} --output-format json < /dev/null 2>&1) ;;
+      r=$(cd "$BASE/smoke-tmp" && agy_run -p "$Q" --model "$m" ${EFFORT:+--effort "$EFFORT"} --output-format json < /dev/null 2>&1)
+      # 인증 경로 확인 (EXP-063): 구독은 consumer, API 키는 gemini_api_key
+      want=gemini_api_key; [ "${AGY_AUTH:-apikey}" = subscription ] && want=consumer
+      am=$(grep -ho 'authMethod=[a-z_]*' "$BASE"/agy-home/.gemini/antigravity-cli/cli.log 2>/dev/null | sort -u | tr '\n' ' ')
+      echo "agy auth: $am (기대 authMethod=$want)" | tee -a "$OUT"
+      [ "$am" = "authMethod=$want " ] || { echo "FAIL $m — agy 인증 경로 불일치: $am"; fail=1; } ;;
     claude-native) r=$(cd "$BASE/smoke-tmp" && env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL \
           claude -p "$Q" --model "$m" --output-format json < /dev/null 2>&1)
       # 구독 인증 확인 (EXP-037: API 키 혼입으로 apiKeySource=ANTHROPIC_API_KEY)

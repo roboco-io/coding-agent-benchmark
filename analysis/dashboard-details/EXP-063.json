@@ -1,0 +1,258 @@
+{
+  "exp": "EXP-063",
+  "date": "2026-11-22",
+  "report": "experiments/063-agy-gemini4/report.md",
+  "client": "Antigravity CLI (agy) 1.5.14",
+  "runs": {
+    "carbon-en-1": {
+      "iter": 1,
+      "commits": 6
+    },
+    "carbon-en-2": {
+      "iter": 1,
+      "commits": 5
+    },
+    "carbon-en-3": {
+      "iter": 1,
+      "commits": 5
+    },
+    "neon-en-1": {
+      "iter": 1,
+      "commits": 5
+    },
+    "neon-en-2": {
+      "iter": 1,
+      "commits": 3
+    },
+    "neon-en-3": {
+      "iter": 1,
+      "commits": 5
+    },
+    "hydrogen-en-1": {
+      "iter": 1,
+      "commits": 2
+    },
+    "hydrogen-en-2": {
+      "iter": 1,
+      "commits": 3
+    },
+    "hydrogen-en-3": {
+      "iter": 1,
+      "commits": 4
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "날짜",
+        "2026-11-22 (01:21–01:41, 08:22–09:17 KST, 순차 9 run)"
+      ],
+      [
+        "에이전트",
+        "Antigravity CLI (agy) 1.5.14, 자동 업데이트 끔"
+      ],
+      [
+        "인증·연결",
+        "Google 계정 구독 인증(authMethod=consumer). 격리 HOME에 키체인 링크를 두고 GEMINI_API_KEY는 노출하지 않음"
+      ],
+      [
+        "모델 ID",
+        "gemini-4-carbon · gemini-4-neon · gemini-4-hydrogen (해석 결과 각 -high)"
+      ],
+      [
+        "effort",
+        "high (세 모델 공통 최고값, EXP-035와 같음)"
+      ],
+      [
+        "격리",
+        "run마다 격리 HOME 초기화(대화·brain 이동), 하네스 파일·다른 run 참조 없음 확인"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 30분(기본 20분보다 김) · 정체 300초"
+      ],
+      [
+        "프롬프트",
+        "정본 EN PROMPT v2, 모델별 n=3, 모델 교차 순서"
+      ],
+      [
+        "비용",
+        "구독 실행이라 API 청구 없음. 환산은 공개 단가(2026-11-22 확인) 기준"
+      ]
+    ],
+    "en": [
+      [
+        "Date",
+        "2026-11-22 (01:21–01:41 and 08:22–09:17 KST, 9 runs in sequence)"
+      ],
+      [
+        "Agent",
+        "Antigravity CLI (agy) 1.5.14, auto-update off"
+      ],
+      [
+        "Auth · connection",
+        "Google account subscription auth (authMethod=consumer). The isolated HOME links the keychain; GEMINI_API_KEY is not exposed"
+      ],
+      [
+        "Model IDs",
+        "gemini-4-carbon · gemini-4-neon · gemini-4-hydrogen (each resolved to -high)"
+      ],
+      [
+        "Effort",
+        "high (highest level all three support; same as EXP-035)"
+      ],
+      [
+        "Isolation",
+        "Isolated HOME reset every run (conversations and brain moved out); no access to harness files or other runs found"
+      ],
+      [
+        "Cap",
+        "30 iterations · 30 min per run (longer than the 20 min default) · 300 s stall"
+      ],
+      [
+        "Prompt",
+        "Canonical EN PROMPT v2, n=3 per model, models interleaved"
+      ],
+      [
+        "Cost",
+        "Subscription run, so no API billing. Conversion uses public prices checked on 2026-11-22"
+      ]
+    ],
+    "ja": [
+      [
+        "日付",
+        "2026-11-22（01:21–01:41、08:22–09:17 KST、9 runを順次実行）"
+      ],
+      [
+        "エージェント",
+        "Antigravity CLI (agy) 1.5.14、自動更新オフ"
+      ],
+      [
+        "認証・接続",
+        "Googleアカウントのサブスクリプション認証（authMethod=consumer）。隔離HOMEにキーチェーンのリンクを置き、GEMINI_API_KEYは公開しない"
+      ],
+      [
+        "モデルID",
+        "gemini-4-carbon · gemini-4-neon · gemini-4-hydrogen（それぞれ-highに解決）"
+      ],
+      [
+        "effort",
+        "high（3モデル共通の最高値、EXP-035と同じ）"
+      ],
+      [
+        "隔離",
+        "runごとに隔離HOMEを初期化（会話・brainを移動）、ハーネスファイルや他runの参照なしを確認"
+      ],
+      [
+        "上限",
+        "30 iteration · runあたり30分（既定の20分より長い） · 停滞300秒"
+      ],
+      [
+        "プロンプト",
+        "正本EN PROMPT v2、モデルごとn=3、モデルを交互に実行"
+      ],
+      [
+        "コスト",
+        "サブスクリプション実行のためAPI請求なし。換算は2026-11-22確認の公開単価"
+      ]
+    ],
+    "zh": [
+      [
+        "日期",
+        "2026-11-22（01:21–01:41、08:22–09:17 KST，顺序运行 9 个 run）"
+      ],
+      [
+        "代理",
+        "Antigravity CLI (agy) 1.5.14，关闭自动更新"
+      ],
+      [
+        "认证·连接",
+        "Google 账号订阅认证（authMethod=consumer）。隔离 HOME 链接钥匙串，不暴露 GEMINI_API_KEY"
+      ],
+      [
+        "模型 ID",
+        "gemini-4-carbon · gemini-4-neon · gemini-4-hydrogen（均解析为 -high）"
+      ],
+      [
+        "effort",
+        "high（三个模型共同支持的最高值，与 EXP-035 相同）"
+      ],
+      [
+        "隔离",
+        "每个 run 重置隔离 HOME（移出会话与 brain），未发现访问 harness 文件或其他 run"
+      ],
+      [
+        "上限",
+        "30 次迭代 · 每 run 30 分钟（长于默认 20 分钟）· 停滞 300 秒"
+      ],
+      [
+        "提示词",
+        "标准 EN PROMPT v2，每个模型 n=3，模型交替运行"
+      ],
+      [
+        "成本",
+        "订阅运行，无 API 计费。折算采用 2026-11-22 核实的公开单价"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "D-1: 01:37 구독 토큰 만료 후 갱신 토큰이 실 HOME 파일에 저장돼, 격리 HOME의 hydrogen-en-1 iteration 1·2가 모델 호출 전에 인증 실패로 끝났다. 실행을 멈추고 토큰 파일을 격리 HOME에 복사하도록 하네스를 고쳤으며, 이 run은 무효 처리했다.",
+      "D-2: 08:17 재개 시 토큰 파일이 사라져 즉시 중단했다. 사용자가 재로그인했고, run마다 시작 전에 인증을 확인해 실패하면 모델 호출 전에 멈추도록 보완했다. 유효한 hydrogen-en-1은 08:22에 다시 실행한 run이다.",
+      "carbon-en-1·neon-en-1은 D-1 수정 전 하네스로 실행했다. 인증 경로(구독)와 다른 조건은 같고, 토큰 전달 방식만 다르다.",
+      "run 순서는 설계 문서의 모델별 묶음이 아니라 하네스 정본의 교차 순서였다."
+    ],
+    "en": [
+      "D-1: after the subscription token expired at 01:37, the refreshed token was stored in a file in the real HOME, so iterations 1 and 2 of hydrogen-en-1 failed authentication in the isolated HOME before any model call. The run was stopped, the harness now copies that token file into the isolated HOME, and the run was voided.",
+      "D-2: on resuming at 08:17 the token file had disappeared, so the run was stopped at once. The user signed in again, and the harness now checks auth before each run and stops before any model call if it fails. The valid hydrogen-en-1 is the rerun started at 08:22.",
+      "carbon-en-1 and neon-en-1 ran on the harness before the D-1 fix. The auth path (subscription) and all other conditions are the same; only the way the token reaches the isolated HOME differs.",
+      "Runs were interleaved across models (the harness default), not grouped by model as the design document said."
+    ],
+    "ja": [
+      "D-1：01:37にサブスクリプショントークンが期限切れになった後、更新トークンが実HOMEのファイルに保存されたため、隔離HOMEのhydrogen-en-1 iteration 1・2がモデル呼び出し前に認証失敗で終了した。実行を止め、トークンファイルを隔離HOMEにコピーするようハーネスを修正し、このrunは無効とした。",
+      "D-2：08:17の再開時にトークンファイルが消えていたため即座に停止した。ユーザーが再ログインし、runごとに開始前に認証を確認して失敗時はモデル呼び出し前に止めるよう補強した。有効なhydrogen-en-1は08:22に再実行したrunである。",
+      "carbon-en-1・neon-en-1はD-1修正前のハーネスで実行した。認証経路（サブスクリプション）とその他の条件は同じで、トークンの渡し方だけが異なる。",
+      "run順序は設計文書のモデル別まとめではなく、ハーネス正本の交互順序だった。"
+    ],
+    "zh": [
+      "D-1：01:37 订阅 token 过期后，刷新后的 token 被保存在真实 HOME 的文件中，导致隔离 HOME 中 hydrogen-en-1 的第 1、2 次迭代在调用模型前认证失败。已停止运行，修改 harness 将该 token 文件复制到隔离 HOME，并将该 run 作废。",
+      "D-2：08:17 恢复时 token 文件已消失，因此立即停止。用户重新登录后，harness 增加了每个 run 开始前的认证检查，失败时在调用模型前停止。有效的 hydrogen-en-1 是 08:22 重新运行的 run。",
+      "carbon-en-1 与 neon-en-1 使用 D-1 修复前的 harness 运行。认证路径（订阅）及其他条件相同，仅 token 传递方式不同。",
+      "run 顺序为 harness 标准的交替顺序，而非设计文档所写的按模型分组。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "9 run 모두 iteration 1에 합격, 커밋 Carbon 5–6개·Neon 3–5개·Hydrogen 2–4개.",
+      "9 run 모두 Fastify + Prisma + TypeScript(tsx) 스택을 골랐다.",
+      "Carbon: 세션 12:51–14:36, 응답 16–26회, output 47.5–52.4K(thinking 26.8–28.6K), 응답당 모델 대기 28–41초.",
+      "Neon: 세션 6:22–6:58, 응답 14–17회, output 32.8–34.0K(thinking 14.3–15.0K), 응답당 모델 대기 17–21초.",
+      "Hydrogen: 세션 4:04–4:39, 응답 18–23회, output 30.8–31.6K(thinking 12.8–14.0K), 응답당 모델 대기 7–9초.",
+      "로그·transcript에 429·quota 오류 없음."
+    ],
+    "en": [
+      "All 9 runs passed at iteration 1; commits: Carbon 5–6, Neon 3–5, Hydrogen 2–4.",
+      "All 9 runs chose a Fastify + Prisma + TypeScript (tsx) stack.",
+      "Carbon: sessions 12:51–14:36, 16–26 responses, output 47.5–52.4K (thinking 26.8–28.6K), 28–41 s of model wait per response.",
+      "Neon: sessions 6:22–6:58, 14–17 responses, output 32.8–34.0K (thinking 14.3–15.0K), 17–21 s of model wait per response.",
+      "Hydrogen: sessions 4:04–4:39, 18–23 responses, output 30.8–31.6K (thinking 12.8–14.0K), 7–9 s of model wait per response.",
+      "No 429 or quota errors in logs or transcripts."
+    ],
+    "ja": [
+      "9 runすべてiteration 1で合格、コミットはCarbon 5–6個・Neon 3–5個・Hydrogen 2–4個。",
+      "9 runすべてFastify + Prisma + TypeScript（tsx）スタックを選んだ。",
+      "Carbon：セッション12:51–14:36、応答16–26回、output 47.5–52.4K（thinking 26.8–28.6K）、応答あたりモデル待ち28–41秒。",
+      "Neon：セッション6:22–6:58、応答14–17回、output 32.8–34.0K（thinking 14.3–15.0K）、応答あたりモデル待ち17–21秒。",
+      "Hydrogen：セッション4:04–4:39、応答18–23回、output 30.8–31.6K（thinking 12.8–14.0K）、応答あたりモデル待ち7–9秒。",
+      "ログ・transcriptに429・quotaエラーなし。"
+    ],
+    "zh": [
+      "9 个 run 全部在第 1 次迭代通过；提交数 Carbon 5–6、Neon 3–5、Hydrogen 2–4。",
+      "9 个 run 全部选择 Fastify + Prisma + TypeScript（tsx）技术栈。",
+      "Carbon：会话 12:51–14:36，响应 16–26 次，output 47.5–52.4K（thinking 26.8–28.6K），每次响应模型等待 28–41 秒。",
+      "Neon：会话 6:22–6:58，响应 14–17 次，output 32.8–34.0K（thinking 14.3–15.0K），每次响应模型等待 17–21 秒。",
+      "Hydrogen：会话 4:04–4:39，响应 18–23 次，output 30.8–31.6K（thinking 12.8–14.0K），每次响应模型等待 7–9 秒。",
+      "日志与 transcript 中无 429 或 quota 错误。"
+    ]
+  }
+}

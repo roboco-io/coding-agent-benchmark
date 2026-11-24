@@ -166,6 +166,7 @@
   "deviations": {
     "ko": [
       "Mini 4.5 Preview의 공개 결과는 파일 시스템 격리 조건(mini45sb) 3 run이다. 앞서 실행한 비격리 4 run은 공개 지표에서 뺐다. en-1(429 100건, D-1)은 계정 한도 영향이 의심돼 사용자 지시로 제외했고(D-7), en-2는 유효하지만 비격리라 참고값이며(D-4·D-5), en-3은 하네스 디렉터리·채점용 Hurl 정본·en-2 소스를 읽어 독립 시행이 아니고(D-6), en-1의 대체 run en-4는 옮겨 둔 디렉터리에서 en-1 코드를 찾아 rsync로 복사해 무효다(D-8). 디렉터리를 옮기는 것으로는 노출을 막지 못했다.",
+      "공개 세션 시간은 429 제한 대기를 뺀 값이다(대기 = 429 응답마다 실패한 요청 시작부터 다음 요청 시작까지의 합: en-1 12.3초, en-2 200.8초, en-3 264.9초). 기록 세션 시간(제한 대기 포함)은 4:18·10:25·12:03이고 공개 시간은 4:06·7:04·7:38이다. Pro 4·Contributor는 429가 없어 그대로다.",
       "D-2 mini45 run 중 사용자 지시로 solar-pro-4-contributor 조건을 추가했다. 재설정·재승인·smoke 후 pro4부터 재기동했고 실험 비용 상한을 $3에서 $5로 올렸다.",
       "D-3 Solar Pro 4 run은 iteration 1(Hurl 0/13, 완료 선언 없음) 뒤 iteration 2에서 38:26에 완주해 run 상한 40분(비정본)에 근접했다. 정본 상한 20분이었다면 미완주였다.",
       "**EXP-064부터 Solar Pro 4 벤치마크 실행은 contributor 변형(`solar-pro-4-contributor`)만 사용한다(사용자 지시 2026-11-24).** Upstage 문서상 Solar Pro 4와 같은 모델이며, 요청과 응답을 Upstage와 공유해 Upstage가 저장하고 학습에 쓰는 대가로 70% 할인을 받는다. 비용은 solar-pro-4 정가로 환산해 공개한다.",
@@ -176,6 +177,7 @@
     ],
     "en": [
       "The published Mini 4.5 Preview result is the 3 filesystem-sandboxed runs (condition mini45sb). The 4 earlier unsandboxed runs are dropped from published metrics: en-1 (100 HTTP 429 errors, D-1) was excluded at the user's request because an account rate limit was suspected (D-7); en-2 is valid but unsandboxed, so reference only (D-4, D-5); en-3 read the harness directory, the grading Hurl files and en-2's source, so it is not an independent trial (D-6); en-4, the replacement for en-1, is invalid because it found en-1's code in a moved directory and rsync-copied it (D-8). Moving directories did not prevent the exposure.",
+      "Published session times exclude HTTP 429 throttling wait (wait = sum, per 429 response, of failed request start to next request start: en-1 12.3 s, en-2 200.8 s, en-3 264.9 s). Recorded session times including throttling are 4:18, 10:25 and 12:03; published times are 4:06, 7:04 and 7:38. Pro 4 and Contributor had no 429, so they are unchanged.",
       "D-2 During the mini45 run the user added the solar-pro-4-contributor condition. After reconfiguration, re-approval and a smoke test, the run restarted from pro4, and the experiment cost cap went from $3 to $5.",
       "D-3 The Solar Pro 4 run ended iteration 1 at Hurl 0/13 without declaring completion and finished at iteration 2 in 38:26, close to the 40-min run cap (non-canonical). It would not have finished under the canonical 20-min cap.",
       "**From EXP-064 onward, Solar Pro 4 benchmark runs use only the contributor variant (`solar-pro-4-contributor`), by user instruction on 2026-11-24.** Per Upstage documentation it is the same model as Solar Pro 4; requests and responses are shared with Upstage, which stores them and uses them for training, in return for a 70% discount. Its cost is published at the solar-pro-4 list price.",
@@ -186,6 +188,7 @@
     ],
     "ja": [
       "Mini 4.5 Previewの公開結果はファイルシステム隔離条件（mini45sb）の3 runである。先に実行した隔離なしの4 runは公開指標から除いた。en-1（429が100件、D-1）はアカウント上限の影響が疑われるためユーザー指示で除外し（D-7）、en-2は有効だが隔離なしのため参考値で（D-4・D-5）、en-3はハーネスディレクトリ・採点用Hurl正本・en-2のソースを読んだため独立試行ではなく（D-6）、en-1の代替のen-4は移動したディレクトリからen-1のコードを見つけてrsyncでコピーしたため無効である（D-8）。ディレクトリを移動しても露出は防げなかった。",
+      "公開セッション時間は429の制限待機を除いた値である（待機=429応答ごとの、失敗したリクエスト開始から次のリクエスト開始までの合計：en-1 12.3秒、en-2 200.8秒、en-3 264.9秒）。制限待機を含む記録セッション時間は4:18・10:25・12:03で、公開時間は4:06・7:04・7:38。Pro 4とContributorは429がなく変更なし。",
       "D-2 mini45のrun中にユーザー指示でsolar-pro-4-contributor条件を追加した。再設定・再承認・smoke後にpro4から再起動し、実験のコスト上限を$3から$5に引き上げた。",
       "D-3 Solar Pro 4のrunはiteration 1がHurl 0/13で完了宣言なしに終わり、iteration 2で38:26に完走して、run上限40分(非正本)に近づいた。正本の上限20分なら未完走だった。",
       "**EXP-064以降、Solar Pro 4のベンチマーク実行はcontributor版(`solar-pro-4-contributor`)のみを使う(ユーザー指示 2026-11-24)。**Upstageのドキュメントでは Solar Pro 4と同じモデルで、リクエストとレスポンスをUpstageと共有し、Upstageが保存して学習に使う代わりに70%割引を受ける。コストはsolar-pro-4の定価で換算して公開する。",
@@ -196,6 +199,7 @@
     ],
     "zh": [
       "Mini 4.5 Preview 的公开结果是文件系统隔离条件（mini45sb）的 3 个 run。此前运行的 4 个未隔离 run 已从公开指标中排除：en-1（100 次 HTTP 429，D-1）因怀疑受账号额度影响，应用户要求排除（D-7）；en-2 有效但未隔离，仅作参考（D-4、D-5）；en-3 读取了框架目录、评分用 Hurl 标准文件和 en-2 的源码，不是独立试验（D-6）；作为 en-1 替代的 en-4 无效，因为它在被移动的目录中找到 en-1 的代码并用 rsync 复制（D-8）。移动目录并不能阻止这种接触。",
+      "公布的会话时间已扣除 HTTP 429 限流等待（等待 = 每个 429 响应从失败请求开始到下一次请求开始的时间之和：en-1 12.3 秒，en-2 200.8 秒，en-3 264.9 秒）。含限流等待的记录会话时间为 4:18、10:25、12:03，公布时间为 4:06、7:04、7:38。Pro 4 和 Contributor 没有 429，因此不变。",
       "D-2 在 mini45 run 期间，用户指示新增 solar-pro-4-contributor 条件。完成重新配置、重新批准和 smoke 后从 pro4 重新启动，实验成本上限从 $3 提高到 $5。",
       "D-3 Solar Pro 4 的 run 在 iteration 1 以 Hurl 0/13 结束且未宣布完成，在 iteration 2 用 38:26 完成，接近 40 分钟的 run 上限（非标准）。若按标准上限 20 分钟则未完成。",
       "**自 EXP-064 起，Solar Pro 4 的基准运行只使用 contributor 变体（`solar-pro-4-contributor`），依据用户 2026-11-24 的指示。**根据 Upstage 文档，它与 Solar Pro 4 是同一个模型；请求和响应与 Upstage 共享，由 Upstage 保存并用于训练，作为交换可享受 70% 折扣。成本按 solar-pro-4 定价折算后公布。",
@@ -207,25 +211,25 @@
   },
   "behavior": {
     "ko": [
-      "Mini 4.5 Preview(격리): en-1 iteration 1·커밋 3개·세션 4:18·52개 응답(429 4건)·output 44,227(reasoning 25,955), en-2 iteration 1·커밋 3개·세션 10:25·152개 응답(429 62건)·output 74,348(reasoning 43,165), en-3 iteration 1·커밋 3개·세션 12:03·179개 응답(429 77건)·output 65,922(reasoning 32,718). 세 run 모두 게이트와 재검증이 13/13·154/154로 일치했다.",
+      "Mini 4.5 Preview(격리): en-1 iteration 1·커밋 3개·세션 4:06(기록 4:18)·52개 응답(429 4건)·output 44,227(reasoning 25,955), en-2 iteration 1·커밋 3개·세션 7:04(기록 10:25)·152개 응답(429 62건)·output 74,348(reasoning 43,165), en-3 iteration 1·커밋 3개·세션 7:38(기록 12:03)·179개 응답(429 77건)·output 65,922(reasoning 32,718). 세 run 모두 게이트와 재검증이 13/13·154/154로 일치했다.",
       "Pro 4: iteration 2에서 완주, 커밋 2개, 세션 38:26, 301개 응답, output 146,559(reasoning 60,769).",
       "Pro 4 Contributor: iteration 1에 완주, 커밋 1개, 세션 17:22, 158개 응답, output 63,262(reasoning 19,448).",
       "세 조건 모두 게이트와 독립 재검증 2회가 13/13·154/154로 일치했다. 각 조건 n=1이므로 contributor와 일반 Pro 4의 차이는 판단하지 않는다."
     ],
     "en": [
-      "Mini 4.5 Preview (sandboxed): en-1 iteration 1, 3 commits, session 4:18, 52 responses (4 were 429), output 44,227 (reasoning 25,955); en-2 iteration 1, 3 commits, session 10:25, 152 responses (62 were 429), output 74,348 (reasoning 43,165); en-3 iteration 1, 3 commits, session 12:03, 179 responses (77 were 429), output 65,922 (reasoning 32,718). All three matched 13/13 · 154/154 at the gate and re-checks.",
+      "Mini 4.5 Preview (sandboxed): en-1 iteration 1, 3 commits, session 4:06 (recorded 4:18), 52 responses (4 were 429), output 44,227 (reasoning 25,955); en-2 iteration 1, 3 commits, session 7:04 (recorded 10:25), 152 responses (62 were 429), output 74,348 (reasoning 43,165); en-3 iteration 1, 3 commits, session 7:38 (recorded 12:03), 179 responses (77 were 429), output 65,922 (reasoning 32,718). All three matched 13/13 · 154/154 at the gate and re-checks.",
       "Pro 4: finished at iteration 2 with 2 commits, session 38:26, 301 responses, output 146,559 (reasoning 60,769).",
       "Pro 4 Contributor: finished at iteration 1 with 1 commit, session 17:22, 158 responses, output 63,262 (reasoning 19,448).",
       "For all three, the gate and two independent re-gradings matched 13/13 · 154/154. Each condition is n=1, so the difference between the contributor and the regular Pro 4 is not judged."
     ],
     "ja": [
-      "Mini 4.5 Preview（隔離）：en-1はiteration 1・コミット3個・セッション4:18・応答52件（429が4件）・output 44,227（reasoning 25,955）、en-2はiteration 1・コミット3個・セッション10:25・応答152件（429が62件）・output 74,348（reasoning 43,165）、en-3はiteration 1・コミット3個・セッション12:03・応答179件（429が77件）・output 65,922（reasoning 32,718）。3 runともゲートと再検証が13/13・154/154で一致した。",
+      "Mini 4.5 Preview（隔離）：en-1はiteration 1・コミット3個・セッション4:06（記録4:18）・応答52件（429が4件）・output 44,227（reasoning 25,955）、en-2はiteration 1・コミット3個・セッション7:04（記録10:25）・応答152件（429が62件）・output 74,348（reasoning 43,165）、en-3はiteration 1・コミット3個・セッション7:38（記録12:03）・応答179件（429が77件）・output 65,922（reasoning 32,718）。3 runともゲートと再検証が13/13・154/154で一致した。",
       "Pro 4: iteration 2で完走、コミット2個、セッション38:26、応答301件、output 146,559(reasoning 60,769)。",
       "Pro 4 Contributor: iteration 1で完走、コミット1個、セッション17:22、応答158件、output 63,262(reasoning 19,448)。",
       "3条件ともゲートと独立再検証2回が13/13・154/154で一致した。各条件n=1のため、contributorと通常のPro 4の違いは判断しない。"
     ],
     "zh": [
-      "Mini 4.5 Preview（隔离）：en-1 在 iteration 1、提交 3 次、会话 4:18、52 条响应（4 次 429）、output 44,227（reasoning 25,955）；en-2 在 iteration 1、提交 3 次、会话 10:25、152 条响应（62 次 429）、output 74,348（reasoning 43,165）；en-3 在 iteration 1、提交 3 次、会话 12:03、179 条响应（77 次 429）、output 65,922（reasoning 32,718）。三个 run 的门控与复验均为 13/13·154/154。",
+      "Mini 4.5 Preview（隔离）：en-1 在 iteration 1、提交 3 次、会话 4:06（记录 4:18）、52 条响应（4 次 429）、output 44,227（reasoning 25,955）；en-2 在 iteration 1、提交 3 次、会话 7:04（记录 10:25）、152 条响应（62 次 429）、output 74,348（reasoning 43,165）；en-3 在 iteration 1、提交 3 次、会话 7:38（记录 12:03）、179 条响应（77 次 429）、output 65,922（reasoning 32,718）。三个 run 的门控与复验均为 13/13·154/154。",
       "Pro 4：在 iteration 2 完成，提交 2 次，会话 38:26，301 条响应，output 146,559（reasoning 60,769）。",
       "Pro 4 Contributor：在 iteration 1 完成，提交 1 次，会话 17:22，158 条响应，output 63,262（reasoning 19,448）。",
       "三个条件的门控与两次独立复评均为 13/13·154/154。每个条件 n=1，因此不判断 contributor 与常规 Pro 4 的差别。"

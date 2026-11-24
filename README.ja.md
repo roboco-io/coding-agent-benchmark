@@ -260,7 +260,7 @@ AC電源の3/3 runすべてイテレーション1で完走。ゲートと独立�
 9 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、全runでサブスクリプション認証(authMethod=consumer)と要求した-highモデルへの解決を確認。セッションはHydrogen 4:04–4:39、Neon 6:22–6:58、Carbon 12:51–14:36。サブスクリプション実行のためAPI請求なし、公開単価換算はrunあたりHydrogen約$0.5、Neon約$0.9、Carbon $0.8–1.0。更新されたOAuthトークンが隔離HOMEにコピーされず1 runが認証に失敗したため、トークンのコピーとrun前の認証確認をハーネスに追加して再実行した。 → [レポート](experiments/063-agy-gemini4/report.md)
 
 **EXP-064 — pi × Upstage Solar Mini 4.5 Preview(ファイルシステム隔離、EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各EN n=1)完走探索** (探索 — 公開5/5完走)  
-公開runはすべて完走し、ゲートと独立再検証2回がすべて13/13・154/154。Mini 4.5 Previewは、エージェント自身のリポジトリ外の読み取りを遮断する新しいmacOSサンドボックス下で3/3がイテレーション1で4:18–12:03(runあたりHTTP 429レート制限エラー4–77件、再試行で継続)。それ以前の非隔離Mini 4 runは公開指標から除外した(ユーザー指示で除外1件、ハーネスと直前runのコードを読んだ1件、以前のrunのコードを見つけてコピーした代替run 1件は無効)。Pro 4はイテレーション2で38:26、Pro 4 Contributorはイテレーション1で17:22。Upstage定価基準の推定コストはrunあたりMini $0.05–0.12、Pro 4 $1.73、Contributor $0.73(Pro 4定価で換算)。n=1のためcontributorモデルの性能がPro 4と同じかどうかは判定しない。以後のSolar Pro 4実験はcontributor版のみで実行する。 → [レポート](experiments/064-pi-upstage-solar/report.md)
+公開runはすべて完走し、ゲートと独立再検証2回がすべて13/13・154/154。Mini 4.5 Previewは、エージェント自身のリポジトリ外の読み取りを遮断する新しいmacOSサンドボックス下で3/3がイテレーション1でHTTP 429スロットリング待ちを除き4:06–7:38(runあたりレート制限エラー4–77件、待ちを含むと4:18–12:03)。それ以前の非隔離Mini 4 runは公開指標から除外した(ユーザー指示で除外1件、ハーネスと直前runのコードを読んだ1件、以前のrunのコードを見つけてコピーした代替run 1件は無効)。Pro 4はイテレーション2で38:26、Pro 4 Contributorはイテレーション1で17:22。Upstage定価基準の推定コストはrunあたりMini $0.05–0.12、Pro 4 $1.73、Contributor $0.73(Pro 4定価で換算)。n=1のためcontributorモデルの性能がPro 4と同じかどうかは判定しない。以後のSolar Pro 4実験はcontributor版のみで実行する。 → [レポート](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

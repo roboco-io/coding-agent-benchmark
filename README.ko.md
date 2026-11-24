@@ -260,7 +260,7 @@ AC 전원 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 
 세 모델 모두 3/3 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 전 run `authMethod=consumer`·요청 모델 해석 확인). 세션은 Hydrogen 4:04–4:39, Neon 6:22–6:58, Carbon 12:51–14:36이다. → [보고서](experiments/063-agy-gemini4/report.md)
 
 **EXP-064 — pi × Upstage Solar Mini 4.5 Preview(파일 시스템 격리, EN n=3)·Solar Pro 4·Solar Pro 4 Contributor(EN 각 n=1) 랄프 루프 완주 탐색** (탐색 — 공개 5/5 완주 관측)  
-Mini 4.5 Preview(파일 시스템 격리) 3/3 iteration 1(4:18–12:03, 429 4–77건), Pro 4 iteration 2(38:26), Pro 4 Contributor iteration 1(17:22). 비용은 정가 기준 run당 Mini $0.05–0.12, Pro 4 $1.73, Contributor $0.73(Pro 4 정가 환산). 비격리 Mini 4 run은 제외·노출·무효로 공개 지표에서 뺐다. → [보고서](experiments/064-pi-upstage-solar/report.md)
+Mini 4.5 Preview(파일 시스템 격리) 3/3 iteration 1(429 스로틀링 대기 제외 4:06–7:38, 기록값 4:18–12:03), Pro 4 iteration 2(38:26), Pro 4 Contributor iteration 1(17:22). 비용은 정가 기준 run당 Mini $0.05–0.12, Pro 4 $1.73, Contributor $0.73(Pro 4 정가 환산). 비격리 Mini 4 run은 제외·노출·무효로 공개 지표에서 뺐다. → [보고서](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

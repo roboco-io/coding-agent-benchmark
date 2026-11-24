@@ -260,7 +260,7 @@ AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立�
 9 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，所有 run 均确认为订阅认证(authMethod=consumer)并解析为所请求的 -high 模型。会话时长：Hydrogen 4:04–4:39、Neon 6:22–6:58、Carbon 12:51–14:36。订阅运行无 API 计费，按公开单价折算每 run 约 Hydrogen $0.5、Neon $0.9、Carbon $0.8–1.0。有 1 个 run 因刷新后的 OAuth token 未复制到隔离 HOME 而认证失败；已在 harness 中加入 token 复制与 run 前认证检查并重新运行。 → [报告](experiments/063-agy-gemini4/report.md)
 
 **EXP-064 — pi × Upstage Solar Mini 4.5 Preview(文件系统隔离，EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各 EN n=1)完成探索** (探索 — 公开 5/5 完成)  
-所有公开 run 均完成，门控与两次独立复核均为 13/13・154/154。Mini 4.5 Preview 在新的 macOS 沙箱(阻止读取代理自身仓库以外的文件)下 3/3 在第 1 次迭代以 4:18–12:03 完成(每 run HTTP 429 限流错误 4–77 次，重试后继续)。此前 4 个未隔离的 Mini run 已从公开指标中剔除(1 个按用户指示排除，1 个读取了 harness 和上一个 run 的代码，1 个替代 run 找到并复制了早期 run 的代码而无效)。Pro 4 在第 2 次迭代以 38:26 完成，Pro 4 Contributor 在第 1 次迭代以 17:22 完成。按 Upstage 定价估算每 run 成本：Mini $0.05–0.12、Pro 4 $1.73、Contributor $0.73(按 Pro 4 定价折算)。n=1，无法判断 contributor 模型与 Pro 4 性能是否相同。此后的 Solar Pro 4 实验仅使用 contributor 版本。 → [报告](experiments/064-pi-upstage-solar/report.md)
+所有公开 run 均完成，门控与两次独立复核均为 13/13・154/154。Mini 4.5 Preview 在新的 macOS 沙箱(阻止读取代理自身仓库以外的文件)下 3/3 在第 1 次迭代完成，扣除 HTTP 429 限流等待后为 4:06–7:38(每 run 限流错误 4–77 次，含等待为 4:18–12:03)。此前 4 个未隔离的 Mini run 已从公开指标中剔除(1 个按用户指示排除，1 个读取了 harness 和上一个 run 的代码，1 个替代 run 找到并复制了早期 run 的代码而无效)。Pro 4 在第 2 次迭代以 38:26 完成，Pro 4 Contributor 在第 1 次迭代以 17:22 完成。按 Upstage 定价估算每 run 成本：Mini $0.05–0.12、Pro 4 $1.73、Contributor $0.73(按 Pro 4 定价折算)。n=1，无法判断 contributor 模型与 Pro 4 性能是否相同。此后的 Solar Pro 4 实验仅使用 contributor 版本。 → [报告](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

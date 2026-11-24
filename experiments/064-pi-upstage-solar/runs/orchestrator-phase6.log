@@ -1,0 +1,9 @@
+=== starting sequential runs (pi: mini45sb:upstage/solar-mini-4-5-preview / en / n=5) : 2026-11-24 22:34:14 ===
+=== skip mini45sb-en-1 : 2026-11-24 22:34:14 ===
+=== skip mini45sb-en-2 : 2026-11-24 22:34:14 ===
+=== skip mini45sb-en-3 : 2026-11-24 22:34:14 ===
+=== start mini45sb-en-4 : 2026-11-24 22:34:14 ===
+=== end mini45sb-en-4 | 1,2026-11-24 22:40:03,0,13,154,1,pass : 2026-11-24 22:40:03 ===
+=== start mini45sb-en-5 : 2026-11-24 22:40:03 ===
+=== end mini45sb-en-5 | 1,2026-11-24 22:47:32,0,13,154,1,pass : 2026-11-24 22:47:32 ===
+=== ALL RUNS FINISHED : 2026-11-24 22:47:32 ===

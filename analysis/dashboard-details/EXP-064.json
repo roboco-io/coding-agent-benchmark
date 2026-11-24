@@ -1,0 +1,214 @@
+{
+  "exp": "EXP-064",
+  "date": "2026-11-24",
+  "report": "experiments/064-pi-upstage-solar/report.md",
+  "client": "pi 0.87.1",
+  "runs": {
+    "mini45-en-1": {
+      "iter": 1,
+      "commits": 2
+    },
+    "pro4-en-1": {
+      "iter": 2,
+      "commits": 2
+    },
+    "pro4c-en-1": {
+      "iter": 1,
+      "commits": 1
+    }
+  },
+  "conditions": {
+    "ko": [
+      [
+        "에이전트",
+        "pi 0.87.1 (`-nc -ns -ne -np -na`, 정본 지속 실행 지침 포함)"
+      ],
+      [
+        "연결",
+        "Upstage OpenAI 호환 엔드포인트(api.upstage.ai/v1) 직결, 종량제 API 키, 실제 과금(청구액 미확인)"
+      ],
+      [
+        "모델 ID",
+        "upstage/solar-mini-4-5-preview · upstage/solar-pro-4 · upstage/solar-pro-4-contributor (pi 사용자 정의 models.json 항목)"
+      ],
+      [
+        "추론",
+        "thinking high"
+      ],
+      [
+        "상한",
+        "30 iteration · run당 40분(비정본, 정본 20분) · 정체 600초, 무개입"
+      ],
+      [
+        "프롬프트",
+        "EN 정본 v2, 조건별 n=1, 순차"
+      ],
+      [
+        "비용 기준",
+        "Upstage 정가(list price) 환산. 할인된 preview·프로모션·contributor 단가는 참고용"
+      ],
+      [
+        "날짜",
+        "2026-11-24"
+      ]
+    ],
+    "en": [
+      [
+        "Agent",
+        "pi 0.87.1 (`-nc -ns -ne -np -na`, canonical persistence prompt)"
+      ],
+      [
+        "Connection",
+        "Upstage OpenAI-compatible endpoint (api.upstage.ai/v1), direct, pay-as-you-go API key, actually billed (bill not checked)"
+      ],
+      [
+        "Model ID",
+        "upstage/solar-mini-4-5-preview · upstage/solar-pro-4 · upstage/solar-pro-4-contributor (custom pi models.json entries)"
+      ],
+      [
+        "Reasoning",
+        "thinking high"
+      ],
+      [
+        "Cap",
+        "30 iterations · 40 min per run (non-canonical; canonical 20 min) · stall limit 600 s, no human intervention"
+      ],
+      [
+        "Prompt",
+        "EN canonical v2, n=1 per condition, sequential"
+      ],
+      [
+        "Cost basis",
+        "Converted at Upstage list price. Discounted preview, promotional and contributor prices are for reference only"
+      ],
+      [
+        "Date",
+        "2026-11-24"
+      ]
+    ],
+    "ja": [
+      [
+        "エージェント",
+        "pi 0.87.1 (`-nc -ns -ne -np -na`、正本の持続実行指示を含む)"
+      ],
+      [
+        "接続",
+        "UpstageのOpenAI互換エンドポイント(api.upstage.ai/v1)直結、従量課金APIキー、実際に課金(請求額は未確認)"
+      ],
+      [
+        "モデルID",
+        "upstage/solar-mini-4-5-preview · upstage/solar-pro-4 · upstage/solar-pro-4-contributor (pi用ユーザー定義models.json項目)"
+      ],
+      [
+        "推論",
+        "thinking high"
+      ],
+      [
+        "上限",
+        "30 iteration · run 40分(非正本、正本は20分) · 停滞600秒、無介入"
+      ],
+      [
+        "プロンプト",
+        "EN正本v2、条件ごとn=1、逐次"
+      ],
+      [
+        "コスト基準",
+        "Upstageの定価(list price)で換算。割引のpreview・プロモーション・contributor価格は参考"
+      ],
+      [
+        "日付",
+        "2026-11-24"
+      ]
+    ],
+    "zh": [
+      [
+        "代理",
+        "pi 0.87.1（`-nc -ns -ne -np -na`，含标准持续执行指示）"
+      ],
+      [
+        "连接",
+        "Upstage OpenAI 兼容端点（api.upstage.ai/v1）直连，按量付费 API 密钥，实际计费（账单未核对）"
+      ],
+      [
+        "模型 ID",
+        "upstage/solar-mini-4-5-preview · upstage/solar-pro-4 · upstage/solar-pro-4-contributor（pi 自定义 models.json 条目）"
+      ],
+      [
+        "推理",
+        "thinking high"
+      ],
+      [
+        "上限",
+        "30 个 iteration · 每 run 40 分钟（非标准，标准 20 分钟） · 停滞 600 秒，无人干预"
+      ],
+      [
+        "提示词",
+        "EN 标准 v2，每个条件 n=1，顺序运行"
+      ],
+      [
+        "成本基准",
+        "按 Upstage 定价（list price）折算。折扣的 preview、促销和 contributor 单价仅供参考"
+      ],
+      [
+        "日期",
+        "2026-11-24"
+      ]
+    ]
+  },
+  "deviations": {
+    "ko": [
+      "D-1 Mini 4.5 Preview run에서 요청 한도 초과(HTTP 429) 오류 100건이 발생했고 pi가 재시도했다. 재시도 대기는 최대 약 305초이며 세션 시간 11:34에 포함된다. Pro 4·Pro 4 Contributor run에는 429가 없었다.",
+      "D-2 mini45 run 중 사용자 지시로 solar-pro-4-contributor 조건을 추가했다. 재설정·재승인·smoke 후 pro4부터 재기동했고 실험 비용 상한을 $3에서 $5로 올렸다.",
+      "D-3 Solar Pro 4 run은 iteration 1(Hurl 0/13, 완료 선언 없음) 뒤 iteration 2에서 38:26에 완주해 run 상한 40분(비정본)에 근접했다. 정본 상한 20분이었다면 미완주였다.",
+      "**EXP-064부터 Solar Pro 4 벤치마크 실행은 contributor 변형(`solar-pro-4-contributor`)만 사용한다(사용자 지시 2026-11-24).** Upstage 문서상 Solar Pro 4와 같은 모델이며, 요청과 응답을 Upstage와 공유해 Upstage가 저장하고 학습에 쓰는 대가로 70% 할인을 받는다. 비용은 solar-pro-4 정가로 환산해 공개한다.",
+      "비용은 세 조건 모두 Upstage 정가(list price) 기준 환산이다(Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4와 Contributor $0.30/$0.06/$1.20, 1M 토큰당 입력/캐시/출력). 실행 당시 할인가로는 Mini 약 $0.012, Pro 4 약 $0.86이고 Contributor 실제 단가로는 약 $0.22다."
+    ],
+    "en": [
+      "D-1 The Mini 4.5 Preview run hit 100 HTTP 429 request-limit errors, which pi retried. The retry wait was at most about 305 s and is included in the 11:34 session time. The Pro 4 and Pro 4 Contributor runs had no 429.",
+      "D-2 During the mini45 run the user added the solar-pro-4-contributor condition. After reconfiguration, re-approval and a smoke test, the run restarted from pro4, and the experiment cost cap went from $3 to $5.",
+      "D-3 The Solar Pro 4 run ended iteration 1 at Hurl 0/13 without declaring completion and finished at iteration 2 in 38:26, close to the 40-min run cap (non-canonical). It would not have finished under the canonical 20-min cap.",
+      "**From EXP-064 onward, Solar Pro 4 benchmark runs use only the contributor variant (`solar-pro-4-contributor`), by user instruction on 2026-11-24.** Per Upstage documentation it is the same model as Solar Pro 4; requests and responses are shared with Upstage, which stores them and uses them for training, in return for a 70% discount. Its cost is published at the solar-pro-4 list price.",
+      "All three conditions are costed at Upstage list price (Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4 and Contributor $0.30/$0.06/$1.20 per 1M input/cached/output). At the discounts in effect during the runs, Mini would be about $0.012 and Pro 4 about $0.86, and the Contributor price actually charged would give about $0.22."
+    ],
+    "ja": [
+      "D-1 Mini 4.5 Previewのrunでリクエスト上限超過(HTTP 429)のエラーが100件発生し、piが再試行した。再試行の待機は最大約305秒で、セッション時間11:34に含まれる。Pro 4とPro 4 Contributorのrunには429はなかった。",
+      "D-2 mini45のrun中にユーザー指示でsolar-pro-4-contributor条件を追加した。再設定・再承認・smoke後にpro4から再起動し、実験のコスト上限を$3から$5に引き上げた。",
+      "D-3 Solar Pro 4のrunはiteration 1がHurl 0/13で完了宣言なしに終わり、iteration 2で38:26に完走して、run上限40分(非正本)に近づいた。正本の上限20分なら未完走だった。",
+      "**EXP-064以降、Solar Pro 4のベンチマーク実行はcontributor版(`solar-pro-4-contributor`)のみを使う(ユーザー指示 2026-11-24)。**Upstageのドキュメントでは Solar Pro 4と同じモデルで、リクエストとレスポンスをUpstageと共有し、Upstageが保存して学習に使う代わりに70%割引を受ける。コストはsolar-pro-4の定価で換算して公開する。",
+      "3条件ともUpstageの定価(list price)で換算した(Mini 4.5 Preview $0.10/$0.01/$0.40、Pro 4とContributor $0.30/$0.06/$1.20、100万トークンあたり入力/キャッシュ/出力)。実行当時の割引価格ではMiniは約$0.012、Pro 4は約$0.86で、Contributorの実際の価格では約$0.22になる。"
+    ],
+    "zh": [
+      "D-1 Mini 4.5 Preview 的 run 出现了 100 次请求额度超限（HTTP 429）错误，由 pi 重试。重试等待最多约 305 秒，已计入 11:34 的会话时间。Pro 4 和 Pro 4 Contributor 的 run 没有 429。",
+      "D-2 在 mini45 run 期间，用户指示新增 solar-pro-4-contributor 条件。完成重新配置、重新批准和 smoke 后从 pro4 重新启动，实验成本上限从 $3 提高到 $5。",
+      "D-3 Solar Pro 4 的 run 在 iteration 1 以 Hurl 0/13 结束且未宣布完成，在 iteration 2 用 38:26 完成，接近 40 分钟的 run 上限（非标准）。若按标准上限 20 分钟则未完成。",
+      "**自 EXP-064 起，Solar Pro 4 的基准运行只使用 contributor 变体（`solar-pro-4-contributor`），依据用户 2026-11-24 的指示。**根据 Upstage 文档，它与 Solar Pro 4 是同一个模型；请求和响应与 Upstage 共享，由 Upstage 保存并用于训练，作为交换可享受 70% 折扣。成本按 solar-pro-4 定价折算后公布。",
+      "三个条件的成本都按 Upstage 定价（list price）折算（Mini 4.5 Preview $0.10/$0.01/$0.40，Pro 4 和 Contributor $0.30/$0.06/$1.20，每 100 万 token 输入/缓存/输出）。按运行时的折扣价，Mini 约 $0.012，Pro 4 约 $0.86；按 Contributor 实际收取的单价约为 $0.22。"
+    ]
+  },
+  "behavior": {
+    "ko": [
+      "Mini 4.5 Preview: iteration 1에 완주, 커밋 2개, 세션 11:34, 199개 응답(429 오류 100건 포함), output 74,787(reasoning 39,074).",
+      "Pro 4: iteration 2에서 완주, 커밋 2개, 세션 38:26, 301개 응답, output 146,559(reasoning 60,769).",
+      "Pro 4 Contributor: iteration 1에 완주, 커밋 1개, 세션 17:22, 158개 응답, output 63,262(reasoning 19,448).",
+      "세 조건 모두 게이트와 독립 재검증 2회가 13/13·154/154로 일치했다. 각 조건 n=1이므로 contributor와 일반 Pro 4의 차이는 판단하지 않는다."
+    ],
+    "en": [
+      "Mini 4.5 Preview: finished at iteration 1 with 2 commits, session 11:34, 199 responses (including 100 429 errors), output 74,787 (reasoning 39,074).",
+      "Pro 4: finished at iteration 2 with 2 commits, session 38:26, 301 responses, output 146,559 (reasoning 60,769).",
+      "Pro 4 Contributor: finished at iteration 1 with 1 commit, session 17:22, 158 responses, output 63,262 (reasoning 19,448).",
+      "For all three, the gate and two independent re-gradings matched 13/13 · 154/154. Each condition is n=1, so the difference between the contributor and the regular Pro 4 is not judged."
+    ],
+    "ja": [
+      "Mini 4.5 Preview: iteration 1で完走、コミット2個、セッション11:34、応答199件(429エラー100件を含む)、output 74,787(reasoning 39,074)。",
+      "Pro 4: iteration 2で完走、コミット2個、セッション38:26、応答301件、output 146,559(reasoning 60,769)。",
+      "Pro 4 Contributor: iteration 1で完走、コミット1個、セッション17:22、応答158件、output 63,262(reasoning 19,448)。",
+      "3条件ともゲートと独立再検証2回が13/13・154/154で一致した。各条件n=1のため、contributorと通常のPro 4の違いは判断しない。"
+    ],
+    "zh": [
+      "Mini 4.5 Preview：在 iteration 1 完成，提交 2 次，会话 11:34，199 条响应（含 100 次 429 错误），output 74,787（reasoning 39,074）。",
+      "Pro 4：在 iteration 2 完成，提交 2 次，会话 38:26，301 条响应，output 146,559（reasoning 60,769）。",
+      "Pro 4 Contributor：在 iteration 1 完成，提交 1 次，会话 17:22，158 条响应，output 63,262（reasoning 19,448）。",
+      "三个条件的门控与两次独立复评均为 13/13·154/154。每个条件 n=1，因此不判断 contributor 与常规 Pro 4 的差别。"
+    ]
+  }
+}

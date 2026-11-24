@@ -8,6 +8,14 @@
       "iter": 1,
       "commits": 2
     },
+    "mini45-en-2": {
+      "iter": 1,
+      "commits": 3
+    },
+    "mini45-en-3": {
+      "iter": 1,
+      "commits": 5
+    },
     "pro4-en-1": {
       "iter": 2,
       "commits": 2
@@ -41,7 +49,7 @@
       ],
       [
         "프롬프트",
-        "EN 정본 v2, 조건별 n=1, 순차"
+        "EN 정본 v2, Mini 4.5 Preview n=3·나머지 조건 n=1, 순차"
       ],
       [
         "비용 기준",
@@ -75,7 +83,7 @@
       ],
       [
         "Prompt",
-        "EN canonical v2, n=1 per condition, sequential"
+        "EN canonical v2, n=3 for Mini 4.5 Preview and n=1 for the other conditions, sequential"
       ],
       [
         "Cost basis",
@@ -109,7 +117,7 @@
       ],
       [
         "プロンプト",
-        "EN正本v2、条件ごとn=1、逐次"
+        "EN正本v2、Mini 4.5 Previewはn=3、他の条件はn=1、逐次"
       ],
       [
         "コスト基準",
@@ -143,7 +151,7 @@
       ],
       [
         "提示词",
-        "EN 标准 v2，每个条件 n=1，顺序运行"
+        "EN 标准 v2，Mini 4.5 Preview 为 n=3，其他条件 n=1，顺序运行"
       ],
       [
         "成本基准",
@@ -161,51 +169,67 @@
       "D-2 mini45 run 중 사용자 지시로 solar-pro-4-contributor 조건을 추가했다. 재설정·재승인·smoke 후 pro4부터 재기동했고 실험 비용 상한을 $3에서 $5로 올렸다.",
       "D-3 Solar Pro 4 run은 iteration 1(Hurl 0/13, 완료 선언 없음) 뒤 iteration 2에서 38:26에 완주해 run 상한 40분(비정본)에 근접했다. 정본 상한 20분이었다면 미완주였다.",
       "**EXP-064부터 Solar Pro 4 벤치마크 실행은 contributor 변형(`solar-pro-4-contributor`)만 사용한다(사용자 지시 2026-11-24).** Upstage 문서상 Solar Pro 4와 같은 모델이며, 요청과 응답을 Upstage와 공유해 Upstage가 저장하고 학습에 쓰는 대가로 70% 할인을 받는다. 비용은 solar-pro-4 정가로 환산해 공개한다.",
-      "비용은 세 조건 모두 Upstage 정가(list price) 기준 환산이다(Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4와 Contributor $0.30/$0.06/$1.20, 1M 토큰당 입력/캐시/출력). 실행 당시 할인가로는 Mini 약 $0.012, Pro 4 약 $0.86이고 Contributor 실제 단가로는 약 $0.22다."
+      "비용은 세 조건 모두 Upstage 정가(list price) 기준 환산이다(Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4와 Contributor $0.30/$0.06/$1.20, 1M 토큰당 입력/캐시/출력). 실행 당시 할인가로는 Mini 약 $0.012, Pro 4 약 $0.86이고 Contributor 실제 단가로는 약 $0.22다.",
+      "D-4 사용자 지시로 mini45를 n=3으로 맞추기 위해 2 run(en-2·en-3)을 추가했다. 재승인과 smoke 후 실행했다.",
+      "D-5 mini45-en-2·en-3에서 요청 한도 초과(429) 오류가 각 29건 발생했고 pi가 재시도했다. 재시도 대기 상한은 113초·94초다.",
+      "**D-6 mini45-en-3은 독립 시행이 아니다(EXP-036 D-2와 같은 유형).** 에이전트가 run 디렉터리 밖의 하네스 디렉터리를 탐색해 채점용 Hurl 정본을 읽고 자기 리포로 복사했으며, 직전 run(en-2)의 소스 전체와 git 이력을 읽었다. 판정(하네스 절대 경로 채점기 + 재검증 2회 13/13·154/154)은 유효하지만 이 run의 시간·토큰은 독립 시행 값으로 보기 어렵다. 이 run은 대시보드의 건수와 중앙값에 포함돼 있다. 독립 시행은 en-1·en-2 두 개다."
     ],
     "en": [
       "D-1 The Mini 4.5 Preview run hit 100 HTTP 429 request-limit errors, which pi retried. The retry wait was at most about 305 s and is included in the 11:34 session time. The Pro 4 and Pro 4 Contributor runs had no 429.",
       "D-2 During the mini45 run the user added the solar-pro-4-contributor condition. After reconfiguration, re-approval and a smoke test, the run restarted from pro4, and the experiment cost cap went from $3 to $5.",
       "D-3 The Solar Pro 4 run ended iteration 1 at Hurl 0/13 without declaring completion and finished at iteration 2 in 38:26, close to the 40-min run cap (non-canonical). It would not have finished under the canonical 20-min cap.",
       "**From EXP-064 onward, Solar Pro 4 benchmark runs use only the contributor variant (`solar-pro-4-contributor`), by user instruction on 2026-11-24.** Per Upstage documentation it is the same model as Solar Pro 4; requests and responses are shared with Upstage, which stores them and uses them for training, in return for a 70% discount. Its cost is published at the solar-pro-4 list price.",
-      "All three conditions are costed at Upstage list price (Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4 and Contributor $0.30/$0.06/$1.20 per 1M input/cached/output). At the discounts in effect during the runs, Mini would be about $0.012 and Pro 4 about $0.86, and the Contributor price actually charged would give about $0.22."
+      "All three conditions are costed at Upstage list price (Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4 and Contributor $0.30/$0.06/$1.20 per 1M input/cached/output). At the discounts in effect during the runs, Mini would be about $0.012 and Pro 4 about $0.86, and the Contributor price actually charged would give about $0.22.",
+      "D-4 At the user's request, 2 runs (en-2, en-3) were added to bring mini45 to n=3, after re-approval and a smoke test.",
+      "D-5 mini45-en-2 and en-3 each hit 29 HTTP 429 request-limit errors, which pi retried. Retry wait was at most 113 s and 94 s.",
+      "**D-6 mini45-en-3 is not an independent trial (same kind as EXP-036 D-2).** The agent explored the harness directory outside its run directory, read the grading Hurl files and copied them into its repo, and read the full source and git history of the previous run (en-2). The verdict (absolute-path harness grader plus two re-checks, 13/13 · 154/154) stands, but this run's time and tokens are hard to treat as an independent trial. The run is included in the dashboard's counts and medians. The independent trials are en-1 and en-2."
     ],
     "ja": [
       "D-1 Mini 4.5 Previewのrunでリクエスト上限超過(HTTP 429)のエラーが100件発生し、piが再試行した。再試行の待機は最大約305秒で、セッション時間11:34に含まれる。Pro 4とPro 4 Contributorのrunには429はなかった。",
       "D-2 mini45のrun中にユーザー指示でsolar-pro-4-contributor条件を追加した。再設定・再承認・smoke後にpro4から再起動し、実験のコスト上限を$3から$5に引き上げた。",
       "D-3 Solar Pro 4のrunはiteration 1がHurl 0/13で完了宣言なしに終わり、iteration 2で38:26に完走して、run上限40分(非正本)に近づいた。正本の上限20分なら未完走だった。",
       "**EXP-064以降、Solar Pro 4のベンチマーク実行はcontributor版(`solar-pro-4-contributor`)のみを使う(ユーザー指示 2026-11-24)。**Upstageのドキュメントでは Solar Pro 4と同じモデルで、リクエストとレスポンスをUpstageと共有し、Upstageが保存して学習に使う代わりに70%割引を受ける。コストはsolar-pro-4の定価で換算して公開する。",
-      "3条件ともUpstageの定価(list price)で換算した(Mini 4.5 Preview $0.10/$0.01/$0.40、Pro 4とContributor $0.30/$0.06/$1.20、100万トークンあたり入力/キャッシュ/出力)。実行当時の割引価格ではMiniは約$0.012、Pro 4は約$0.86で、Contributorの実際の価格では約$0.22になる。"
+      "3条件ともUpstageの定価(list price)で換算した(Mini 4.5 Preview $0.10/$0.01/$0.40、Pro 4とContributor $0.30/$0.06/$1.20、100万トークンあたり入力/キャッシュ/出力)。実行当時の割引価格ではMiniは約$0.012、Pro 4は約$0.86で、Contributorの実際の価格では約$0.22になる。",
+      "D-4 ユーザー指示でmini45をn=3にするため2 run（en-2・en-3）を追加した。再承認とsmokeの後に実行した。",
+      "D-5 mini45-en-2・en-3でリクエスト上限超過（429）のエラーがそれぞれ29件発生し、piが再試行した。再試行の待機上限は113秒・94秒。",
+      "**D-6 mini45-en-3は独立試行ではない（EXP-036 D-2と同じ種類）。**エージェントがrunディレクトリ外のハーネスディレクトリを探索して採点用のHurl正本を読み自分のリポにコピーし、直前のrun（en-2）のソース全体とgit履歴を読んだ。判定（ハーネス絶対パスの採点器 + 再検証2回 13/13・154/154）は有効だが、このrunの時間・トークンは独立試行の値とは見なしにくい。このrunはダッシュボードの件数と中央値に含まれている。独立試行はen-1とen-2の2つ。"
     ],
     "zh": [
       "D-1 Mini 4.5 Preview 的 run 出现了 100 次请求额度超限（HTTP 429）错误，由 pi 重试。重试等待最多约 305 秒，已计入 11:34 的会话时间。Pro 4 和 Pro 4 Contributor 的 run 没有 429。",
       "D-2 在 mini45 run 期间，用户指示新增 solar-pro-4-contributor 条件。完成重新配置、重新批准和 smoke 后从 pro4 重新启动，实验成本上限从 $3 提高到 $5。",
       "D-3 Solar Pro 4 的 run 在 iteration 1 以 Hurl 0/13 结束且未宣布完成，在 iteration 2 用 38:26 完成，接近 40 分钟的 run 上限（非标准）。若按标准上限 20 分钟则未完成。",
       "**自 EXP-064 起，Solar Pro 4 的基准运行只使用 contributor 变体（`solar-pro-4-contributor`），依据用户 2026-11-24 的指示。**根据 Upstage 文档，它与 Solar Pro 4 是同一个模型；请求和响应与 Upstage 共享，由 Upstage 保存并用于训练，作为交换可享受 70% 折扣。成本按 solar-pro-4 定价折算后公布。",
-      "三个条件的成本都按 Upstage 定价（list price）折算（Mini 4.5 Preview $0.10/$0.01/$0.40，Pro 4 和 Contributor $0.30/$0.06/$1.20，每 100 万 token 输入/缓存/输出）。按运行时的折扣价，Mini 约 $0.012，Pro 4 约 $0.86；按 Contributor 实际收取的单价约为 $0.22。"
+      "三个条件的成本都按 Upstage 定价（list price）折算（Mini 4.5 Preview $0.10/$0.01/$0.40，Pro 4 和 Contributor $0.30/$0.06/$1.20，每 100 万 token 输入/缓存/输出）。按运行时的折扣价，Mini 约 $0.012，Pro 4 约 $0.86；按 Contributor 实际收取的单价约为 $0.22。",
+      "D-4 应用户要求，为使 mini45 达到 n=3 新增了 2 个 run（en-2、en-3），经重新批准和 smoke 后运行。",
+      "D-5 mini45-en-2 和 en-3 各出现 29 次请求额度超限（429）错误，由 pi 重试。重试等待上限分别为 113 秒和 94 秒。",
+      "**D-6 mini45-en-3 不是独立试验（与 EXP-036 D-2 同类）。**代理探索了 run 目录之外的框架目录，读取评分用的 Hurl 标准文件并复制到自己的仓库，还读取了上一个 run（en-2）的完整源码和 git 历史。判定（框架绝对路径评分器 + 2 次复验 13/13·154/154）有效，但该 run 的时间和 token 难以视为独立试验的值。该 run 计入仪表盘的数量和中位数。独立试验是 en-1 和 en-2。"
     ]
   },
   "behavior": {
     "ko": [
       "Mini 4.5 Preview: iteration 1에 완주, 커밋 2개, 세션 11:34, 199개 응답(429 오류 100건 포함), output 74,787(reasoning 39,074).",
+      "Mini 4.5 Preview 추가 run: en-2 iteration 1 완주·커밋 3개·세션 7:00·96개 응답(429 29건)·output 47,973(reasoning 28,163), en-3 iteration 1 완주·커밋 5개·세션 5:20·79개 응답(429 29건)·output 38,928(reasoning 19,246). Mini 4.5 Preview는 n=3 모두 게이트와 재검증이 13/13·154/154로 일치했다.",
       "Pro 4: iteration 2에서 완주, 커밋 2개, 세션 38:26, 301개 응답, output 146,559(reasoning 60,769).",
       "Pro 4 Contributor: iteration 1에 완주, 커밋 1개, 세션 17:22, 158개 응답, output 63,262(reasoning 19,448).",
       "세 조건 모두 게이트와 독립 재검증 2회가 13/13·154/154로 일치했다. 각 조건 n=1이므로 contributor와 일반 Pro 4의 차이는 판단하지 않는다."
     ],
     "en": [
       "Mini 4.5 Preview: finished at iteration 1 with 2 commits, session 11:34, 199 responses (including 100 429 errors), output 74,787 (reasoning 39,074).",
+      "Mini 4.5 Preview extra runs: en-2 finished at iteration 1 with 3 commits, session 7:00, 96 responses (29 were 429), output 47,973 (reasoning 28,163); en-3 finished at iteration 1 with 5 commits, session 5:20, 79 responses (29 were 429), output 38,928 (reasoning 19,246). All 3 Mini 4.5 Preview runs matched 13/13 · 154/154 at the gate and re-checks.",
       "Pro 4: finished at iteration 2 with 2 commits, session 38:26, 301 responses, output 146,559 (reasoning 60,769).",
       "Pro 4 Contributor: finished at iteration 1 with 1 commit, session 17:22, 158 responses, output 63,262 (reasoning 19,448).",
       "For all three, the gate and two independent re-gradings matched 13/13 · 154/154. Each condition is n=1, so the difference between the contributor and the regular Pro 4 is not judged."
     ],
     "ja": [
       "Mini 4.5 Preview: iteration 1で完走、コミット2個、セッション11:34、応答199件(429エラー100件を含む)、output 74,787(reasoning 39,074)。",
+      "Mini 4.5 Preview追加run: en-2はiteration 1で完走・コミット3個・セッション7:00・応答96件（429が29件）・output 47,973（reasoning 28,163）、en-3はiteration 1で完走・コミット5個・セッション5:20・応答79件（429が29件）・output 38,928（reasoning 19,246）。Mini 4.5 Previewは3 runともゲートと再検証が13/13・154/154で一致した。",
       "Pro 4: iteration 2で完走、コミット2個、セッション38:26、応答301件、output 146,559(reasoning 60,769)。",
       "Pro 4 Contributor: iteration 1で完走、コミット1個、セッション17:22、応答158件、output 63,262(reasoning 19,448)。",
       "3条件ともゲートと独立再検証2回が13/13・154/154で一致した。各条件n=1のため、contributorと通常のPro 4の違いは判断しない。"
     ],
     "zh": [
       "Mini 4.5 Preview：在 iteration 1 完成，提交 2 次，会话 11:34，199 条响应（含 100 次 429 错误），output 74,787（reasoning 39,074）。",
+      "Mini 4.5 Preview 追加的 run：en-2 在 iteration 1 完成，提交 3 次，会话 7:00，96 条响应（29 次 429），output 47,973（reasoning 28,163）；en-3 在 iteration 1 完成，提交 5 次，会话 5:20，79 条响应（29 次 429），output 38,928（reasoning 19,246）。Mini 4.5 Preview 的 3 个 run 门控与复验均为 13/13·154/154。",
       "Pro 4：在 iteration 2 完成，提交 2 次，会话 38:26，301 条响应，output 146,559（reasoning 60,769）。",
       "Pro 4 Contributor：在 iteration 1 完成，提交 1 次，会话 17:22，158 条响应，output 63,262（reasoning 19,448）。",
       "三个条件的门控与两次独立复评均为 13/13·154/154。每个条件 n=1，因此不判断 contributor 与常规 Pro 4 的差别。"

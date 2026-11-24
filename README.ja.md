@@ -89,7 +89,7 @@
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember(OpenRouter)完走検証（EN n=3） | M-52: pi 0.87.1でOpenRouterのmeta/muse-ember(Meta固定、thinking high、pi正本の継続指示あり)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・20分以内に完走できる (EN n=3) | **検証** | pi 0.87.1 |
 | [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × K-EXAONE 2.5（EXAONE API）完走検証 | M-53: pi 0.87.1 × EXAONE API k-exaone_v2.5（推論既定max、preserve_thinking、pi持続指示）はEN正本PROMPT v2でRealWorldバックエンド（Hurl 13/13）を60分上限（非正本）・30イテレーション内に完走できる（EN n=3） | **棄却** | pi 0.87.1 |
 | [EXP-063](experiments/063-agy-gemini4/report.md) Antigravity CLI × Gemini 4 Carbon・Neon・Hydrogen(サブスクリプション認証)完走検証(モデルごとEN n=3) | M-54: agy 1.5.14でgemini-4-carbon・gemini-4-neon・gemini-4-hydrogen(effort high、Googleアカウントのサブスクリプション認証)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・30分以内に完走できる(モデルごとEN n=3) | **検証** | Antigravity CLI (agy) 1.5.14 |
-| [EXP-064](experiments/064-pi-upstage-solar/report.md) pi × Upstage Solar Mini 4.5 Preview(EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各EN n=1)完走探索 | M-55: pi 0.87.1でUpstage solar-mini-4-5-preview・solar-pro-4・solar-pro-4-contributor(thinking high、pi正本の継続実行指示)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・40分(非正本)以内に完走できる(モデルごとEN n=1、探索。のちにMini 4.5 Previewはn=3) | **探索 — 5/5完走** | pi 0.87.1 |
+| [EXP-064](experiments/064-pi-upstage-solar/report.md) pi × Upstage Solar Mini 4.5 Preview(ファイルシステム隔離、EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各EN n=1)完走探索 | M-55: pi 0.87.1でUpstage solar-mini-4-5-preview・solar-pro-4・solar-pro-4-contributor(thinking high、pi正本の継続実行指示)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・40分(非正本)以内に完走できる(モデルごとEN n=1、探索。のちにMini 4.5 Previewはファイルシステム隔離下でn=3を再測定) | **探索 — 公開5/5完走** | pi 0.87.1 |
 
 **EXP-001 — Ralphループ vs Plan-then-execute** (観測範囲で棄却)  
 重複除去後のトークン代理指標はPTE 1,128,420、Ralph 136,506（8.27倍）。採点セットが異なるため同品質の費用比較ではない。 → [レポート](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -259,8 +259,8 @@ AC電源の3/3 runすべてイテレーション1で完走。ゲートと独立�
 **EXP-063 — Antigravity CLI × Gemini 4 Carbon・Neon・Hydrogen(サブスクリプション認証)完走検証(モデルごとEN n=3)** (検証)  
 9 runすべてイテレーション1で完走。ゲートと独立再検証2回がすべて13/13・154/154、全runでサブスクリプション認証(authMethod=consumer)と要求した-highモデルへの解決を確認。セッションはHydrogen 4:04–4:39、Neon 6:22–6:58、Carbon 12:51–14:36。サブスクリプション実行のためAPI請求なし、公開単価換算はrunあたりHydrogen約$0.5、Neon約$0.9、Carbon $0.8–1.0。更新されたOAuthトークンが隔離HOMEにコピーされず1 runが認証に失敗したため、トークンのコピーとrun前の認証確認をハーネスに追加して再実行した。 → [レポート](experiments/063-agy-gemini4/report.md)
 
-**EXP-064 — pi × Upstage Solar Mini 4.5 Preview(EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各EN n=1)完走探索** (探索 — 5/5完走)  
-5 runすべて完走し、ゲートと独立再検証2回がすべて13/13・154/154。Mini 4.5 Previewは3/3がイテレーション1で5:20–11:34(全runでHTTP 429レート制限エラー29–100件、再試行で継続)。3 run目はハーネスディレクトリを探索して直前runのソース全体と採点用Hurlファイルを読んだため、独立試行とはみなさない。Pro 4はイテレーション2で38:26、Pro 4 Contributorはイテレーション1で17:22。Upstage定価基準の推定コストはrunあたりMini $0.07–0.12、Pro 4 $1.73、Contributor $0.73(Pro 4定価で換算)。n=1のためcontributorモデルの性能がPro 4と同じかどうかは判定しない。以後のSolar Pro 4実験はcontributor版のみで実行する。 → [レポート](experiments/064-pi-upstage-solar/report.md)
+**EXP-064 — pi × Upstage Solar Mini 4.5 Preview(ファイルシステム隔離、EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各EN n=1)完走探索** (探索 — 公開5/5完走)  
+公開runはすべて完走し、ゲートと独立再検証2回がすべて13/13・154/154。Mini 4.5 Previewは、エージェント自身のリポジトリ外の読み取りを遮断する新しいmacOSサンドボックス下で3/3がイテレーション1で4:18–12:03(runあたりHTTP 429レート制限エラー4–77件、再試行で継続)。それ以前の非隔離Mini 4 runは公開指標から除外した(ユーザー指示で除外1件、ハーネスと直前runのコードを読んだ1件、以前のrunのコードを見つけてコピーした代替run 1件は無効)。Pro 4はイテレーション2で38:26、Pro 4 Contributorはイテレーション1で17:22。Upstage定価基準の推定コストはrunあたりMini $0.05–0.12、Pro 4 $1.73、Contributor $0.73(Pro 4定価で換算)。n=1のためcontributorモデルの性能がPro 4と同じかどうかは判定しない。以後のSolar Pro 4実験はcontributor版のみで実行する。 → [レポート](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

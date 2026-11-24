@@ -89,7 +89,7 @@
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember (OpenRouter) 랄프 루프 완주 검증 (EN n=3) | M-52: pi 0.87.1 × OpenRouter `meta/muse-ember`(Meta 고정, thinking high, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 20분·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 | [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × LG AI연구원 K-EXAONE 2.5 (EXAONE API) 랄프 루프 완주 검증 (EN n=3) | M-53: pi 0.87.1 × EXAONE API `k-exaone_v2.5`(reasoning_effort 제공자 기본 max, preserve_thinking, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 60분(비정본)·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **기각** | pi 0.87.1 |
 | [EXP-063](experiments/063-agy-gemini4/report.md) Antigravity CLI × Gemini 4 Carbon·Neon·Hydrogen (구독 인증) 랄프 루프 완주 검증 (EN n=3) | M-54: agy 1.5.14 × `gemini-4-carbon`·`gemini-4-neon`·`gemini-4-hydrogen`(effort high, Google 계정 구독 인증)은 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 30분·30 iteration 안에 무개입 완주할 수 있다 (모델별 EN n=3). | **검증** | Antigravity CLI (agy) 1.5.14 |
-| [EXP-064](experiments/064-pi-upstage-solar/report.md) pi × Upstage Solar Mini 4.5 Preview(EN n=3)·Solar Pro 4·Solar Pro 4 Contributor(EN 각 n=1) 랄프 루프 완주 탐색 | M-55: pi 0.87.1 × Upstage `solar-mini-4-5-preview`·`solar-pro-4`·`solar-pro-4-contributor`(thinking high, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 40분(비정본)·30 iteration 안에 무개입 완주할 수 있다 (모델별 EN n=1, 탐색. 이후 사용자 지시로 Mini 4.5 Preview는 n=3). | **탐색 — 5/5 완주 관측** | pi 0.87.1 |
+| [EXP-064](experiments/064-pi-upstage-solar/report.md) pi × Upstage Solar Mini 4.5 Preview(파일 시스템 격리, EN n=3)·Solar Pro 4·Solar Pro 4 Contributor(EN 각 n=1) 랄프 루프 완주 탐색 | M-55: pi 0.87.1 × Upstage `solar-mini-4-5-preview`·`solar-pro-4`·`solar-pro-4-contributor`(thinking high, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 40분(비정본)·30 iteration 안에 무개입 완주할 수 있다 (모델별 EN n=1, 탐색. 이후 사용자 지시로 Mini 4.5 Preview는 파일 시스템 격리 조건 n=3으로 다시 측정). | **탐색 — 공개 5/5 완주 관측** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -259,8 +259,8 @@ AC 전원 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 
 **EXP-063 — Antigravity CLI × Gemini 4 Carbon·Neon·Hydrogen (구독 인증) 랄프 루프 완주 검증 (EN n=3)** (검증)  
 세 모델 모두 3/3 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 전 run `authMethod=consumer`·요청 모델 해석 확인). 세션은 Hydrogen 4:04–4:39, Neon 6:22–6:58, Carbon 12:51–14:36이다. → [보고서](experiments/063-agy-gemini4/report.md)
 
-**EXP-064 — pi × Upstage Solar Mini 4.5 Preview(EN n=3)·Solar Pro 4·Solar Pro 4 Contributor(EN 각 n=1) 랄프 루프 완주 탐색** (탐색 — 5/5 완주 관측)  
-Mini 4.5 Preview 3/3 iteration 1(5:20–11:34, 3 run 모두 429 발생, en-3은 이전 run·채점 정본 노출로 독립 시행 아님), Pro 4 iteration 2(38:26), Pro 4 Contributor iteration 1(17:22). 비용은 정가 기준 run당 Mini $0.07–0.12, Pro 4 $1.73, Contributor $0.73(Pro 4 정가 환산). 각 n=1이므로 재현성과 contributor·일반 모델의 성능 차이는 판정하지 않는다. → [보고서](experiments/064-pi-upstage-solar/report.md)
+**EXP-064 — pi × Upstage Solar Mini 4.5 Preview(파일 시스템 격리, EN n=3)·Solar Pro 4·Solar Pro 4 Contributor(EN 각 n=1) 랄프 루프 완주 탐색** (탐색 — 공개 5/5 완주 관측)  
+Mini 4.5 Preview(파일 시스템 격리) 3/3 iteration 1(4:18–12:03, 429 4–77건), Pro 4 iteration 2(38:26), Pro 4 Contributor iteration 1(17:22). 비용은 정가 기준 run당 Mini $0.05–0.12, Pro 4 $1.73, Contributor $0.73(Pro 4 정가 환산). 비격리 Mini 4 run은 제외·노출·무효로 공개 지표에서 뺐다. → [보고서](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

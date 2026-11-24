@@ -84,7 +84,7 @@
 - [ ] pi 하네스 정체 감시가 스트리밍 수신을 활동으로 인정하거나 부분 응답을 기록 — EXP-061에서 느린 서빙(약 20 tok/s)의 긴 응답과 스트림 멈춤을 구분하지 못함
 - [x] EXP-063: Antigravity CLI(agy 1.5.14) × Gemini 4 Carbon·Neon·Hydrogen, Google 계정 구독 인증 (M-54, EN 모델별 n=3, effort high, run 상한 30분, PROMPT v2) — 검증(9/9 iteration 1, Hydrogen 4–5분·Neon 6–7분·Carbon 13–15분), [보고서](experiments/063-agy-gemini4/report.md)
 - [ ] agy 구독 경로와 API 키 경로를 같은 Gemini 4 모델로 비교 — EXP-063은 구독 경로만 측정(서빙·리비전 동일 여부 미확인)
-- [x] EXP-064: pi 0.87.1 × Upstage Solar Mini 4.5 Preview·Solar Pro 4·Solar Pro 4 Contributor (M-55, EN 모델별 n=1, thinking high, run 상한 40분, PROMPT v2) — 탐색 5/5 완주(Mini n=3 iter 1·5:20–11:34·$0.07–0.12, Pro 4 iter 2·38:26·$1.73, Contributor iter 1·17:22·$0.73, 정가 기준). Mini 429 전 run 발생, mini45-en-3 이전 run 노출(D-6)
+- [x] EXP-064: pi 0.87.1 × Upstage Solar Mini 4.5 Preview·Solar Pro 4·Solar Pro 4 Contributor (M-55, EN 모델별 n=1, thinking high, run 상한 40분, PROMPT v2) — 탐색 공개 5/5 완주(Mini 격리 n=3 iter 1·4:18–12:03·$0.05–0.12, Pro 4 iter 2·38:26·$1.73, Contributor iter 1·17:22·$0.73, 정가 기준). Mini 429 전 run 발생, 비격리 run의 하네스·이전 run 코드 노출(D-6·D-8) → pi `PI_SANDBOX=on` 추가
 - Solar Pro 4 실행 정책 (2026-11-24 사용자 지시): 이후 Solar Pro 4 실험은 `solar-pro-4-contributor`로만 실행하고 비용은 `solar-pro-4` 정가로 공개한다. 일반 모델과의 성능 차이는 EXP-064(n=1)에서 판정하지 않았다
 - [ ] 정식 Solar Mini 4.5 (2026-12-01 출시 예정) 측정 — EXP-064는 preview(2026-11-30 종료)
 - [x] 지속 실행 지침을 pi 정본에 포함 (2026-10-28 사용자 결정, 스킬 `assets/pi-persistence.md`·`PI_PERSISTENCE=on` 기본·smoke 주입 탐침)
@@ -93,6 +93,6 @@
 - [ ] driver가 iteration마다 `bench.env`의 상한(`MAX_SEC`)을 다시 읽도록 개선 — 실행 중 상한 변경 적용 실패 사례(EXP-043 D-3)
 - [ ] DGX Spark 등급 후속: Qwen pi 재측정 중 flash·coder 남음(27b는 EXP-045 완료), Nemotron-3.5-Lightning(HF 크레딧 필요). 256GB·512GB 등급 중 GLM-5.3-Flash는 Z.ai API로 EXP-046 완료(로컬 실행은 미측정), MiniMax-M3는 키 확보 후 — [후보 조사](docs/2026-10-10-local-runnable-open-weight-models.md)
 - [ ] 에이전트 실행 격리(별도 사용자·컨테이너) — 에이전트가 `ps`/`pgrep`으로 같은 머신의 다른 프로세스 비밀값을 읽은 사례(EXP-038 D-1)
-- [ ] 하네스 디렉터리와 run 디렉터리 분리 — 에이전트가 채점기·이전 run 기록에 접근한 사례(EXP-035 D-1, EXP-036 D-2, EXP-029 3개 세션) 재발 방지
+- [ ] 하네스 디렉터리와 run 디렉터리 분리 — 에이전트가 채점기·이전 run 기록에 접근한 사례(EXP-035 D-1, EXP-036 D-2, EXP-029 3개 세션) 재발 방지. pi는 EXP-064에서 `PI_SANDBOX=on`(macOS sandbox-exec 읽기 격리)으로 부분 해결 — 디렉터리 이동만으로는 막지 못함(EXP-064 D-8). pi 정본 기본값으로 할지, 다른 하네스(Claude Code·Codex·agy)에도 적용할지 결정 필요
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화

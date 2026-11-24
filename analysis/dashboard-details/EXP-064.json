@@ -6,19 +6,23 @@
   "runs": {
     "mini45sb-en-4": {
       "iter": 1,
-      "commits": 2
+      "commits": 2,
+      "http429": 0
     },
     "mini45sb-en-5": {
       "iter": 1,
-      "commits": 4
+      "commits": 4,
+      "http429": 13
     },
     "pro4-en-1": {
       "iter": 2,
-      "commits": 2
+      "commits": 2,
+      "http429": 0
     },
     "pro4c-en-1": {
       "iter": 1,
-      "commits": 1
+      "commits": 1,
+      "http429": 0
     }
   },
   "conditions": {

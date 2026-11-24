@@ -94,6 +94,7 @@ def main() -> int:
                 "time": num(r["time_min"]), "input": num(r["input_uncached"]), "cacheRead": num(r["cache_read"]),
                 "cacheWrite": cw, "output": num(r["output"]), "requests": num(r["unique_requests"]),
                 "usd": num(r["est_cost_usd"]),
+                **({"http429": meta["http429"]} if meta.get("http429") is not None else {}),
             })
         out.setdefault(name, []).append({
             "exp": exp, "date": det.get("date"), "report": det.get("report") or rep["path"],

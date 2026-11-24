@@ -67,6 +67,7 @@
 | EXP-060 | pi 0.87.1 | `experiments/060-pi-muse-ember/runs/phase0.md` |
 | EXP-061 | pi 0.87.1 | `experiments/061-pi-k-exaone25/runs/phase0.md` |
 | EXP-063 | Antigravity CLI (agy) 1.5.14 | `experiments/063-agy-gemini4/runs/phase0.md`, `agy --version` 1.5.14(`AGY_CLI_DISABLE_AUTO_UPDATE=1`) |
+| EXP-064 | pi 0.87.1 | `experiments/064-pi-upstage-solar/runs/phase0.md`, `pi --version` 0.87.1 |
 
 ## 읽는 법
 

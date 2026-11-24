@@ -1,0 +1,77 @@
+{
+ "providers": {
+  "upstage": {
+   "baseUrl": "https://api.upstage.ai/v1",
+   "api": "openai-completions",
+   "apiKey": "$UPSTAGE_API_KEY",
+   "models": [
+    {
+     "id": "solar-mini-4-5-preview",
+     "name": "Solar Mini 4.5 Preview",
+     "reasoning": true,
+     "input": [
+      "text"
+     ],
+     "contextWindow": 512000,
+     "maxTokens": 65536,
+     "cost": {
+      "input": 0.01,
+      "output": 0.04,
+      "cacheRead": 0.001,
+      "cacheWrite": 0
+     },
+     "compat": {
+      "thinkingFormat": "openai",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "supportsStrictMode": false
+     }
+    },
+    {
+     "id": "solar-pro-4",
+     "name": "Solar Pro 4",
+     "reasoning": true,
+     "input": [
+      "text"
+     ],
+     "contextWindow": 512000,
+     "maxTokens": 65536,
+     "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+     },
+     "compat": {
+      "thinkingFormat": "openai",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "supportsStrictMode": false
+     }
+    },
+    {
+     "id": "solar-pro-4-contributor",
+     "name": "Solar Pro 4 Contributor",
+     "reasoning": true,
+     "input": [
+      "text"
+     ],
+     "contextWindow": 512000,
+     "maxTokens": 65536,
+     "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+     },
+     "compat": {
+      "thinkingFormat": "openai",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "supportsStrictMode": false
+     }
+    }
+   ]
+  }
+ }
+}

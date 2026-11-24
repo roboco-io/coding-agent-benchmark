@@ -1,0 +1,47 @@
+{
+ "upstage/solar-mini-4-5-preview": {
+  "provider": "Upstage OpenAI 호환 chat/completions (https://api.upstage.ai/v1, Bearer UPSTAGE_API_KEY), pi 사용자 정의 models.json. GET /v1/models에 solar-mini-4-5-preview 존재(created 20261028), 응답 model 필드 solar-mini-4-5-preview (2026-11-24 확인)",
+  "context_window": 512000,
+  "max_output": 128000,
+  "context_source": "https://console.upstage.ai/docs/models/solar-mini-4-5-preview.md (2026-11-24 확인, 512K / 128K, 35B·활성 3B, 2026-11-30 종료 예정 preview)",
+  "billing": "api",
+  "pricing": {
+   "input": 0.01,
+   "output": 0.04,
+   "cache_read": 0.001,
+   "tiers": [],
+   "source": "https://console.upstage.ai/docs/models/solar-mini-4-5-preview.md (2026-11-24 확인, preview 90% 할인가. 정가 $0.10/$0.40/$0.01). completion_tokens가 reasoning_tokens를 포함함을 직접 호출로 확인",
+   "checked_at": "2026-11-24"
+  }
+ },
+ "upstage/solar-pro-4": {
+  "provider": "Upstage OpenAI 호환 chat/completions (https://api.upstage.ai/v1, Bearer UPSTAGE_API_KEY), pi 사용자 정의 models.json. GET /v1/models에 solar-pro-4(별칭)·solar-pro-4-260806 존재, 응답 model 필드 solar-pro4-260806 (2026-11-24 확인)",
+  "context_window": 512000,
+  "max_output": 128000,
+  "context_source": "https://console.upstage.ai/docs/models/solar-pro-4.md (2026-11-24 확인, 512K / 128K)",
+  "billing": "api",
+  "pricing": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.03,
+   "tiers": [],
+   "source": "https://console.upstage.ai/docs/models/solar-pro-4.md (2026-11-24 확인, 프로모션 할인가. 정가 $0.30/$1.20/$0.06). completion_tokens가 reasoning_tokens를 포함함을 직접 호출로 확인",
+   "checked_at": "2026-11-24"
+  }
+ },
+ "upstage/solar-pro-4-contributor": {
+  "provider": "Upstage OpenAI 호환 chat/completions (https://api.upstage.ai/v1, Bearer UPSTAGE_API_KEY), pi 사용자 정의 models.json. solar-pro-4와 같은 모델이며 요청·응답을 Upstage가 저장·학습에 사용(contributor mode). GET /v1/models에 solar-pro-4-contributor 존재, 응답 model 필드 solar-pro-4-260806-contributor (2026-11-24 확인)",
+  "context_window": 512000,
+  "max_output": 128000,
+  "context_source": "https://console.upstage.ai/docs/models/solar-pro-4.md (2026-11-24 확인, 512K / 128K)",
+  "billing": "api",
+  "pricing": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.03,
+   "tiers": [],
+   "source": "비용 상한·공개 환산은 사용자 지시(2026-11-24)로 solar-pro-4 단가($0.15/$0.60/$0.03)를 적용한다. contributor 실제 단가는 $0.09/$0.36/$0.018(정가 70% 할인), 출처 https://console.upstage.ai/docs/models/solar-pro-4.md (2026-11-24 확인). completion_tokens가 reasoning_tokens를 포함함을 직접 호출로 확인",
+   "checked_at": "2026-11-24"
+  }
+ }
+}

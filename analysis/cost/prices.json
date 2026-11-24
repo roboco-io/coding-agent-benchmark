@@ -333,5 +333,35 @@
     "src": "https://aistudio.google.com/docs/pricing",
     "accessed": "2026-11-22",
     "caveat": "Gemini API 유료 티어 Standard, 출력 단가는 thinking 토큰 포함. 프롬프트 길이 구간 없음, 암묵 캐시만. EXP-063은 agy 구독 인증(authMethod=consumer) 실행이라 실제 지출 없음 — 환산값만"
+  },
+  "solar-mini-4-5-preview": {
+    "input": 0.1,
+    "cache_read": 0.01,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 0.4,
+    "src": "https://console.upstage.ai/docs/models/solar-mini-4-5-preview.md",
+    "accessed": "2026-11-24",
+    "caveat": "정가(list price) 기준 환산(사용자 지시 2026-11-24). 실행 시점 preview 90% 할인가는 $0.01/$0.001/$0.04이며 이 단가로는 run당 약 $0.012다. 2026-11-30 종료 예정 preview라 단가가 바뀔 수 있음. 출력 단가는 reasoning 토큰 포함. EXP-064는 Upstage API 키 실행(실제 과금, 청구액 미확인)"
+  },
+  "solar-pro-4": {
+    "input": 0.3,
+    "cache_read": 0.06,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 1.2,
+    "src": "https://console.upstage.ai/docs/models/solar-pro-4.md",
+    "accessed": "2026-11-24",
+    "caveat": "정가(list price) 기준 환산(사용자 지시 2026-11-24). 실행 시점 프로모션 할인가는 $0.15/$0.03/$0.60이며 이 단가로는 run당 약 $0.86. 출력 단가는 reasoning 토큰 포함. 기존 'Solar Pro 4' 항목(EXP-020, 2026-08 정가 기준)과 별개. EXP-064는 Upstage API 키 실행(실제 과금, 청구액 미확인)"
+  },
+  "solar-pro-4-contributor": {
+    "input": 0.3,
+    "cache_read": 0.06,
+    "cache_write_5m": null,
+    "cache_write_1h": null,
+    "output": 1.2,
+    "src": "https://console.upstage.ai/docs/models/solar-pro-4.md",
+    "accessed": "2026-11-24",
+    "caveat": "사용자 지시(2026-11-24)로 solar-pro-4 정가(list price)로 환산해 공개한다. contributor 실제 단가는 $0.09/$0.018/$0.36(정가 70% 할인, 같은 문서)이며 이 단가로 계산하면 run당 약 $0.22다. 요청·응답을 Upstage가 저장해 학습에 사용하는 대가의 할인. EXP-064는 Upstage API 키 실행(실제 과금, 청구액 미확인)"
   }
 }

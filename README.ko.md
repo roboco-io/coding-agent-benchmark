@@ -20,7 +20,7 @@
 
 > 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다(영·일·중 README는 [`scripts/readme_i18n.json`](scripts/readme_i18n.json)의 번역을 사용). 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-063 (2026-11-22)
+**📊 라이브 대시보드**: [랄프 루프 모델별 완주 비교](https://roboco.io/coding-agent-benchmark/) — 최신 실험 반영: EXP-064 (2026-11-24)
 
 **🔤 자매 리포 — 언어 비교**: [language-benchmark](https://github.com/roboco-io/language-benchmark) ([대시보드](https://roboco.io/language-benchmark/))는 모델·하네스를 고정하고 같은 RealWorld 백엔드를 구현 언어(TypeScript, Python, Go, Rust, C++)별로 비교한다.
 
@@ -89,6 +89,7 @@
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember (OpenRouter) 랄프 루프 완주 검증 (EN n=3) | M-52: pi 0.87.1 × OpenRouter `meta/muse-ember`(Meta 고정, thinking high, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 20분·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **검증** | pi 0.87.1 |
 | [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × LG AI연구원 K-EXAONE 2.5 (EXAONE API) 랄프 루프 완주 검증 (EN n=3) | M-53: pi 0.87.1 × EXAONE API `k-exaone_v2.5`(reasoning_effort 제공자 기본 max, preserve_thinking, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 60분(비정본)·30 iteration 안에 무개입 완주할 수 있다 (EN n=3). | **기각** | pi 0.87.1 |
 | [EXP-063](experiments/063-agy-gemini4/report.md) Antigravity CLI × Gemini 4 Carbon·Neon·Hydrogen (구독 인증) 랄프 루프 완주 검증 (EN n=3) | M-54: agy 1.5.14 × `gemini-4-carbon`·`gemini-4-neon`·`gemini-4-hydrogen`(effort high, Google 계정 구독 인증)은 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 30분·30 iteration 안에 무개입 완주할 수 있다 (모델별 EN n=3). | **검증** | Antigravity CLI (agy) 1.5.14 |
+| [EXP-064](experiments/064-pi-upstage-solar/report.md) pi × Upstage Solar Mini 4.5 Preview·Solar Pro 4·Solar Pro 4 Contributor 랄프 루프 완주 탐색 (EN 각 n=1) | M-55: pi 0.87.1 × Upstage `solar-mini-4-5-preview`·`solar-pro-4`·`solar-pro-4-contributor`(thinking high, pi 정본 지속 지침)는 EN 정본(PROMPT v2) 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 run 상한 40분(비정본)·30 iteration 안에 무개입 완주할 수 있다 (모델별 EN n=1, 탐색). | **탐색 — 3/3 완주 관측** | pi 0.87.1 |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (관측 범위 한정))  
 보관 로그의 토큰 대리지표는 PTE 1,128,420, Ralph 136,506으로 약 8.27배. 동일 품질의 비용 우위로 일반화하지 않는다. → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -257,6 +258,9 @@ AC 전원 3/3 모두 iteration 1 완주 (게이트 pass + 독립 재검증 2회 
 
 **EXP-063 — Antigravity CLI × Gemini 4 Carbon·Neon·Hydrogen (구독 인증) 랄프 루프 완주 검증 (EN n=3)** (검증)  
 세 모델 모두 3/3 iteration 1 완주 (게이트 pass + 독립 재검증 2회 13/13·154/154 일치, 전 run `authMethod=consumer`·요청 모델 해석 확인). 세션은 Hydrogen 4:04–4:39, Neon 6:22–6:58, Carbon 12:51–14:36이다. → [보고서](experiments/063-agy-gemini4/report.md)
+
+**EXP-064 — pi × Upstage Solar Mini 4.5 Preview·Solar Pro 4·Solar Pro 4 Contributor 랄프 루프 완주 탐색 (EN 각 n=1)** (탐색 — 3/3 완주 관측)  
+Mini 4.5 Preview iteration 1(11:34, 429 100건 포함), Pro 4 iteration 2(38:26), Pro 4 Contributor iteration 1(17:22). 비용은 정가 기준 run당 $0.12·$1.73·$0.73(Contributor는 Pro 4 정가 환산). 각 n=1이므로 재현성과 contributor·일반 모델의 성능 차이는 판정하지 않는다. → [보고서](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

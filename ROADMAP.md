@@ -84,6 +84,9 @@
 - [ ] pi 하네스 정체 감시가 스트리밍 수신을 활동으로 인정하거나 부분 응답을 기록 — EXP-061에서 느린 서빙(약 20 tok/s)의 긴 응답과 스트림 멈춤을 구분하지 못함
 - [x] EXP-063: Antigravity CLI(agy 1.5.14) × Gemini 4 Carbon·Neon·Hydrogen, Google 계정 구독 인증 (M-54, EN 모델별 n=3, effort high, run 상한 30분, PROMPT v2) — 검증(9/9 iteration 1, Hydrogen 4–5분·Neon 6–7분·Carbon 13–15분), [보고서](experiments/063-agy-gemini4/report.md)
 - [ ] agy 구독 경로와 API 키 경로를 같은 Gemini 4 모델로 비교 — EXP-063은 구독 경로만 측정(서빙·리비전 동일 여부 미확인)
+- [x] EXP-064: pi 0.87.1 × Upstage Solar Mini 4.5 Preview·Solar Pro 4·Solar Pro 4 Contributor (M-55, EN 모델별 n=1, thinking high, run 상한 40분, PROMPT v2) — 탐색 3/3 완주(Mini iter 1·11:34·$0.12, Pro 4 iter 2·38:26·$1.73, Contributor iter 1·17:22·$0.73, 정가 기준). Mini 429 100건(D-1)
+- Solar Pro 4 실행 정책 (2026-11-24 사용자 지시): 이후 Solar Pro 4 실험은 `solar-pro-4-contributor`로만 실행하고 비용은 `solar-pro-4` 정가로 공개한다. 일반 모델과의 성능 차이는 EXP-064(n=1)에서 판정하지 않았다
+- [ ] 정식 Solar Mini 4.5 (2026-12-01 출시 예정) 측정 — EXP-064는 preview(2026-11-30 종료)
 - [x] 지속 실행 지침을 pi 정본에 포함 (2026-10-28 사용자 결정, 스킬 `assets/pi-persistence.md`·`PI_PERSISTENCE=on` 기본·smoke 주입 탐침)
 - [ ] 지침 추가 전 pi 결과(EXP-029–053)를 새 pi 정본으로 재측정할지 검토 — 지침 유무가 기존 pi 비교의 교란 변수
 - [ ] DashScope Anthropic 호환 엔드포인트 usage 누락(EXP-042 D-1)이 EXP-013·016·017(qwen3.8-max) 토큰 수치에 준 영향 재점검

@@ -1,0 +1,4 @@
+run,files,assistant_msgs,usage_entries,dup_skipped,missing_usage,input,output,cacheRead,cacheWrite,reasoning,proxy
+mini45-en-1,1,199,0,0,0,64664,74787,7905024,0,39074,139451
+pro4-en-1,2,301,0,0,0,714684,146559,22273600,0,60769,861243
+pro4c-en-1,1,158,0,0,0,199196,63262,9833344,0,19448,262458

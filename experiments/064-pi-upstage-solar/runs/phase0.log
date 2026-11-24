@@ -1,0 +1,19 @@
+INFO 3000번대 포트 외부 LISTEN — 종료 불필요. 하네스는 빈 포트(PORT)를 주입하고 리포 소속 프로세스의 포트로만 채점한다. PORT를 무시하고 이 포트에 고정 바인딩한 앱은 기동 실패로 기각될 수 있다(산출물 결함, 부검 시 확인):
+DeepSRT 127.0.0.1:3003
+=== upstage/solar-mini-4-5-preview (pi) 2026-11-24 12:14:22 ===
+persistence probe: Do not end your turn after finishing one part of the work: when a part is done, continue with the next remaining part.
+SMOKE-OK
+=== upstage/solar-pro-4 (pi) 2026-11-24 12:14:23 ===
+persistence probe: when a part is done, continue with the next remaining part. Do not end your turn to report progress or partial results. End your turn only when every completion criterion has been met and verified, or when you are blocked by something you cannot resolve yourself.
+SMOKE-OK
+INFO 3000번대 포트 외부 LISTEN — 종료 불필요. 하네스는 빈 포트(PORT)를 주입하고 리포 소속 프로세스의 포트로만 채점한다. PORT를 무시하고 이 포트에 고정 바인딩한 앱은 기동 실패로 기각될 수 있다(산출물 결함, 부검 시 확인):
+DeepSRT 127.0.0.1:3003
+=== upstage/solar-mini-4-5-preview (pi) 2026-11-24 12:26:58 ===
+persistence probe: "Do not end your turn after finishing one part of the work: when a part is done, continue with the next remaining part."
+SMOKE-OK
+=== upstage/solar-pro-4 (pi) 2026-11-24 12:27:00 ===
+persistence probe: Do not end your turn after finishing one part of the work: when a part is done, continue with the next remaining part.
+SMOKE-OK
+=== upstage/solar-pro-4-contributor (pi) 2026-11-24 12:27:04 ===
+persistence probe: When a part is done, continue with the next remaining part. Do not end your turn to report progress or partial results. End your turn only when every completion criterion has been met and verified, or when you are blocked by something you cannot resolve yourself.
+SMOKE-OK

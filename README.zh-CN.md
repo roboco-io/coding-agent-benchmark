@@ -20,7 +20,7 @@
 
 > 下表与各实验摘要由 [`scripts/update_readme_results.py`](scripts/update_readme_results.py) 根据各实验的 `report.md` 自动生成（英·日·中 README 使用 [`scripts/readme_i18n.json`](scripts/readme_i18n.json) 中的翻译）。实验结束提交 `report.md` 时，pre-commit 钩子会自动执行（手动执行：`python3 scripts/update_readme_results.py`）。
 
-**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-063（2026-11-22）
+**📊 实时仪表板**：[Ralph 循环各模型完成率对比](https://roboco.io/coding-agent-benchmark/) —— 最新实验：EXP-064（2026-11-24）
 
 **🔤 姊妹仓库 — 语言比较**: [language-benchmark](https://github.com/roboco-io/language-benchmark)([仪表板](https://roboco.io/language-benchmark/))固定模型与工具组合,按实现语言(TypeScript、Python、Go、Rust、C++)比较同一个 RealWorld 后端。
 
@@ -89,6 +89,7 @@
 | [EXP-060](experiments/060-pi-muse-ember/report.md) pi × Meta Muse Ember(OpenRouter)完成验证（EN n=3） | M-52: 在 pi 0.87.1 中通过 OpenRouter 运行 meta/muse-ember(固定 Meta，thinking high，含 pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、20 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154) (EN n=3) | **已验证** | pi 0.87.1 |
 | [EXP-061](experiments/061-pi-k-exaone25/report.md) pi × K-EXAONE 2.5（EXAONE API）完成验证 | M-53: pi 0.87.1 × EXAONE API k-exaone_v2.5（默认 max 推理、preserve_thinking、pi 持续指令）可用 EN 正本 PROMPT v2 在 60 分钟上限（非正本）和 30 次迭代内完成 RealWorld 后端（Hurl 13/13）（EN n=3） | **否定** | pi 0.87.1 |
 | [EXP-063](experiments/063-agy-gemini4/report.md) Antigravity CLI × Gemini 4 Carbon・Neon・Hydrogen(订阅认证)完成验证(每个模型 EN n=3) | M-54: 在 agy 1.5.14 中运行 gemini-4-carbon、gemini-4-neon、gemini-4-hydrogen(effort high，Google 账号订阅认证)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、30 分钟上限内完成 RealWorld 后端(Hurl 13/13・154/154)(每个模型 EN n=3) | **已验证** | Antigravity CLI (agy) 1.5.14 |
+| [EXP-064](experiments/064-pi-upstage-solar/report.md) pi × Upstage Solar Mini 4.5 Preview・Solar Pro 4・Solar Pro 4 Contributor 完成探索(每个模型 EN n=1) | M-55: 在 pi 0.87.1 中运行 Upstage solar-mini-4-5-preview、solar-pro-4、solar-pro-4-contributor(thinking high，pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、40 分钟(非正本)上限内完成 RealWorld 后端(Hurl 13/13・154/154)(每个模型 EN n=1，探索) | **探索 — 3/3 完成** | pi 0.87.1 |
 
 **EXP-001 — Ralph 循环 vs Plan-then-execute** (在观测范围内否定)  
 去重后的 token 代理指标：PTE 1,128,420，Ralph 136,506（8.27倍）。评分集不同，不能作为同等质量的成本比较。 → [报告](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -257,6 +258,9 @@ AC 电源下 3/3 个 run 全部在第 1 次迭代完成；门控与两次独立�
 
 **EXP-063 — Antigravity CLI × Gemini 4 Carbon・Neon・Hydrogen(订阅认证)完成验证(每个模型 EN n=3)** (已验证)  
 9 个 run 全部在第 1 次迭代完成；门控与两次独立复核均为 13/13・154/154，所有 run 均确认为订阅认证(authMethod=consumer)并解析为所请求的 -high 模型。会话时长：Hydrogen 4:04–4:39、Neon 6:22–6:58、Carbon 12:51–14:36。订阅运行无 API 计费，按公开单价折算每 run 约 Hydrogen $0.5、Neon $0.9、Carbon $0.8–1.0。有 1 个 run 因刷新后的 OAuth token 未复制到隔离 HOME 而认证失败；已在 harness 中加入 token 复制与 run 前认证检查并重新运行。 → [报告](experiments/063-agy-gemini4/report.md)
+
+**EXP-064 — pi × Upstage Solar Mini 4.5 Preview・Solar Pro 4・Solar Pro 4 Contributor 完成探索(每个模型 EN n=1)** (探索 — 3/3 完成)  
+3 个 run 全部完成，门控与两次独立复核均为 13/13・154/154。Mini 4.5 Preview 在第 1 次迭代以 11:34 完成(包含 100 次 HTTP 429 限流错误后最多约 5 分钟的重试等待)，Pro 4 在第 2 次迭代以 38:26 完成，Pro 4 Contributor 在第 1 次迭代以 17:22 完成。按 Upstage 定价估算每 run 成本为 $0.12、$1.73、$0.73(Contributor 按 Pro 4 定价折算，实际折扣单价更低)。每个条件 n=1，无法判断 contributor 模型与 Pro 4 性能是否相同。此后的 Solar Pro 4 实验仅使用 contributor 版本。 → [报告](experiments/064-pi-upstage-solar/report.md)
 
 <!-- RESULTS:END -->
 

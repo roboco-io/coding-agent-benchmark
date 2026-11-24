@@ -24,7 +24,14 @@ for c in $CONDITIONS; do
     codex) r=$(CODEX_HOME="$BASE/codex-home" codex exec --model "$m" ${EFFORT:+-c model_reasoning_effort="$EFFORT"} \
              --sandbox read-only --skip-git-repo-check -C "$BASE/smoke-tmp" "$Q" < /dev/null 2>&1) ;;
     pi) source "$BASE/pi_env.sh"
-      r=$(cd "$BASE/smoke-tmp" && "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/smoke-tmp/sessions" \
+      # PI_SANDBOX=on: 격리 안에서 하네스 파일·홈 목록 읽기가 거부되는지 결정적으로 확인 (EXP-064 D-7)
+      if [ "${PI_SANDBOX:-off}" = on ]; then
+        sb=$(sandbox-exec -p "$(pi_sandbox_profile "$BASE/smoke-tmp" "$BASE/smoke-tmp/sessions")" /bin/bash -c \
+          "cat '$BASE/measure.sh' >/dev/null 2>&1 && echo LEAK; ls '$HOME/experiments' >/dev/null 2>&1 && echo LEAK; cat '$HOME/.zsh_secrets' >/dev/null 2>&1 && echo LEAK; ls '$BASE/smoke-tmp' >/dev/null && echo OWN-OK")
+        echo "sandbox probe: $(echo $sb)" >> "$OUT"
+        [ "$sb" = "OWN-OK" ] || { echo "FAIL $m — PI_SANDBOX 격리 미확인: $(echo $sb)"; fail=1; }
+      fi
+      r=$(cd "$BASE/smoke-tmp" && pi_exec "$BASE/smoke-tmp" "$BASE/smoke-tmp/sessions" -p -nc -ns -ne -np -na --session-dir "$BASE/smoke-tmp/sessions" \
           --model "$m" ${THINKING:+--thinking "$THINKING"} "$Q" < /dev/null 2>&1)
       # 정본 지속 지침 주입 확인 (EXP-057: 모델 자기보고는 신뢰하지 않고 지침 고유 문장 완성으로 확인)
       if [ "${PI_PERSISTENCE:-on}" != off ]; then

@@ -77,7 +77,7 @@ invoke_agent() {
         "$(cat "$REPO/PROMPT.md")" ;;
     pi)
       source "$BASE/pi_env.sh"
-      "$PI_BIN" -p -nc -ns -ne -np -na --session-dir "$BASE/sessions-$RUN" \
+      pi_exec "$REPO" "$BASE/sessions-$RUN" -p -nc -ns -ne -np -na --session-dir "$BASE/sessions-$RUN" \
         --model "$MODEL" ${THINKING:+--thinking "$THINKING"} \
         "${PI_PERSIST_ARGS[@]}" \
         ${PI_APPEND_SYSTEM_PROMPT:+--append-system-prompt "$PI_APPEND_SYSTEM_PROMPT"} "$(cat "$REPO/PROMPT.md")" ;;

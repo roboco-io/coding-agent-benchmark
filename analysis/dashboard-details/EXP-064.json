@@ -4,17 +4,13 @@
   "report": "experiments/064-pi-upstage-solar/report.md",
   "client": "pi 0.87.1",
   "runs": {
-    "mini45sb-en-1": {
+    "mini45sb-en-4": {
       "iter": 1,
-      "commits": 3
+      "commits": 2
     },
-    "mini45sb-en-2": {
+    "mini45sb-en-5": {
       "iter": 1,
-      "commits": 3
-    },
-    "mini45sb-en-3": {
-      "iter": 1,
-      "commits": 3
+      "commits": 4
     },
     "pro4-en-1": {
       "iter": 2,
@@ -49,7 +45,7 @@
       ],
       [
         "프롬프트",
-        "EN 정본 v2, Mini 4.5 Preview는 파일 시스템 격리(PI_SANDBOX=on) n=3·나머지 조건 n=1, 순차"
+        "EN 정본 v2, Mini 4.5 Preview는 파일 시스템 격리(PI_SANDBOX=on) 공개 n=2(참고 n=3 별도)·나머지 조건 n=1, 순차"
       ],
       [
         "비용 기준",
@@ -83,7 +79,7 @@
       ],
       [
         "Prompt",
-        "EN canonical v2, n=3 for Mini 4.5 Preview (filesystem sandbox, PI_SANDBOX=on) and n=1 for the other conditions, sequential"
+        "EN canonical v2, Mini 4.5 Preview published n=2 (filesystem sandbox, PI_SANDBOX=on; 3 more reference runs separate) and n=1 for the other conditions, sequential"
       ],
       [
         "Cost basis",
@@ -117,7 +113,7 @@
       ],
       [
         "プロンプト",
-        "EN正本v2、Mini 4.5 Previewはファイルシステム隔離（PI_SANDBOX=on）でn=3、他の条件はn=1、逐次"
+        "EN正本v2、Mini 4.5 Previewはファイルシステム隔離（PI_SANDBOX=on）で公開n=2（参考n=3は別）、他の条件はn=1、逐次"
       ],
       [
         "コスト基準",
@@ -151,7 +147,7 @@
       ],
       [
         "提示词",
-        "EN 标准 v2，Mini 4.5 Preview 为文件系统隔离（PI_SANDBOX=on）n=3，其他条件 n=1，顺序运行"
+        "EN 标准 v2，Mini 4.5 Preview 为文件系统隔离（PI_SANDBOX=on）公开 n=2（另有参考 n=3），其他条件 n=1，顺序运行"
       ],
       [
         "成本基准",
@@ -165,71 +161,75 @@
   },
   "deviations": {
     "ko": [
-      "Mini 4.5 Preview의 공개 결과는 파일 시스템 격리 조건(mini45sb) 3 run이다. 앞서 실행한 비격리 4 run은 공개 지표에서 뺐다. en-1(429 100건, D-1)은 계정 한도 영향이 의심돼 사용자 지시로 제외했고(D-7), en-2는 유효하지만 비격리라 참고값이며(D-4·D-5), en-3은 하네스 디렉터리·채점용 Hurl 정본·en-2 소스를 읽어 독립 시행이 아니고(D-6), en-1의 대체 run en-4는 옮겨 둔 디렉터리에서 en-1 코드를 찾아 rsync로 복사해 무효다(D-8). 디렉터리를 옮기는 것으로는 노출을 막지 못했다.",
-      "공개 세션 시간은 429 제한 대기를 뺀 값이다(대기 = 429 응답마다 실패한 요청 시작부터 다음 요청 시작까지의 합: en-1 12.3초, en-2 200.8초, en-3 264.9초). 기록 세션 시간(제한 대기 포함)은 4:18·10:25·12:03이고 공개 시간은 4:06·7:04·7:38이다. Pro 4·Contributor는 429가 없어 그대로다.",
+      "Mini 4.5 Preview의 공개 결과는 파일 시스템 격리 조건(mini45sb)에서 추가로 실행한 2 run(en-4·en-5)이다. 같은 조건의 앞선 3 run(en-1·2·3)은 429 스로틀링 4·62·77건 때문에 사용자 지시로 참고 자료로 내렸다(D-13). 그보다 먼저 실행한 비격리 4 run도 공개 지표에서 뺐다. 비격리 en-1(429 100건, D-1)은 계정 한도 영향이 의심돼 사용자 지시로 제외했고(D-7), en-2는 유효하지만 비격리라 참고값이며(D-4·D-5), en-3은 하네스 디렉터리·채점용 Hurl 정본·en-2 소스를 읽어 독립 시행이 아니고(D-6), en-1의 대체 run en-4는 옮겨 둔 디렉터리에서 en-1 코드를 찾아 rsync로 복사해 무효다(D-8). 디렉터리를 옮기는 것으로는 노출을 막지 못했다. 비격리 run의 이름(mini45-en-N)과 격리 run의 이름(mini45sb-en-N)은 번호가 겹치지만 서로 다른 run이다.",
+      "공개 세션 시간은 429 제한 대기를 뺀 값이다(대기 = 429 응답마다 실패한 요청 시작부터 다음 요청 시작까지의 합). 공개 en-4는 429가 0건이라 기록값과 같은 5:49이고, en-5는 429 13건·대기 37.1초라 기록 7:29에서 뺀 6:52다. 참고로 내린 격리 en-1·2·3은 대기가 12.3·200.8·264.9초이고 기록값 4:18·10:25·12:03에서 뺀 4:06·7:04·7:38이다. Pro 4·Contributor는 429가 없어 그대로다.",
       "D-2 mini45 run 중 사용자 지시로 solar-pro-4-contributor 조건을 추가했다. 재설정·재승인·smoke 후 pro4부터 재기동했고 실험 비용 상한을 $3에서 $5로 올렸다.",
       "D-3 Solar Pro 4 run은 iteration 1(Hurl 0/13, 완료 선언 없음) 뒤 iteration 2에서 38:26에 완주해 run 상한 40분(비정본)에 근접했다. 정본 상한 20분이었다면 미완주였다.",
       "**EXP-064부터 Solar Pro 4 벤치마크 실행은 contributor 변형(`solar-pro-4-contributor`)만 사용한다(사용자 지시 2026-11-24).** Upstage 문서상 Solar Pro 4와 같은 모델이며, 요청과 응답을 Upstage와 공유해 Upstage가 저장하고 학습에 쓰는 대가로 70% 할인을 받는다. 비용은 solar-pro-4 정가로 환산해 공개한다.",
-      "비용은 세 조건 모두 Upstage 정가(list price) 기준 환산이다(Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4와 Contributor $0.30/$0.06/$1.20, 1M 토큰당 입력/캐시/출력). 실행 당시 할인가로는 Mini 약 $0.005–0.012, Pro 4 약 $0.86이고 Contributor 실제 단가로는 약 $0.22다.",
+      "비용은 세 조건 모두 Upstage 정가(list price) 기준 환산이다(Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4와 Contributor $0.30/$0.06/$1.20, 1M 토큰당 입력/캐시/출력). 실행 당시 할인가로는 Mini 약 $0.007–0.013, Pro 4 약 $0.86이고 Contributor 실제 단가로는 약 $0.22다.",
       "D-9 pi 하네스에 PI_SANDBOX=on 옵션을 추가했다. macOS sandbox-exec로 홈 디렉터리 안의 파일 읽기·목록·쓰기를 거부하고 에이전트의 자기 리포·세션 디렉터리·pi-agent·도구 경로만 허용한다(홈 밖은 제한 없음). smoke가 하네스 파일·~/experiments 목록·비밀 파일 읽기 거부를 확인했다. 첫 기동은 비용 가드가 누적 단가를 찾지 못해 모델 호출 없이 멈췄고(D-10), 예비 단가를 두고 실험 누적 상한을 $7로 올려 재기동했다.",
-      "D-11 격리로 생긴 환경 차이: 읽을 수 없는 ~/.gitignore_global 때문에 git 경고가 났고, 에이전트가 /bin/ps를 실행하지 못했다(en-3, 2회). 하네스 디렉터리를 조회하려는 시도는 세 run 모두 거부됐고 자기 리포 밖 파일 내용을 읽은 기록은 없다. 격리 없는 pi run과 비교할 때 격리 유무를 교란 변수로 적는다.",
-      "D-12 격리 run에서도 요청 한도 초과(429)가 en-1 4건, en-2 62건, en-3 77건 발생했고 pi가 재시도했다. 대기 상한은 12·201·265초이며 세션 시간에 포함된다. 따라서 비격리 en-1의 429를 계정 한도만의 문제로 볼 근거는 이 데이터에서 확인되지 않는다."
+      "D-11 격리로 생긴 환경 차이: 읽을 수 없는 ~/.gitignore_global 때문에 git 경고가 났고, 에이전트가 /bin/ps를 실행하지 못했다(공개 en-4·en-5와 참고 en-3). 하네스 디렉터리를 조회하려는 시도(예: en-4의 ls ~/experiments/ralph-exp064)는 거부됐고 자기 리포 밖 파일 내용을 읽은 기록은 찾지 못했다. 격리 없는 pi run과 비교할 때 격리 유무를 교란 변수로 적는다.",
+      "D-12 격리 run에서도 요청 한도 초과(429)가 en-1 4건, en-2 62건, en-3 77건, en-5 13건 발생했고(en-4는 0건) pi가 재시도했다. 대기 상한은 en-1·2·3 12·201·265초, en-5 37초이며 기록 세션 시간에 포함된다. 따라서 비격리 en-1의 429를 계정 한도만의 문제로 볼 근거는 이 데이터에서 확인되지 않는다.",
+      "D-13 사용자 지시(2026-11-24)로 429 스로틀링을 받은 격리 en-1·2·3을 참고 자료로 내리고 격리 2 run(en-4·en-5)을 추가했다(실험 비용 상한 $8). en-4는 429 0건이고 en-5는 13건이라 공개 2 run 중 하나는 여전히 스로틀링을 받았다. 응답 헤더의 한도는 Mini 분당 요청 4,000건·분당 토큰 1,500,000(Contributor 3,000,000)이다. 성공 요청의 60초 이동 창 입력 토큰 최댓값은 en-1·2·3이 1.29M·1.34M·1.54M, en-4가 1.47M, en-5가 2.50M이라 분당 토큰 한도 근처 스로틀링일 가능성이 있으나, 429 시점의 직전 60초 합이 대부분 1.5M 미만이라 확정하지 못했다. 스로틀링 없는 Mini 측정에는 Upstage의 한도 상향이 필요할 수 있다."
     ],
     "en": [
-      "The published Mini 4.5 Preview result is the 3 filesystem-sandboxed runs (condition mini45sb). The 4 earlier unsandboxed runs are dropped from published metrics: en-1 (100 HTTP 429 errors, D-1) was excluded at the user's request because an account rate limit was suspected (D-7); en-2 is valid but unsandboxed, so reference only (D-4, D-5); en-3 read the harness directory, the grading Hurl files and en-2's source, so it is not an independent trial (D-6); en-4, the replacement for en-1, is invalid because it found en-1's code in a moved directory and rsync-copied it (D-8). Moving directories did not prevent the exposure.",
-      "Published session times exclude HTTP 429 throttling wait (wait = sum, per 429 response, of failed request start to next request start: en-1 12.3 s, en-2 200.8 s, en-3 264.9 s). Recorded session times including throttling are 4:18, 10:25 and 12:03; published times are 4:06, 7:04 and 7:38. Pro 4 and Contributor had no 429, so they are unchanged.",
+      "The published Mini 4.5 Preview result is the 2 runs (en-4, en-5) added later under the filesystem sandbox (condition mini45sb). The 3 earlier runs of the same condition (en-1, en-2, en-3) received 4, 62 and 77 HTTP 429 errors and were demoted to reference data at the user's instruction (D-13). The 4 earlier unsandboxed runs are also dropped from published metrics: unsandboxed en-1 (100 HTTP 429 errors, D-1) was excluded at the user's request because an account rate limit was suspected (D-7); en-2 is valid but unsandboxed, so reference only (D-4, D-5); en-3 read the harness directory, the grading Hurl files and en-2's source, so it is not an independent trial (D-6); en-4, the replacement for en-1, is invalid because it found en-1's code in a moved directory and rsync-copied it (D-8). Moving directories did not prevent the exposure. Unsandboxed runs (mini45-en-N) and sandboxed runs (mini45sb-en-N) share numbers but are different runs.",
+      "Published session times exclude HTTP 429 throttling wait (wait = sum, per 429 response, of failed request start to next request start). Published en-4 had no 429, so its time equals the recorded 5:49; en-5 had 13 429 errors and 37.1 s of wait, so 7:29 recorded becomes 6:52. The demoted sandboxed en-1, en-2 and en-3 waited 12.3, 200.8 and 264.9 s, so recorded 4:18, 10:25 and 12:03 become 4:06, 7:04 and 7:38. Pro 4 and Contributor had no 429, so they are unchanged.",
       "D-2 During the mini45 run the user added the solar-pro-4-contributor condition. After reconfiguration, re-approval and a smoke test, the run restarted from pro4, and the experiment cost cap went from $3 to $5.",
       "D-3 The Solar Pro 4 run ended iteration 1 at Hurl 0/13 without declaring completion and finished at iteration 2 in 38:26, close to the 40-min run cap (non-canonical). It would not have finished under the canonical 20-min cap.",
       "**From EXP-064 onward, Solar Pro 4 benchmark runs use only the contributor variant (`solar-pro-4-contributor`), by user instruction on 2026-11-24.** Per Upstage documentation it is the same model as Solar Pro 4; requests and responses are shared with Upstage, which stores them and uses them for training, in return for a 70% discount. Its cost is published at the solar-pro-4 list price.",
-      "All three conditions are costed at Upstage list price (Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4 and Contributor $0.30/$0.06/$1.20 per 1M input/cached/output). At the discounts in effect during the runs, Mini would be about $0.005–0.012 per run and Pro 4 about $0.86, and the Contributor price actually charged would give about $0.22.",
+      "All three conditions are costed at Upstage list price (Mini 4.5 Preview $0.10/$0.01/$0.40, Pro 4 and Contributor $0.30/$0.06/$1.20 per 1M input/cached/output). At the discounts in effect during the runs, Mini would be about $0.007–0.013 per run and Pro 4 about $0.86, and the Contributor price actually charged would give about $0.22.",
       "D-9 A PI_SANDBOX=on option was added to the pi harness. macOS sandbox-exec denies file reads, listings and writes in the home directory except the agent's own repo, session directory, pi-agent and tool paths (outside home is not restricted). The smoke test checks that reads of harness files, the ~/experiments listing and the secrets file are denied. The first start was stopped by the cost guard, which could not find a cumulative price, before any model call (D-10); it was restarted with a fallback price and the experiment cap raised to $7.",
-      "D-11 Differences caused by the sandbox: a git warning appeared because ~/.gitignore_global was unreadable, and the agent could not run /bin/ps (en-3, twice). Attempts to list the harness directory were denied in all three runs, and no file content outside the agent's repo was read. When comparing with unsandboxed pi runs, the sandbox is a confounder.",
-      "D-12 429 request-limit errors continued in the sandboxed runs: 4 in en-1, 62 in en-2 and 77 in en-3, retried by pi. The wait upper bounds are 12, 201 and 265 s and are included in the session time. These data give no basis for attributing the unsandboxed en-1's 429s to an account limit alone."
+      "D-11 Differences caused by the sandbox: a git warning appeared because ~/.gitignore_global was unreadable, and the agent could not run /bin/ps (published en-4 and en-5, and reference en-3). Attempts to list the harness directory (for example en-4's ls ~/experiments/ralph-exp064) were denied, and no read of file content outside the agent's repo was found. When comparing with unsandboxed pi runs, the sandbox is a confounder.",
+      "D-12 429 request-limit errors continued in the sandboxed runs: 4 in en-1, 62 in en-2, 77 in en-3 and 13 in en-5 (none in en-4), retried by pi. The wait upper bounds are 12, 201 and 265 s for en-1, en-2 and en-3 and 37 s for en-5, and they are included in the recorded session time. These data give no basis for attributing the unsandboxed en-1's 429s to an account limit alone.",
+      "D-13 At the user's instruction (2026-11-24), the sandboxed en-1, en-2 and en-3, which were throttled by 429, were demoted to reference data and 2 sandboxed runs (en-4, en-5) were added (experiment cost cap $8). en-4 had no 429 and en-5 had 13, so one of the two published runs was still throttled. The response-header limits are 4,000 requests per minute and 1,500,000 tokens per minute for Mini (3,000,000 for the Contributor). The peak 60-second input tokens of successful requests were 1.29M, 1.34M and 1.54M for en-1, en-2 and en-3, 1.47M for en-4 and 2.50M for en-5, so throttling near the per-minute token limit is possible. It is not confirmed, because the preceding 60-second sum at most 429s was below 1.5M. A throttle-free Mini measurement may need a limit increase from Upstage."
     ],
     "ja": [
-      "Mini 4.5 Previewの公開結果はファイルシステム隔離条件（mini45sb）の3 runである。先に実行した隔離なしの4 runは公開指標から除いた。en-1（429が100件、D-1）はアカウント上限の影響が疑われるためユーザー指示で除外し（D-7）、en-2は有効だが隔離なしのため参考値で（D-4・D-5）、en-3はハーネスディレクトリ・採点用Hurl正本・en-2のソースを読んだため独立試行ではなく（D-6）、en-1の代替のen-4は移動したディレクトリからen-1のコードを見つけてrsyncでコピーしたため無効である（D-8）。ディレクトリを移動しても露出は防げなかった。",
-      "公開セッション時間は429の制限待機を除いた値である（待機=429応答ごとの、失敗したリクエスト開始から次のリクエスト開始までの合計：en-1 12.3秒、en-2 200.8秒、en-3 264.9秒）。制限待機を含む記録セッション時間は4:18・10:25・12:03で、公開時間は4:06・7:04・7:38。Pro 4とContributorは429がなく変更なし。",
+      "Mini 4.5 Previewの公開結果は、ファイルシステム隔離条件（mini45sb）で後から追加実行した2 run（en-4・en-5）である。同じ条件の先の3 run（en-1・2・3）は429が4・62・77件出たため、ユーザー指示で参考データに下げた（D-13）。それより前の隔離なしの4 runも公開指標から除いた。隔離なしのen-1（429が100件、D-1）はアカウント上限の影響が疑われるためユーザー指示で除外し（D-7）、en-2は有効だが隔離なしのため参考値で（D-4・D-5）、en-3はハーネスディレクトリ・採点用Hurl正本・en-2のソースを読んだため独立試行ではなく（D-6）、en-1の代替のen-4は移動したディレクトリからen-1のコードを見つけてrsyncでコピーしたため無効である（D-8）。ディレクトリを移動しても露出は防げなかった。隔離なしrun（mini45-en-N）と隔離run（mini45sb-en-N）は番号が重なるが別のrunである。",
+      "公開セッション時間は429の制限待機を除いた値である（待機=429応答ごとの、失敗したリクエスト開始から次のリクエスト開始までの合計）。公開en-4は429が0件のため記録値と同じ5:49、en-5は429が13件・待機37.1秒のため記録7:29から除いて6:52である。参考に下げた隔離en-1・2・3は待機が12.3・200.8・264.9秒で、記録4:18・10:25・12:03から除いて4:06・7:04・7:38である。Pro 4とContributorは429がなく変更なし。",
       "D-2 mini45のrun中にユーザー指示でsolar-pro-4-contributor条件を追加した。再設定・再承認・smoke後にpro4から再起動し、実験のコスト上限を$3から$5に引き上げた。",
       "D-3 Solar Pro 4のrunはiteration 1がHurl 0/13で完了宣言なしに終わり、iteration 2で38:26に完走して、run上限40分(非正本)に近づいた。正本の上限20分なら未完走だった。",
       "**EXP-064以降、Solar Pro 4のベンチマーク実行はcontributor版(`solar-pro-4-contributor`)のみを使う(ユーザー指示 2026-11-24)。**Upstageのドキュメントでは Solar Pro 4と同じモデルで、リクエストとレスポンスをUpstageと共有し、Upstageが保存して学習に使う代わりに70%割引を受ける。コストはsolar-pro-4の定価で換算して公開する。",
-      "3条件ともUpstageの定価(list price)で換算した(Mini 4.5 Preview $0.10/$0.01/$0.40、Pro 4とContributor $0.30/$0.06/$1.20、100万トークンあたり入力/キャッシュ/出力)。実行当時の割引価格ではMiniは約$0.005–0.012、Pro 4は約$0.86で、Contributorの実際の価格では約$0.22になる。",
+      "3条件ともUpstageの定価(list price)で換算した(Mini 4.5 Preview $0.10/$0.01/$0.40、Pro 4とContributor $0.30/$0.06/$1.20、100万トークンあたり入力/キャッシュ/出力)。実行当時の割引価格ではMiniは約$0.007–0.013、Pro 4は約$0.86で、Contributorの実際の価格では約$0.22になる。",
       "D-9 piハーネスにPI_SANDBOX=onオプションを追加した。macOS sandbox-execでホームディレクトリ内のファイル読み取り・一覧・書き込みを拒否し、エージェント自身のリポ・セッションディレクトリ・pi-agent・ツールパスのみを許可する（ホーム外は制限なし）。smokeでハーネスファイル・~/experimentsの一覧・秘密ファイルの読み取り拒否を確認した。最初の起動はコストガードが累積単価を見つけられず、モデル呼び出しなしで停止し（D-10）、予備単価を置き実験の累積上限を$7に上げて再起動した。",
-      "D-11 隔離で生じた環境の違い：読み取れない~/.gitignore_globalのためgit警告が出て、エージェントが/bin/psを実行できなかった（en-3、2回）。ハーネスディレクトリを一覧しようとした試みは3 runすべてで拒否され、自分のリポ外のファイル内容を読んだ記録はない。隔離なしのpi runと比べるときは隔離の有無を交絡として記す。",
-      "D-12 隔離runでもリクエスト上限超過（429）がen-1で4件、en-2で62件、en-3で77件発生し、piが再試行した。待機の上限は12・201・265秒でセッション時間に含まれる。したがって隔離なしのen-1の429をアカウント上限だけの問題とみなす根拠はこのデータからは確認できない。"
+      "D-11 隔離で生じた環境差：読み取れない~/.gitignore_globalのためgit警告が出て、エージェントが/bin/psを実行できなかった（公開en-4・en-5と参考en-3）。ハーネスディレクトリを一覧しようとした試み（例：en-4のls ~/experiments/ralph-exp064）は拒否され、自分のリポ外のファイル内容を読んだ記録は見つからなかった。隔離なしのpi runと比べるときは隔離の有無を交絡として記す。",
+      "D-12 隔離runでもリクエスト上限超過（429）がen-1で4件、en-2で62件、en-3で77件、en-5で13件発生し（en-4は0件）、piが再試行した。待機の上限はen-1・2・3が12・201・265秒、en-5が37秒で、記録セッション時間に含まれる。したがって隔離なしen-1の429をアカウント上限だけの問題とみなす根拠はこのデータにはない。",
+      "D-13 ユーザー指示（2026-11-24）で、429スロットリングを受けた隔離en-1・2・3を参考データに下げ、隔離2 run（en-4・en-5）を追加した（実験コスト上限$8）。en-4は429が0件、en-5は13件で、公開した2 runの一方はなおスロットリングを受けた。応答ヘッダの上限はMiniで毎分4,000リクエスト・毎分1,500,000トークン（Contributorは3,000,000）である。成功リクエストの60秒移動窓の入力トークン最大値はen-1・2・3が1.29M・1.34M・1.54M、en-4が1.47M、en-5が2.50Mで、分あたりトークン上限付近のスロットリングの可能性があるが、429時点の直前60秒の合計が多くは1.5M未満だったため確定していない。スロットリングのないMini測定にはUpstageの上限引き上げが必要な可能性がある。"
     ],
     "zh": [
-      "Mini 4.5 Preview 的公开结果是文件系统隔离条件（mini45sb）的 3 个 run。此前运行的 4 个未隔离 run 已从公开指标中排除：en-1（100 次 HTTP 429，D-1）因怀疑受账号额度影响，应用户要求排除（D-7）；en-2 有效但未隔离，仅作参考（D-4、D-5）；en-3 读取了框架目录、评分用 Hurl 标准文件和 en-2 的源码，不是独立试验（D-6）；作为 en-1 替代的 en-4 无效，因为它在被移动的目录中找到 en-1 的代码并用 rsync 复制（D-8）。移动目录并不能阻止这种接触。",
-      "公布的会话时间已扣除 HTTP 429 限流等待（等待 = 每个 429 响应从失败请求开始到下一次请求开始的时间之和：en-1 12.3 秒，en-2 200.8 秒，en-3 264.9 秒）。含限流等待的记录会话时间为 4:18、10:25、12:03，公布时间为 4:06、7:04、7:38。Pro 4 和 Contributor 没有 429，因此不变。",
+      "Mini 4.5 Preview 的公开结果是在文件系统隔离条件（mini45sb）下追加运行的 2 个 run（en-4、en-5）。同一条件下此前的 3 个 run（en-1、en-2、en-3）收到 4、62、77 次 429，应用户指示降为参考数据（D-13）。更早的 4 个未隔离 run 也已从公开指标中剔除。未隔离 en-1（100 次 429，D-1）因怀疑受账号额度影响，应用户要求排除（D-7）；en-2 有效但未隔离，仅作参考（D-4・D-5）；en-3 读取了框架目录、评分用 Hurl 标准文件和 en-2 的源码，不是独立试验（D-6）；作为 en-1 替代的 en-4 在被移动的目录中找到 en-1 的代码并用 rsync 复制，因此无效（D-8）。移动目录并不能防止暴露。未隔离 run（mini45-en-N）与隔离 run（mini45sb-en-N）编号重叠，但是不同的 run。",
+      "公布的会话时间已扣除 HTTP 429 限流等待（等待 = 每个 429 响应从失败请求开始到下一次请求开始的时间之和）。公开的 en-4 没有 429，时间与记录值相同，为 5:49；en-5 有 13 次 429、等待 37.1 秒，因此记录的 7:29 扣除后为 6:52。降为参考的隔离 en-1、en-2、en-3 等待 12.3、200.8、264.9 秒，记录的 4:18、10:25、12:03 扣除后为 4:06、7:04、7:38。Pro 4 和 Contributor 没有 429，因此不变。",
       "D-2 在 mini45 run 期间，用户指示新增 solar-pro-4-contributor 条件。完成重新配置、重新批准和 smoke 后从 pro4 重新启动，实验成本上限从 $3 提高到 $5。",
       "D-3 Solar Pro 4 的 run 在 iteration 1 以 Hurl 0/13 结束且未宣布完成，在 iteration 2 用 38:26 完成，接近 40 分钟的 run 上限（非标准）。若按标准上限 20 分钟则未完成。",
       "**自 EXP-064 起，Solar Pro 4 的基准运行只使用 contributor 变体（`solar-pro-4-contributor`），依据用户 2026-11-24 的指示。**根据 Upstage 文档，它与 Solar Pro 4 是同一个模型；请求和响应与 Upstage 共享，由 Upstage 保存并用于训练，作为交换可享受 70% 折扣。成本按 solar-pro-4 定价折算后公布。",
-      "三个条件的成本都按 Upstage 定价（list price）折算（Mini 4.5 Preview $0.10/$0.01/$0.40，Pro 4 和 Contributor $0.30/$0.06/$1.20，每 100 万 token 输入/缓存/输出）。按运行时的折扣价，Mini 约 $0.005–0.012，Pro 4 约 $0.86；按 Contributor 实际收取的单价约为 $0.22。",
+      "三个条件的成本都按 Upstage 定价（list price）折算（Mini 4.5 Preview $0.10/$0.01/$0.40，Pro 4 和 Contributor $0.30/$0.06/$1.20，每 100 万 token 输入/缓存/输出）。按运行时的折扣价，Mini 约 $0.007–0.013，Pro 4 约 $0.86；按 Contributor 实际收取的单价约为 $0.22。",
       "D-9 为 pi 框架新增了 PI_SANDBOX=on 选项。macOS sandbox-exec 拒绝读取、列出和写入主目录内的文件，仅允许代理自己的仓库、会话目录、pi-agent 和工具路径（主目录之外不受限制）。smoke 确认读取框架文件、~/experiments 列表和密钥文件均被拒绝。首次启动因成本守卫找不到累计单价而在任何模型调用之前停止（D-10），设置备用单价并将实验累计上限提高到 $7 后重新启动。",
-      "D-11 隔离带来的环境差异：因无法读取 ~/.gitignore_global 出现 git 警告，代理无法运行 /bin/ps（en-3，2 次）。列出框架目录的尝试在 3 个 run 中都被拒绝，也没有读取代理仓库之外文件内容的记录。与未隔离的 pi run 比较时，应把是否隔离作为混杂因素。",
-      "D-12 隔离的 run 中仍出现请求额度超限（429）：en-1 为 4 次，en-2 为 62 次，en-3 为 77 次，由 pi 重试。等待上限为 12、201、265 秒，已计入会话时间。因此这些数据不能支持把未隔离 en-1 的 429 只归因于账号额度。"
+      "D-11 隔离带来的环境差异：因无法读取 ~/.gitignore_global 出现 git 警告，代理无法运行 /bin/ps（公开的 en-4、en-5 和参考的 en-3）。列出框架目录的尝试（例如 en-4 的 ls ~/experiments/ralph-exp064）被拒绝，未发现读取其仓库之外文件内容的记录。与未隔离的 pi run 比较时，把是否隔离记为混杂因素。",
+      "D-12 隔离 run 中仍出现请求额度超限（429）：en-1 4 次、en-2 62 次、en-3 77 次、en-5 13 次（en-4 为 0 次），由 pi 重试。等待上限在 en-1、en-2、en-3 为 12、201、265 秒，en-5 为 37 秒，包含在记录的会话时间中。因此这些数据不能说明未隔离 en-1 的 429 仅由账号额度造成。",
+      "D-13 应用户指示（2026-11-24），收到 429 限流的隔离 en-1、en-2、en-3 被降为参考数据，并追加 2 个隔离 run（en-4、en-5）（实验费用上限 $8）。en-4 没有 429，en-5 有 13 次，因此公开的 2 个 run 中仍有一个受到限流。响应头中的上限为 Mini 每分钟 4,000 次请求、每分钟 1,500,000 token（Contributor 为 3,000,000）。成功请求 60 秒滑动窗口内输入 token 的最大值，en-1、en-2、en-3 分别为 1.29M、1.34M、1.54M，en-4 为 1.47M，en-5 为 2.50M，因此可能是接近每分钟 token 上限的限流，但由于多数 429 发生时前 60 秒的合计低于 1.5M，尚未确认。要得到无限流的 Mini 测量，可能需要 Upstage 提高上限。"
     ]
   },
   "behavior": {
     "ko": [
-      "Mini 4.5 Preview(격리): en-1 iteration 1·커밋 3개·세션 4:06(기록 4:18)·52개 응답(429 4건)·output 44,227(reasoning 25,955), en-2 iteration 1·커밋 3개·세션 7:04(기록 10:25)·152개 응답(429 62건)·output 74,348(reasoning 43,165), en-3 iteration 1·커밋 3개·세션 7:38(기록 12:03)·179개 응답(429 77건)·output 65,922(reasoning 32,718). 세 run 모두 게이트와 재검증이 13/13·154/154로 일치했다.",
+      "Mini 4.5 Preview(격리, 공개): en-4 iteration 1·커밋 2개·세션 5:49·62개 응답(429 0건)·output 52,749(reasoning 30,183), en-5 iteration 1·커밋 4개·세션 7:29(429 제외 6:52)·129개 응답(429 13건)·output 69,086(reasoning 36,498). 두 run 모두 게이트와 재검증이 13/13·154/154로 일치했다. 참고(공개 제외): 격리 en-1·2·3은 iteration 1·커밋 3개씩·세션 4:06·7:04·7:38(기록 4:18·10:25·12:03)·429 4·62·77건이다.",
       "Pro 4: iteration 2에서 완주, 커밋 2개, 세션 38:26, 301개 응답, output 146,559(reasoning 60,769).",
       "Pro 4 Contributor: iteration 1에 완주, 커밋 1개, 세션 17:22, 158개 응답, output 63,262(reasoning 19,448).",
       "세 조건 모두 게이트와 독립 재검증 2회가 13/13·154/154로 일치했다. 각 조건 n=1이므로 contributor와 일반 Pro 4의 차이는 판단하지 않는다."
     ],
     "en": [
-      "Mini 4.5 Preview (sandboxed): en-1 iteration 1, 3 commits, session 4:06 (recorded 4:18), 52 responses (4 were 429), output 44,227 (reasoning 25,955); en-2 iteration 1, 3 commits, session 7:04 (recorded 10:25), 152 responses (62 were 429), output 74,348 (reasoning 43,165); en-3 iteration 1, 3 commits, session 7:38 (recorded 12:03), 179 responses (77 were 429), output 65,922 (reasoning 32,718). All three matched 13/13 · 154/154 at the gate and re-checks.",
+      "Mini 4.5 Preview (sandboxed, published): en-4 iteration 1, 2 commits, session 5:49, 62 responses (0 were 429), output 52,749 (reasoning 30,183); en-5 iteration 1, 4 commits, session 7:29 (6:52 excluding 429 wait), 129 responses (13 were 429), output 69,086 (reasoning 36,498). Both matched 13/13 · 154/154 at the gate and re-checks. Reference only (not published): sandboxed en-1, en-2 and en-3 finished at iteration 1 with 3 commits each, sessions 4:06, 7:04 and 7:38 (recorded 4:18, 10:25 and 12:03) and 4, 62 and 77 429 errors.",
       "Pro 4: finished at iteration 2 with 2 commits, session 38:26, 301 responses, output 146,559 (reasoning 60,769).",
       "Pro 4 Contributor: finished at iteration 1 with 1 commit, session 17:22, 158 responses, output 63,262 (reasoning 19,448).",
       "For all three, the gate and two independent re-gradings matched 13/13 · 154/154. Each condition is n=1, so the difference between the contributor and the regular Pro 4 is not judged."
     ],
     "ja": [
-      "Mini 4.5 Preview（隔離）：en-1はiteration 1・コミット3個・セッション4:06（記録4:18）・応答52件（429が4件）・output 44,227（reasoning 25,955）、en-2はiteration 1・コミット3個・セッション7:04（記録10:25）・応答152件（429が62件）・output 74,348（reasoning 43,165）、en-3はiteration 1・コミット3個・セッション7:38（記録12:03）・応答179件（429が77件）・output 65,922（reasoning 32,718）。3 runともゲートと再検証が13/13・154/154で一致した。",
+      "Mini 4.5 Preview（隔離、公開）：en-4はiteration 1・コミット2個・セッション5:49・応答62件（429が0件）・output 52,749（reasoning 30,183）、en-5はiteration 1・コミット4個・セッション7:29（429待機を除き6:52）・応答129件（429が13件）・output 69,086（reasoning 36,498）。2 runともゲートと再検証が13/13・154/154で一致した。参考（公開除外）：隔離en-1・2・3はiteration 1・コミット各3個・セッション4:06・7:04・7:38（記録4:18・10:25・12:03）・429が4・62・77件。",
       "Pro 4: iteration 2で完走、コミット2個、セッション38:26、応答301件、output 146,559(reasoning 60,769)。",
       "Pro 4 Contributor: iteration 1で完走、コミット1個、セッション17:22、応答158件、output 63,262(reasoning 19,448)。",
       "3条件ともゲートと独立再検証2回が13/13・154/154で一致した。各条件n=1のため、contributorと通常のPro 4の違いは判断しない。"
     ],
     "zh": [
-      "Mini 4.5 Preview（隔离）：en-1 在 iteration 1、提交 3 次、会话 4:06（记录 4:18）、52 条响应（4 次 429）、output 44,227（reasoning 25,955）；en-2 在 iteration 1、提交 3 次、会话 7:04（记录 10:25）、152 条响应（62 次 429）、output 74,348（reasoning 43,165）；en-3 在 iteration 1、提交 3 次、会话 7:38（记录 12:03）、179 条响应（77 次 429）、output 65,922（reasoning 32,718）。三个 run 的门控与复验均为 13/13·154/154。",
+      "Mini 4.5 Preview（隔离，公开）：en-4 在 iteration 1、提交 2 次、会话 5:49、62 条响应（429 为 0 次）、output 52,749（reasoning 30,183）；en-5 在 iteration 1、提交 4 次、会话 7:29（扣除 429 等待后 6:52）、129 条响应（13 次 429）、output 69,086（reasoning 36,498）。两个 run 的门控与复验均为 13/13·154/154。参考（不公开）：隔离 en-1、en-2、en-3 均在 iteration 1、各提交 3 次，会话 4:06、7:04、7:38（记录 4:18、10:25、12:03），429 为 4、62、77 次。",
       "Pro 4：在 iteration 2 完成，提交 2 次，会话 38:26，301 条响应，output 146,559（reasoning 60,769）。",
       "Pro 4 Contributor：在 iteration 1 完成，提交 1 次，会话 17:22，158 条响应，output 63,262（reasoning 19,448）。",
       "三个条件的门控与两次独立复评均为 13/13·154/154。每个条件 n=1，因此不判断 contributor 与常规 Pro 4 的差别。"

@@ -1167,22 +1167,22 @@
     },
     "EXP-064": {
       "en": {
-        "name": "pi × Upstage Solar Mini 4.5 Preview · Solar Pro 4 · Solar Pro 4 Contributor completion probe (EN n=1 per model)",
-        "hypothesis": "pi 0.87.1 with Upstage solar-mini-4-5-preview, solar-pro-4 and solar-pro-4-contributor (thinking high, pi canonical persistence instruction) completes the RealWorld backend (Hurl 13/13 · 154/154) with the EN canonical PROMPT v2 Ralph loop, unattended, within 30 iterations and 40 min per run (non-canonical cap) (EN n=1 per model, exploratory)",
-        "verdict": "Exploratory — 3/3 completed",
-        "summary": "All three runs completed; gate and two independent re-gradings all 13/13 · 154/154. Mini 4.5 Preview finished at iteration 1 in 11:34 (including up to about 5 min of retries after 100 HTTP 429 rate-limit errors), Pro 4 at iteration 2 in 38:26, Pro 4 Contributor at iteration 1 in 17:22. Estimated cost per run at Upstage list prices: $0.12, $1.73 and $0.73 (Contributor priced at the Pro 4 list price; actual discounted prices were lower). With n=1 per condition, this does not show whether the contributor model performs the same as Pro 4; later Solar Pro 4 runs use the contributor variant only."
+        "name": "pi × Upstage Solar Mini 4.5 Preview (EN n=3) · Solar Pro 4 · Solar Pro 4 Contributor (EN n=1 each) completion probe",
+        "hypothesis": "pi 0.87.1 with Upstage solar-mini-4-5-preview, solar-pro-4 and solar-pro-4-contributor (thinking high, pi canonical persistence instruction) completes the RealWorld backend (Hurl 13/13 · 154/154) with the EN canonical PROMPT v2 Ralph loop, unattended, within 30 iterations and 40 min per run (non-canonical cap) (EN n=1 per model, exploratory; Mini 4.5 Preview later extended to n=3)",
+        "verdict": "Exploratory — 5/5 completed",
+        "summary": "All five runs completed; gate and two independent re-gradings all 13/13 · 154/154. Mini 4.5 Preview finished 3/3 at iteration 1 in 5:20–11:34 (every run hit HTTP 429 rate limits, 29–100 errors, retried); its third run explored the harness directory and read the previous run's full source and the grading Hurl files, so it is not an independent trial. Pro 4 finished at iteration 2 in 38:26, Pro 4 Contributor at iteration 1 in 17:22. Estimated cost per run at Upstage list prices: Mini $0.07–0.12, Pro 4 $1.73, Contributor $0.73 (priced at the Pro 4 list price). With n=1, this does not show whether the contributor model performs the same as Pro 4; later Solar Pro 4 runs use the contributor variant only."
       },
       "ja": {
-        "name": "pi × Upstage Solar Mini 4.5 Preview・Solar Pro 4・Solar Pro 4 Contributor 完走探索(モデルごとEN n=1)",
-        "hypothesis": "pi 0.87.1でUpstage solar-mini-4-5-preview・solar-pro-4・solar-pro-4-contributor(thinking high、pi正本の継続実行指示)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・40分(非正本)以内に完走できる(モデルごとEN n=1、探索)",
-        "verdict": "探索 — 3/3完走",
-        "summary": "3 runすべて完走し、ゲートと独立再検証2回がすべて13/13・154/154。Mini 4.5 Previewはイテレーション1で11:34(HTTP 429レート制限エラー100件の再試行待ち最大約5分を含む)、Pro 4はイテレーション2で38:26、Pro 4 Contributorはイテレーション1で17:22。Upstage定価基準の推定コストはrunあたり$0.12・$1.73・$0.73(ContributorはPro 4定価で換算、実際の割引単価はこれより低い)。各条件n=1のため、contributorモデルの性能がPro 4と同じかどうかは判定しない。以後のSolar Pro 4実験はcontributor版のみで実行する。"
+        "name": "pi × Upstage Solar Mini 4.5 Preview(EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各EN n=1)完走探索",
+        "hypothesis": "pi 0.87.1でUpstage solar-mini-4-5-preview・solar-pro-4・solar-pro-4-contributor(thinking high、pi正本の継続実行指示)を動かせば、EN正本PROMPT v2のラルフループでRealWorldバックエンド(Hurl 13/13・154/154)を無介入でrunあたり上限30イテレーション・40分(非正本)以内に完走できる(モデルごとEN n=1、探索。のちにMini 4.5 Previewはn=3)",
+        "verdict": "探索 — 5/5完走",
+        "summary": "5 runすべて完走し、ゲートと独立再検証2回がすべて13/13・154/154。Mini 4.5 Previewは3/3がイテレーション1で5:20–11:34(全runでHTTP 429レート制限エラー29–100件、再試行で継続)。3 run目はハーネスディレクトリを探索して直前runのソース全体と採点用Hurlファイルを読んだため、独立試行とはみなさない。Pro 4はイテレーション2で38:26、Pro 4 Contributorはイテレーション1で17:22。Upstage定価基準の推定コストはrunあたりMini $0.07–0.12、Pro 4 $1.73、Contributor $0.73(Pro 4定価で換算)。n=1のためcontributorモデルの性能がPro 4と同じかどうかは判定しない。以後のSolar Pro 4実験はcontributor版のみで実行する。"
       },
       "zh-CN": {
-        "name": "pi × Upstage Solar Mini 4.5 Preview・Solar Pro 4・Solar Pro 4 Contributor 完成探索(每个模型 EN n=1)",
-        "hypothesis": "在 pi 0.87.1 中运行 Upstage solar-mini-4-5-preview、solar-pro-4、solar-pro-4-contributor(thinking high，pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、40 分钟(非正本)上限内完成 RealWorld 后端(Hurl 13/13・154/154)(每个模型 EN n=1，探索)",
-        "verdict": "探索 — 3/3 完成",
-        "summary": "3 个 run 全部完成，门控与两次独立复核均为 13/13・154/154。Mini 4.5 Preview 在第 1 次迭代以 11:34 完成(包含 100 次 HTTP 429 限流错误后最多约 5 分钟的重试等待)，Pro 4 在第 2 次迭代以 38:26 完成，Pro 4 Contributor 在第 1 次迭代以 17:22 完成。按 Upstage 定价估算每 run 成本为 $0.12、$1.73、$0.73(Contributor 按 Pro 4 定价折算，实际折扣单价更低)。每个条件 n=1，无法判断 contributor 模型与 Pro 4 性能是否相同。此后的 Solar Pro 4 实验仅使用 contributor 版本。"
+        "name": "pi × Upstage Solar Mini 4.5 Preview(EN n=3)・Solar Pro 4・Solar Pro 4 Contributor(各 EN n=1)完成探索",
+        "hypothesis": "在 pi 0.87.1 中运行 Upstage solar-mini-4-5-preview、solar-pro-4、solar-pro-4-contributor(thinking high，pi 正本持续执行指令)，可用 EN 正本 PROMPT v2 的 Ralph 循环在无人干预下于每 run 30 次迭代、40 分钟(非正本)上限内完成 RealWorld 后端(Hurl 13/13・154/154)(每个模型 EN n=1，探索；之后 Mini 4.5 Preview 扩展为 n=3)",
+        "verdict": "探索 — 5/5 完成",
+        "summary": "5 个 run 全部完成，门控与两次独立复核均为 13/13・154/154。Mini 4.5 Preview 3/3 在第 1 次迭代以 5:20–11:34 完成(每个 run 都遇到 HTTP 429 限流错误 29–100 次，重试后继续)；第 3 个 run 探索了 harness 目录并读取了上一个 run 的全部源码和评分用 Hurl 文件，因此不视为独立试验。Pro 4 在第 2 次迭代以 38:26 完成，Pro 4 Contributor 在第 1 次迭代以 17:22 完成。按 Upstage 定价估算每 run 成本：Mini $0.07–0.12、Pro 4 $1.73、Contributor $0.73(按 Pro 4 定价折算)。n=1，无法判断 contributor 模型与 Pro 4 性能是否相同。此后的 Solar Pro 4 实验仅使用 contributor 版本。"
       }
     }
   }

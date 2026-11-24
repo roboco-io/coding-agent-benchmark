@@ -144,5 +144,7 @@ EXP-063,gemini-4-hydrogen,hydrogen-en-1,230,158,72,18,31594,8.8,200.0,0.687,1,0,
 EXP-063,gemini-4-hydrogen,hydrogen-en-2,251,164,87,21,30844,7.8,188.1,0.653,1,0,4.4,agy
 EXP-063,gemini-4-hydrogen,hydrogen-en-3,246,151,95,23,31199,6.6,206.6,0.614,1,0,4.38,agy
 EXP-064,pi × solar-mini-4-5-preview,mini45-en-1,679,615,65,199,74787,3.1,121.7,0.905,1,0,11.57,pi
+EXP-064,pi × solar-mini-4-5-preview,mini45-en-2,404,322,81,96,47973,3.4,148.9,0.798,1,0,7.0,pi
+EXP-064,pi × solar-mini-4-5-preview,mini45-en-3,303,262,41,79,38928,3.3,148.7,0.865,1,0,5.33,pi
 EXP-064,pi × solar-pro-4,pro4-en-1,2157,1769,388,301,146559,5.9,82.9,0.82,2,0,38.43,pi
 EXP-064,pi × solar-pro-4-contributor,pro4c-en-1,1025,880,145,158,63262,5.6,71.9,0.859,1,0,17.37,pi
